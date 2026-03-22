@@ -1,16 +1,25 @@
 use dioxus::prelude::*;
 
+use crate::ui::footer::Footer;
 use crate::ui::sidenav::Sidenav;
+use crate::ui::toc::{TableOfContents, TocItem};
 use crate::Route;
 
 #[component]
 pub fn DocsLayout() -> Element {
+    // Provide a writable signal — child pages write their headings into it
+    let toc = use_context_provider(|| Signal::new(Vec::<TocItem>::new()));
+
     rsx! {
-        div { class: "flex min-h-screen bg-background",
-            Sidenav {}
-            main { class: "flex-1 p-8 overflow-y-auto",
-                Outlet::<Route> {}
+        div { class: "flex flex-col min-h-screen bg-background",
+            div { class: "flex flex-1",
+                Sidenav {}
+                div { class: "flex flex-1 min-w-0",
+                    Outlet::<Route> {}
+                    TableOfContents { items: toc() }
+                }
             }
+            Footer {}
         }
     }
 }

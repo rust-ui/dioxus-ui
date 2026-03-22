@@ -5,6 +5,7 @@ use html_parser::{Dom, Element as HtmlElement, Node};
 
 use crate::markdown::markdown_to_html;
 use crate::ui::demo_wrapper::DemoWrapper;
+use crate::ui::toc::{TocItem, slugify};
 
 // ---------------------------------------------------------------------------
 // Types
@@ -40,6 +41,31 @@ impl MdComponents {
 // ---------------------------------------------------------------------------
 // Entry point
 // ---------------------------------------------------------------------------
+
+/// Extract H2/H3 headings from markdown for the Table of Contents.
+pub fn extract_toc(md: &str) -> Vec<TocItem> {
+    let html = markdown_to_html(md);
+    let dom = match Dom::parse(&html) {
+        Ok(d) => d,
+        Err(_) => return vec![],
+    };
+    let mut items = Vec::new();
+    for node in &dom.children {
+        if let Node::Element(el) = node {
+            let depth = match el.name.to_lowercase().as_str() {
+                "h2" => 2u8,
+                "h3" => 3u8,
+                _ => continue,
+            };
+            let text = extract_text(&el.children);
+            if !text.is_empty() {
+                let id = slugify(&text);
+                items.push(TocItem { id, text, depth });
+            }
+        }
+    }
+    items
+}
 
 /// Convert a markdown string to a Dioxus Element tree.
 pub fn convert_md(md: &str, components: &MdComponents) -> Element {
@@ -99,8 +125,16 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     // Default element rendering with Tailwind classes
     match el.name.to_lowercase().as_str() {
         "h1" => rsx! { h1 { class: "text-3xl font-bold mt-6 mb-4", {children.into_iter()} } },
-        "h2" => rsx! { h2 { class: "text-2xl font-semibold mt-8 mb-3 pb-1 border-b border-border", {children.into_iter()} } },
-        "h3" => rsx! { h3 { class: "text-xl font-semibold mt-6 mb-2", {children.into_iter()} } },
+        "h2" => {
+            let text = extract_text(&el.children);
+            let id = slugify(&text);
+            rsx! { h2 { id: "{id}", class: "text-2xl font-semibold mt-8 mb-3 pb-1 border-b border-border scroll-mt-16", {children.into_iter()} } }
+        }
+        "h3" => {
+            let text = extract_text(&el.children);
+            let id = slugify(&text);
+            rsx! { h3 { id: "{id}", class: "text-xl font-semibold mt-6 mb-2 scroll-mt-16", {children.into_iter()} } }
+        }
         "h4" => rsx! { h4 { class: "text-base font-semibold mt-4 mb-1", {children.into_iter()} } },
         "p" => rsx! { p { class: "mb-4 leading-7 text-foreground/90", {children.into_iter()} } },
         "ul" => rsx! { ul { class: "list-disc pl-6 mb-4 space-y-1", {children.into_iter()} } },

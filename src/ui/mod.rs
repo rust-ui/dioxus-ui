@@ -1,5 +1,7 @@
 pub mod alert;
 pub mod demo_wrapper;
+pub mod footer;
+pub mod toc;
 pub mod avatar;
 pub mod badge;
 pub mod button;
