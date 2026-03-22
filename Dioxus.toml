@@ -9,7 +9,7 @@ title = "dioxus-ui"
 [web.resource]
 
 # Additional CSS style files
-style = ["assets/tailwind.css"]
+style = ["public/tailwind.css"]
 
 # Additional JavaScript files
 script = []

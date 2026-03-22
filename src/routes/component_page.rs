@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use crate::markdown::{markdown_to_html, parse_md};
 
 // Embed markdown docs at compile time
-const MD_BUTTON: &str = include_str!("../../assets/docs/button.md");
+const MD_BUTTON: &str = include_str!("../../public/docs/button.md");
 
 fn md_for(name: &str) -> Option<&'static str> {
     match name {

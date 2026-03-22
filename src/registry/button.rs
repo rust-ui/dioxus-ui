@@ -7,7 +7,7 @@ use crate::registry::RegistryEntry;
 
 pub static BUTTON: RegistryEntry = RegistryEntry {
     slug: "button",
-    raw: include_str!("../../assets/docs/button.md"),
+    raw: include_str!("../../public/docs/button.md"),
     components: button_components,
 };
 

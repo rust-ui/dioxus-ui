@@ -12,8 +12,8 @@ use routes::docs_layout::DocsLayout;
 use routes::home_page::Home;
 use routes::markdown_page::MarkdownPage;
 
-const FAVICON: Asset = asset!("/assets/favicon.ico");
-const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
+const FAVICON: Asset = asset!("/public/favicon.ico");
+const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
