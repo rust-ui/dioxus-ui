@@ -27,7 +27,7 @@ pub fn TableOfContents(items: Vec<TocItem>) -> Element {
     rsx! {
         div { class: "hidden xl:block w-52 shrink-0",
             div { class: "sticky top-16 pt-8 pb-4",
-                p { class: "text-xs font-semibold text-foreground uppercase tracking-wider mb-3",
+                p { class: "text-sm font-semibold text-foreground mb-3",
                     "On This Page"
                 }
                 nav { class: "flex flex-col gap-1",

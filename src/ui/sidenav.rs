@@ -14,7 +14,7 @@ pub fn Sidenav() -> Element {
                         for entry in REGISTRY {
                             li {
                                 Link {
-                                    class: "block px-2 py-1 text-sm text-muted-foreground hover:underline",
+                                    class: "block px-2 py-1.5 text-sm text-muted-foreground hover:underline",
                                     active_class: "font-bold",
                                     to: Route::ComponentPage { name: entry.slug.to_string() },
                                     {entry.title()}

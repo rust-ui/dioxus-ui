@@ -15,11 +15,11 @@ pub fn DocHeader(
     rsx! {
         div { class: "mb-8",
             // 1. Breadcrumb
-            nav { class: "flex items-center gap-1 text-sm text-muted-foreground mb-4",
+            nav { class: "flex items-center gap-1.5 text-sm text-muted-foreground mb-4",
                 Link { to: Route::Home {}, "Home" }
-                span { "/" }
+                span { class: "text-muted-foreground/50", "›" }
                 span { "Components" }
-                span { "/" }
+                span { class: "text-muted-foreground/50", "›" }
                 span { class: "text-foreground font-medium", "{title}" }
             }
 
