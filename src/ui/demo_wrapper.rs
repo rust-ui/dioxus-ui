@@ -113,8 +113,8 @@ pub fn DemoWrapper(children: Element) -> Element {
                     // Drag handle — visual pill, mousedown triggers JS resize
                     div {
                         id: "{handle_id}",
-                        class: "hidden md:flex relative justify-center items-center w-3 -mr-2 translate-x-2 bg-transparent cursor-col-resize select-none touch-none z-10",
-                        div { class: "h-8 w-1.5 rounded-full bg-neutral-200 dark:bg-neutral-600 transition-all" }
+                        class: "hidden md:flex relative justify-center items-center w-3 bg-transparent cursor-col-resize select-none touch-none z-10",
+                        div { class: "h-8 w-1.5 rounded-full bg-neutral-300 dark:bg-neutral-600 transition-all" }
                     }
                     // Background: starts at w-0, grows when handle is dragged left
                     div {
