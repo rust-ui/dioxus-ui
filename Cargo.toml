@@ -12,6 +12,7 @@ dioxus_ui = "0.1"
 icons = { version = "0.18", features = ["dioxus"] }
 tw_merge = { version = "0.1", features = ["debug"] }
 pulldown-cmark = { version = "0.12", default-features = false, features = ["html"] }
+html_parser = "0.7.0"
 
 [features]
 default = ["web"]

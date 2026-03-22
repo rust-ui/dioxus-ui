@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+use crate::markdown::converter::{convert_md, MdComponents};
 use crate::registry::{self, REGISTRY};
 
 #[component]
@@ -30,10 +31,7 @@ pub fn MarkdownPage(slug: String) -> Element {
                     Some(e) => rsx! {
                         h1 { class: "text-2xl font-bold mb-1", "{e.title()}" }
                         p { class: "text-muted-foreground text-sm mb-6", "{e.description()}" }
-                        div {
-                            class: "prose prose-sm dark:prose-invert max-w-none",
-                            dangerous_inner_html: "{e.body_html()}",
-                        }
+                        {convert_md(e.body_md(), &MdComponents::new())}
                     },
                 }
             }

@@ -1,4 +1,4 @@
-use crate::markdown::{markdown_to_html, parse_md};
+use crate::markdown::parse_md;
 
 pub struct RegistryEntry {
     pub slug: &'static str,
@@ -14,9 +14,8 @@ impl RegistryEntry {
         parse_md(self.raw).0.description
     }
 
-    pub fn body_html(&self) -> String {
-        let (_, body) = parse_md(self.raw);
-        markdown_to_html(body)
+    pub fn body_md(&self) -> &str {
+        parse_md(self.raw).1
     }
 }
 
