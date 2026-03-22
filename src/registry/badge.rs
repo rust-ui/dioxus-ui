@@ -10,6 +10,7 @@ use crate::registry::RegistryEntry;
 pub static BADGE: RegistryEntry = RegistryEntry {
     slug: "badge",
     raw: include_str!("../../public/docs/badge.md"),
+    tags: &["display", "status"],
     components: badge_components,
 };
 

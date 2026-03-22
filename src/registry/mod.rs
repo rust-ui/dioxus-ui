@@ -20,6 +20,7 @@ use spinner::SPINNER;
 pub struct RegistryEntry {
     pub slug: &'static str,
     pub raw: &'static str,
+    pub tags: &'static [&'static str],
     pub components: fn() -> MdComponents,
 }
 
@@ -43,4 +44,15 @@ pub static REGISTRY: &[&RegistryEntry] = &[
 
 pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
     REGISTRY.iter().copied().find(|e| e.slug == slug)
+}
+
+pub fn prev_next(slug: &str) -> (Option<&'static str>, Option<&'static str>) {
+    let pos = REGISTRY.iter().position(|e| e.slug == slug);
+    match pos {
+        None => (None, None),
+        Some(i) => (
+            if i > 0 { Some(REGISTRY[i - 1].slug) } else { None },
+            if i + 1 < REGISTRY.len() { Some(REGISTRY[i + 1].slug) } else { None },
+        ),
+    }
 }

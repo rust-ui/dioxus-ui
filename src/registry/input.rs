@@ -8,6 +8,7 @@ use crate::registry::RegistryEntry;
 pub static INPUT: RegistryEntry = RegistryEntry {
     slug: "input",
     raw: include_str!("../../public/docs/input.md"),
+    tags: &["interactive", "form"],
     components: input_components,
 };
 

@@ -11,6 +11,7 @@ use crate::registry::RegistryEntry;
 pub static CARD: RegistryEntry = RegistryEntry {
     slug: "card",
     raw: include_str!("../../public/docs/card.md"),
+    tags: &["layout", "display"],
     components: card_components,
 };
 

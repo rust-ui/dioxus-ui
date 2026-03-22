@@ -8,6 +8,7 @@ use crate::registry::RegistryEntry;
 pub static SPINNER: RegistryEntry = RegistryEntry {
     slug: "spinner",
     raw: include_str!("../../public/docs/spinner.md"),
+    tags: &["feedback", "loading"],
     components: spinner_components,
 };
 

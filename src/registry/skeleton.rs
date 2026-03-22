@@ -12,6 +12,7 @@ use crate::registry::RegistryEntry;
 pub static SKELETON: RegistryEntry = RegistryEntry {
     slug: "skeleton",
     raw: include_str!("../../public/docs/skeleton.md"),
+    tags: &["feedback", "loading"],
     components: skeleton_components,
 };
 

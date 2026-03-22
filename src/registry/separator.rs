@@ -7,6 +7,7 @@ use crate::registry::RegistryEntry;
 pub static SEPARATOR: RegistryEntry = RegistryEntry {
     slug: "separator",
     raw: include_str!("../../public/docs/separator.md"),
+    tags: &["layout"],
     components: separator_components,
 };
 
