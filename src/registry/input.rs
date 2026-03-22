@@ -13,7 +13,7 @@ pub static INPUT: RegistryEntry = RegistryEntry {
 
 fn input_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-input", |_: MdNodeProps| rsx! { DemoInput {} });
-    c.add("demo-input-copy", |_: MdNodeProps| rsx! { DemoInputCopy {} });
+    c.add("DemoInput", |_: MdNodeProps| rsx! { DemoInput {} });
+    c.add("DemoInputCopy", |_: MdNodeProps| rsx! { DemoInputCopy {} });
     c
 }

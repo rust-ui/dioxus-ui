@@ -12,6 +12,6 @@ pub static SEPARATOR: RegistryEntry = RegistryEntry {
 
 fn separator_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-separator", |_: MdNodeProps| rsx! { DemoSeparator {} });
+    c.add("DemoSeparator", |_: MdNodeProps| rsx! { DemoSeparator {} });
     c
 }

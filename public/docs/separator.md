@@ -5,7 +5,7 @@ description: Visually or semantically separates content.
 
 ## Demo
 
-<demo-separator></demo-separator>
+<DemoSeparator />
 
 ## Props
 

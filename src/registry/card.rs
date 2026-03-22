@@ -16,10 +16,10 @@ pub static CARD: RegistryEntry = RegistryEntry {
 
 fn card_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-card", |_: MdNodeProps| rsx! { DemoCard {} });
-    c.add("demo-card-action", |_: MdNodeProps| rsx! { DemoCardAction {} });
-    c.add("demo-card-group", |_: MdNodeProps| rsx! { DemoCardGroup {} });
-    c.add("demo-card-sm", |_: MdNodeProps| rsx! { DemoCardSm {} });
-    c.add("demo-card-reverse", |_: MdNodeProps| rsx! { DemoCardReverse {} });
+    c.add("DemoCard", |_: MdNodeProps| rsx! { DemoCard {} });
+    c.add("DemoCardAction", |_: MdNodeProps| rsx! { DemoCardAction {} });
+    c.add("DemoCardGroup", |_: MdNodeProps| rsx! { DemoCardGroup {} });
+    c.add("DemoCardSm", |_: MdNodeProps| rsx! { DemoCardSm {} });
+    c.add("DemoCardReverse", |_: MdNodeProps| rsx! { DemoCardReverse {} });
     c
 }

@@ -5,43 +5,43 @@ description: Displays a button or a component that looks like a button.
 
 ## Demo
 
-<demo-button></demo-button>
+<DemoButton />
 
 ## Variants
 
-<demo-button-variants></demo-button-variants>
+<DemoButtonVariants />
 
 ## Sizes
 
-<demo-button-sizes></demo-button-sizes>
+<DemoButtonSizes />
 
 ## Disabled
 
-<demo-button-disabled></demo-button-disabled>
+<DemoButtonDisabled />
 
 ## Stateful
 
-<demo-button-stateful></demo-button-stateful>
+<DemoButtonStateful />
 
 ## Reactive
 
-<demo-button-reactive></demo-button-reactive>
+<DemoButtonReactive />
 
 ## Class Override
 
-<demo-button-override></demo-button-override>
+<DemoButtonOverride />
 
 ## As Link
 
-<demo-button-href></demo-button-href>
+<DemoButtonHref />
 
 ## Button Group
 
-<demo-button-group></demo-button-group>
+<DemoButtonGroup />
 
 ## Button Group with Icons
 
-<demo-button-group-icon></demo-button-group-icon>
+<DemoButtonGroupIcon />
 
 ## Props
 

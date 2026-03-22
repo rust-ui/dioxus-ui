@@ -13,7 +13,7 @@ pub static SPINNER: RegistryEntry = RegistryEntry {
 
 fn spinner_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-spinner", |_: MdNodeProps| rsx! { DemoSpinner {} });
-    c.add("demo-spinner-button", |_: MdNodeProps| rsx! { DemoSpinnerButton {} });
+    c.add("DemoSpinner", |_: MdNodeProps| rsx! { DemoSpinner {} });
+    c.add("DemoSpinnerButton", |_: MdNodeProps| rsx! { DemoSpinnerButton {} });
     c
 }

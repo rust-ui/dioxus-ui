@@ -5,11 +5,11 @@ description: Displays an animated spinner to indicate loading state.
 
 ## Demo
 
-<demo-spinner></demo-spinner>
+<DemoSpinner />
 
 ## With Button
 
-<demo-spinner-button></demo-spinner-button>
+<DemoSpinnerButton />
 
 ## Props
 

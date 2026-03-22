@@ -5,11 +5,11 @@ description: Displays a form input field for user text entry.
 
 ## Demo
 
-<demo-input></demo-input>
+<DemoInput />
 
 ## With Copy
 
-<demo-input-copy></demo-input-copy>
+<DemoInputCopy />
 
 ## Props
 

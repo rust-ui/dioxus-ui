@@ -15,9 +15,9 @@ pub static BADGE: RegistryEntry = RegistryEntry {
 
 fn badge_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-badge", |_: MdNodeProps| rsx! { DemoBadge {} });
-    c.add("demo-badge-variants", |_: MdNodeProps| rsx! { DemoBadgeVariants {} });
-    c.add("demo-badge-colors", |_: MdNodeProps| rsx! { DemoBadgeColors {} });
-    c.add("demo-badge-custom", |_: MdNodeProps| rsx! { DemoBadgeCustom {} });
+    c.add("DemoBadge", |_: MdNodeProps| rsx! { DemoBadge {} });
+    c.add("DemoBadgeVariants", |_: MdNodeProps| rsx! { DemoBadgeVariants {} });
+    c.add("DemoBadgeColors", |_: MdNodeProps| rsx! { DemoBadgeColors {} });
+    c.add("DemoBadgeCustom", |_: MdNodeProps| rsx! { DemoBadgeCustom {} });
     c
 }

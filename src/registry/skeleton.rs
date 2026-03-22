@@ -17,11 +17,11 @@ pub static SKELETON: RegistryEntry = RegistryEntry {
 
 fn skeleton_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-skeleton", |_: MdNodeProps| rsx! { DemoSkeleton {} });
-    c.add("demo-skeleton-text", |_: MdNodeProps| rsx! { DemoSkeletonText {} });
-    c.add("demo-skeleton-avatar", |_: MdNodeProps| rsx! { DemoSkeletonAvatar {} });
-    c.add("demo-skeleton-form", |_: MdNodeProps| rsx! { DemoSkeletonForm {} });
-    c.add("demo-skeleton-image", |_: MdNodeProps| rsx! { DemoSkeletonImage {} });
-    c.add("demo-skeleton-table", |_: MdNodeProps| rsx! { DemoSkeletonTable {} });
+    c.add("DemoSkeleton", |_: MdNodeProps| rsx! { DemoSkeleton {} });
+    c.add("DemoSkeletonText", |_: MdNodeProps| rsx! { DemoSkeletonText {} });
+    c.add("DemoSkeletonAvatar", |_: MdNodeProps| rsx! { DemoSkeletonAvatar {} });
+    c.add("DemoSkeletonForm", |_: MdNodeProps| rsx! { DemoSkeletonForm {} });
+    c.add("DemoSkeletonImage", |_: MdNodeProps| rsx! { DemoSkeletonImage {} });
+    c.add("DemoSkeletonTable", |_: MdNodeProps| rsx! { DemoSkeletonTable {} });
     c
 }

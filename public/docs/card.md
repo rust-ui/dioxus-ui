@@ -5,31 +5,37 @@ description: Displays a card with header, content, and footer sections.
 
 ## Demo
 
-<demo-card></demo-card>
+<DemoCard />
 
-## Variants
+## Action
 
-<demo-card-action></demo-card-action>
+<DemoCardAction />
 
-<demo-card-group></demo-card-group>
+## Group
 
-<demo-card-sm></demo-card-sm>
+<DemoCardGroup />
 
-<demo-card-reverse></demo-card-reverse>
+## Small
+
+<DemoCardSm />
+
+## Reverse
+
+<DemoCardReverse />
 
 ## Props
 
 ### Card
 
-| Prop    | Type             | Default | Description                  |
-|---------|------------------|---------|------------------------------|
-| `class` | `Option<String>` | `None`  | Extra Tailwind classes        |
+| Prop    | Type             | Default | Description             |
+|---------|------------------|---------|-------------------------|
+| `class` | `Option<String>` | `None`  | Extra Tailwind classes  |
 
 ### CardHeader / CardContent / CardFooter
 
-| Prop    | Type             | Default | Description                  |
-|---------|------------------|---------|------------------------------|
-| `class` | `Option<String>` | `None`  | Extra Tailwind classes        |
+| Prop    | Type             | Default | Description             |
+|---------|------------------|---------|-------------------------|
+| `class` | `Option<String>` | `None`  | Extra Tailwind classes  |
 
 ## Usage
 

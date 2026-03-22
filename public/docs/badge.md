@@ -5,19 +5,19 @@ description: Displays a badge or a component that looks like a badge.
 
 ## Demo
 
-<demo-badge></demo-badge>
+<DemoBadge />
 
 ## Variants
 
-<demo-badge-variants></demo-badge-variants>
+<DemoBadgeVariants />
 
 ## Colors
 
-<demo-badge-colors></demo-badge-colors>
+<DemoBadgeColors />
 
 ## Custom
 
-<demo-badge-custom></demo-badge-custom>
+<DemoBadgeCustom />
 
 ## Props
 

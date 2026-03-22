@@ -22,15 +22,16 @@ pub struct MdNodeProps {
 pub type MdComponent = fn(MdNodeProps) -> Element;
 
 #[derive(Default)]
-pub struct MdComponents(HashMap<&'static str, MdComponent>);
+pub struct MdComponents(HashMap<String, MdComponent>);
 
 impl MdComponents {
     pub fn new() -> Self {
         Self::default()
     }
 
+    /// Keys are stored lowercase so `<DemoCard />` and `"DemoCard"` match transparently.
     pub fn add(&mut self, tag: &'static str, f: MdComponent) -> &mut Self {
-        self.0.insert(tag, f);
+        self.0.insert(tag.to_lowercase(), f);
         self
     }
 }
@@ -83,7 +84,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     let children: Vec<Element> = el.children.iter().map(|n| process_node(n, components)).collect();
 
     // Check custom registry first
-    if let Some(component) = components.0.get(el.name.as_str()) {
+    if let Some(component) = components.0.get(&el.name) {
         return component(MdNodeProps {
             id: el.id.clone(),
             classes: el.classes.clone(),
@@ -120,5 +121,74 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
         "td" => rsx! { td { class: "px-4 py-2", {children.into_iter()} } },
         "hr" => rsx! { hr { class: "border-border my-6" } },
         _ => rsx! { {children.into_iter()} },
+    }
+}
+
+// ---------------------------------------------------------------------------
+// Tests
+// ---------------------------------------------------------------------------
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn add_stores_key_lowercase() {
+        let mut c = MdComponents::new();
+        c.add("DemoCard", |_| rsx! {});
+        assert!(c.0.contains_key("democard"), "key should be stored as lowercase");
+        assert!(!c.0.contains_key("DemoCard"), "original case should not be stored");
+    }
+
+    #[test]
+    fn add_pascal_matches_html_parser_lowercase() {
+        // html_parser lowercases all tag names, so <DemoCard /> → "democard"
+        // registering "DemoCard" should produce a hit for "democard"
+        let mut c = MdComponents::new();
+        c.add("DemoCard", |_| rsx! {});
+        assert!(c.0.get("democard").is_some());
+    }
+
+    #[test]
+    fn add_kebab_also_works() {
+        let mut c = MdComponents::new();
+        c.add("demo-card", |_| rsx! {});
+        assert!(c.0.contains_key("demo-card"));
+    }
+
+    #[test]
+    fn parse_md_extracts_frontmatter() {
+        use crate::markdown::parse_md;
+        let raw = "---\ntitle: Button\ndescription: A button.\n---\n## Usage\nHello";
+        let (fm, body) = parse_md(raw);
+        assert_eq!(fm.title, "Button");
+        assert_eq!(fm.description, "A button.");
+        assert!(body.contains("## Usage"));
+    }
+
+    #[test]
+    fn parse_md_no_frontmatter_returns_full_body() {
+        use crate::markdown::parse_md;
+        let raw = "## Just body";
+        let (fm, body) = parse_md(raw);
+        assert_eq!(fm.title, "");
+        assert_eq!(body, raw);
+    }
+
+    #[test]
+    fn markdown_to_html_renders_heading() {
+        use crate::markdown::markdown_to_html;
+        let html = markdown_to_html("## Hello");
+        assert!(html.contains("<h2>") || html.contains("<h2 "));
+        assert!(html.contains("Hello"));
+    }
+
+    #[test]
+    fn markdown_to_html_renders_table() {
+        use crate::markdown::markdown_to_html;
+        let md = "| A | B |\n|---|---|\n| 1 | 2 |";
+        let html = markdown_to_html(md);
+        assert!(html.contains("<table"));
+        assert!(html.contains("<td>"));
     }
 }

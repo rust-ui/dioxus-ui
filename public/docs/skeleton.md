@@ -5,27 +5,27 @@ description: Use to show a placeholder while content is loading.
 
 ## Demo
 
-<demo-skeleton></demo-skeleton>
+<DemoSkeleton />
 
 ## Text
 
-<demo-skeleton-text></demo-skeleton-text>
+<DemoSkeletonText />
 
 ## Avatar
 
-<demo-skeleton-avatar></demo-skeleton-avatar>
+<DemoSkeletonAvatar />
 
 ## Form
 
-<demo-skeleton-form></demo-skeleton-form>
+<DemoSkeletonForm />
 
 ## Image
 
-<demo-skeleton-image></demo-skeleton-image>
+<DemoSkeletonImage />
 
 ## Table
 
-<demo-skeleton-table></demo-skeleton-table>
+<DemoSkeletonTable />
 
 ## Props
 

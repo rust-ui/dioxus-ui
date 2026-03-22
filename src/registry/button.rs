@@ -21,15 +21,15 @@ pub static BUTTON: RegistryEntry = RegistryEntry {
 
 fn button_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("demo-button", |_: MdNodeProps| rsx! { DemoButton {} });
-    c.add("demo-button-variants", |_: MdNodeProps| rsx! { DemoButtonVariants {} });
-    c.add("demo-button-sizes", |_: MdNodeProps| rsx! { DemoButtonSizes {} });
-    c.add("demo-button-disabled", |_: MdNodeProps| rsx! { DemoButtonDisabled {} });
-    c.add("demo-button-stateful", |_: MdNodeProps| rsx! { DemoButtonStateful {} });
-    c.add("demo-button-reactive", |_: MdNodeProps| rsx! { DemoButtonReactive {} });
-    c.add("demo-button-override", |_: MdNodeProps| rsx! { DemoButtonOverride {} });
-    c.add("demo-button-href", |_: MdNodeProps| rsx! { DemoButtonHref {} });
-    c.add("demo-button-group", |_: MdNodeProps| rsx! { DemoButtonGroup {} });
-    c.add("demo-button-group-icon", |_: MdNodeProps| rsx! { DemoButtonGroupIcon {} });
+    c.add("DemoButton", |_: MdNodeProps| rsx! { DemoButton {} });
+    c.add("DemoButtonVariants", |_: MdNodeProps| rsx! { DemoButtonVariants {} });
+    c.add("DemoButtonSizes", |_: MdNodeProps| rsx! { DemoButtonSizes {} });
+    c.add("DemoButtonDisabled", |_: MdNodeProps| rsx! { DemoButtonDisabled {} });
+    c.add("DemoButtonStateful", |_: MdNodeProps| rsx! { DemoButtonStateful {} });
+    c.add("DemoButtonReactive", |_: MdNodeProps| rsx! { DemoButtonReactive {} });
+    c.add("DemoButtonOverride", |_: MdNodeProps| rsx! { DemoButtonOverride {} });
+    c.add("DemoButtonHref", |_: MdNodeProps| rsx! { DemoButtonHref {} });
+    c.add("DemoButtonGroup", |_: MdNodeProps| rsx! { DemoButtonGroup {} });
+    c.add("DemoButtonGroupIcon", |_: MdNodeProps| rsx! { DemoButtonGroupIcon {} });
     c
 }
