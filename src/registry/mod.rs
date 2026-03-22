@@ -1,8 +1,14 @@
+pub mod button;
+
+use crate::markdown::converter::MdComponents;
 use crate::markdown::parse_md;
+
+use button::BUTTON;
 
 pub struct RegistryEntry {
     pub slug: &'static str,
     pub raw: &'static str,
+    pub components: fn() -> MdComponents,
 }
 
 impl RegistryEntry {
@@ -19,13 +25,8 @@ impl RegistryEntry {
     }
 }
 
-pub static REGISTRY: &[RegistryEntry] = &[
-    RegistryEntry {
-        slug: "button",
-        raw: include_str!("../../assets/docs/button.md"),
-    },
-];
+pub static REGISTRY: &[&RegistryEntry] = &[&BUTTON];
 
 pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
-    REGISTRY.iter().find(|e| e.slug == slug)
+    REGISTRY.iter().copied().find(|e| e.slug == slug)
 }
