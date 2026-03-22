@@ -11,5 +11,3 @@ node_modules/
 
 # Tailwind generated output
 assets/tailwind.css
-
-deploy.sh
