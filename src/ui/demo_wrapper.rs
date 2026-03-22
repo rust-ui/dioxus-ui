@@ -72,8 +72,8 @@ pub fn DemoWrapper(children: Element) -> Element {
     rsx! {
         div { class: "flex flex-col gap-2 w-full",
 
-            // Toolbar — matches RUST-UI TabList style
-            div { class: "inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground",
+            // Toolbar — self-start prevents flex-col from stretching it full width
+            div { class: "self-start inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground",
                 button {
                     class: "{preview_cls()}",
                     onclick: move |_| tab.set(DemoTab::Preview),
@@ -102,8 +102,8 @@ pub fn DemoWrapper(children: Element) -> Element {
 
             // Preview panel
             div { style: "{preview_display()}",
-                // Matches RUST-UI: border rounded-xl flex flex-row w-full
-                div { class: "border rounded-xl flex flex-row md:touch-none w-full overflow-hidden",
+                // No overflow-hidden — allows handle to translate outside the border (matches RUST-UI)
+                div { class: "border rounded-xl flex flex-row md:touch-none w-full",
                     // Content area: flex-[1_1_auto] — takes all space, shrinks when bg grows
                     div {
                         id: "{container_id}",
@@ -113,7 +113,7 @@ pub fn DemoWrapper(children: Element) -> Element {
                     // Drag handle — visual pill, mousedown triggers JS resize
                     div {
                         id: "{handle_id}",
-                        class: "hidden md:flex relative justify-center items-center w-3 bg-transparent cursor-col-resize select-none touch-none z-10",
+                        class: "hidden md:flex relative justify-center items-center w-3 -mr-2 translate-x-2 bg-transparent cursor-col-resize select-none touch-none z-10",
                         div { class: "h-8 w-1.5 rounded-full bg-neutral-300 dark:bg-neutral-600 transition-all" }
                     }
                     // Background: starts at w-0, grows when handle is dragged left
