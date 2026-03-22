@@ -1,24 +1,32 @@
 ---
 title: Separator
-description: Visually or semantically separates content.
+description: Dioxus UI component that displays a separator line.
+tags: []
 ---
-
-## Demo
 
 <DemoSeparator />
 
-## Props
+## Installation
 
-| Prop          | Type              | Default        | Description             |
-|---------------|-------------------|----------------|-------------------------|
-| `orientation` | `Orientation`     | `horizontal`   | Horizontal or vertical  |
-| `class`       | `Option<String>`  | `None`         | Extra Tailwind classes  |
+Add `dioxus_ui` to your `Cargo.toml`:
+
+```toml
+dioxus_ui = "0.1"
+```
 
 ## Usage
 
 ```rust
+use dioxus_ui::separator::Separator;
+```
+
+```rust
 rsx! {
     Separator {}
-    Separator { orientation: Orientation::Vertical }
 }
 ```
+
+## See Also
+
+- [Card](/components/card)
+- [Button](/components/button)

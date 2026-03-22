@@ -1,56 +1,80 @@
 ---
 title: Card
-description: Displays a card with header, content, and footer sections.
+description: Dioxus UI component that displays a card with header, content and footer.
+tags: ["card"]
 ---
-
-## Demo
 
 <DemoCard />
 
-## Action
+## Installation
 
-<DemoCardAction />
+Add `dioxus_ui` to your `Cargo.toml`:
 
-## Group
+```toml
+dioxus_ui = "0.1"
+```
 
-<DemoCardGroup />
+## Components
 
-## Small
+The Card component is composed of several subcomponents:
 
-<DemoCardSm />
-
-## Reverse
-
-<DemoCardReverse />
-
-## Props
-
-### Card
-
-| Prop    | Type             | Default | Description             |
-|---------|------------------|---------|-------------------------|
-| `class` | `Option<String>` | `None`  | Extra Tailwind classes  |
-
-### CardHeader / CardContent / CardFooter
-
-| Prop    | Type             | Default | Description             |
-|---------|------------------|---------|-------------------------|
-| `class` | `Option<String>` | `None`  | Extra Tailwind classes  |
+- **Card**: Main card wrapper with rounded borders and shadow
+- **CardHeader**: Header section containing title and description
+- **CardTitle**: Primary heading text for the card
+- **CardDescription**: Secondary descriptive text below the title
+- **CardContent**: Main content area for the card body
+- **CardFooter**: Footer section for actions or additional information
 
 ## Usage
+
+```rust
+use dioxus_ui::card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
+```
 
 ```rust
 rsx! {
     Card {
         CardHeader {
-            CardTitle { "Title" }
+            CardTitle { "Card Title" }
+            CardDescription { "Card Description" }
         }
         CardContent {
-            CardDescription { "Description" }
+            p { "Card Content" }
         }
         CardFooter {
-            Button { "Action" }
+            p { "Card Footer" }
         }
     }
 }
 ```
+
+## Examples
+
+### Card with Action
+
+Use the `CardFooter` to place action buttons at the bottom. This example shows how to compose a card with cancel and confirm actions using the [Button](/components/button) component.
+
+<DemoCardAction />
+
+### Card Group
+
+Display multiple Card components in a responsive grid layout with consistent spacing. This example shows how to organize cards using Tailwind CSS grid utilities for building dashboard layouts and content galleries.
+
+<DemoCardGroup />
+
+### Card Reverse
+
+Reverse the visual hierarchy of Card sections by repositioning header and footer elements. This example demonstrates flexible card composition patterns for creating varied content layouts.
+
+<DemoCardReverse />
+
+### Card SM
+
+A compact card variant with reduced padding, ideal for dense UI panels like customizers, sidebars, or settings panels where space is limited.
+
+<DemoCardSm />
+
+## See Also
+
+- [Badge](/components/badge)
+- [Separator](/components/separator)
