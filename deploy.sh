@@ -29,10 +29,12 @@ COMPONENTS=$(grep -rh 'slug: "[a-z]*"' src/registry/ \
 
 [[ -n "$COMPONENTS" ]] || die "No component slugs found in src/registry/ — check slug: \"...\" entries"
 
-echo "Copying index.html to component routes..."
+echo "Copying index.html to SPA routes..."
 while IFS= read -r comp; do
-    mkdir -p "$BUILD_DIR/components/$comp" || die "Failed to create directory for component: $comp"
-    cp "$BUILD_DIR/index.html" "$BUILD_DIR/components/$comp/index.html" || die "Failed to copy index.html for component: $comp"
+    for prefix in components markdown; do
+        mkdir -p "$BUILD_DIR/$prefix/$comp" || die "Failed to create $prefix/$comp"
+        cp "$BUILD_DIR/index.html" "$BUILD_DIR/$prefix/$comp/index.html" || die "Failed to copy index.html to $prefix/$comp"
+    done
 done <<< "$COMPONENTS"
 
 echo "Deploying to Wasmer..."
