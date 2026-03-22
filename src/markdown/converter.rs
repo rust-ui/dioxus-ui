@@ -4,6 +4,7 @@ use dioxus::prelude::*;
 use html_parser::{Dom, Element as HtmlElement, Node};
 
 use crate::markdown::markdown_to_html;
+use crate::ui::demo_wrapper::DemoWrapper;
 
 // ---------------------------------------------------------------------------
 // Types
@@ -83,15 +84,16 @@ fn extract_text(nodes: &[Node]) -> String {
 fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     let children: Vec<Element> = el.children.iter().map(|n| process_node(n, components)).collect();
 
-    // Check custom registry first
+    // Check custom registry first — wrap in DemoWrapper for Preview/Code tabs
     if let Some(component) = components.0.get(&el.name.to_lowercase()) {
-        return component(MdNodeProps {
+        let inner = component(MdNodeProps {
             id: el.id.clone(),
             classes: el.classes.clone(),
             attributes: el.attributes.clone(),
             children,
             text_content: extract_text(&el.children),
         });
+        return rsx! { DemoWrapper { {inner} } };
     }
 
     // Default element rendering with Tailwind classes
