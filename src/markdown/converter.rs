@@ -84,7 +84,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     let children: Vec<Element> = el.children.iter().map(|n| process_node(n, components)).collect();
 
     // Check custom registry first
-    if let Some(component) = components.0.get(&el.name) {
+    if let Some(component) = components.0.get(&el.name.to_lowercase()) {
         return component(MdNodeProps {
             id: el.id.clone(),
             classes: el.classes.clone(),
@@ -95,7 +95,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     }
 
     // Default element rendering with Tailwind classes
-    match el.name.as_str() {
+    match el.name.to_lowercase().as_str() {
         "h1" => rsx! { h1 { class: "text-3xl font-bold mt-6 mb-4", {children.into_iter()} } },
         "h2" => rsx! { h2 { class: "text-2xl font-semibold mt-8 mb-3 pb-1 border-b border-border", {children.into_iter()} } },
         "h3" => rsx! { h3 { class: "text-xl font-semibold mt-6 mb-2", {children.into_iter()} } },
@@ -181,6 +181,24 @@ mod tests {
         let html = markdown_to_html("## Hello");
         assert!(html.contains("<h2>") || html.contains("<h2 "));
         assert!(html.contains("Hello"));
+    }
+
+    #[test]
+    fn pascal_case_tag_passes_through_pulldown() {
+        use crate::markdown::markdown_to_html;
+        let html = markdown_to_html("\n<DemoButton />\n");
+        eprintln!("pulldown output: {:?}", html);
+        assert!(!html.contains("&lt;"), "pulldown-cmark escaped the PascalCase tag");
+    }
+
+    #[test]
+    fn html_parser_parses_pascal_case_element() {
+        let html = "<DemoButton />";
+        let dom = Dom::parse(html).unwrap();
+        eprintln!("dom children: {:?}", dom.children);
+        // html_parser preserves original case — name is "DemoButton" not "demobutton"
+        let has_element = dom.children.iter().any(|n| matches!(n, Node::Element(e) if e.name.to_lowercase() == "demobutton"));
+        assert!(has_element, "html_parser did not parse <DemoButton /> as element");
     }
 
     #[test]
