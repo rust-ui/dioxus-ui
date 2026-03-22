@@ -20,6 +20,12 @@ pub fn Navbar() -> Element {
                         to: Route::ComponentPage { name: "button".to_string() },
                         "Components"
                     }
+                    Link {
+                        class: "text-sm text-muted-foreground hover:text-foreground transition-colors",
+                        active_class: "text-foreground font-medium",
+                        to: Route::MarkdownPage { slug: "button".to_string() },
+                        "Markdown"
+                    }
                 }
                 ThemeToggle {}
             }

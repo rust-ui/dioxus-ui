@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 
 mod demos;
+pub mod markdown;
+pub mod registry;
 mod routes;
 mod ui;
 
@@ -8,6 +10,7 @@ use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
 use routes::home_page::Home;
+use routes::markdown_page::MarkdownPage;
 
 const FAVICON: Asset = asset!("/assets/favicon.ico");
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
@@ -20,6 +23,8 @@ enum Route {
             #[route("/components/:name")]
             ComponentPage { name: String },
         #[end_layout]
+        #[route("/markdown/:slug")]
+        MarkdownPage { slug: String },
         #[route("/")]
         Home {},
 }

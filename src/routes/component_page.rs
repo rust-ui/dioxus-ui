@@ -1,5 +1,17 @@
 use dioxus::prelude::*;
 
+use crate::markdown::{markdown_to_html, parse_md};
+
+// Embed markdown docs at compile time
+const MD_BUTTON: &str = include_str!("../../assets/docs/button.md");
+
+fn md_for(name: &str) -> Option<&'static str> {
+    match name {
+        "button" => Some(MD_BUTTON),
+        _ => None,
+    }
+}
+
 use crate::demos::demo_badge::DemoBadge;
 use crate::demos::demo_badge_colors::DemoBadgeColors;
 use crate::demos::demo_badge_custom::DemoBadgeCustom;
@@ -33,15 +45,21 @@ use crate::demos::demo_spinner_button::DemoSpinnerButton;
 
 #[component]
 pub fn ComponentPage(name: String) -> Element {
-    let (title, description) = match name.as_str() {
-        "button" => ("Button", "Displays a button or a component that looks like a button."),
-        "card" => ("Card", "Displays a card with header, content, and footer sections."),
-        "input" => ("Input", "Displays a form input field for user text entry."),
-        "badge" => ("Badge", "Displays a badge or a component that looks like a badge."),
-        "separator" => ("Separator", "Visually or semantically separates content."),
-        "skeleton" => ("Skeleton", "Use to show a placeholder while content is loading."),
-        "spinner" => ("Spinner", "Displays an animated spinner to indicate loading state."),
-        _ => ("Not Found", "This component does not exist."),
+    let (title, description, md_body_html) = if let Some(raw) = md_for(name.as_str()) {
+        let (fm, body) = parse_md(raw);
+        let html = markdown_to_html(body);
+        (fm.title, fm.description, Some(html))
+    } else {
+        let (title, description) = match name.as_str() {
+            "card" => ("Card".to_string(), "Displays a card with header, content, and footer sections.".to_string()),
+            "input" => ("Input".to_string(), "Displays a form input field for user text entry.".to_string()),
+            "badge" => ("Badge".to_string(), "Displays a badge or a component that looks like a badge.".to_string()),
+            "separator" => ("Separator".to_string(), "Visually or semantically separates content.".to_string()),
+            "skeleton" => ("Skeleton".to_string(), "Use to show a placeholder while content is loading.".to_string()),
+            "spinner" => ("Spinner".to_string(), "Displays an animated spinner to indicate loading state.".to_string()),
+            _ => ("Not Found".to_string(), "This component does not exist.".to_string()),
+        };
+        (title, description, None)
     };
 
     rsx! {
@@ -49,6 +67,12 @@ pub fn ComponentPage(name: String) -> Element {
             div {
                 h1 { class: "text-2xl font-bold mb-1", "{title}" }
                 p { class: "text-muted-foreground text-sm", "{description}" }
+            }
+            if let Some(html) = md_body_html {
+                div {
+                    class: "prose prose-sm dark:prose-invert max-w-none",
+                    dangerous_inner_html: "{html}",
+                }
             }
             match name.as_str() {
                 "button" => rsx! {
