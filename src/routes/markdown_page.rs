@@ -1,7 +1,21 @@
 use dioxus::prelude::*;
 
-use crate::markdown::converter::{convert_md, MdComponents};
+use crate::demos::demo_button::DemoButton;
+use crate::demos::demo_button_variants::DemoButtonVariants;
+use crate::markdown::converter::{convert_md, MdComponents, MdNodeProps};
 use crate::registry::{self, REGISTRY};
+
+fn components_for(slug: &str) -> MdComponents {
+    let mut c = MdComponents::new();
+    match slug {
+        "button" => {
+            c.add("demo-button", |_: MdNodeProps| rsx! { DemoButton {} });
+            c.add("demo-button-variants", |_: MdNodeProps| rsx! { DemoButtonVariants {} });
+        }
+        _ => {}
+    }
+    c
+}
 
 #[component]
 pub fn MarkdownPage(slug: String) -> Element {
@@ -31,7 +45,7 @@ pub fn MarkdownPage(slug: String) -> Element {
                     Some(e) => rsx! {
                         h1 { class: "text-2xl font-bold mb-1", "{e.title()}" }
                         p { class: "text-muted-foreground text-sm mb-6", "{e.description()}" }
-                        {convert_md(e.body_md(), &MdComponents::new())}
+                        {convert_md(e.body_md(), &components_for(e.slug))}
                     },
                 }
             }
