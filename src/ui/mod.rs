@@ -1,6 +1,15 @@
+pub mod alert;
+pub mod avatar;
 pub mod badge;
 pub mod button;
+pub mod checkbox;
 pub mod doc_header;
+pub mod kbd;
+pub mod label;
+pub mod progress;
+pub mod switch;
+pub mod tabs;
+pub mod textarea;
 pub mod button_group;
 pub mod card;
 pub mod input;

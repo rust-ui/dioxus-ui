@@ -10,10 +10,10 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 
 - [x] Button (`button`, `button_group`)
 - [x] Input
-- [ ] Textarea
+- [x] Textarea
 - [ ] Select
-- [ ] Checkbox
-- [ ] Switch
+- [x] Checkbox
+- [x] Switch
 - [ ] Slider
 - [ ] Radio Button (`radio-button`, `radio-button-group`)
 - [ ] Combobox
@@ -31,11 +31,12 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 - [x] Badge
 - [x] Card
 - [x] Separator
-- [ ] Avatar
+- [x] Avatar
 - [ ] Table
-- [ ] Alert
+- [x] Alert
 - [ ] Callout
-- [ ] Kbd
+- [x] Kbd
+- [x] Label
 - [ ] Chips
 - [ ] Status
 - [ ] Empty
@@ -44,7 +45,7 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 
 - [x] Skeleton
 - [x] Spinner
-- [ ] Progress
+- [x] Progress
 - [ ] Shimmer
 - [ ] Animate
 - [ ] Animate Group
@@ -54,7 +55,7 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 ## Navigation
 
 - [ ] Breadcrumb
-- [ ] Tabs
+- [x] Tabs
 - [ ] Pagination
 - [ ] Bottom Nav
 - [ ] Navigation Menu
@@ -142,3 +143,40 @@ For each component, demos to port:
 ### Spinner
 - [x] `DemoSpinner`
 - [x] `DemoSpinnerButton`
+
+### Alert
+- [x] `DemoAlert`
+- [x] `DemoAlertDestructive`
+
+### Avatar
+- [x] `DemoAvatar`
+- [x] `DemoAvatarFallback`
+- [x] `DemoAvatarSizes`
+
+### Checkbox
+- [x] `DemoCheckbox`
+- [x] `DemoCheckboxLabeled`
+- [x] `DemoCheckboxDisabled`
+
+### Kbd
+- [x] `DemoKbd`
+- [x] `DemoKbdCombination`
+
+### Label
+- [x] `DemoLabel`
+- [x] `DemoLabelInput`
+
+### Progress
+- [x] `DemoProgress`
+- [x] `DemoProgressAnimated`
+
+### Switch
+- [x] `DemoSwitch`
+- [x] `DemoSwitchLabeled`
+
+### Tabs
+- [x] `DemoTabs`
+
+### Textarea
+- [x] `DemoTextarea`
+- [x] `DemoTextareaDisabled`
