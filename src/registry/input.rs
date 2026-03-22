@@ -1,0 +1,19 @@
+use dioxus::prelude::*;
+
+use crate::demos::demo_input::DemoInput;
+use crate::demos::demo_input_copy::DemoInputCopy;
+use crate::markdown::converter::{MdComponents, MdNodeProps};
+use crate::registry::RegistryEntry;
+
+pub static INPUT: RegistryEntry = RegistryEntry {
+    slug: "input",
+    raw: include_str!("../../public/docs/input.md"),
+    components: input_components,
+};
+
+fn input_components() -> MdComponents {
+    let mut c = MdComponents::new();
+    c.add("demo-input", |_: MdNodeProps| rsx! { DemoInput {} });
+    c.add("demo-input-copy", |_: MdNodeProps| rsx! { DemoInputCopy {} });
+    c
+}

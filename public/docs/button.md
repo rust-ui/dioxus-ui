@@ -11,24 +11,37 @@ description: Displays a button or a component that looks like a button.
 
 <demo-button-variants></demo-button-variants>
 
-Use the `variant` prop to change the visual style:
-
-| Variant        | Description                    |
-|----------------|--------------------------------|
-| `default`      | Filled primary color           |
-| `secondary`    | Muted secondary style          |
-| `outline`      | Bordered, transparent bg       |
-| `ghost`        | No border, subtle hover        |
-| `destructive`  | Red, for dangerous actions     |
-| `link`         | Looks like a hyperlink         |
-
 ## Sizes
 
-| Size | Height |
-|------|--------|
-| `sm` | 32px   |
-| `md` | 40px   |
-| `lg` | 48px   |
+<demo-button-sizes></demo-button-sizes>
+
+## Disabled
+
+<demo-button-disabled></demo-button-disabled>
+
+## Stateful
+
+<demo-button-stateful></demo-button-stateful>
+
+## Reactive
+
+<demo-button-reactive></demo-button-reactive>
+
+## Class Override
+
+<demo-button-override></demo-button-override>
+
+## As Link
+
+<demo-button-href></demo-button-href>
+
+## Button Group
+
+<demo-button-group></demo-button-group>
+
+## Button Group with Icons
+
+<demo-button-group-icon></demo-button-group-icon>
 
 ## Props
 
