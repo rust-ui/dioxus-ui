@@ -14,27 +14,28 @@ enum DemoTab {
 #[component]
 pub fn DemoWrapper(children: Element) -> Element {
     let id = use_hook(|| DEMO_COUNTER.fetch_add(1, Ordering::Relaxed));
-    let container_id = format!("demo-preview-{id}");
+    let container_id = format!("demo-content-{id}");
     let handle_id = format!("demo-handle-{id}");
+    let bg_id = format!("demo-bg-{id}");
 
     let mut tab = use_signal(|| DemoTab::Preview);
 
-    // Inject JS drag-to-resize on mount
-    let cid = container_id.clone();
+    // Drag handle: grows the bg div (starts at w-0) leftward, content shrinks naturally (flex-[1_1_auto])
     let hid = handle_id.clone();
+    let bgid = bg_id.clone();
     use_effect(move || {
         let js = format!(
             r#"
             (function() {{
                 const handle = document.getElementById('{hid}');
-                const container = document.getElementById('{cid}');
-                if (!handle || !container) return;
+                const bg = document.getElementById('{bgid}');
+                if (!handle || !bg) return;
 
-                let startX, startW;
+                let startX, startBgW;
 
                 handle.addEventListener('mousedown', function(e) {{
                     startX = e.clientX;
-                    startW = container.offsetWidth;
+                    startBgW = bg.offsetWidth;
                     document.addEventListener('mousemove', onMove);
                     document.addEventListener('mouseup', onUp);
                     e.preventDefault();
@@ -42,9 +43,9 @@ pub fn DemoWrapper(children: Element) -> Element {
 
                 function onMove(e) {{
                     const dx = e.clientX - startX;
-                    const newW = Math.max(200, startW + dx);
-                    container.style.width = newW + 'px';
-                    container.style.flex = 'none';
+                    // Dragging left (negative dx) grows bg, dragging right shrinks it
+                    const newBgW = Math.max(0, startBgW - dx);
+                    bg.style.width = newBgW + 'px';
                 }}
 
                 function onUp() {{
@@ -71,18 +72,15 @@ pub fn DemoWrapper(children: Element) -> Element {
     rsx! {
         div { class: "flex flex-col gap-2 w-full",
 
-            // Toolbar
+            // Toolbar — matches RUST-UI TabList style
             div { class: "inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground",
                 button {
                     class: "{preview_cls()}",
                     onclick: move |_| tab.set(DemoTab::Preview),
                     svg {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "14", height: "14",
-                        view_box: "0 0 24 24",
-                        fill: "none", stroke: "currentColor",
-                        stroke_width: "2",
-                        stroke_linecap: "round", stroke_linejoin: "round",
+                        xmlns: "http://www.w3.org/2000/svg", width: "14", height: "14",
+                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
+                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
                         path { d: "M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" }
                         circle { cx: "12", cy: "12", r: "3" }
                     }
@@ -92,12 +90,9 @@ pub fn DemoWrapper(children: Element) -> Element {
                     class: "{code_cls()}",
                     onclick: move |_| tab.set(DemoTab::Code),
                     svg {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "14", height: "14",
-                        view_box: "0 0 24 24",
-                        fill: "none", stroke: "currentColor",
-                        stroke_width: "2",
-                        stroke_linecap: "round", stroke_linejoin: "round",
+                        xmlns: "http://www.w3.org/2000/svg", width: "14", height: "14",
+                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
+                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
                         polyline { points: "16 18 22 12 16 6" }
                         polyline { points: "8 6 2 12 8 18" }
                     }
@@ -107,23 +102,25 @@ pub fn DemoWrapper(children: Element) -> Element {
 
             // Preview panel
             div { style: "{preview_display()}",
-                div { class: "border rounded-xl flex flex-row w-full overflow-hidden",
-                    // Resizable content area
+                // Matches RUST-UI: border rounded-xl flex flex-row w-full
+                div { class: "border rounded-xl flex flex-row md:touch-none w-full overflow-hidden",
+                    // Content area: flex-[1_1_auto] — takes all space, shrinks when bg grows
                     div {
                         id: "{container_id}",
-                        class: "flex items-center justify-center min-h-[370px] flex-1 px-4 bg-background",
+                        class: "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] px-4 bg-background",
                         {children}
                     }
-                    // Drag handle
+                    // Drag handle — visual pill, mousedown triggers JS resize
                     div {
                         id: "{handle_id}",
-                        class: "hidden md:flex items-center justify-center w-3 shrink-0 cursor-col-resize select-none z-10",
-                        div { class: "h-8 w-1.5 rounded-full bg-border" }
+                        class: "hidden md:flex relative justify-center items-center w-3 -mr-2 translate-x-2 bg-transparent cursor-col-resize select-none touch-none z-10",
+                        div { class: "h-8 w-1.5 rounded-full bg-neutral-200 dark:bg-neutral-600 transition-all" }
                     }
-                    // Dotted background
+                    // Background: starts at w-0, grows when handle is dragged left
                     div {
-                        class: "flex-1 bg-muted min-w-0",
-                        style: "background-image: radial-gradient(circle, color-mix(in srgb, currentColor 25%, transparent) 1px, transparent 1px); background-size: 20px 20px; background-attachment: fixed;",
+                        id: "{bg_id}",
+                        class: "flex-[0_0_auto] bg-muted",
+                        style: "width: 0px; background-image: radial-gradient(circle, color-mix(in srgb, currentColor 25%, transparent) 1px, transparent 1px); background-size: 20px 20px; background-attachment: fixed;",
                     }
                 }
             }
