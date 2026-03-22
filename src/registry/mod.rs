@@ -1,9 +1,11 @@
 pub mod button;
+pub mod card;
 
 use crate::markdown::converter::MdComponents;
 use crate::markdown::parse_md;
 
 use button::BUTTON;
+use card::CARD;
 
 pub struct RegistryEntry {
     pub slug: &'static str,
@@ -25,7 +27,7 @@ impl RegistryEntry {
     }
 }
 
-pub static REGISTRY: &[&RegistryEntry] = &[&BUTTON];
+pub static REGISTRY: &[&RegistryEntry] = &[&BUTTON, &CARD];
 
 pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
     REGISTRY.iter().copied().find(|e| e.slug == slug)
