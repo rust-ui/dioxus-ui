@@ -10,6 +10,7 @@ pub mod breadcrumb;
 pub mod button;
 pub mod card;
 pub mod checkbox;
+pub mod chips;
 pub mod collapsible;
 pub mod dialog;
 pub mod empty;
@@ -46,6 +47,7 @@ use breadcrumb::BREADCRUMB;
 use button::BUTTON;
 use card::CARD;
 use checkbox::CHECKBOX;
+use chips::CHIPS;
 use collapsible::COLLAPSIBLE;
 use dialog::DIALOG;
 use empty::EMPTY;
@@ -101,6 +103,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &BUTTON,
     &CARD,
     &CHECKBOX,
+    &CHIPS,
     &COLLAPSIBLE,
     &DIALOG,
     &EMPTY,

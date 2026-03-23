@@ -32,6 +32,7 @@ pub mod demo_card_sm;
 pub mod demo_checkbox;
 pub mod demo_checkbox_disabled;
 pub mod demo_checkbox_labeled;
+pub mod demo_chips;
 pub mod demo_collapsible;
 pub mod demo_dialog;
 pub mod demo_dialog_scrollable;

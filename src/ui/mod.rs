@@ -11,6 +11,7 @@ pub mod button;
 pub mod button_group;
 pub mod card;
 pub mod checkbox;
+pub mod chips;
 pub mod collapsible;
 pub mod demo_wrapper;
 pub mod dialog;
