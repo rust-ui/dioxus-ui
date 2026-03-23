@@ -12,9 +12,9 @@ pub fn DocsLayout() -> Element {
 
     rsx! {
         div { class: "flex flex-col min-h-screen bg-background",
-            div { class: "flex flex-1",
-                Sidenav {}
-                div { class: "flex flex-1 min-w-0",
+            div { class: "flex-1",
+                div { class: "container mx-auto flex items-start",
+                    Sidenav {}
                     Outlet::<Route> {}
                     TableOfContents { items: toc() }
                 }
