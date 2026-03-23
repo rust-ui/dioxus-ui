@@ -1,3 +1,4 @@
+pub mod seo_meta;
 pub mod alert;
 pub mod demo_wrapper;
 pub mod footer;
