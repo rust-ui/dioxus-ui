@@ -112,6 +112,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
 
     // Check custom registry first — wrap in DemoWrapper for Preview/Code tabs
     if let Some(component) = components.0.get(&el.name.to_lowercase()) {
+        let demo_name = el.name.clone();
         let inner = component(MdNodeProps {
             id: el.id.clone(),
             classes: el.classes.clone(),
@@ -119,7 +120,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
             children,
             text_content: extract_text(&el.children),
         });
-        return rsx! { DemoWrapper { {inner} } };
+        return rsx! { DemoWrapper { demo_name: demo_name, {inner} } };
     }
 
     // Default element rendering with Tailwind classes

@@ -24,6 +24,7 @@ pub mod select_native;
 pub mod separator;
 pub mod skeleton;
 pub mod slider;
+pub mod source_map;
 pub mod spinner;
 pub mod status;
 pub mod switch;
@@ -34,9 +35,9 @@ pub mod theme_toggle;
 pub mod toggle;
 pub mod toggle_group;
 pub mod tooltip;
+pub mod types;
 
-use crate::markdown::converter::MdComponents;
-use crate::markdown::parse_md;
+use types::RegistryEntry;
 
 use accordion::ACCORDION;
 use alert::ALERT;
@@ -71,27 +72,6 @@ use theme_toggle::THEME_TOGGLE;
 use toggle::TOGGLE;
 use toggle_group::TOGGLE_GROUP;
 use tooltip::TOOLTIP;
-
-pub struct RegistryEntry {
-    pub slug: &'static str,
-    pub raw: &'static str,
-    pub tags: &'static [&'static str],
-    pub components: fn() -> MdComponents,
-}
-
-impl RegistryEntry {
-    pub fn title(&self) -> String {
-        parse_md(self.raw).0.title
-    }
-
-    pub fn description(&self) -> String {
-        parse_md(self.raw).0.description
-    }
-
-    pub fn body_md(&self) -> &str {
-        parse_md(self.raw).1
-    }
-}
 
 pub static REGISTRY: &[&RegistryEntry] = &[
     &ACCORDION,

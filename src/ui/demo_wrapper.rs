@@ -3,6 +3,8 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use dioxus::document::eval;
 use dioxus::prelude::*;
 
+use crate::registry::source_map::get_demo_source;
+
 static DEMO_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
 #[derive(Clone, Copy, PartialEq)]
@@ -12,7 +14,10 @@ enum DemoTab {
 }
 
 #[component]
-pub fn DemoWrapper(children: Element) -> Element {
+pub fn DemoWrapper(
+    #[props(into, optional)] demo_name: Option<String>,
+    children: Element,
+) -> Element {
     let id = use_hook(|| DEMO_COUNTER.fetch_add(1, Ordering::Relaxed));
     let container_id = format!("demo-content-{id}");
     let handle_id = format!("demo-handle-{id}");
@@ -125,10 +130,47 @@ pub fn DemoWrapper(children: Element) -> Element {
                 }
             }
 
-            // Code panel — Soon
+            // Code panel
             div { style: "{code_display()}",
-                div { class: "rounded-xl border bg-muted flex items-center justify-center min-h-[370px]",
-                    p { class: "text-sm text-muted-foreground", "Code display — coming soon" }
+                {
+                    let source = demo_name.as_deref().and_then(get_demo_source);
+                    if let Some(code) = source {
+                        let code = code.to_string();
+                        let copy_id = format!("copy-btn-{id}");
+                        let cid = copy_id.clone();
+                        rsx! {
+                            div { class: "relative rounded-xl border bg-muted overflow-hidden",
+                                // Copy button
+                                button {
+                                    id: "{copy_id}",
+                                    class: "absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-md border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground shadow-xs hover:bg-muted transition-colors",
+                                    onclick: move |_| {
+                                        let code = code.clone();
+                                        let cid = cid.clone();
+                                        spawn(async move {
+                                            let js = format!(
+                                                r#"navigator.clipboard.writeText({code:?}).then(() => {{
+                                                    const btn = document.getElementById('{cid}');
+                                                    if (btn) {{ btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500); }}
+                                                }})"#
+                                            );
+                                            let _ = eval(&js).await;
+                                        });
+                                    },
+                                    "Copy"
+                                }
+                                pre { class: "overflow-x-auto py-3.5 px-4 text-xs min-h-[370px]",
+                                    code { class: "font-mono", "{code}" }
+                                }
+                            }
+                        }
+                    } else {
+                        rsx! {
+                            div { class: "rounded-xl border bg-muted flex items-center justify-center min-h-[370px]",
+                                p { class: "text-sm text-muted-foreground", "Source not available." }
+                            }
+                        }
+                    }
                 }
             }
         }
