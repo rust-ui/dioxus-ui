@@ -1,10 +1,6 @@
-use std::sync::atomic::{AtomicUsize, Ordering};
-
 use dioxus::document::eval;
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
-
-static DIALOG_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
 #[component]
 pub fn Dialog(
@@ -52,23 +48,26 @@ pub fn DialogContent(
     open: Signal<bool>,
     children: Element,
 ) -> Element {
-    if !open() {
-        return rsx! {};
-    }
+    let state = if open() { "open" } else { "closed" };
 
     let merged = tw_merge!(
-        "fixed top-1/2 left-1/2 z-50 -translate-x-1/2 -translate-y-1/2 w-full max-w-[calc(100%-2rem)] sm:max-w-[425px] max-h-[85vh] overflow-y-auto rounded-2xl border bg-background shadow-lg p-6",
+        "relative bg-background border rounded-2xl shadow-lg p-6 w-full max-w-[calc(100%-2rem)] sm:max-w-[425px] max-h-[85vh] overflow-y-auto fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100",
         class.as_deref().unwrap_or("")
     );
 
     rsx! {
         // Backdrop
         div {
-            class: "fixed inset-0 z-40 bg-black/50 backdrop-blur-sm",
+            class: "fixed inset-0 z-40 bg-black/50 transition-opacity duration-200 data-[state=closed]:opacity-0 data-[state=open]:opacity-100",
+            "data-state": "{state}",
+            style: if open() { "" } else { "pointer-events: none;" },
             onclick: move |_| open.set(false),
         }
         // Panel
-        div { class: "{merged}",
+        div {
+            class: "{merged}",
+            "data-state": "{state}",
+            style: if open() { "" } else { "pointer-events: none;" },
             {children}
         }
     }
