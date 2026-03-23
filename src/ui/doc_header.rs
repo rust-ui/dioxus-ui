@@ -13,7 +13,7 @@ pub fn DocHeader(
     next: Option<&'static str>,
 ) -> Element {
     rsx! {
-        div { class: "mb-8",
+        div { class: "mb-2",
             // 1. Breadcrumb
             nav { class: "flex items-center gap-1.5 text-sm text-muted-foreground mb-4",
                 Link { to: Route::Home {}, "Home" }
