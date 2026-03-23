@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::demos::demo_slider::DemoSlider;
+use crate::demos::demo_slider_disabled::DemoSliderDisabled;
 use crate::markdown::converter::{MdComponents, MdNodeProps};
 use crate::registry::RegistryEntry;
 
@@ -14,5 +15,6 @@ pub static SLIDER: RegistryEntry = RegistryEntry {
 fn slider_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSlider", |_: MdNodeProps| rsx! { DemoSlider {} });
+    c.add("DemoSliderDisabled", |_: MdNodeProps| rsx! { DemoSliderDisabled {} });
     c
 }

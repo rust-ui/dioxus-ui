@@ -26,12 +26,12 @@ let mut open = use_signal(|| false);
 rsx! {
     Collapsible {
         CollapsibleTrigger {
-            open: open.read_only(),
+            open: open,
             onclick: move |_| open.toggle(),
             "Toggle"
         }
         CollapsibleContent {
-            open: open.read_only(),
+            open: open,
             "Hidden content revealed on open."
         }
     }

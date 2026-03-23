@@ -27,18 +27,22 @@ rsx! {
     Accordion {
         AccordionItem {
             AccordionTrigger {
-                open: open.read_only(),
+                open: open,
                 onclick: move |_| open.toggle(),
                 "Is it accessible?"
             }
             AccordionContent {
-                open: open.read_only(),
+                open: open,
                 "Yes. It adheres to the WAI-ARIA design pattern."
             }
         }
     }
 }
 ```
+
+## Bordered
+
+<DemoAccordionBordered />
 
 ## See Also
 

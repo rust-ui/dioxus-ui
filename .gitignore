@@ -11,3 +11,5 @@ node_modules/
 
 # Tailwind generated output
 assets/tailwind.css
+
+__TMP/

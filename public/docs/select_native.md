@@ -33,6 +33,10 @@ rsx! {
 }
 ```
 
+## Option Groups
+
+<DemoSelectNativeGroup />
+
 ## See Also
 
 - [Input](/components/input)

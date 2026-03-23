@@ -35,15 +35,9 @@ rsx! {
 }
 ```
 
-## Props
+## States
 
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| min | f64 | 0.0 | Minimum value |
-| max | f64 | 100.0 | Maximum value |
-| step | f64 | 1.0 | Step increment |
-| value | f64 | 50.0 | Current value |
-| disabled | bool | false | Disable interaction |
+<DemoSliderDisabled />
 
 ## See Also
 

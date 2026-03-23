@@ -32,7 +32,7 @@ rsx! {
         "Open Dialog"
     }
     AlertDialog {
-        open: open.read_only(),
+        open: open,
         AlertDialogHeader {
             AlertDialogTitle { "Are you sure?" }
             AlertDialogDescription { "This action cannot be undone." }
