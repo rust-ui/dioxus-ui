@@ -8,11 +8,7 @@ tags: ["card"]
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Components
 
@@ -28,7 +24,7 @@ The Card component is composed of several subcomponents:
 ## Usage
 
 ```rust
-use dioxus_ui::card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
+use crate::ui::card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
 ```
 
 ```rust

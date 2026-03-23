@@ -8,23 +8,12 @@ tags: []
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
-
-Also add `public/hooks/lock_scroll.js` to your `Dioxus.toml`:
-
-```toml
-[web.resource]
-script = ["public/hooks/lock_scroll.js"]
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::dialog::{
+use crate::ui::dialog::{
     Dialog, DialogTrigger, DialogContent, DialogBody,
     DialogHeader, DialogTitle, DialogDescription,
     DialogFooter, DialogClose,

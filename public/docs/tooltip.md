@@ -8,16 +8,12 @@ tags: []
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::tooltip::{Tooltip, TooltipContent, TooltipPosition};
+use crate::ui::tooltip::{Tooltip, TooltipContent, TooltipPosition};
 ```
 
 ```rust

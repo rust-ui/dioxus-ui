@@ -11,7 +11,7 @@ tags: ["input"]
 You can use the `Input` component in combination with the [Button](/components/button) component.
 
 ```rust
-use dioxus_ui::input::Input;
+use crate::ui::input::Input;
 ```
 
 ```rust
@@ -30,11 +30,7 @@ Input field with integrated copy-to-clipboard functionality for easy text sharin
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## See Also
 

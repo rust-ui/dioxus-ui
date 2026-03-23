@@ -8,16 +8,12 @@ tags: []
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::breadcrumb::{
+use crate::ui::breadcrumb::{
     Breadcrumb, BreadcrumbList, BreadcrumbItem,
     BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator,
 };

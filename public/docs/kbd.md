@@ -8,16 +8,12 @@ tags: ["display", "typography"]
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::kbd::Kbd;
+use crate::ui::kbd::Kbd;
 ```
 
 ```rust

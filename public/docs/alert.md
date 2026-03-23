@@ -8,16 +8,12 @@ tags: ["feedback", "display"]
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::alert::{Alert, AlertTitle, AlertDescription};
+use crate::ui::alert::{Alert, AlertTitle, AlertDescription};
 ```
 
 ```rust

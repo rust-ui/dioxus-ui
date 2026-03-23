@@ -8,16 +8,12 @@ tags: ["interactive", "form"]
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::checkbox::Checkbox;
+use crate::ui::checkbox::Checkbox;
 ```
 
 ```rust

@@ -8,16 +8,12 @@ tags: ["button"]
 
 ## Installation
 
-Add `dioxus_ui` to your `Cargo.toml`:
-
-```toml
-dioxus_ui = "0.1"
-```
+Coming soon.
 
 ## Usage
 
 ```rust
-use dioxus_ui::button::Button;
+use crate::ui::button::Button;
 ```
 
 ```rust
