@@ -8,9 +8,12 @@ pub mod button;
 pub mod card;
 pub mod checkbox;
 pub mod collapsible;
+pub mod dialog;
+pub mod empty;
 pub mod input;
 pub mod kbd;
 pub mod label;
+pub mod pagination;
 pub mod progress;
 pub mod radio_group;
 pub mod select_native;
@@ -18,11 +21,14 @@ pub mod separator;
 pub mod skeleton;
 pub mod slider;
 pub mod spinner;
+pub mod status;
 pub mod switch;
 pub mod table;
 pub mod tabs;
 pub mod textarea;
+pub mod theme_toggle;
 pub mod toggle;
+pub mod toggle_group;
 pub mod tooltip;
 
 use crate::markdown::converter::MdComponents;
@@ -38,9 +44,12 @@ use button::BUTTON;
 use card::CARD;
 use checkbox::CHECKBOX;
 use collapsible::COLLAPSIBLE;
+use dialog::DIALOG;
+use empty::EMPTY;
 use input::INPUT;
 use kbd::KBD;
 use label::LABEL;
+use pagination::PAGINATION;
 use progress::PROGRESS;
 use radio_group::RADIO_GROUP;
 use select_native::SELECT_NATIVE;
@@ -48,11 +57,14 @@ use separator::SEPARATOR;
 use skeleton::SKELETON;
 use slider::SLIDER;
 use spinner::SPINNER;
+use status::STATUS;
 use switch::SWITCH;
 use table::TABLE;
 use tabs::TABS;
 use textarea::TEXTAREA;
+use theme_toggle::THEME_TOGGLE;
 use toggle::TOGGLE;
+use toggle_group::TOGGLE_GROUP;
 use tooltip::TOOLTIP;
 
 pub struct RegistryEntry {
@@ -87,9 +99,12 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &CARD,
     &CHECKBOX,
     &COLLAPSIBLE,
+    &DIALOG,
+    &EMPTY,
     &INPUT,
     &KBD,
     &LABEL,
+    &PAGINATION,
     &PROGRESS,
     &RADIO_GROUP,
     &SELECT_NATIVE,
@@ -97,11 +112,14 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &SKELETON,
     &SLIDER,
     &SPINNER,
+    &STATUS,
     &SWITCH,
     &TABLE,
     &TABS,
     &TEXTAREA,
+    &THEME_TOGGLE,
     &TOGGLE,
+    &TOGGLE_GROUP,
     &TOOLTIP,
 ];
 

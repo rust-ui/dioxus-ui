@@ -12,10 +12,10 @@ title = "dioxus-ui"
 style = ["public/tailwind.css"]
 
 # Additional JavaScript files
-script = []
+script = ["public/hooks/lock_scroll.js"]
 
 [web.resource.dev]
 
 # Javascript code file
 # serve: [dev-server] only
-script = []
+script = ["public/hooks/lock_scroll.js"]
