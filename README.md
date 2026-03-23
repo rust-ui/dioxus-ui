@@ -4,6 +4,8 @@ The goal: bring the shadcn/ui component registry model to Dioxus — Tailwind CS
 
 > **Early stage, experimental** — expect breaking changes. Open to contributors.
 
+> **Not affiliated with or endorsed by the Dioxus team.** This is an independent personal project.
+
 This project will eventually be integrated into [rust-ui.com](https://www.rust-ui.com), alongside the existing Leptos component library.
 
 Live demo: **[dioxus-ui.wasmer.app](https://dioxus-ui.wasmer.app)**
