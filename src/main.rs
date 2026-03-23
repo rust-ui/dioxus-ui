@@ -10,7 +10,6 @@ use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
 use routes::home_page::Home;
-use routes::markdown_page::MarkdownPage;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");
 const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
@@ -23,8 +22,6 @@ enum Route {
             #[route("/components/:name")]
             ComponentPage { name: String },
         #[end_layout]
-        #[route("/markdown/:slug")]
-        MarkdownPage { slug: String },
         #[route("/")]
         Home {},
 }
