@@ -38,9 +38,9 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 - [ ] Callout
 - [x] Kbd
 - [x] Label
-- [ ] Chips
-- [ ] Status
-- [ ] Empty
+- [x] Chips
+- [x] Status
+- [x] Empty
 
 ## Feedback / Loading
 
@@ -57,14 +57,14 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 
 - [x] Breadcrumb
 - [x] Tabs
-- [ ] Pagination
+- [x] Pagination
 - [ ] Bottom Nav
 - [ ] Navigation Menu
 - [ ] Menubar
 
 ## Overlay
 
-- [ ] Dialog
+- [x] Dialog
 - [x] Alert Dialog
 - [ ] Drawer
 - [ ] Sheet
@@ -87,9 +87,9 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 
 ## Utilities
 
-- [ ] Theme Toggle (component exists, no doc page yet)
+- [x] Theme Toggle
 - [x] Toggle
-- [ ] Toggle Group
+- [x] Toggle Group
 - [ ] Pressable
 - [ ] Marquee
 - [ ] Drag and Drop
@@ -215,3 +215,24 @@ For each component, demos to port:
 
 ### Tooltip
 - [x] `DemoTooltip`
+
+### Dialog
+- [x] `DemoDialog`
+- [x] `DemoDialogScrollable`
+
+### Chips
+- [x] `DemoChips`
+
+### Status
+- [x] `DemoStatus`
+- [x] `DemoStatusVariants`
+
+### Empty
+- [x] `DemoEmpty`
+- [x] `DemoEmptyMuted`
+
+### Pagination
+- [x] `DemoPagination`
+
+### Toggle Group
+- [x] `DemoToggleGroup`

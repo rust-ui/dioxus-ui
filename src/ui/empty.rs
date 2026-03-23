@@ -64,10 +64,10 @@ pub fn EmptyMedia(
 ) -> Element {
     let variant_class = match variant {
         EmptyMediaVariant::Default => "bg-transparent",
-        EmptyMediaVariant::Icon => "bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg]:size-6",
+        EmptyMediaVariant::Icon => "bg-muted text-foreground flex size-10 shrink-0 items-center justify-center rounded-lg [&_svg:not([class*='size-'])]:size-6",
     };
     let merged = tw_merge!(
-        "flex shrink-0 items-center justify-center mb-2",
+        "flex shrink-0 items-center justify-center mb-2 [&_svg]:pointer-events-none [&_svg]:shrink-0",
         variant_class,
         class.as_deref().unwrap_or("")
     );
