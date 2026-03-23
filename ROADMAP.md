@@ -11,11 +11,12 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 - [x] Button (`button`, `button_group`)
 - [x] Input
 - [x] Textarea
-- [ ] Select
+- [ ] Select (custom dropdown)
+- [x] Select Native
 - [x] Checkbox
 - [x] Switch
-- [ ] Slider
-- [ ] Radio Button (`radio-button`, `radio-button-group`)
+- [x] Slider
+- [x] Radio Button (`radio-group`)
 - [ ] Combobox
 - [ ] Multi Select
 - [ ] Date Picker
@@ -32,7 +33,7 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 - [x] Card
 - [x] Separator
 - [x] Avatar
-- [ ] Table
+- [x] Table
 - [x] Alert
 - [ ] Callout
 - [x] Kbd
@@ -54,7 +55,7 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 
 ## Navigation
 
-- [ ] Breadcrumb
+- [x] Breadcrumb
 - [x] Tabs
 - [ ] Pagination
 - [ ] Bottom Nav
@@ -64,20 +65,20 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 ## Overlay
 
 - [ ] Dialog
-- [ ] Alert Dialog
+- [x] Alert Dialog
 - [ ] Drawer
 - [ ] Sheet
 - [ ] Popover
 - [ ] Hover Card
-- [ ] Tooltip
+- [x] Tooltip
 - [ ] Dropdown Menu
 - [ ] Context Menu
 - [ ] Command
 
 ## Layout
 
-- [ ] Accordion
-- [ ] Collapsible
+- [x] Accordion
+- [x] Collapsible
 - [ ] Carousel
 - [ ] Card Carousel
 - [ ] Scroll Area
@@ -86,7 +87,8 @@ Each item requires: `src/ui/<component>.rs`, `src/registry/<component>.rs`, `pub
 
 ## Utilities
 
-- [ ] Theme Toggle
+- [ ] Theme Toggle (component exists, no doc page yet)
+- [x] Toggle
 - [ ] Toggle Group
 - [ ] Pressable
 - [ ] Marquee
@@ -180,3 +182,36 @@ For each component, demos to port:
 ### Textarea
 - [x] `DemoTextarea`
 - [x] `DemoTextareaDisabled`
+
+### Accordion
+- [x] `DemoAccordion`
+- [x] `DemoAccordionBordered`
+
+### Alert Dialog
+- [x] `DemoAlertDialog`
+
+### Breadcrumb
+- [x] `DemoBreadcrumb`
+
+### Collapsible
+- [x] `DemoCollapsible`
+
+### Radio Group
+- [x] `DemoRadioGroup`
+
+### Select Native
+- [x] `DemoSelectNative`
+- [x] `DemoSelectNativeGroup`
+
+### Slider
+- [x] `DemoSlider`
+- [x] `DemoSliderDisabled`
+
+### Table
+- [x] `DemoTable`
+
+### Toggle
+- [x] `DemoToggle`
+
+### Tooltip
+- [x] `DemoTooltip`
