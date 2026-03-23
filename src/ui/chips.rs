@@ -14,7 +14,7 @@ const CHIPS_CONTAINER_STYLE: &str = r#"
 #[component]
 pub fn ChipsContainer(children: Element) -> Element {
     rsx! {
-        style { "{CHIPS_CONTAINER_STYLE}" }
+        style { dangerous_inner_html: CHIPS_CONTAINER_STYLE }
         div {
             "data-name": "ChipsContainer",
             class: "flex relative flex-wrap justify-start content-center w-full transition-all max-w-[66vmin] z-[1] bg-card/5 p-[2.8vmin] rounded-[2vmin] shadow-[inset_0_0_1px_1px_theme(colors.border)] duration-[350ms] *:transition-all *:duration-[350ms]",
