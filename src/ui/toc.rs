@@ -25,21 +25,27 @@ pub fn TableOfContents(items: Vec<TocItem>) -> Element {
     }
 
     rsx! {
-        div { class: "hidden xl:block w-52 shrink-0",
-            div { class: "sticky top-16 pt-8 pb-4",
-                p { class: "text-sm font-semibold text-foreground mb-3",
-                    "On This Page"
-                }
-                nav { class: "flex flex-col gap-1",
-                    for item in items {
-                        a {
-                            href: "#{item.id}",
-                            class: if item.depth == 2 {
-                                "text-sm text-muted-foreground hover:text-foreground transition-colors py-0.5"
-                            } else {
-                                "text-sm text-muted-foreground hover:text-foreground transition-colors py-0.5 pl-3"
-                            },
-                            "{item.text}"
+        aside { class: "hidden sticky lg:block top-16 h-[calc(100vh-3.5rem)] w-[250px] shrink-0",
+            div { class: "flex flex-col pl-4 h-full",
+                div {
+                    h4 { class: "mb-4 text-sm font-medium", "On This Page" }
+                    nav {
+                        "aria-label": "Table of contents",
+                        class: "overflow-y-auto max-h-[calc(100vh-16rem)] scroll-smooth",
+                        ul { class: "pb-4 space-y-1.5",
+                            for item in items {
+                                li {
+                                    a {
+                                        href: "#{item.id}",
+                                        class: if item.depth == 2 {
+                                            "block text-sm text-muted-foreground hover:text-foreground transition-colors"
+                                        } else {
+                                            "block text-sm text-muted-foreground hover:text-foreground transition-colors pl-4"
+                                        },
+                                        "{item.text}"
+                                    }
+                                }
+                            }
                         }
                     }
                 }
