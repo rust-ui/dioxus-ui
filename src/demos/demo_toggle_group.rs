@@ -8,10 +8,9 @@ pub fn DemoToggleGroup() -> Element {
 
     rsx! {
         div { class: "flex flex-col gap-6 items-center",
-            // Text alignment group
             ToggleGroup {
                 ToggleGroupItem {
-                    value: "left",
+                    title: "Align left",
                     pressed: selected() == "left",
                     onclick: move |_| selected.set("left".to_string()),
                     svg {
@@ -24,7 +23,7 @@ pub fn DemoToggleGroup() -> Element {
                     }
                 }
                 ToggleGroupItem {
-                    value: "center",
+                    title: "Align center",
                     pressed: selected() == "center",
                     onclick: move |_| selected.set("center".to_string()),
                     svg {
@@ -37,7 +36,7 @@ pub fn DemoToggleGroup() -> Element {
                     }
                 }
                 ToggleGroupItem {
-                    value: "right",
+                    title: "Align right",
                     pressed: selected() == "right",
                     onclick: move |_| selected.set("right".to_string()),
                     svg {

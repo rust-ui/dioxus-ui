@@ -1,44 +1,55 @@
+use std::sync::atomic::{AtomicUsize, Ordering};
+
 use dioxus::prelude::*;
-use dioxus::prelude::Signal;
 use tw_merge::tw_merge;
 
+static ACCORDION_COUNTER: AtomicUsize = AtomicUsize::new(0);
+
 #[component]
-pub fn Accordion(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
-    let merged = tw_merge!("divide-y divide-border w-full", class.as_deref().unwrap_or(""));
+pub fn Accordion(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("divide-y divide-input w-full", class.as_deref().unwrap_or(""));
     rsx! { div { class: "{merged}", {children} } }
 }
 
 #[component]
-pub fn AccordionItem(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
-    let merged = tw_merge!("w-full", class.as_deref().unwrap_or(""));
+pub fn AccordionItem(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!(
+        "w-full [&:has(>input:checked)>label>svg:last-child]:rotate-180",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { div { class: "{merged}", {children} } }
 }
 
 #[component]
 pub fn AccordionTrigger(
     #[props(into, optional)] class: Option<String>,
-    open: Signal<bool>,
-    onclick: EventHandler<MouseEvent>,
+    #[props(default = false)] open: bool,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!(
-        "flex w-full justify-between items-center p-3 text-sm font-medium cursor-pointer hover:bg-muted/50 transition-colors",
+    let id = use_hook(|| {
+        let n = ACCORDION_COUNTER.fetch_add(1, Ordering::Relaxed);
+        format!("accordion_{n}")
+    });
+
+    let label_class = tw_merge!(
+        "flex justify-between items-center p-3 list-none cursor-pointer [&_svg:not([class*='size-'])]:size-4 peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2",
         class.as_deref().unwrap_or("")
     );
-    let rotate = if open() { "rotate-180" } else { "" };
+
     rsx! {
-        button {
-            class: "{merged}",
-            onclick: move |e| onclick.call(e),
+        input {
+            id: "{id}",
+            r#type: "checkbox",
+            class: "overflow-hidden absolute p-0 -m-px w-px h-px whitespace-nowrap border-0 peer",
+            style: "clip: rect(0, 0, 0, 0)",
+            checked: open,
+        }
+        label {
+            r#for: "{id}",
+            class: "{label_class}",
             {children}
             svg {
-                class: "size-4 shrink-0 transition-transform duration-200 {rotate}",
+                class: "transition-all duration-300 size-4 shrink-0",
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 24 24",
                 fill: "none",
@@ -55,13 +66,45 @@ pub fn AccordionTrigger(
 #[component]
 pub fn AccordionContent(
     #[props(into, optional)] class: Option<String>,
-    open: Signal<bool>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("px-3 pb-3 text-sm text-muted-foreground", class.as_deref().unwrap_or(""));
-    if open() {
-        rsx! { div { class: "{merged}", {children} } }
-    } else {
-        rsx! {}
+    let inner = tw_merge!("p-3 pt-0", class.as_deref().unwrap_or(""));
+    rsx! {
+        article {
+            class: "grid overflow-hidden transition-all duration-400 grid-rows-[0fr] peer-checked:grid-rows-[1fr]",
+            div { "data-name": "__AccordionContentInner", class: "min-h-[0]",
+                div { class: "{inner}", {children} }
+            }
+        }
     }
+}
+
+#[component]
+pub fn AccordionHeader(
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!(
+        "flex gap-2 items-center [&_svg:not([class*='size-'])]:size-4",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! { div { class: "{merged}", {children} } }
+}
+
+#[component]
+pub fn AccordionTitle(
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!("text-sm font-medium", class.as_deref().unwrap_or(""));
+    rsx! { h4 { class: "{merged}", {children} } }
+}
+
+#[component]
+pub fn AccordionDescription(
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!("text-muted-foreground text-sm", class.as_deref().unwrap_or(""));
+    rsx! { p { class: "{merged}", {children} } }
 }

@@ -3,26 +3,29 @@ use tw_merge::tw_merge;
 
 #[component]
 pub fn Progress(
-    /// Value between 0.0 and 100.0
-    #[props(default = 0.0)]
-    value: f64,
-    #[props(into, default)] class: Option<String>,
+    #[props(default = 0.0)] value: f64,
+    #[props(default = 100.0)] max: f64,
+    #[props(into, optional)] class: Option<String>,
 ) -> Element {
-    let class = tw_merge!(
+    let pct = (value / max * 100.0).clamp(0.0, 100.0);
+    let style = format!("transform: translateX(-{}%)", 100.0 - pct);
+
+    let merged = tw_merge!(
         "relative h-2 w-full overflow-hidden rounded-full bg-secondary",
         class.as_deref().unwrap_or("")
     );
-    let translate = format!("-{}%", 100.0 - value.clamp(0.0, 100.0));
+
     rsx! {
         div {
+            "data-name": "Progress",
             role: "progressbar",
             aria_valuemin: "0",
-            aria_valuemax: "100",
+            aria_valuemax: "{max}",
             aria_valuenow: "{value}",
-            class: "{class}",
+            class: "{merged}",
             div {
-                class: "h-full w-full flex-1 bg-primary transition-all",
-                style: "transform: translateX({translate})",
+                class: "flex-1 w-full h-full transition-all duration-300 ease-in-out bg-primary",
+                style: "{style}",
             }
         }
     }

@@ -1,44 +1,49 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
+#[derive(Clone, Copy)]
+struct CollapsibleCtx {
+    open: Signal<bool>,
+}
+
 #[component]
 pub fn Collapsible(
+    #[props(default = false)] default_open: bool,
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("w-full", class.as_deref().unwrap_or(""));
-    rsx! { div { class: "{merged}", {children} } }
+    let open = use_signal(|| default_open);
+    provide_context(CollapsibleCtx { open });
+
+    let state = if open() { "open" } else { "closed" };
+    let class = tw_merge!("", class.as_deref().unwrap_or(""));
+
+    rsx! {
+        div {
+            "data-name": "Collapsible",
+            "data-state": "{state}",
+            class: "{class}",
+            {children}
+        }
+    }
 }
 
 #[component]
 pub fn CollapsibleTrigger(
     #[props(into, optional)] class: Option<String>,
-    open: Signal<bool>,
-    onclick: EventHandler<MouseEvent>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!(
-        "flex w-full items-center justify-between rounded-md px-3 py-2 text-sm font-medium hover:bg-muted/50 transition-colors cursor-pointer",
-        class.as_deref().unwrap_or("")
-    );
-    let rotate = if open() { "rotate-180" } else { "" };
+    let CollapsibleCtx { mut open } = use_context::<CollapsibleCtx>();
+    let state = if open() { "open" } else { "closed" };
+
     rsx! {
         button {
-            class: "{merged}",
-            "aria-expanded": "{open()}",
-            onclick: move |e| onclick.call(e),
+            r#type: "button",
+            "data-name": "CollapsibleTrigger",
+            "data-state": "{state}",
+            class: "{class.as_deref().unwrap_or(\"\")}",
+            onclick: move |_| open.set(!open()),
             {children}
-            svg {
-                class: "size-4 shrink-0 transition-transform duration-200 {rotate}",
-                xmlns: "http://www.w3.org/2000/svg",
-                view_box: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                stroke_width: "2",
-                stroke_linecap: "round",
-                stroke_linejoin: "round",
-                path { d: "m6 9 6 6 6-6" }
-            }
         }
     }
 }
@@ -46,13 +51,23 @@ pub fn CollapsibleTrigger(
 #[component]
 pub fn CollapsibleContent(
     #[props(into, optional)] class: Option<String>,
-    open: Signal<bool>,
+    #[props(into, optional)] outer_class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("mt-1", class.as_deref().unwrap_or(""));
-    if open() {
-        rsx! { div { class: "{merged}", {children} } }
-    } else {
-        rsx! {}
+    let CollapsibleCtx { open } = use_context::<CollapsibleCtx>();
+    let state = if open() { "open" } else { "closed" };
+
+    let outer = tw_merge!(
+        "grid overflow-hidden transition-all duration-300 data-[state=closed]:grid-rows-[0fr] data-[state=open]:grid-rows-[1fr]",
+        outer_class.as_deref().unwrap_or("")
+    );
+
+    rsx! {
+        div {
+            "data-name": "CollapsibleContent",
+            "data-state": "{state}",
+            class: "{outer}",
+            div { class: tw_merge!("min-h-0", class.as_deref().unwrap_or("")), {children} }
+        }
     }
 }

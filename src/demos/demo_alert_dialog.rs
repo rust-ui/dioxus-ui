@@ -1,39 +1,34 @@
 use dioxus::prelude::*;
 
 use crate::ui::alert_dialog::{
-    AlertDialog, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+    AlertDialog, AlertDialogAction, AlertDialogClose, AlertDialogContent,
+    AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
+    AlertDialogTrigger,
 };
 use crate::ui::button::{Button, ButtonVariant};
 
 #[component]
 pub fn DemoAlertDialog() -> Element {
-    let mut open = use_signal(|| false);
-
     rsx! {
         div { class: "flex justify-center",
-            Button {
-                variant: ButtonVariant::Outline,
-                onclick: move |_| open.set(true),
-                "Show Dialog"
-            }
             AlertDialog {
-                open: open,
-                AlertDialogHeader {
-                    AlertDialogTitle { "Are you absolutely sure?" }
-                    AlertDialogDescription {
-                        "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
-                    }
+                AlertDialogTrigger {
+                    Button { variant: ButtonVariant::Outline, "Show Dialog" }
                 }
-                AlertDialogFooter {
-                    Button {
-                        variant: ButtonVariant::Outline,
-                        onclick: move |_| open.set(false),
-                        "Cancel"
+                AlertDialogContent {
+                    AlertDialogHeader {
+                        AlertDialogTitle { "Are you absolutely sure?" }
+                        AlertDialogDescription {
+                            "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
+                        }
                     }
-                    Button {
-                        variant: ButtonVariant::Destructive,
-                        onclick: move |_| open.set(false),
-                        "Delete"
+                    AlertDialogFooter {
+                        AlertDialogClose {
+                            Button { variant: ButtonVariant::Outline, "Cancel" }
+                        }
+                        AlertDialogAction {
+                            Button { variant: ButtonVariant::Destructive, "Delete" }
+                        }
                     }
                 }
             }
