@@ -1,6 +1,6 @@
 [package]
 name = "maxime15848/dioxus-ui"
-version = "0.1.15"
+version = "0.1.16"
 
 [dependencies]
 "wasmer/static-web-server" = "*"
