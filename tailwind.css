@@ -46,6 +46,30 @@
   --ring: oklch(0.556 0 0);
 }
 
+@utility no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar { display: none; }
+}
+
+@utility scrollbar__on_hover {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar { width: 0; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: transparent; }
+
+  .group\/scrollbar-on-hover:hover & {
+    scrollbar-width: thin;
+    &::-webkit-scrollbar { width: 4px; }
+    &::-webkit-scrollbar-track { background: transparent; }
+    &::-webkit-scrollbar-thumb {
+      background: var(--scrollbar-thumb, oklch(0.7 0 0));
+      border-radius: 5px;
+    }
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

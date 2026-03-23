@@ -127,7 +127,7 @@ pub fn DemoWrapper(children: Element) -> Element {
 
             // Code panel — Soon
             div { style: "{code_display()}",
-                div { class: "rounded-xl border bg-muted flex items-center justify-center min-h-[200px]",
+                div { class: "rounded-xl border bg-muted flex items-center justify-center min-h-[370px]",
                     p { class: "text-sm text-muted-foreground", "Code display — coming soon" }
                 }
             }
