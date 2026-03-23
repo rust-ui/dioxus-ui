@@ -4,7 +4,12 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_slider::DemoSlider;
+use crate::demos::demo_slider_controlled::DemoSliderControlled;
 use crate::demos::demo_slider_disabled::DemoSliderDisabled;
+use crate::demos::demo_slider_flat::DemoSliderFlat;
+use crate::demos::demo_slider_multiple::DemoSliderMultiple;
+use crate::demos::demo_slider_rtl::DemoSliderRtl;
+use crate::demos::demo_slider_vertical::DemoSliderVertical;
 use super::RegistryEntry;
 
 pub static SLIDER: RegistryEntry = RegistryEntry {
@@ -17,6 +22,11 @@ pub static SLIDER: RegistryEntry = RegistryEntry {
 fn slider_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSlider", |_| rsx! { DemoSlider {} });
+    c.add("DemoSliderControlled", |_| rsx! { DemoSliderControlled {} });
     c.add("DemoSliderDisabled", |_| rsx! { DemoSliderDisabled {} });
+    c.add("DemoSliderFlat", |_| rsx! { DemoSliderFlat {} });
+    c.add("DemoSliderMultiple", |_| rsx! { DemoSliderMultiple {} });
+    c.add("DemoSliderRtl", |_| rsx! { DemoSliderRtl {} });
+    c.add("DemoSliderVertical", |_| rsx! { DemoSliderVertical {} });
     c
 }

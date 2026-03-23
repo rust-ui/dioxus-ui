@@ -4,7 +4,11 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_select_native::DemoSelectNative;
+use crate::demos::demo_select_native_auto_width::DemoSelectNativeAutoWidth;
+use crate::demos::demo_select_native_error::DemoSelectNativeError;
 use crate::demos::demo_select_native_group::DemoSelectNativeGroup;
+use crate::demos::demo_select_native_overlapping_label::DemoSelectNativeOverlappingLabel;
+use crate::demos::demo_select_native_timezone::DemoSelectNativeTimezone;
 use super::RegistryEntry;
 
 pub static SELECT_NATIVE: RegistryEntry = RegistryEntry {
@@ -17,6 +21,10 @@ pub static SELECT_NATIVE: RegistryEntry = RegistryEntry {
 fn select_native_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSelectNative", |_| rsx! { DemoSelectNative {} });
+    c.add("DemoSelectNativeAutoWidth", |_| rsx! { DemoSelectNativeAutoWidth {} });
+    c.add("DemoSelectNativeError", |_| rsx! { DemoSelectNativeError {} });
     c.add("DemoSelectNativeGroup", |_| rsx! { DemoSelectNativeGroup {} });
+    c.add("DemoSelectNativeOverlappingLabel", |_| rsx! { DemoSelectNativeOverlappingLabel {} });
+    c.add("DemoSelectNativeTimezone", |_| rsx! { DemoSelectNativeTimezone {} });
     c
 }

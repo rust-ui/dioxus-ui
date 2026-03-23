@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_input::DemoInput;
 use crate::demos::demo_input_copy::DemoInputCopy;
+use crate::demos::demo_input_rtl::DemoInputRtl;
 use super::RegistryEntry;
 
 pub static INPUT: RegistryEntry = RegistryEntry {
@@ -18,5 +19,6 @@ fn input_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoInput", |_| rsx! { DemoInput {} });
     c.add("DemoInputCopy", |_| rsx! { DemoInputCopy {} });
+    c.add("DemoInputRtl", |_| rsx! { DemoInputRtl {} });
     c
 }

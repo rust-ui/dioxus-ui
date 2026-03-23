@@ -6,6 +6,7 @@ use crate::markdown::converter::MdComponents;
 use crate::demos::demo_badge::DemoBadge;
 use crate::demos::demo_badge_colors::DemoBadgeColors;
 use crate::demos::demo_badge_custom::DemoBadgeCustom;
+use crate::demos::demo_badge_rtl::DemoBadgeRtl;
 use crate::demos::demo_badge_variants::DemoBadgeVariants;
 use super::RegistryEntry;
 
@@ -21,6 +22,7 @@ fn badge_components() -> MdComponents {
     c.add("DemoBadge", |_| rsx! { DemoBadge {} });
     c.add("DemoBadgeColors", |_| rsx! { DemoBadgeColors {} });
     c.add("DemoBadgeCustom", |_| rsx! { DemoBadgeCustom {} });
+    c.add("DemoBadgeRtl", |_| rsx! { DemoBadgeRtl {} });
     c.add("DemoBadgeVariants", |_| rsx! { DemoBadgeVariants {} });
     c
 }

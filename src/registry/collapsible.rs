@@ -4,6 +4,9 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_collapsible::DemoCollapsible;
+use crate::demos::demo_collapsible_basic::DemoCollapsibleBasic;
+use crate::demos::demo_collapsible_file_tree::DemoCollapsibleFileTree;
+use crate::demos::demo_collapsible_rtl::DemoCollapsibleRtl;
 use super::RegistryEntry;
 
 pub static COLLAPSIBLE: RegistryEntry = RegistryEntry {
@@ -16,5 +19,8 @@ pub static COLLAPSIBLE: RegistryEntry = RegistryEntry {
 fn collapsible_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCollapsible", |_| rsx! { DemoCollapsible {} });
+    c.add("DemoCollapsibleBasic", |_| rsx! { DemoCollapsibleBasic {} });
+    c.add("DemoCollapsibleFileTree", |_| rsx! { DemoCollapsibleFileTree {} });
+    c.add("DemoCollapsibleRtl", |_| rsx! { DemoCollapsibleRtl {} });
     c
 }

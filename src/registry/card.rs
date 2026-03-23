@@ -7,6 +7,7 @@ use crate::demos::demo_card::DemoCard;
 use crate::demos::demo_card_action::DemoCardAction;
 use crate::demos::demo_card_group::DemoCardGroup;
 use crate::demos::demo_card_reverse::DemoCardReverse;
+use crate::demos::demo_card_rtl::DemoCardRtl;
 use crate::demos::demo_card_sm::DemoCardSm;
 use super::RegistryEntry;
 
@@ -23,6 +24,7 @@ fn card_components() -> MdComponents {
     c.add("DemoCardAction", |_| rsx! { DemoCardAction {} });
     c.add("DemoCardGroup", |_| rsx! { DemoCardGroup {} });
     c.add("DemoCardReverse", |_| rsx! { DemoCardReverse {} });
+    c.add("DemoCardRtl", |_| rsx! { DemoCardRtl {} });
     c.add("DemoCardSm", |_| rsx! { DemoCardSm {} });
     c
 }

@@ -53,6 +53,8 @@ pub fn Button(
     #[props(default = ButtonSize::default())] size: ButtonSize,
     #[props(optional)] disabled: bool,
     #[props(into, optional)] href: Option<String>,
+    // TODO: replace button_type with a proper ButtonType enum (e.g. ButtonType::Submit/Reset/Button)
+    #[props(into, optional)] button_type: Option<String>,
     #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
     children: Element,
 ) -> Element {
@@ -71,6 +73,7 @@ pub fn Button(
         rsx! {
             button {
                 class: "{merged_class}",
+                r#type: button_type.as_deref().unwrap_or("button"),
                 disabled: disabled,
                 onclick: move |e| {
                     if let Some(handler) = &onclick {

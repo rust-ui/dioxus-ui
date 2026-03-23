@@ -4,7 +4,9 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_kbd::DemoKbd;
+use crate::demos::demo_kbd_button::DemoKbdButton;
 use crate::demos::demo_kbd_combination::DemoKbdCombination;
+use crate::demos::demo_kbd_rtl::DemoKbdRtl;
 use super::RegistryEntry;
 
 pub static KBD: RegistryEntry = RegistryEntry {
@@ -17,6 +19,8 @@ pub static KBD: RegistryEntry = RegistryEntry {
 fn kbd_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoKbd", |_| rsx! { DemoKbd {} });
+    c.add("DemoKbdButton", |_| rsx! { DemoKbdButton {} });
     c.add("DemoKbdCombination", |_| rsx! { DemoKbdCombination {} });
+    c.add("DemoKbdRtl", |_| rsx! { DemoKbdRtl {} });
     c
 }

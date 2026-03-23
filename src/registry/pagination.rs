@@ -4,6 +4,7 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_pagination::DemoPagination;
+use crate::demos::demo_pagination_rtl::DemoPaginationRtl;
 use super::RegistryEntry;
 
 pub static PAGINATION: RegistryEntry = RegistryEntry {
@@ -16,5 +17,6 @@ pub static PAGINATION: RegistryEntry = RegistryEntry {
 fn pagination_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoPagination", |_| rsx! { DemoPagination {} });
+    c.add("DemoPaginationRtl", |_| rsx! { DemoPaginationRtl {} });
     c
 }

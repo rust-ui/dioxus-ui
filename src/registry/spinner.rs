@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_spinner::DemoSpinner;
 use crate::demos::demo_spinner_button::DemoSpinnerButton;
+use crate::demos::demo_spinner_rtl::DemoSpinnerRtl;
 use super::RegistryEntry;
 
 pub static SPINNER: RegistryEntry = RegistryEntry {
@@ -18,5 +19,6 @@ fn spinner_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSpinner", |_| rsx! { DemoSpinner {} });
     c.add("DemoSpinnerButton", |_| rsx! { DemoSpinnerButton {} });
+    c.add("DemoSpinnerRtl", |_| rsx! { DemoSpinnerRtl {} });
     c
 }

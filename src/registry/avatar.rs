@@ -4,7 +4,13 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_avatar::DemoAvatar;
+use crate::demos::demo_avatar_badge::DemoAvatarBadge;
+use crate::demos::demo_avatar_badge_icon::DemoAvatarBadgeIcon;
 use crate::demos::demo_avatar_fallback::DemoAvatarFallback;
+use crate::demos::demo_avatar_group::DemoAvatarGroup;
+use crate::demos::demo_avatar_group_count::DemoAvatarGroupCount;
+use crate::demos::demo_avatar_rtl::DemoAvatarRtl;
+use crate::demos::demo_avatar_size::DemoAvatarSize;
 use crate::demos::demo_avatar_sizes::DemoAvatarSizes;
 use super::RegistryEntry;
 
@@ -18,7 +24,13 @@ pub static AVATAR: RegistryEntry = RegistryEntry {
 fn avatar_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAvatar", |_| rsx! { DemoAvatar {} });
+    c.add("DemoAvatarBadge", |_| rsx! { DemoAvatarBadge {} });
+    c.add("DemoAvatarBadgeIcon", |_| rsx! { DemoAvatarBadgeIcon {} });
     c.add("DemoAvatarFallback", |_| rsx! { DemoAvatarFallback {} });
+    c.add("DemoAvatarGroup", |_| rsx! { DemoAvatarGroup {} });
+    c.add("DemoAvatarGroupCount", |_| rsx! { DemoAvatarGroupCount {} });
+    c.add("DemoAvatarRtl", |_| rsx! { DemoAvatarRtl {} });
+    c.add("DemoAvatarSize", |_| rsx! { DemoAvatarSize {} });
     c.add("DemoAvatarSizes", |_| rsx! { DemoAvatarSizes {} });
     c
 }

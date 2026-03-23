@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_label::DemoLabel;
 use crate::demos::demo_label_input::DemoLabelInput;
+use crate::demos::demo_label_rtl::DemoLabelRtl;
 use super::RegistryEntry;
 
 pub static LABEL: RegistryEntry = RegistryEntry {
@@ -18,5 +19,6 @@ fn label_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoLabel", |_| rsx! { DemoLabel {} });
     c.add("DemoLabelInput", |_| rsx! { DemoLabelInput {} });
+    c.add("DemoLabelRtl", |_| rsx! { DemoLabelRtl {} });
     c
 }

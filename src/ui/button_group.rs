@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
+use crate::ui::separator::{Separator, SeparatorOrientation};
+
 #[allow(dead_code)]
 #[derive(Default, Clone, PartialEq)]
 pub enum ButtonGroupOrientation {
@@ -32,5 +34,21 @@ pub fn ButtonGroup(
 
     rsx! {
         div { "data-name": "ButtonGroup", role: "group", class: "{merged_class}", {children} }
+    }
+}
+
+#[component]
+pub fn ButtonGroupSeparator(
+    #[props(into, optional)] class: Option<String>,
+) -> Element {
+    let merged = tw_merge!(
+        "relative !m-0 self-stretch data-[orientation=vertical]:h-auto",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        Separator {
+            class: "{merged}",
+            orientation: SeparatorOrientation::Vertical,
+        }
     }
 }

@@ -4,6 +4,9 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_tabs::DemoTabs;
+use crate::demos::demo_tabs_line::DemoTabsLine;
+use crate::demos::demo_tabs_rtl::DemoTabsRtl;
+use crate::demos::demo_tabs_vertical::DemoTabsVertical;
 use super::RegistryEntry;
 
 pub static TABS: RegistryEntry = RegistryEntry {
@@ -16,5 +19,8 @@ pub static TABS: RegistryEntry = RegistryEntry {
 fn tabs_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTabs", |_| rsx! { DemoTabs {} });
+    c.add("DemoTabsLine", |_| rsx! { DemoTabsLine {} });
+    c.add("DemoTabsRtl", |_| rsx! { DemoTabsRtl {} });
+    c.add("DemoTabsVertical", |_| rsx! { DemoTabsVertical {} });
     c
 }

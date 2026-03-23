@@ -66,6 +66,15 @@ pub fn TableCell(
 }
 
 #[component]
+pub fn TableFooter(
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!("font-medium border border-t bg-muted/50 [&>tr]:last:border-b-0", class.as_deref().unwrap_or(""));
+    rsx! { tfoot { class: "{merged}", {children} } }
+}
+
+#[component]
 pub fn TableCaption(
     #[props(into, optional)] class: Option<String>,
     children: Element,

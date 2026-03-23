@@ -108,3 +108,18 @@ pub fn AccordionDescription(
     let merged = tw_merge!("text-muted-foreground text-sm", class.as_deref().unwrap_or(""));
     rsx! { p { class: "{merged}", {children} } }
 }
+
+#[component]
+pub fn AccordionLink(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] href: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!(
+        "grid gap-2.5 items-center p-2 grid-cols-[auto_1fr] [&_svg:not([class*='size-'])]:size-4 hover:bg-muted",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        a { class: "{merged}", href: href.as_deref().unwrap_or("#"), {children} }
+    }
+}

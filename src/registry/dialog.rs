@@ -4,7 +4,9 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_dialog::DemoDialog;
+use crate::demos::demo_dialog_rtl::DemoDialogRtl;
 use crate::demos::demo_dialog_scrollable::DemoDialogScrollable;
+use crate::demos::demo_dialog_sticky_footer::DemoDialogStickyFooter;
 use super::RegistryEntry;
 
 pub static DIALOG: RegistryEntry = RegistryEntry {
@@ -17,6 +19,8 @@ pub static DIALOG: RegistryEntry = RegistryEntry {
 fn dialog_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDialog", |_| rsx! { DemoDialog {} });
+    c.add("DemoDialogRtl", |_| rsx! { DemoDialogRtl {} });
     c.add("DemoDialogScrollable", |_| rsx! { DemoDialogScrollable {} });
+    c.add("DemoDialogStickyFooter", |_| rsx! { DemoDialogStickyFooter {} });
     c
 }

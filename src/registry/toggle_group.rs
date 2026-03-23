@@ -4,6 +4,11 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_toggle_group::DemoToggleGroup;
+use crate::demos::demo_toggle_group_font_weight::DemoToggleGroupFontWeight;
+use crate::demos::demo_toggle_group_outline::DemoToggleGroupOutline;
+use crate::demos::demo_toggle_group_rtl::DemoToggleGroupRtl;
+use crate::demos::demo_toggle_group_spacing::DemoToggleGroupSpacing;
+use crate::demos::demo_toggle_group_vertical::DemoToggleGroupVertical;
 use super::RegistryEntry;
 
 pub static TOGGLE_GROUP: RegistryEntry = RegistryEntry {
@@ -16,5 +21,10 @@ pub static TOGGLE_GROUP: RegistryEntry = RegistryEntry {
 fn toggle_group_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoToggleGroup", |_| rsx! { DemoToggleGroup {} });
+    c.add("DemoToggleGroupFontWeight", |_| rsx! { DemoToggleGroupFontWeight {} });
+    c.add("DemoToggleGroupOutline", |_| rsx! { DemoToggleGroupOutline {} });
+    c.add("DemoToggleGroupRtl", |_| rsx! { DemoToggleGroupRtl {} });
+    c.add("DemoToggleGroupSpacing", |_| rsx! { DemoToggleGroupSpacing {} });
+    c.add("DemoToggleGroupVertical", |_| rsx! { DemoToggleGroupVertical {} });
     c
 }

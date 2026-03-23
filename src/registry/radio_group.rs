@@ -3,6 +3,7 @@
 
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
+use crate::demos::demo_radio_button_custom::DemoRadioButtonCustom;
 use crate::demos::demo_radio_group::DemoRadioGroup;
 use super::RegistryEntry;
 
@@ -15,6 +16,7 @@ pub static RADIO_GROUP: RegistryEntry = RegistryEntry {
 
 fn radio_group_components() -> MdComponents {
     let mut c = MdComponents::new();
+    c.add("DemoRadioButtonCustom", |_| rsx! { DemoRadioButtonCustom {} });
     c.add("DemoRadioGroup", |_| rsx! { DemoRadioGroup {} });
     c
 }

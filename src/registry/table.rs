@@ -4,6 +4,7 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_table::DemoTable;
+use crate::demos::demo_table_rtl::DemoTableRtl;
 use super::RegistryEntry;
 
 pub static TABLE: RegistryEntry = RegistryEntry {
@@ -16,5 +17,6 @@ pub static TABLE: RegistryEntry = RegistryEntry {
 fn table_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTable", |_| rsx! { DemoTable {} });
+    c.add("DemoTableRtl", |_| rsx! { DemoTableRtl {} });
     c
 }

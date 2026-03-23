@@ -11,7 +11,7 @@ pub fn SelectNative(
     children: Element,
 ) -> Element {
     let merged = tw_merge!(
-        "peer inline-flex w-full cursor-pointer appearance-none items-center rounded-lg h-9 pe-8 ps-3 border border-input bg-background shadow-sm text-sm text-foreground transition-shadow focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+        "peer inline-flex w-full cursor-pointer appearance-none items-center rounded-lg h-9 pe-8 ps-3 border border-input bg-background shadow-sm shadow-black/5 transition-shadow text-sm text-foreground focus-visible:border-ring focus-visible:outline-none focus-visible:ring-[3px] focus-visible:ring-ring/20 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 has-[option[disabled]:checked]:text-muted-foreground",
         class.as_deref().unwrap_or("")
     );
 
@@ -41,6 +41,44 @@ pub fn SelectNative(
                     path { d: "m6 9 6 6 6-6" }
                 }
             }
+        }
+    }
+}
+
+#[component]
+pub fn LabelNative(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] html_for: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!(
+        "text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        label {
+            class: "{merged}",
+            r#for: html_for.as_deref().unwrap_or(""),
+            {children}
+        }
+    }
+}
+
+#[component]
+pub fn OverlappingLabel(
+    #[props(into)] html_for: String,
+    #[props(into)] label: String,
+    #[props(into, optional)] class: Option<String>,
+) -> Element {
+    let merged = tw_merge!(
+        "block absolute top-0 z-10 px-2 text-xs font-medium -translate-y-1/2 start-1 bg-background text-foreground group-has-[select:disabled]:opacity-50",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        label {
+            class: "{merged}",
+            r#for: "{html_for}",
+            {label}
         }
     }
 }
