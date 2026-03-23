@@ -124,38 +124,38 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
 
     // Default element rendering with Tailwind classes
     match el.name.to_lowercase().as_str() {
-        "h1" => rsx! { h1 { class: "text-3xl font-bold mt-10", {children.into_iter()} } },
+        "h1" => rsx! { h1 { class: "mt-2 text-3xl font-bold tracking-tight scroll-mt-28", {children.into_iter()} } },
         "h2" => {
             let text = extract_text(&el.children);
             let id = slugify(&text);
-            rsx! { h2 { id: "{id}", class: "text-2xl font-semibold mt-12 pb-2 border-b border-border scroll-mt-16", {children.into_iter()} } }
+            rsx! { h2 { id: "{id}", class: "mt-10 text-xl font-medium tracking-tight lg:mt-12 first:mt-0 scroll-mt-28", {children.into_iter()} } }
         }
         "h3" => {
             let text = extract_text(&el.children);
             let id = slugify(&text);
-            rsx! { h3 { id: "{id}", class: "text-xl font-semibold mt-8 scroll-mt-16", {children.into_iter()} } }
+            rsx! { h3 { id: "{id}", class: "mt-12 text-lg font-medium tracking-tight scroll-mt-28", {children.into_iter()} } }
         }
-        "h4" => rsx! { h4 { class: "text-base font-semibold mt-6", {children.into_iter()} } },
-        "p" => rsx! { p { class: "mt-2 leading-7 text-foreground/90", {children.into_iter()} } },
-        "ul" => rsx! { ul { class: "list-disc pl-6 mt-4 space-y-1", {children.into_iter()} } },
-        "ol" => rsx! { ol { class: "list-decimal pl-6 mt-4 space-y-1", {children.into_iter()} } },
-        "li" => rsx! { li { class: "leading-7", {children.into_iter()} } },
+        "h4" => rsx! { h4 { class: "mt-8 text-base font-medium tracking-tight scroll-mt-28", {children.into_iter()} } },
+        "p" => rsx! { p { class: "leading-relaxed [&:not(:first-child)]:mt-6", {children.into_iter()} } },
+        "ul" => rsx! { ul { class: "pl-6 my-6 list-disc", {children.into_iter()} } },
+        "ol" => rsx! { ol { class: "pl-6 my-6 list-decimal", {children.into_iter()} } },
+        "li" => rsx! { li { class: "mt-2", {children.into_iter()} } },
         "a" => {
             let href = el.attributes.get("href").and_then(|v| v.clone()).unwrap_or_default();
-            rsx! { a { class: "text-primary underline underline-offset-4 hover:opacity-80", href: "{href}", {children.into_iter()} } }
+            rsx! { a { class: "font-medium underline underline-offset-4", href: "{href}", {children.into_iter()} } }
         }
-        "code" => rsx! { code { class: "bg-muted rounded px-1.5 py-0.5 font-mono text-sm", {children.into_iter()} } },
-        "pre" => rsx! { pre { class: "bg-muted rounded-lg p-4 mt-4 overflow-x-auto text-sm", {children.into_iter()} } },
-        "strong" | "b" => rsx! { strong { class: "font-semibold", {children.into_iter()} } },
+        "code" => rsx! { code { class: "relative font-mono break-words rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-[0.8rem]", {children.into_iter()} } },
+        "pre" => rsx! { pre { class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs", {children.into_iter()} } },
+        "strong" | "b" => rsx! { strong { class: "font-medium", {children.into_iter()} } },
         "em" | "i" => rsx! { em { {children.into_iter()} } },
-        "blockquote" => rsx! { blockquote { class: "border-l-4 border-border pl-4 italic text-muted-foreground mt-4", {children.into_iter()} } },
-        "table" => rsx! { div { class: "overflow-x-auto mb-4", table { class: "w-full text-sm border-collapse", {children.into_iter()} } } },
-        "thead" => rsx! { thead { class: "border-b border-border", {children.into_iter()} } },
+        "blockquote" => rsx! { blockquote { class: "pl-6 mt-6 italic border-l-2", {children.into_iter()} } },
+        "table" => rsx! { div { class: "overflow-y-auto my-6 w-full rounded-xl border", table { class: "w-full text-sm border-none", {children.into_iter()} } } },
+        "thead" => rsx! { thead { {children.into_iter()} } },
         "tbody" => rsx! { tbody { {children.into_iter()} } },
-        "tr" => rsx! { tr { class: "border-b border-border last:border-0", {children.into_iter()} } },
-        "th" => rsx! { th { class: "px-4 py-2 text-left font-semibold", {children.into_iter()} } },
-        "td" => rsx! { td { class: "px-4 py-2", {children.into_iter()} } },
-        "hr" => rsx! { hr { class: "border-border my-6" } },
+        "tr" => rsx! { tr { class: "m-0 border-b", {children.into_iter()} } },
+        "th" => rsx! { th { class: "py-2 px-4 font-bold text-left", {children.into_iter()} } },
+        "td" => rsx! { td { class: "py-2 px-4 text-left whitespace-nowrap", {children.into_iter()} } },
+        "hr" => rsx! { hr { class: "my-4 md:my-8" } },
         _ => rsx! { {children.into_iter()} },
     }
 }
