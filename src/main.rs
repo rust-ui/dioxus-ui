@@ -13,6 +13,7 @@ use routes::home_page::Home;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");
 const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
+const LOCK_SCROLL_JS: Asset = asset!("/public/hooks/lock_scroll.js");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -35,6 +36,7 @@ fn App() -> Element {
     rsx! {
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
+        document::Script { src: LOCK_SCROLL_JS }
         Router::<Route> {}
     }
 }
