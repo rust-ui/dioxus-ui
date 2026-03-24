@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use icons::ChevronRight;
 use tw_merge::tw_merge;
 
 #[component]
@@ -68,17 +69,7 @@ pub fn BreadcrumbSeparator(
     let merged = tw_merge!("text-muted-foreground/50", class.as_deref().unwrap_or(""));
     rsx! {
         li { class: "{merged}", role: "presentation", "aria-hidden": "true",
-            svg {
-                xmlns: "http://www.w3.org/2000/svg",
-                class: "size-3.5",
-                view_box: "0 0 24 24",
-                fill: "none",
-                stroke: "currentColor",
-                stroke_width: "2",
-                stroke_linecap: "round",
-                stroke_linejoin: "round",
-                path { d: "m9 18 6-6-6-6" }
-            }
+            ChevronRight { class: "size-3.5" }
         }
     }
 }

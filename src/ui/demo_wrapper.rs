@@ -2,6 +2,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 
 use dioxus::document::eval;
 use dioxus::prelude::*;
+use icons::{Code, Eye};
 
 use crate::registry::source_map::get_demo_source;
 
@@ -82,25 +83,13 @@ pub fn DemoWrapper(
                 button {
                     class: "{preview_cls()}",
                     onclick: move |_| tab.set(DemoTab::Preview),
-                    svg {
-                        xmlns: "http://www.w3.org/2000/svg", width: "14", height: "14",
-                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
-                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
-                        path { d: "M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" }
-                        circle { cx: "12", cy: "12", r: "3" }
-                    }
+                    Eye { class: "size-3.5" }
                     "Preview"
                 }
                 button {
                     class: "{code_cls()}",
                     onclick: move |_| tab.set(DemoTab::Code),
-                    svg {
-                        xmlns: "http://www.w3.org/2000/svg", width: "14", height: "14",
-                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
-                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
-                        polyline { points: "16 18 22 12 16 6" }
-                        polyline { points: "8 6 2 12 8 18" }
-                    }
+                    Code { class: "size-3.5" }
                     "Code"
                 }
             }

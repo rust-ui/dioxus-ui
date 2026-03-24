@@ -21,7 +21,8 @@ Live demo: **[dioxus-ui.wasmer.app](https://dioxus-ui.wasmer.app)**
 ## Run locally
 
 ```bash
-dx serve
+dx serve # web
+dx serve --platform desktop
 ```
 
 ## License

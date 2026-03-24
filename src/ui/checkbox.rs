@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use icons::Check;
 use tw_merge::tw_merge;
 
 #[component]
@@ -31,18 +32,7 @@ pub fn Checkbox(
             },
             if state() {
                 span { class: "flex items-center justify-center text-current",
-                    svg {
-                        xmlns: "http://www.w3.org/2000/svg",
-                        width: "12",
-                        height: "12",
-                        view_box: "0 0 24 24",
-                        fill: "none",
-                        stroke: "currentColor",
-                        stroke_width: "3",
-                        stroke_linecap: "round",
-                        stroke_linejoin: "round",
-                        polyline { points: "20 6 9 17 4 12" }
-                    }
+                    Check { class: "size-3.5" }
                 }
             }
         }
