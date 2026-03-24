@@ -9,7 +9,7 @@ use super::RegistryEntry;
 
 pub static RADIO_GROUP: RegistryEntry = RegistryEntry {
     slug: "radio-group",
-    raw: include_str!("../../public/docs/radio_group.md"),
+    raw: include_str!("../../public/docs/radio-group.md"),
     tags: &[],
     components: radio_group_components,
 };

@@ -9,11 +9,18 @@ struct CollapsibleCtx {
 #[component]
 pub fn Collapsible(
     #[props(default = false)] default_open: bool,
+    #[props(into, optional)] open: Option<bool>,
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let open = use_signal(|| default_open);
-    provide_context(CollapsibleCtx { open });
+    let mut open_signal = use_signal(|| open.unwrap_or(default_open));
+    if let Some(controlled) = open {
+        if controlled != open_signal() {
+            open_signal.set(controlled);
+        }
+    }
+    provide_context(CollapsibleCtx { open: open_signal });
+    let open = open_signal;
 
     let state = if open() { "open" } else { "closed" };
     let class = tw_merge!("", class.as_deref().unwrap_or(""));
