@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+pub mod __registry__;
 mod demos;
 pub mod markdown;
 pub mod registry;

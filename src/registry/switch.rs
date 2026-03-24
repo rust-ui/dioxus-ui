@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static SWITCH: RegistryEntry = RegistryEntry {
     slug: "switch",
     raw: include_str!("../../public/docs/switch.md"),
-    tags: &["utils"],
+    tags: &[],
     components: switch_components,
 };
 

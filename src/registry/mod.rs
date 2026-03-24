@@ -25,7 +25,6 @@ pub mod select_native;
 pub mod separator;
 pub mod skeleton;
 pub mod slider;
-pub mod source_map;
 pub mod spinner;
 pub mod status;
 pub mod switch;

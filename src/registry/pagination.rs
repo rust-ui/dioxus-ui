@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static PAGINATION: RegistryEntry = RegistryEntry {
     slug: "pagination",
     raw: include_str!("../../public/docs/pagination.md"),
-    tags: &["navigation"],
+    tags: &[],
     components: pagination_components,
 };
 

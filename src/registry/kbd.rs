@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static KBD: RegistryEntry = RegistryEntry {
     slug: "kbd",
     raw: include_str!("../../public/docs/kbd.md"),
-    tags: &["utils"],
+    tags: &[],
     components: kbd_components,
 };
 

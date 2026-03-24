@@ -10,7 +10,7 @@ use super::RegistryEntry;
 pub static BREADCRUMB: RegistryEntry = RegistryEntry {
     slug: "breadcrumb",
     raw: include_str!("../../public/docs/breadcrumb.md"),
-    tags: &["navigation"],
+    tags: &[],
     components: breadcrumb_components,
 };
 

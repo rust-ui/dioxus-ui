@@ -10,7 +10,7 @@ use super::RegistryEntry;
 pub static SPINNER: RegistryEntry = RegistryEntry {
     slug: "spinner",
     raw: include_str!("../../public/docs/spinner.md"),
-    tags: &["animation", "utils"],
+    tags: &[],
     components: spinner_components,
 };
 

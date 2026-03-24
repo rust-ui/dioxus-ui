@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static CHECKBOX: RegistryEntry = RegistryEntry {
     slug: "checkbox",
     raw: include_str!("../../public/docs/checkbox.md"),
-    tags: &["utils"],
+    tags: &[],
     components: checkbox_components,
 };
 

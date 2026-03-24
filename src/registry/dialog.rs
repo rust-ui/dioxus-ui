@@ -10,7 +10,7 @@ use super::RegistryEntry;
 pub static DIALOG: RegistryEntry = RegistryEntry {
     slug: "dialog",
     raw: include_str!("../../public/docs/dialog.md"),
-    tags: &["dialog"],
+    tags: &[],
     components: dialog_components,
 };
 

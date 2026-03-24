@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static TABS: RegistryEntry = RegistryEntry {
     slug: "tabs",
     raw: include_str!("../../public/docs/tabs.md"),
-    tags: &["utils"],
+    tags: &[],
     components: tabs_components,
 };
 

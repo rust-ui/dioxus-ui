@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static TEXTAREA: RegistryEntry = RegistryEntry {
     slug: "textarea",
     raw: include_str!("../../public/docs/textarea.md"),
-    tags: &["input"],
+    tags: &[],
     components: textarea_components,
 };
 

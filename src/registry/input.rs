@@ -10,7 +10,7 @@ use super::RegistryEntry;
 pub static INPUT: RegistryEntry = RegistryEntry {
     slug: "input",
     raw: include_str!("../../public/docs/input.md"),
-    tags: &["input"],
+    tags: &[],
     components: input_components,
 };
 

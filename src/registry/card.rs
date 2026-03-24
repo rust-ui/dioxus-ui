@@ -13,7 +13,7 @@ use super::RegistryEntry;
 pub static CARD: RegistryEntry = RegistryEntry {
     slug: "card",
     raw: include_str!("../../public/docs/card.md"),
-    tags: &["card"],
+    tags: &[],
     components: card_components,
 };
 

@@ -18,7 +18,7 @@ use super::RegistryEntry;
 pub static BUTTON: RegistryEntry = RegistryEntry {
     slug: "button",
     raw: include_str!("../../public/docs/button.md"),
-    tags: &["button"],
+    tags: &[],
     components: button_components,
 };
 

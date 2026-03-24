@@ -10,7 +10,7 @@ use super::RegistryEntry;
 pub static ACCORDION: RegistryEntry = RegistryEntry {
     slug: "accordion",
     raw: include_str!("../../public/docs/accordion.md"),
-    tags: &["accordion"],
+    tags: &[],
     components: accordion_components,
 };
 

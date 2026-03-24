@@ -9,7 +9,7 @@ use super::RegistryEntry;
 pub static TOOLTIP: RegistryEntry = RegistryEntry {
     slug: "tooltip",
     raw: include_str!("../../public/docs/tooltip.md"),
-    tags: &["dialog"],
+    tags: &[],
     components: tooltip_components,
 };
 

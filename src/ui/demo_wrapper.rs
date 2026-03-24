@@ -4,7 +4,7 @@ use dioxus::document::eval;
 use dioxus::prelude::*;
 use icons::{Code, Eye};
 
-use crate::registry::source_map::get_demo_source;
+use crate::__registry__::source_map::get_demo_source;
 
 static DEMO_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
