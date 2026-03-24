@@ -23,6 +23,7 @@ Live demo: **[dioxus-ui.wasmer.app](https://dioxus-ui.wasmer.app)**
 ```bash
 dx serve # web
 dx serve --platform desktop
+dx serve --platform ios
 ```
 
 ## License
