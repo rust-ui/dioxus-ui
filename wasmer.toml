@@ -14,4 +14,6 @@ module = "wasmer/static-web-server:webserver"
 runner = "https://webc.org/runner/wasi"
 
 [command.annotations.wasi]
-main-args = ["-w", "/public"]
+# --page-fallback serves index.html for unknown paths (SPA fallback for client-side routing)
+# Needed when Dioxus SSG pre-rendered pages are missing, and as a safety net in general
+main-args = ["-w", "/public", "--page-fallback", "/public/index.html"]
