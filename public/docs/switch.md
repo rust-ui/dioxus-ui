@@ -33,8 +33,6 @@ rsx! {
 
 Pair a switch with a label for a clear, accessible toggle control.
 
-<DemoSwitchLabeled />
-
 ## See Also
 
 - [Checkbox](/components/checkbox)

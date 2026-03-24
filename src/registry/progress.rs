@@ -4,23 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_progress::DemoProgress;
-use crate::demos::demo_progress_animated::DemoProgressAnimated;
-use crate::demos::demo_progress_controlled::DemoProgressControlled;
-use crate::demos::demo_progress_rtl::DemoProgressRtl;
 use super::RegistryEntry;
 
 pub static PROGRESS: RegistryEntry = RegistryEntry {
     slug: "progress",
     raw: include_str!("../../public/docs/progress.md"),
-    tags: &["feedback", "display"],
+    tags: &[],
     components: progress_components,
 };
 
 fn progress_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoProgress", |_| rsx! { DemoProgress {} });
-    c.add("DemoProgressAnimated", |_| rsx! { DemoProgressAnimated {} });
-    c.add("DemoProgressControlled", |_| rsx! { DemoProgressControlled {} });
-    c.add("DemoProgressRtl", |_| rsx! { DemoProgressRtl {} });
     c
 }

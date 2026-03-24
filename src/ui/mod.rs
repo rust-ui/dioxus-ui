@@ -2,7 +2,6 @@
 // Run `cargo run --manifest-path dioxus_ui_internals/build_registry/Cargo.toml` to regenerate.
 
 pub mod accordion;
-pub mod direction_provider;
 pub mod alert;
 pub mod alert_dialog;
 pub mod avatar;
@@ -16,6 +15,7 @@ pub mod chips;
 pub mod collapsible;
 pub mod demo_wrapper;
 pub mod dialog;
+pub mod direction_provider;
 pub mod doc_header;
 pub mod empty;
 pub mod footer;

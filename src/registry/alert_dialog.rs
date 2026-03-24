@@ -4,9 +4,7 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_alert_dialog::DemoAlertDialog;
-use crate::demos::demo_alert_dialog_media::DemoAlertDialogMedia;
-use crate::demos::demo_alert_dialog_rtl::DemoAlertDialogRtl;
-use crate::demos::demo_alert_dialog_small::DemoAlertDialogSmall;
+use crate::demos::demo_alert_dialog_small_media::DemoAlertDialogSmallMedia;
 use super::RegistryEntry;
 
 pub static ALERT_DIALOG: RegistryEntry = RegistryEntry {
@@ -19,8 +17,6 @@ pub static ALERT_DIALOG: RegistryEntry = RegistryEntry {
 fn alert_dialog_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAlertDialog", |_| rsx! { DemoAlertDialog {} });
-    c.add("DemoAlertDialogMedia", |_| rsx! { DemoAlertDialogMedia {} });
-    c.add("DemoAlertDialogRtl", |_| rsx! { DemoAlertDialogRtl {} });
-    c.add("DemoAlertDialogSmall", |_| rsx! { DemoAlertDialogSmall {} });
+    c.add("DemoAlertDialogSmallMedia", |_| rsx! { DemoAlertDialogSmallMedia {} });
     c
 }

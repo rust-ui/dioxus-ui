@@ -33,13 +33,9 @@ rsx! {
 
 Combine the checkbox with a label for accessible form fields.
 
-<DemoCheckboxLabeled />
-
 ### Disabled
 
 A disabled checkbox prevents user interaction while maintaining its visual state.
-
-<DemoCheckboxDisabled />
 
 ## See Also
 

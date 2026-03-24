@@ -33,8 +33,6 @@ rsx! {
 
 Use a Dioxus signal to drive the progress value dynamically.
 
-<DemoProgressAnimated />
-
 ## See Also
 
 - [Spinner](/components/spinner)

@@ -22,7 +22,7 @@ pub fn DemoAlertDialogMedia() -> Element {
                     }
                     AlertDialogFooter {
                         AlertDialogClose { class: "w-full sm:w-fit", "Cancel" }
-                        Button { class: "w-full sm:w-fit", "Share" }
+                        Button { button_type: "submit", class: "w-full sm:w-fit", "Share" }
                     }
                 }
             }

@@ -4,21 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_switch::DemoSwitch;
-use crate::demos::demo_switch_labeled::DemoSwitchLabeled;
-use crate::demos::demo_switch_rtl::DemoSwitchRtl;
 use super::RegistryEntry;
 
 pub static SWITCH: RegistryEntry = RegistryEntry {
     slug: "switch",
     raw: include_str!("../../public/docs/switch.md"),
-    tags: &["interactive", "form"],
+    tags: &["utils"],
     components: switch_components,
 };
 
 fn switch_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSwitch", |_| rsx! { DemoSwitch {} });
-    c.add("DemoSwitchLabeled", |_| rsx! { DemoSwitchLabeled {} });
-    c.add("DemoSwitchRtl", |_| rsx! { DemoSwitchRtl {} });
     c
 }

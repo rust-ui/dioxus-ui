@@ -8,6 +8,7 @@ pub mod avatar;
 pub mod badge;
 pub mod breadcrumb;
 pub mod button;
+pub mod button_group;
 pub mod card;
 pub mod checkbox;
 pub mod chips;
@@ -46,6 +47,7 @@ use avatar::AVATAR;
 use badge::BADGE;
 use breadcrumb::BREADCRUMB;
 use button::BUTTON;
+use button_group::BUTTON_GROUP;
 use card::CARD;
 use checkbox::CHECKBOX;
 use chips::CHIPS;
@@ -81,6 +83,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &BADGE,
     &BREADCRUMB,
     &BUTTON,
+    &BUTTON_GROUP,
     &CARD,
     &CHECKBOX,
     &CHIPS,

@@ -36,8 +36,6 @@ rsx! {
 
 Use the destructive variant to communicate errors or critical warnings to the user.
 
-<DemoAlertDestructive />
-
 ## See Also
 
 - [Badge](/components/badge)

@@ -36,13 +36,14 @@ rsx! {
 
 When the image fails to load or no `src` is provided, the fallback content is displayed instead.
 
-<DemoAvatarFallback />
-
 ### Sizes
 
 Avatar supports three size variants: `Sm`, `Default`, and `Lg`.
 
-<DemoAvatarSizes />
+
+### Group Count with Icon
+
+<DemoAvatarGroupCountIcon />
 
 ## See Also
 

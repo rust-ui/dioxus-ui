@@ -4,19 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_tooltip::DemoTooltip;
-use crate::demos::demo_tooltip_rtl::DemoTooltipRtl;
 use super::RegistryEntry;
 
 pub static TOOLTIP: RegistryEntry = RegistryEntry {
     slug: "tooltip",
     raw: include_str!("../../public/docs/tooltip.md"),
-    tags: &[],
+    tags: &["dialog"],
     components: tooltip_components,
 };
 
 fn tooltip_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTooltip", |_| rsx! { DemoTooltip {} });
-    c.add("DemoTooltipRtl", |_| rsx! { DemoTooltipRtl {} });
     c
 }

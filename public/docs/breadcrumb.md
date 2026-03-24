@@ -40,6 +40,11 @@ rsx! {
 }
 ```
 
+
+### RTL
+
+<DemoBreadcrumbRtl />
+
 ## See Also
 
 - [Tabs](/components/tabs)

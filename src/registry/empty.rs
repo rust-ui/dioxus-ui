@@ -4,12 +4,7 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_empty::DemoEmpty;
-use crate::demos::demo_empty_avatar_group::DemoEmptyAvatarGroup;
-use crate::demos::demo_empty_background::DemoEmptyBackground;
-use crate::demos::demo_empty_card::DemoEmptyCard;
 use crate::demos::demo_empty_muted::DemoEmptyMuted;
-use crate::demos::demo_empty_outline::DemoEmptyOutline;
-use crate::demos::demo_empty_rtl::DemoEmptyRtl;
 use super::RegistryEntry;
 
 pub static EMPTY: RegistryEntry = RegistryEntry {
@@ -22,11 +17,6 @@ pub static EMPTY: RegistryEntry = RegistryEntry {
 fn empty_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoEmpty", |_| rsx! { DemoEmpty {} });
-    c.add("DemoEmptyAvatarGroup", |_| rsx! { DemoEmptyAvatarGroup {} });
-    c.add("DemoEmptyBackground", |_| rsx! { DemoEmptyBackground {} });
-    c.add("DemoEmptyCard", |_| rsx! { DemoEmptyCard {} });
     c.add("DemoEmptyMuted", |_| rsx! { DemoEmptyMuted {} });
-    c.add("DemoEmptyOutline", |_| rsx! { DemoEmptyOutline {} });
-    c.add("DemoEmptyRtl", |_| rsx! { DemoEmptyRtl {} });
     c
 }

@@ -33,8 +33,6 @@ rsx! {
 
 Combine multiple `Kbd` elements with a separator to represent multi-key shortcuts.
 
-<DemoKbdCombination />
-
 ## See Also
 
 - [Badge](/components/badge)

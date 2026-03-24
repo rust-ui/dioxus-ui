@@ -7,7 +7,6 @@ use crate::demos::demo_skeleton::DemoSkeleton;
 use crate::demos::demo_skeleton_avatar::DemoSkeletonAvatar;
 use crate::demos::demo_skeleton_form::DemoSkeletonForm;
 use crate::demos::demo_skeleton_image::DemoSkeletonImage;
-use crate::demos::demo_skeleton_rtl::DemoSkeletonRtl;
 use crate::demos::demo_skeleton_table::DemoSkeletonTable;
 use crate::demos::demo_skeleton_text::DemoSkeletonText;
 use super::RegistryEntry;
@@ -25,7 +24,6 @@ fn skeleton_components() -> MdComponents {
     c.add("DemoSkeletonAvatar", |_| rsx! { DemoSkeletonAvatar {} });
     c.add("DemoSkeletonForm", |_| rsx! { DemoSkeletonForm {} });
     c.add("DemoSkeletonImage", |_| rsx! { DemoSkeletonImage {} });
-    c.add("DemoSkeletonRtl", |_| rsx! { DemoSkeletonRtl {} });
     c.add("DemoSkeletonTable", |_| rsx! { DemoSkeletonTable {} });
     c.add("DemoSkeletonText", |_| rsx! { DemoSkeletonText {} });
     c

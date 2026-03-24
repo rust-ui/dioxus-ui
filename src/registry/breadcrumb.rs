@@ -4,17 +4,19 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_breadcrumb::DemoBreadcrumb;
+use crate::demos::demo_breadcrumb_rtl::DemoBreadcrumbRtl;
 use super::RegistryEntry;
 
 pub static BREADCRUMB: RegistryEntry = RegistryEntry {
     slug: "breadcrumb",
     raw: include_str!("../../public/docs/breadcrumb.md"),
-    tags: &[],
+    tags: &["navigation"],
     components: breadcrumb_components,
 };
 
 fn breadcrumb_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoBreadcrumb", |_| rsx! { DemoBreadcrumb {} });
+    c.add("DemoBreadcrumbRtl", |_| rsx! { DemoBreadcrumbRtl {} });
     c
 }

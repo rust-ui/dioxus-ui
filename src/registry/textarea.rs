@@ -4,21 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_textarea::DemoTextarea;
-use crate::demos::demo_textarea_disabled::DemoTextareaDisabled;
-use crate::demos::demo_textarea_rtl::DemoTextareaRtl;
 use super::RegistryEntry;
 
 pub static TEXTAREA: RegistryEntry = RegistryEntry {
     slug: "textarea",
     raw: include_str!("../../public/docs/textarea.md"),
-    tags: &["form", "input"],
+    tags: &["input"],
     components: textarea_components,
 };
 
 fn textarea_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTextarea", |_| rsx! { DemoTextarea {} });
-    c.add("DemoTextareaDisabled", |_| rsx! { DemoTextareaDisabled {} });
-    c.add("DemoTextareaRtl", |_| rsx! { DemoTextareaRtl {} });
     c
 }

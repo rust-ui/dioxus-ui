@@ -5,15 +5,12 @@ use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_accordion::DemoAccordion;
 use crate::demos::demo_accordion_bordered::DemoAccordionBordered;
-use crate::demos::demo_accordion_card::DemoAccordionCard;
-use crate::demos::demo_accordion_icons::DemoAccordionIcons;
-use crate::demos::demo_accordion_rtl::DemoAccordionRtl;
 use super::RegistryEntry;
 
 pub static ACCORDION: RegistryEntry = RegistryEntry {
     slug: "accordion",
     raw: include_str!("../../public/docs/accordion.md"),
-    tags: &[],
+    tags: &["accordion"],
     components: accordion_components,
 };
 
@@ -21,8 +18,5 @@ fn accordion_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAccordion", |_| rsx! { DemoAccordion {} });
     c.add("DemoAccordionBordered", |_| rsx! { DemoAccordionBordered {} });
-    c.add("DemoAccordionCard", |_| rsx! { DemoAccordionCard {} });
-    c.add("DemoAccordionIcons", |_| rsx! { DemoAccordionIcons {} });
-    c.add("DemoAccordionRtl", |_| rsx! { DemoAccordionRtl {} });
     c
 }

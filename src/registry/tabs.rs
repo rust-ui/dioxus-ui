@@ -4,23 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_tabs::DemoTabs;
-use crate::demos::demo_tabs_line::DemoTabsLine;
-use crate::demos::demo_tabs_rtl::DemoTabsRtl;
-use crate::demos::demo_tabs_vertical::DemoTabsVertical;
 use super::RegistryEntry;
 
 pub static TABS: RegistryEntry = RegistryEntry {
     slug: "tabs",
     raw: include_str!("../../public/docs/tabs.md"),
-    tags: &["navigation", "layout"],
+    tags: &["utils"],
     components: tabs_components,
 };
 
 fn tabs_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTabs", |_| rsx! { DemoTabs {} });
-    c.add("DemoTabsLine", |_| rsx! { DemoTabsLine {} });
-    c.add("DemoTabsRtl", |_| rsx! { DemoTabsRtl {} });
-    c.add("DemoTabsVertical", |_| rsx! { DemoTabsVertical {} });
     c
 }

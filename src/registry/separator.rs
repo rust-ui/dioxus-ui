@@ -4,7 +4,6 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_separator::DemoSeparator;
-use crate::demos::demo_separator_rtl::DemoSeparatorRtl;
 use super::RegistryEntry;
 
 pub static SEPARATOR: RegistryEntry = RegistryEntry {
@@ -17,6 +16,5 @@ pub static SEPARATOR: RegistryEntry = RegistryEntry {
 fn separator_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSeparator", |_| rsx! { DemoSeparator {} });
-    c.add("DemoSeparatorRtl", |_| rsx! { DemoSeparatorRtl {} });
     c
 }

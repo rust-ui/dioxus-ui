@@ -1,34 +1,30 @@
 use dioxus::prelude::*;
 
 use crate::ui::alert_dialog::{
-    AlertDialog, AlertDialogAction, AlertDialogClose, AlertDialogContent,
-    AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle,
-    AlertDialogTrigger,
+    AlertDialog, AlertDialogBody, AlertDialogClose, AlertDialogContent, AlertDialogDescription,
+    AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
 };
-use crate::ui::button::{Button, ButtonVariant};
+use crate::ui::button::Button;
 
 #[component]
 pub fn DemoAlertDialog() -> Element {
     rsx! {
-        div { class: "flex justify-center",
-            AlertDialog {
-                AlertDialogTrigger {
-                    Button { variant: ButtonVariant::Outline, "Show Dialog" }
-                }
-                AlertDialogContent {
+        AlertDialog {
+            AlertDialogTrigger { "Open Alert" }
+
+            AlertDialogContent { class: "w-[425px]",
+                AlertDialogBody {
                     AlertDialogHeader {
                         AlertDialogTitle { "Are you absolutely sure?" }
+
                         AlertDialogDescription {
                             "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
                         }
                     }
+
                     AlertDialogFooter {
-                        AlertDialogClose {
-                            Button { variant: ButtonVariant::Outline, "Cancel" }
-                        }
-                        AlertDialogAction {
-                            Button { variant: ButtonVariant::Destructive, "Delete" }
-                        }
+                        AlertDialogClose { class: "w-full sm:w-fit", "Cancel" }
+                        Button { button_type: "submit", class: "w-full sm:w-fit", "Continue" }
                     }
                 }
             }

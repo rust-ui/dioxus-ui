@@ -10,6 +10,12 @@ Each ported component requires:
 - `public/docs/<component>.md`
 - `src/demos/demo_<component>*.rs` — matching RUST-UI exactly
 
+After adding or removing demos, run `build_registry` to regenerate `src/demos/mod.rs`, `src/registry/mod.rs`, and validate that every `<DemoXxx />` tag in `public/docs/` has a matching demo file:
+
+```
+cargo run --manifest-path dioxus_ui_internals/build_registry/Cargo.toml
+```
+
 ---
 
 ## Inputs & Forms

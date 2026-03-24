@@ -52,6 +52,11 @@ rsx! {
 }
 ```
 
+
+### Small (Media)
+
+<DemoAlertDialogSmallMedia />
+
 ## See Also
 
 - [Alert](/components/alert)

@@ -7,8 +7,6 @@ type: "components:ui"
 path: "ui/select_native.rs"
 ---
 
-<DemoSelectNative />
-
 ## Installation
 
 Coming soon.

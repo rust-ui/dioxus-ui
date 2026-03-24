@@ -38,8 +38,6 @@ rsx! {
 
 ## States
 
-<DemoSliderDisabled />
-
 ## See Also
 
 - [Progress](/components/progress)

@@ -33,8 +33,6 @@ rsx! {
 
 A disabled textarea prevents user input and shows reduced opacity.
 
-<DemoTextareaDisabled />
-
 ## See Also
 
 - [Input](/components/input)

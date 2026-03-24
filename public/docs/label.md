@@ -33,8 +33,6 @@ rsx! {
 
 Pair a label with an input for accessible form fields. The `html_for` prop links the label to the input via its `id`.
 
-<DemoLabelInput />
-
 ## See Also
 
 - [Input](/components/input)

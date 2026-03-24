@@ -4,23 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_checkbox::DemoCheckbox;
-use crate::demos::demo_checkbox_disabled::DemoCheckboxDisabled;
-use crate::demos::demo_checkbox_labeled::DemoCheckboxLabeled;
-use crate::demos::demo_checkbox_rtl::DemoCheckboxRtl;
 use super::RegistryEntry;
 
 pub static CHECKBOX: RegistryEntry = RegistryEntry {
     slug: "checkbox",
     raw: include_str!("../../public/docs/checkbox.md"),
-    tags: &["interactive", "form"],
+    tags: &["utils"],
     components: checkbox_components,
 };
 
 fn checkbox_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCheckbox", |_| rsx! { DemoCheckbox {} });
-    c.add("DemoCheckboxDisabled", |_| rsx! { DemoCheckboxDisabled {} });
-    c.add("DemoCheckboxLabeled", |_| rsx! { DemoCheckboxLabeled {} });
-    c.add("DemoCheckboxRtl", |_| rsx! { DemoCheckboxRtl {} });
     c
 }

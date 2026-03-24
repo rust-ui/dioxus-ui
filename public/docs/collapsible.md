@@ -39,6 +39,11 @@ rsx! {
 }
 ```
 
+
+### Settings
+
+<DemoCollapsibleSettings />
+
 ## See Also
 
 - [Accordion](/components/accordion)

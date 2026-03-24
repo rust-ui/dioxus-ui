@@ -4,23 +4,17 @@
 use dioxus::prelude::*;
 use crate::markdown::converter::MdComponents;
 use crate::demos::demo_alert::DemoAlert;
-use crate::demos::demo_alert_colors::DemoAlertColors;
-use crate::demos::demo_alert_destructive::DemoAlertDestructive;
-use crate::demos::demo_alert_rtl::DemoAlertRtl;
 use super::RegistryEntry;
 
 pub static ALERT: RegistryEntry = RegistryEntry {
     slug: "alert",
     raw: include_str!("../../public/docs/alert.md"),
-    tags: &["feedback", "display"],
+    tags: &[],
     components: alert_components,
 };
 
 fn alert_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAlert", |_| rsx! { DemoAlert {} });
-    c.add("DemoAlertColors", |_| rsx! { DemoAlertColors {} });
-    c.add("DemoAlertDestructive", |_| rsx! { DemoAlertDestructive {} });
-    c.add("DemoAlertRtl", |_| rsx! { DemoAlertRtl {} });
     c
 }
