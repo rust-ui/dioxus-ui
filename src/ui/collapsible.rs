@@ -38,6 +38,7 @@ pub fn Collapsible(
 #[component]
 pub fn CollapsibleTrigger(
     #[props(into, optional)] class: Option<String>,
+    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
     children: Element,
 ) -> Element {
     let CollapsibleCtx { mut open } = use_context::<CollapsibleCtx>();
@@ -49,7 +50,12 @@ pub fn CollapsibleTrigger(
             "data-name": "CollapsibleTrigger",
             "data-state": "{state}",
             class: "{class.as_deref().unwrap_or(\"\")}",
-            onclick: move |_| open.set(!open()),
+            onclick: move |e| {
+                open.set(!open());
+                if let Some(handler) = &onclick {
+                    handler.call(e);
+                }
+            },
             {children}
         }
     }

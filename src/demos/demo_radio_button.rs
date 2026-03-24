@@ -22,7 +22,7 @@ pub fn DemoRadioButton() -> Element {
                             move |_| selected.set(frequency.clone())
                         },
                     }
-                    Label { r#for: *frequency, {*frequency} }
+                    Label { html_for: *frequency, {*frequency} }
                 }
             }
         }

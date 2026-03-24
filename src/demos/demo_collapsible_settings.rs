@@ -16,7 +16,7 @@ pub fn DemoCollapsibleSettings() -> Element {
                 CardDescription { "Set the corner radius of the element." }
             }
             CardContent {
-                Collapsible { open: open(), class: "flex gap-2 items-start",
+                Collapsible { class: "flex gap-2 items-start",
                     div { class: "grid grid-cols-2 gap-2 w-full",
                         div { class: "flex flex-col gap-1",
                             label { class: "sr-only", r#for: "radius-tl", "Top Left" }

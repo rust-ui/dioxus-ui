@@ -22,7 +22,7 @@ pub fn DemoRadioGroup() -> Element {
                             move |_| selected.set(size.clone())
                         },
                     }
-                    Label { r#for: *size, {*size} }
+                    Label { html_for: *size, {*size} }
                 }
             }
         }
