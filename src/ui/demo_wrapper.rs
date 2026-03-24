@@ -101,6 +101,7 @@ pub fn DemoWrapper(
                     // Content area: flex-[1_1_auto] — takes all space, shrinks when bg grows
                     div {
                         id: "{container_id}",
+                        "data-name": "Preview",
                         class: "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] px-4 bg-background",
                         {children}
                     }
