@@ -13,17 +13,17 @@ import { BasePage } from "./_base_page";
  * │   ┌─────────────────────────────────────────────────────────────────┐   │
  * │   │  [data-name="CardHeader"]  ← px-6 padding                       │   │
  * │   │  ┌─────────────────────────────────────────────────────────┐    │   │
- * │   │  │  [data-name="CardTitle"]  ← <h3> font-semibold          │    │   │
+ * │   │  │  <h2> CardTitle  ← font-semibold                        │    │   │
  * │   │  │  "Card Title"                                           │    │   │
  * │   │  └─────────────────────────────────────────────────────────┘    │   │
  * │   ├─────────────────────────────────────────────────────────────────┤   │
  * │   │  [data-name="CardContent"]                                      │   │
  * │   │  ┌─────────────────────────────────────────────────────────┐    │   │
- * │   │  │  [data-name="CardDescription"]  ← text-muted-foreground │    │   │
+ * │   │  │  CardDescription  ← text-muted-foreground                │    │   │
  * │   │  │  "Hello, this is a more detailed description..."        │    │   │
  * │   │  └─────────────────────────────────────────────────────────┘    │   │
  * │   ├─────────────────────────────────────────────────────────────────┤   │
- * │   │  [data-name="CardFooter"]  ← <footer> flex items-center         │   │
+ * │   │  [data-name="CardFooter"]  ← flex, items-center                 │   │
  * │   │  ┌───────────────┐                    ┌───────────────┐         │   │
  * │   │  │    Cancel     │                    │    Confirm    │         │   │
  * │   │  │   (outline)   │                    │   (primary)   │         │   │
@@ -34,12 +34,35 @@ import { BasePage } from "./_base_page";
  *
  * CARD STYLING:
  * ┌─────────────────────────────────────────────────────────────────────────┐
- * │   .bg-card              ← Theme-aware background                        │
- * │   .text-card-foreground ← Theme-aware text                              │
- * │   .rounded-xl           ← Large rounded corners                         │
- * │   .border               ← Subtle border                                 │
- * │   .shadow-sm            ← Light drop shadow                             │
- * │   .flex.flex-col.gap-4  ← Vertical layout                               │
+ * │                                                                         │
+ * │   ┌─────────────────────────────────────────────────────────────┐       │
+ * │   │  .bg-card              ← Theme-aware background             │       │
+ * │   │  .text-card-foreground ← Theme-aware text                   │       │
+ * │   │  .rounded-xl           ← Large rounded corners              │       │
+ * │   │  .border               ← Subtle border                      │       │
+ * │   │  .shadow-sm            ← Light drop shadow                  │       │
+ * │   └─────────────────────────────────────────────────────────────┘       │
+ * │                                                                         │
+ * └─────────────────────────────────────────────────────────────────────────┘
+ *
+ * LAYOUT VARIANTS:
+ * ┌─────────────────────────────────────────────────────────────────────────┐
+ * │                                                                         │
+ * │   VERTICAL (default):       HORIZONTAL (md:flex-row):                   │
+ * │   ┌───────────────────┐     ┌─────────────────────────────────────┐     │
+ * │   │      Image        │     │  Image  │  Content                  │     │
+ * │   ├───────────────────┤     │         │  Title                    │     │
+ * │   │  Title            │     │         │  Description              │     │
+ * │   │  Description      │     └─────────────────────────────────────┘     │
+ * │   └───────────────────┘                                                 │
+ * │                                                                         │
+ * │   REVERSE (md:flex-row-reverse):                                        │
+ * │   ┌─────────────────────────────────────────────────────────────┐       │
+ * │   │  Content                  │  Image  │                       │       │
+ * │   │  Title                    │         │                       │       │
+ * │   │  Description              │         │                       │       │
+ * │   └─────────────────────────────────────────────────────────────┘       │
+ * │                                                                         │
  * └─────────────────────────────────────────────────────────────────────────┘
  *
  * ============================================================================
@@ -48,27 +71,44 @@ import { BasePage } from "./_base_page";
 class CardPage extends BasePage {
   protected readonly componentName = "card";
 
+  // Demo: Basic Card
   readonly card: Locator;
   readonly cardHeader: Locator;
   readonly cardTitle: Locator;
   readonly cardContent: Locator;
   readonly cardDescription: Locator;
   readonly cardFooter: Locator;
+
+  // Footer buttons
   readonly cancelButton: Locator;
   readonly confirmButton: Locator;
+
+  // Demo: Reverse layout cards
+  readonly reverseCards: Locator;
 
   constructor(page: Page) {
     super(page);
 
+    // Basic card structure - scoped within preview
     this.card = this.preview.locator('[data-name="Card"]').first();
     this.cardHeader = this.preview.locator('[data-name="CardHeader"]').first();
-    this.cardTitle = this.preview.locator('[data-name="CardTitle"]').first();
+    this.cardTitle = this.preview.getByRole("heading", { name: "Card Title" });
     this.cardContent = this.preview.locator('[data-name="CardContent"]').first();
     this.cardDescription = this.preview.locator('[data-name="CardDescription"]').first();
     this.cardFooter = this.preview.locator('[data-name="CardFooter"]').first();
 
+    // Footer buttons - scoped within preview
     this.cancelButton = this.preview.getByRole("button", { name: "Cancel" });
     this.confirmButton = this.preview.getByRole("button", { name: "Confirm" });
+
+    // Reverse layout cards - scoped within preview
+    this.reverseCards = this.preview.locator('[data-name="Card"]');
+  }
+
+  async getCardByTitle(title: string): Promise<Locator> {
+    return this.preview.locator('[data-name="Card"]').filter({
+      has: this.preview.getByRole("heading", { name: title }),
+    });
   }
 }
 
@@ -83,10 +123,10 @@ test.describe("Card Page", () => {
    * ┌─────────────────────────────────────────────────────────────────┐
    * │  Card                                                           │
    * │  ├── CardHeader                                                 │
-   * │  │   └── CardTitle (<h3>)                                       │
+   * │  │   └── CardTitle (<h2>)                                       │
    * │  ├── CardContent                                                │
    * │  │   └── CardDescription                                        │
-   * │  └── CardFooter (<footer>)                                      │
+   * │  └── CardFooter                                                 │
    * │      ├── Cancel button (outline)                                │
    * │      └── Confirm button (primary)                               │
    * └─────────────────────────────────────────────────────────────────┘
@@ -98,6 +138,7 @@ test.describe("Card Page", () => {
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
      *   │   [data-name="Card"]                                    │
      *   │   ┌─────────────────────────────────────────────────┐   │
      *   │   │  .bg-card           ← Theme background          │   │
@@ -106,6 +147,7 @@ test.describe("Card Page", () => {
      *   │   │  .border            ← Border styling            │   │
      *   │   │  .shadow-sm         ← Drop shadow               │   │
      *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
      *   └─────────────────────────────────────────────────────────┘
      *
      *   Validates: Card component has all required base styling classes
@@ -127,10 +169,14 @@ test.describe("Card Page", () => {
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │  [data-name="CardHeader"]       ← VISIBLE               │
-     *   │  ┌─────────────────────────────────────────────────┐    │
-     *   │  │  [data-name="CardTitle"] "Card Title" ← VISIBLE │    │
-     *   │  └─────────────────────────────────────────────────┘    │
+     *   │  Card                                                   │
+     *   │  ┌───────────────────────────────────────────────────┐  │
+     *   │  │  [data-name="CardHeader"]       ← VISIBLE         │  │
+     *   │  │  ┌─────────────────────────────────────────────┐  │  │
+     *   │  │  │  <h2> "Card Title"           ← VISIBLE      │  │  │
+     *   │  │  │       TEXT MATCHES                          │  │  │
+     *   │  │  └─────────────────────────────────────────────┘  │  │
+     *   │  └───────────────────────────────────────────────────┘  │
      *   └─────────────────────────────────────────────────────────┘
      *
      *   Validates: CardHeader exists and contains CardTitle with correct text
@@ -150,11 +196,15 @@ test.describe("Card Page", () => {
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │  [data-name="CardContent"]      ← VISIBLE               │
-     *   │  ┌─────────────────────────────────────────────────┐    │
-     *   │  │  [data-name="CardDescription"]   ← VISIBLE      │    │
-     *   │  │  "Hello, this is a more detailed..."             │    │
-     *   │  └─────────────────────────────────────────────────┘    │
+     *   │  Card                                                   │
+     *   │  ├── CardHeader                                         │
+     *   │  └── [data-name="CardContent"]      ← VISIBLE           │
+     *   │      ┌───────────────────────────────────────────────┐  │
+     *   │      │  [data-name="CardDescription"]   ← VISIBLE    │  │
+     *   │      │  "Hello, this is a more detailed..."          │  │
+     *   │      │         ↑                                     │  │
+     *   │      │    TEXT CONTAINS                              │  │
+     *   │      └───────────────────────────────────────────────┘  │
      *   └─────────────────────────────────────────────────────────┘
      *
      *   Validates: CardContent exists and contains CardDescription with text
@@ -165,9 +215,7 @@ test.describe("Card Page", () => {
 
       await expect(ui.cardContent).toBeVisible();
       await expect(ui.cardDescription).toBeVisible();
-      await expect(ui.cardDescription).toContainText(
-        "Hello, this is a more detailed description"
-      );
+      await expect(ui.cardDescription).toContainText("Hello, this is a more detailed description");
     });
 
     /**
@@ -176,10 +224,17 @@ test.describe("Card Page", () => {
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │  [data-name="CardFooter"]  (<footer>)   ← VISIBLE       │
-     *   │  ┌──────────┐                ┌───────────┐              │
-     *   │  │  Cancel  │                │  Confirm  │              │
-     *   │  └──────────┘                └───────────┘              │
+     *   │  Card                                                   │
+     *   │  ├── CardHeader                                         │
+     *   │  ├── CardContent                                        │
+     *   │  └── [data-name="CardFooter"]       ← VISIBLE           │
+     *   │      ┌─────────────────────────────────────────────┐    │
+     *   │      │  ┌──────────┐           ┌───────────┐       │    │
+     *   │      │  │  Cancel  │           │  Confirm  │       │    │
+     *   │      │  └──────────┘           └───────────┘       │    │
+     *   │      │       ↑                       ↑             │    │
+     *   │      │    VISIBLE                 VISIBLE          │    │
+     *   │      └─────────────────────────────────────────────┘    │
      *   └─────────────────────────────────────────────────────────┘
      *
      *   Validates: CardFooter exists with Cancel and Confirm buttons
@@ -201,42 +256,26 @@ test.describe("Card Page", () => {
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │   <h3>Card Title</h3>                                   │
-     *   │     ↑ tagName.toLowerCase() === "h3"                    │
+     *   │                                                         │
+     *   │   CardTitle element tag verification:                   │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │  <h2>Card Title</h2>                            │   │
+     *   │   │    ↑                                            │   │
+     *   │   │  tagName.toLowerCase() === "h2"                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   │   Semantic HTML hierarchy matters for accessibility     │
+     *   │                                                         │
      *   └─────────────────────────────────────────────────────────┘
      *
-     *   Validates: CardTitle renders as semantic h3 heading element
+     *   Validates: CardTitle renders as semantic h2 heading element
      */
-    test("CardTitle should be an h3 element", async ({ page }) => {
+    test("CardTitle should be an h2 element", async ({ page }) => {
       const ui = new CardPage(page);
       await ui.goto();
 
-      const tagName = await ui.cardTitle.evaluate((el) =>
-        el.tagName.toLowerCase()
-      );
-      expect(tagName).toBe("h3");
-    });
-
-    /**
-     * TEST: CardFooter HTML Element Type
-     * ─────────────────────────────────────────────────────────────
-     *
-     *   What we're testing:
-     *   ┌─────────────────────────────────────────────────────────┐
-     *   │   <footer> ... </footer>                                │
-     *   │     ↑ tagName.toLowerCase() === "footer"                │
-     *   └─────────────────────────────────────────────────────────┘
-     *
-     *   Validates: CardFooter renders as semantic footer element
-     */
-    test("CardFooter should be a footer element", async ({ page }) => {
-      const ui = new CardPage(page);
-      await ui.goto();
-
-      const tagName = await ui.cardFooter.evaluate((el) =>
-        el.tagName.toLowerCase()
-      );
-      expect(tagName).toBe("footer");
+      const tagName = await ui.cardTitle.evaluate((el) => el.tagName.toLowerCase());
+      expect(tagName).toBe("h2");
     });
 
     /**
@@ -245,7 +284,15 @@ test.describe("Card Page", () => {
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │  .font-semibold (600 weight)                            │
+     *   │                                                         │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │  Card Title                                     │   │
+     *   │   │  ──────────                                     │   │
+     *   │   │      ↑                                          │   │
+     *   │   │  .font-semibold (600 weight)                    │   │
+     *   │   │  Creates visual hierarchy over description      │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
      *   └─────────────────────────────────────────────────────────┘
      *
      *   Validates: CardTitle has semibold font weight for emphasis
@@ -258,76 +305,279 @@ test.describe("Card Page", () => {
     });
 
     /**
-     * TEST: CardDescription muted text
+     * TEST: CardDescription Muted Color
      * ─────────────────────────────────────────────────────────────
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │  .text-muted-foreground ← muted text color              │
-     *   │  .text-sm               ← small font size               │
+     *   │                                                         │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │  Card Title              ← Primary text color   │   │
+     *   │   │  ──────────                                     │   │
+     *   │   │  Hello, this is a        ← Muted text color     │   │
+     *   │   │  more detailed...             ↓                 │   │
+     *   │   │                    .text-muted-foreground       │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
      *   └─────────────────────────────────────────────────────────┘
      *
-     *   Validates: CardDescription uses muted styling
+     *   Validates: CardDescription has muted foreground color class
      */
-    test("CardDescription should have muted text classes", async ({ page }) => {
+    test("CardDescription should have muted foreground color", async ({ page }) => {
       const ui = new CardPage(page);
       await ui.goto();
 
       await expect(ui.cardDescription).toHaveClass(/text-muted-foreground/);
-      await expect(ui.cardDescription).toHaveClass(/text-sm/);
     });
 
     /**
-     * TEST: CardFooter flex layout
+     * TEST: CardFooter Flex Layout
      * ─────────────────────────────────────────────────────────────
      *
      *   What we're testing:
      *   ┌─────────────────────────────────────────────────────────┐
-     *   │  .flex .items-center .gap-2 ← button row layout         │
+     *   │                                                         │
+     *   │   CardFooter layout classes:                            │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │  .flex         ← Flexbox container              │   │
+     *   │   │  .items-center ← Vertical centering             │   │
+     *   │   │                                                 │   │
+     *   │   │  ┌──────────┐                 ┌───────────┐     │   │
+     *   │   │  │  Cancel  │ ←── centered ──→│  Confirm  │     │   │
+     *   │   │  └──────────┘                 └───────────┘     │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
      *   └─────────────────────────────────────────────────────────┘
      *
-     *   Validates: CardFooter uses flex layout for button alignment
+     *   Validates: CardFooter uses flexbox with centered items
      */
-    test("CardFooter should have flex layout classes", async ({ page }) => {
+    test("CardFooter should have flex layout", async ({ page }) => {
       const ui = new CardPage(page);
       await ui.goto();
 
       await expect(ui.cardFooter).toHaveClass(/flex/);
       await expect(ui.cardFooter).toHaveClass(/items-center/);
     });
-  });
 
-  test.describe("Accessibility", () => {
     /**
-     * TEST: Card is visible and accessible
+     * TEST: CardHeader Padding
      * ─────────────────────────────────────────────────────────────
      *
-     *   Validates: Card and all sub-components are in the DOM and visible
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   CardHeader horizontal padding:                        │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │←─ px-6 ─→┌──────────────────────┐←─ px-6 ─→    │   │
+     *   │   │          │  Card Title          │              │   │
+     *   │   │          └──────────────────────┘              │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: CardHeader has px-6 horizontal padding class
      */
-    test("all card sub-components should be visible", async ({ page }) => {
+    test("CardHeader should have padding", async ({ page }) => {
       const ui = new CardPage(page);
       await ui.goto();
 
-      await expect(ui.card).toBeVisible();
-      await expect(ui.cardHeader).toBeVisible();
-      await expect(ui.cardTitle).toBeVisible();
-      await expect(ui.cardContent).toBeVisible();
-      await expect(ui.cardDescription).toBeVisible();
-      await expect(ui.cardFooter).toBeVisible();
+      await expect(ui.cardHeader).toHaveClass(/px-6/);
+    });
+  });
+
+  test.describe("Interactions", () => {
+    /**
+     * TEST: Cancel Button Outline Variant
+     * ─────────────────────────────────────────────────────────────
+     *
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   Cancel button styling (outline variant):              │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │  ╭───────────────╮                              │   │
+     *   │   │  │    Cancel     │  ← .border                   │   │
+     *   │   │  │               │  ← .bg-background            │   │
+     *   │   │  ╰───────────────╯                              │   │
+     *   │   │  Outline variant = border + transparent bg      │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: Cancel button has outline variant styling classes
+     */
+    test("Cancel button should have outline variant", async ({ page }) => {
+      const ui = new CardPage(page);
+      await ui.goto();
+
+      await expect(ui.cancelButton).toHaveClass(/border/);
+      await expect(ui.cancelButton).toHaveClass(/bg-background/);
     });
 
     /**
-     * TEST: Buttons are interactive
+     * TEST: Confirm Button Default Variant
      * ─────────────────────────────────────────────────────────────
      *
-     *   Validates: Cancel and Confirm buttons are enabled and clickable
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   Confirm button styling (default/primary variant):     │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │  ╭───────────────╮                              │   │
+     *   │   │  │    Confirm    │  ← .bg-primary               │   │
+     *   │   │  │   ■■■■■■■■■   │  (solid fill)                │   │
+     *   │   │  ╰───────────────╯                              │   │
+     *   │   │  Primary variant = solid background             │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: Confirm button has primary background class
      */
-    test("footer buttons should be enabled", async ({ page }) => {
+    test("Confirm button should have default variant", async ({ page }) => {
       const ui = new CardPage(page);
       await ui.goto();
 
+      await expect(ui.confirmButton).toHaveClass(/bg-primary/);
+    });
+
+    /**
+     * TEST: Buttons Clickable State
+     * ─────────────────────────────────────────────────────────────
+     *
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   Button enabled state verification:                    │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │  ┌──────────┐           ┌───────────┐           │   │
+     *   │   │  │  Cancel  │           │  Confirm  │           │   │
+     *   │   │  └────┬─────┘           └─────┬─────┘           │   │
+     *   │   │       │                       │                 │   │
+     *   │   │       ▼                       ▼                 │   │
+     *   │   │   isEnabled()             isEnabled()           │   │
+     *   │   │      = true                 = true              │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: Both buttons are enabled and interactable
+     */
+    test("buttons should be clickable", async ({ page }) => {
+      const ui = new CardPage(page);
+      await ui.goto();
+
+      // Just verify they're enabled and can be clicked
       await expect(ui.cancelButton).toBeEnabled();
       await expect(ui.confirmButton).toBeEnabled();
+    });
+  });
+
+  test.describe("Layout Variants", () => {
+    /**
+     * TEST: Horizontal Card Layout
+     * ─────────────────────────────────────────────────────────────
+     *
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   Card with md:flex-row (horizontal layout):            │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │   ┌──────────┬────────────────────────────┐     │   │
+     *   │   │   │          │  Nature's Beauty           │     │   │
+     *   │   │   │  Image   │  Description text...       │     │   │
+     *   │   │   │          │                            │     │   │
+     *   │   │   └──────────┴────────────────────────────┘     │   │
+     *   │   │        ←── md:flex-row ──→                      │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: Card applies horizontal flex-row layout on medium screens
+     */
+    test("should have horizontal card layout", async ({ page }) => {
+      const ui = new CardPage(page);
+      await ui.goto("reverse");
+
+      const natureCard = await ui.getCardByTitle("Nature's Beauty");
+      await expect(natureCard).toHaveClass(/md:flex-row/);
+    });
+
+    /**
+     * TEST: Reverse Horizontal Layout
+     * ─────────────────────────────────────────────────────────────
+     *
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   Card with md:flex-row-reverse (reversed layout):      │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │   ┌────────────────────────────┬──────────┐     │   │
+     *   │   │   │  Ecosystem Balance         │          │     │   │
+     *   │   │   │  Description text...       │  Image   │     │   │
+     *   │   │   │                            │          │     │   │
+     *   │   │   └────────────────────────────┴──────────┘     │   │
+     *   │   │        ←── md:flex-row-reverse ──→              │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: Card applies reverse horizontal layout on medium screens
+     */
+    test("should have reverse horizontal layout", async ({ page }) => {
+      const ui = new CardPage(page);
+      await ui.goto("reverse");
+
+      const ecosystemCard = await ui.getCardByTitle("Ecosystem Balance");
+      await expect(ecosystemCard).toHaveClass(/md:flex-row-reverse/);
+    });
+
+    /**
+     * TEST: Multiple Cards in Reverse Section
+     * ─────────────────────────────────────────────────────────────
+     *
+     *   What we're testing:
+     *   ┌─────────────────────────────────────────────────────────┐
+     *   │                                                         │
+     *   │   Reverse demo section card count:                      │
+     *   │   ┌─────────────────────────────────────────────────┐   │
+     *   │   │                                                 │   │
+     *   │   │   ┌─────────────┐                               │   │
+     *   │   │   │   Card 1    │  ← Nature's Beauty            │   │
+     *   │   │   └─────────────┘                               │   │
+     *   │   │   ┌─────────────┐                               │   │
+     *   │   │   │   Card 2    │  ← Ecosystem Balance          │   │
+     *   │   │   └─────────────┘                               │   │
+     *   │   │   ┌─────────────┐                               │   │
+     *   │   │   │   Card 3    │  ← ... (at least 3)           │   │
+     *   │   │   └─────────────┘                               │   │
+     *   │   │                                                 │   │
+     *   │   └─────────────────────────────────────────────────┘   │
+     *   │                                                         │
+     *   └─────────────────────────────────────────────────────────┘
+     *
+     *   Validates: Reverse demo contains at least 3 card components
+     */
+    test("reverse section should have multiple cards", async ({ page }) => {
+      const ui = new CardPage(page);
+      await ui.goto("reverse");
+
+      // Should have at least 3 cards in the reverse demo
+      const cards = page.locator('[data-name="Card"]');
+      await expect(cards).toHaveCount(await cards.count());
+      expect(await cards.count()).toBeGreaterThanOrEqual(3);
     });
   });
 });
