@@ -1,13 +1,7 @@
----
-title: "Separator"
-name: "separator"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/separator.rs"
-description: "Rust/UI component that displays a separator line."
-tags: []
----
++++
+title = "Separator"
+description = "Rust/UI component that displays a separator line."
++++
 
 <DemoSeparator />
 

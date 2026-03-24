@@ -1,13 +1,7 @@
----
-title: "Empty"
-name: "empty"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/empty.rs"
-description: "Use the Empty component to display a empty state."
-tags: []
----
++++
+title = "Empty"
+description = "Use the Empty component to display a empty state."
++++
 
 <DemoEmpty />
 

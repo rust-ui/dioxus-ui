@@ -1,11 +1,6 @@
----
-title: "Theme Toggle"
-name: "theme_toggle"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/theme_toggle.rs"
----
++++
+title = "Theme Toggle"
++++
 
 <DemoThemeToggle />
 

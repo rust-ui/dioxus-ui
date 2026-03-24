@@ -1,13 +1,7 @@
----
-title: "Button"
-name: "button"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/button.rs"
-description: "Rust/UI component that displays a button or a component that looks like a button."
-tags: ["button"]
----
++++
+title = "Button"
+description = "Rust/UI component that displays a button or a component that looks like a button."
++++
 
 <DemoButton />
 

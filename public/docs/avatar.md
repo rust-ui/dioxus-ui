@@ -1,13 +1,7 @@
----
-title: "Avatar"
-name: "avatar"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/avatar.rs"
-description: "Rust/UI component that displays an avatar with image and fallback support."
-tags: []
----
++++
+title = "Avatar"
+description = "Rust/UI component that displays an avatar with image and fallback support."
++++
 
 <DemoAvatar />
 

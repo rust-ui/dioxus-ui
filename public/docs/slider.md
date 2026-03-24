@@ -1,13 +1,7 @@
----
-title: "Slider"
-name: "slider"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/slider.rs"
-description: "Rust/UI component that allows users to select a value from a range."
-tags: []
----
++++
+title = "Slider"
+description = "Rust/UI component that allows users to select a value from a range."
++++
 
 <DemoSlider />
 

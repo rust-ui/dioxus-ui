@@ -1,13 +1,7 @@
----
-title: "Chips"
-name: "chips"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/chips.rs"
-description: "Rust/UI component that displays a chip or a component that looks like a chip."
-tags: []
----
++++
+title = "Chips"
+description = "Rust/UI component that displays a chip or a component that looks like a chip."
++++
 
 <DemoChips />
 

@@ -102,7 +102,7 @@ pub fn DemoWrapper(
                     div {
                         id: "{container_id}",
                         "data-name": "Preview",
-                        class: "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] px-4 bg-background",
+                        class: "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] bg-background p-4",
                         {children}
                     }
                     // Drag handle — visual pill, mousedown triggers JS resize
@@ -140,9 +140,9 @@ pub fn DemoWrapper(
                                         spawn(async move {
                                             let js = format!(
                                                 r#"navigator.clipboard.writeText({code:?}).then(() => {{
-                                                    const btn = document.getElementById('{cid}');
-                                                    if (btn) {{ btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500); }}
-                                                }})"#
+                                                                                                                    const btn = document.getElementById('{cid}');
+                                                                                                                    if (btn) {{ btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500); }}
+                                                                                                                }})"#,
                                             );
                                             let _ = eval(&js).await;
                                         });

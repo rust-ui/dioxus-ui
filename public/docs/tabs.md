@@ -1,13 +1,7 @@
----
-title: "Tabs"
-name: "tabs"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/tabs.rs"
-description: "Rust/UI component that displays a set of layered sections of content, known as tab pages, that are displayed one at a time."
-tags: ["utils"]
----
++++
+title = "Tabs"
+description = "Rust/UI component that displays a set of layered sections of content, known as tab pages, that are displayed one at a time."
++++
 
 <DemoTabs />
 

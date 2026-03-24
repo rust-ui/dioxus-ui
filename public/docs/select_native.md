@@ -1,11 +1,6 @@
----
-title: "Select Native"
-name: "select_native"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/select_native.rs"
----
++++
+title = "Select Native"
++++
 
 ## Installation
 

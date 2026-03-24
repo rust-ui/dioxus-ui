@@ -1,13 +1,7 @@
----
-title: "Button Group"
-name: "button_group"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/button_group.rs"
-description: "Rust/UI component that groups buttons together into a cohesive unit."
-tags: []
----
++++
+title = "Button Group"
+description = "Rust/UI component that groups buttons together into a cohesive unit."
++++
 
 # Button Group
 

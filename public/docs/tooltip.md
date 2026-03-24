@@ -1,13 +1,7 @@
----
-title: "Tooltip"
-name: "tooltip"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/tooltip.rs"
-description: "A popup component that displays informative text when users hover over, focus on, or click an element."
-tags: ["dialog"]
----
++++
+title = "Tooltip"
+description = "A popup component that displays informative text when users hover over, focus on, or click an element."
++++
 
 <DemoTooltip />
 

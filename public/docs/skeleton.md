@@ -1,13 +1,7 @@
----
-title: "Skeleton"
-name: "skeleton"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/skeleton.rs"
-description: "Rust/UI component that show a placeholder while content is loading."
-tags: []
----
++++
+title = "Skeleton"
+description = "Rust/UI component that show a placeholder while content is loading."
++++
 
 <DemoSkeleton />
 

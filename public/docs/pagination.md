@@ -1,13 +1,7 @@
----
-title: "Pagination"
-name: "pagination"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:constants"
-path: "constants/pagination.rs"
-description: "Rust/UI component that displays a pagination component."
-tags: ["navigation"]
----
++++
+title = "Pagination"
+description = "Rust/UI component that displays a pagination component."
++++
 
 <DemoPagination />
 

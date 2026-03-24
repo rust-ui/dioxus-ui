@@ -1,13 +1,7 @@
----
-title: "Switch"
-name: "switch"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/switch.rs"
-description: "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
-tags: ["utils"]
----
++++
+title = "Switch"
+description = "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
++++
 
 <DemoSwitch />
 

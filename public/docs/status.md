@@ -1,13 +1,7 @@
----
-title: "Status"
-name: "status"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/status.rs"
-description: "Rust/UI component for displaying statuses."
-tags: []
----
++++
+title = "Status"
+description = "Rust/UI component for displaying statuses."
++++
 
 <DemoStatus />
 

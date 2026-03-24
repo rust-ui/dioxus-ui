@@ -1,11 +1,6 @@
----
-title: "Alert Dialog"
-name: "alert_dialog"
-cargo_dependencies: []
-registry_dependencies: ["button", "dialog"]
-type: "components:ui"
-path: "ui/alert_dialog.rs"
----
++++
+title = "Alert Dialog"
++++
 
 <DemoAlertDialog />
 

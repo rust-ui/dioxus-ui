@@ -1800,6 +1800,8 @@ dependencies = [
  "html_parser",
  "icons",
  "pulldown-cmark",
+ "serde",
+ "toml",
  "tw_merge",
 ]
 

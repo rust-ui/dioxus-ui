@@ -1,11 +1,6 @@
----
-title: "Toggle Group"
-name: "toggle_group"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/toggle_group.rs"
----
++++
+title = "Toggle Group"
++++
 
 <DemoToggleGroup />
 

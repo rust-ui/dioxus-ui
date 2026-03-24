@@ -1,13 +1,7 @@
----
-title: "Dialog"
-name: "dialog"
-cargo_dependencies: []
-registry_dependencies: ["button"]
-type: "components:ui"
-path: "ui/dialog.rs"
-description: "Rust/UI component that displays a modal dialog that the user can interact with."
-tags: ["dialog"]
----
++++
+title = "Dialog"
+description = "Rust/UI component that displays a modal dialog that the user can interact with."
++++
 
 <DemoDialog />
 

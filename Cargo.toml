@@ -13,6 +13,8 @@ icons = { version = "0.18", features = ["dioxus"] }
 tw_merge = { version = "0.1", features = ["debug"] }
 pulldown-cmark = { version = "0.12", default-features = false, features = ["html"] }
 html_parser = "0.7.0"
+toml = "0.8"
+serde = { version = "1", features = ["derive"] }
 
 [features]
 default = ["web"]

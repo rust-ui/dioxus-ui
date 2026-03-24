@@ -1,13 +1,7 @@
----
-title: "Label"
-name: "label"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/label.rs"
-description: "Rust/UI component that displays a label for an input field."
-tags: []
----
++++
+title = "Label"
+description = "Rust/UI component that displays a label for an input field."
++++
 
 <DemoLabel />
 

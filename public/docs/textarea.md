@@ -1,13 +1,7 @@
----
-title: "Textarea"
-name: "textarea"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/textarea.rs"
-description: "Rust/UI component that displays a textarea."
-tags: ["input"]
----
++++
+title = "Textarea"
+description = "Rust/UI component that displays a textarea."
++++
 
 <DemoTextarea />
 

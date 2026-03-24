@@ -1,13 +1,7 @@
----
-title: "Table"
-name: "table"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/table.rs"
-description: "Rust/UI component that displays a table with header, body and footer."
-tags: ["table"]
----
++++
+title = "Table"
+description = "Rust/UI component that displays a table with header, body and footer."
++++
 
 <DemoTable />
 

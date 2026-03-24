@@ -1,13 +1,7 @@
----
-title: "Toggle"
-name: "toggle"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/toggle.rs"
-description: "Rust/UI component that displays a two-state button that can be either on or off."
-tags: ["form"]
----
++++
+title = "Toggle"
+description = "Rust/UI component that displays a two-state button that can be either on or off."
++++
 
 <DemoToggle />
 

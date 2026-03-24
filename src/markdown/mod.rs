@@ -1,35 +1,28 @@
 pub mod converter;
 
 use pulldown_cmark::{html, Options, Parser};
+use serde::Deserialize;
 
+#[derive(Deserialize)]
 pub struct Frontmatter {
     pub title: String,
+    #[serde(default)]
     pub description: String,
 }
 
-/// Parse `---\nkey: value\n---\nbody` into (Frontmatter, body_markdown).
+/// Parse `+++\ntoml\n+++\nbody` into (Frontmatter, body_markdown).
 pub fn parse_md(raw: &str) -> (Frontmatter, &str) {
-    let mut title = String::new();
-    let mut description = String::new();
-
-    if let Some(rest) = raw.strip_prefix("---\n") {
-        if let Some(end) = rest.find("\n---\n") {
-            let front = &rest[..end];
-            let body = &rest[end + 5..]; // skip "\n---\n"
-
-            for line in front.lines() {
-                if let Some(v) = line.strip_prefix("title:") {
-                    title = v.trim().to_string();
-                } else if let Some(v) = line.strip_prefix("description:") {
-                    description = v.trim().to_string();
-                }
+    let content = raw.trim();
+    if let Some(rest) = content.strip_prefix("+++\n") {
+        if let Some(end) = rest.find("\n+++") {
+            let toml_str = &rest[..end];
+            let body = &rest[end + 4..]; // skip "\n+++"
+            if let Ok(fm) = toml::from_str::<Frontmatter>(toml_str) {
+                return (fm, body.trim_start_matches('\n'));
             }
-
-            return (Frontmatter { title, description }, body);
         }
     }
-
-    (Frontmatter { title, description }, raw)
+    (Frontmatter { title: String::new(), description: String::new() }, raw)
 }
 
 pub fn markdown_to_html(md: &str) -> String {

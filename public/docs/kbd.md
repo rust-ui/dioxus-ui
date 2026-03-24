@@ -1,13 +1,7 @@
----
-title: "Kbd"
-name: "kbd"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/kbd.rs"
-description: "Display keyboard shortcuts and key combinations with proper styling."
-tags: ["utils"]
----
++++
+title = "Kbd"
+description = "Display keyboard shortcuts and key combinations with proper styling."
++++
 
 <DemoKbd />
 

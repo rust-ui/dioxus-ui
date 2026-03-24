@@ -1,13 +1,7 @@
----
-title: "Checkbox"
-name: "checkbox"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/checkbox.rs"
-description: "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
-tags: ["utils"]
----
++++
+title = "Checkbox"
+description = "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
++++
 
 <DemoCheckbox />
 

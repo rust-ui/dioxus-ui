@@ -1,13 +1,7 @@
----
-title: "Alert"
-name: "alert"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/alert.rs"
-description: "Rust/UI component that displays a callout to the user."
-tags: []
----
++++
+title = "Alert"
+description = "Rust/UI component that displays a callout to the user."
++++
 
 <DemoAlert />
 

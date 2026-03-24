@@ -1,13 +1,7 @@
----
-title: "Progress"
-name: "progress"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/progress.rs"
-description: "Rust/UI component that displays a progress bar indicating task completion."
-tags: []
----
++++
+title = "Progress"
+description = "Rust/UI component that displays a progress bar indicating task completion."
++++
 
 <DemoProgress />
 

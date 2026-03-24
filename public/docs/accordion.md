@@ -1,13 +1,7 @@
----
-title: "Accordion"
-name: "accordion"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/accordion.rs"
-description: "Rust/UI component that displays an Accordion."
-tags: ["accordion"]
----
++++
+title = "Accordion"
+description = "Rust/UI component that displays an Accordion."
++++
 
 <DemoAccordion />
 

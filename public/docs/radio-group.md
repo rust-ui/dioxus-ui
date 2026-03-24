@@ -1,13 +1,7 @@
----
-title: "Radio Group"
-name: "radio-group"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/radio_group.rs"
-description: "Rust/UI component that displays a set of radio buttons where only one can be selected at a time."
-tags: ["form"]
----
++++
+title = "Radio Group"
+description = "Rust/UI component that displays a set of radio buttons where only one can be selected at a time."
++++
 
 <DemoRadioGroup />
 

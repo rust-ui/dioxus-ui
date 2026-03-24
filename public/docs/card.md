@@ -1,13 +1,7 @@
----
-title: "Card"
-name: "card"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/card.rs"
-description: "Rust/UI component that displays a card with header, content and footer."
-tags: ["card"]
----
++++
+title = "Card"
+description = "Rust/UI component that displays a card with header, content and footer."
++++
 
 <DemoCard />
 

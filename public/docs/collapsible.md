@@ -1,13 +1,7 @@
----
-title: "Collapsible"
-name: "collapsible"
-cargo_dependencies: []
-registry_dependencies: []
-type: "components:ui"
-path: "ui/collapsible.rs"
-description: "An interactive component which expands/collapses a panel with smooth animation."
-tags: []
----
++++
+title = "Collapsible"
+description = "An interactive component which expands/collapses a panel with smooth animation."
++++
 
 <DemoCollapsible />
 
