@@ -1,6 +1,11 @@
 ---
-title: Empty
-description: An empty state component for displaying a placeholder when there is no content.
+title: "Empty"
+name: "empty"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/empty.rs"
+description: "Use the Empty component to display a empty state."
 tags: []
 ---
 

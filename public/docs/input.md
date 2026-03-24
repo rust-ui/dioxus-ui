@@ -1,6 +1,11 @@
 ---
-title: Input
-description: Dioxus UI component that displays an input field that allows the user to enter text.
+title: "Input"
+name: "input"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/input.rs"
+description: "Rust/UI component that displays an input field that allows the user to enter text."
 tags: ["input"]
 ---
 

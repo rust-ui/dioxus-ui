@@ -1,6 +1,11 @@
 ---
-title: Slider
-description: An input where the user selects a value from within a given range using a native range input.
+title: "Slider"
+name: "slider"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/slider.rs"
+description: "Rust/UI component that allows users to select a value from a range."
 tags: []
 ---
 

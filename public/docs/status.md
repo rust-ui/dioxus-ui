@@ -1,6 +1,11 @@
 ---
-title: Status
-description: An indicator with a ping animation that shows the live status of an element.
+title: "Status"
+name: "status"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/status.rs"
+description: "Rust/UI component for displaying statuses."
 tags: []
 ---
 

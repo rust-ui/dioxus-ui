@@ -1,7 +1,12 @@
 ---
-title: Accordion
-description: A vertically stacked set of interactive headings that each reveal a section of content.
-tags: []
+title: "Accordion"
+name: "accordion"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/accordion.rs"
+description: "Rust/UI component that displays an Accordion."
+tags: ["accordion"]
 ---
 
 <DemoAccordion />

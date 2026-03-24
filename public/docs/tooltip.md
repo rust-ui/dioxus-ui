@@ -1,7 +1,12 @@
 ---
-title: Tooltip
-description: A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.
-tags: []
+title: "Tooltip"
+name: "tooltip"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/tooltip.rs"
+description: "A popup component that displays informative text when users hover over, focus on, or click an element."
+tags: ["dialog"]
 ---
 
 <DemoTooltip />

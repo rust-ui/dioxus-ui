@@ -1,7 +1,12 @@
 ---
-title: Avatar
-description: An image element with a fallback for representing the user.
-tags: ["display", "user"]
+title: "Avatar"
+name: "avatar"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/avatar.rs"
+description: "Rust/UI component that displays an avatar with image and fallback support."
+tags: []
 ---
 
 <DemoAvatar />

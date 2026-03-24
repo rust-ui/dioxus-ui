@@ -1,7 +1,12 @@
 ---
-title: Breadcrumb
-description: Displays the path to the current resource using a hierarchy of links.
-tags: []
+title: "Breadcrumb"
+name: "breadcrumb"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/breadcrumb.rs"
+description: "Rust/UI component that displays the path to the current resource using a hierarchy of links."
+tags: ["navigation"]
 ---
 
 <DemoBreadcrumb />

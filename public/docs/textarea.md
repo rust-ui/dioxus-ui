@@ -1,7 +1,12 @@
 ---
-title: Textarea
-description: Displays a form textarea or a component that looks like a textarea.
-tags: ["form", "input"]
+title: "Textarea"
+name: "textarea"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/textarea.rs"
+description: "Rust/UI component that displays a textarea."
+tags: ["input"]
 ---
 
 <DemoTextarea />

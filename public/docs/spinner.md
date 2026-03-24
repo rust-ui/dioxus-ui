@@ -1,7 +1,12 @@
 ---
-title: Spinner
-description: A loading spinner component with animation for indicating processing states.
-tags: ["animation"]
+title: "Spinner"
+name: "spinner"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/spinner.rs"
+description: "A loading spinner component with animation for indicating processing states."
+tags: ["animation", "utils"]
 ---
 
 <DemoSpinner />

@@ -1,7 +1,12 @@
 ---
-title: Alert
-description: Displays a callout for user attention with support for default and destructive variants.
-tags: ["feedback", "display"]
+title: "Alert"
+name: "alert"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/alert.rs"
+description: "Rust/UI component that displays a callout to the user."
+tags: []
 ---
 
 <DemoAlert />

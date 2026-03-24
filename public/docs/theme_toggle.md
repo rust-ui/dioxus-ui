@@ -1,7 +1,10 @@
 ---
-title: Theme Toggle
-description: A button that toggles between light and dark mode, persisting the preference to localStorage.
-tags: []
+title: "Theme Toggle"
+name: "theme_toggle"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/theme_toggle.rs"
 ---
 
 <DemoThemeToggle />

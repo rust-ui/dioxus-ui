@@ -1,7 +1,12 @@
 ---
-title: Switch
-description: A control that allows the user to toggle between checked and unchecked states.
-tags: ["interactive", "form"]
+title: "Switch"
+name: "switch"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/switch.rs"
+description: "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
+tags: ["utils"]
 ---
 
 <DemoSwitch />

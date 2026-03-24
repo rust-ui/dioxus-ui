@@ -1,7 +1,10 @@
 ---
-title: Select Native
-description: A native HTML select element with custom styling and a chevron icon.
-tags: []
+title: "Select Native"
+name: "select_native"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/select_native.rs"
 ---
 
 <DemoSelectNative />

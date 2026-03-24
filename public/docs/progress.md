@@ -1,7 +1,12 @@
 ---
-title: Progress
-description: Displays an indicator showing the completion progress of a task.
-tags: ["feedback", "display"]
+title: "Progress"
+name: "progress"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/progress.rs"
+description: "Rust/UI component that displays a progress bar indicating task completion."
+tags: []
 ---
 
 <DemoProgress />

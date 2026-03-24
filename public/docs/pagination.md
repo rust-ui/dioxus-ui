@@ -1,7 +1,12 @@
 ---
-title: Pagination
-description: Navigation component for moving between pages of content.
-tags: []
+title: "Pagination"
+name: "pagination"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:constants"
+path: "constants/pagination.rs"
+description: "Rust/UI component that displays a pagination component."
+tags: ["navigation"]
 ---
 
 <DemoPagination />

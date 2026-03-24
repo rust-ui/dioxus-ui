@@ -1,7 +1,10 @@
 ---
-title: Alert Dialog
-description: A modal dialog that interrupts the user with important content and expects a response.
-tags: []
+title: "Alert Dialog"
+name: "alert_dialog"
+cargo_dependencies: []
+registry_dependencies: ["button", "dialog"]
+type: "components:ui"
+path: "ui/alert_dialog.rs"
 ---
 
 <DemoAlertDialog />

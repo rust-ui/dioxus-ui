@@ -1,7 +1,12 @@
 ---
-title: Checkbox
-description: A control that allows the user to toggle between checked and unchecked states.
-tags: ["interactive", "form"]
+title: "Checkbox"
+name: "checkbox"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/checkbox.rs"
+description: "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
+tags: ["utils"]
 ---
 
 <DemoCheckbox />

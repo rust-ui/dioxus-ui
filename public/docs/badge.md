@@ -1,7 +1,12 @@
 ---
-title: Badge
-description: Dioxus UI component that displays a badge or a component that looks like a badge.
-tags: ["badge"]
+title: "Badge"
+name: "badge"
+cargo_dependencies: []
+registry_dependencies: []
+type: "components:ui"
+path: "ui/badge.rs"
+description: "Rust/UI component that displays a badge or a component that looks like a badge."
+tags: []
 ---
 
 <DemoBadge />
