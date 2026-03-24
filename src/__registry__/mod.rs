@@ -2,5 +2,6 @@
 // Run `cargo run --manifest-path dioxus_ui_internals/build_registry/Cargo.toml` to regenerate.
 
 pub mod command_bar;
+pub mod sidenav;
 pub mod source_map;
 

@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::registry::REGISTRY;
+use crate::__registry__::sidenav::SIDENAV_ITEMS;
 use crate::Route;
 
 #[component]
@@ -11,13 +11,13 @@ pub fn Sidenav() -> Element {
                 div { class: "flex overflow-hidden overflow-y-auto overscroll-y-contain flex-col gap-4 pb-4 w-full h-full scrollbar__on_hover",
                     h4 { class: "my-1 text-sm font-semibold", "Components" }
                     ul { class: "ml-1 list-none",
-                        for entry in REGISTRY {
+                        for item in SIDENAV_ITEMS {
                             li {
                                 Link {
                                     class: "text-sm text-muted-foreground hover:underline",
                                     active_class: "font-bold",
-                                    to: Route::ComponentPage { name: entry.slug.to_string() },
-                                    {entry.title()}
+                                    to: Route::ComponentPage { name: item.slug.to_string() },
+                                    "{item.label}"
                                 }
                             }
                         }
