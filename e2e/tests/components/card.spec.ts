@@ -106,8 +106,8 @@ class CardPage extends BasePage {
   }
 
   async getCardByTitle(title: string): Promise<Locator> {
-    return this.preview.locator('[data-name="Card"]').filter({
-      has: this.preview.getByRole("heading", { name: title }),
+    return this.page.locator('[data-name="Card"]').filter({
+      has: this.page.getByRole("heading", { name: title }),
     });
   }
 }
