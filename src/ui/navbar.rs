@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::Route;
+use crate::ui::command_bar::CommandBar;
 use crate::ui::theme_toggle::ThemeToggle;
 
 #[component]
@@ -21,7 +22,10 @@ pub fn Navbar() -> Element {
                         "Components"
                     }
                 }
-                ThemeToggle {}
+                div { class: "flex items-center gap-3",
+                    CommandBar {}
+                    ThemeToggle {}
+                }
             }
         }
     }

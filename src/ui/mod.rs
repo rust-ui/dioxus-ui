@@ -13,6 +13,7 @@ pub mod card;
 pub mod checkbox;
 pub mod chips;
 pub mod collapsible;
+pub mod command_bar;
 pub mod demo_wrapper;
 pub mod dialog;
 pub mod direction_provider;
