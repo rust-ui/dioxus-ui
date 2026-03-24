@@ -8,4 +8,14 @@ title = "dioxus-ui"
 # include `assets` in web platform
 [web.resource]
 
+# Additional CSS style files
+style = ["public/tailwind.css"]
+
+# Additional JavaScript files
+script = ["public/hooks/lock_scroll.js"]
+
 [web.resource.dev]
+
+# Javascript code file
+# serve: [dev-server] only
+script = ["public/hooks/lock_scroll.js"]

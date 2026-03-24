@@ -1,6 +1,6 @@
 [package]
 name = "maxime15848/dioxus-ui"
-version = "0.1.19"
+version = "0.1.20"
 
 [dependencies]
 "wasmer/static-web-server" = "*"
@@ -14,4 +14,4 @@ module = "wasmer/static-web-server:webserver"
 runner = "https://webc.org/runner/wasi"
 
 [command.annotations.wasi]
-main-args = ["-w", "/public", "--page-fallback", "/index.html"]
+main-args = ["-w", "/public"]
