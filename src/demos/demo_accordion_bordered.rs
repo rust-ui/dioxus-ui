@@ -1,23 +1,33 @@
 use dioxus::prelude::*;
 
-use crate::ui::accordion::{Accordion, AccordionContent, AccordionItem, AccordionTrigger};
+use crate::ui::accordion::{Accordion, AccordionContent, AccordionDescription, AccordionItem, AccordionTitle, AccordionTrigger};
 
 #[component]
 pub fn DemoAccordionBordered() -> Element {
     rsx! {
-        div { class: "w-full max-w-md",
-            Accordion { class: "overflow-hidden rounded-lg border bg-background",
-                AccordionItem {
-                    AccordionTrigger { class: "hover:bg-accent", "Accordion item 01" }
-                    AccordionContent { "This is the Accordion description" }
+        Accordion { class: "overflow-hidden rounded-lg border bg-background max-w-[400px]",
+            AccordionItem {
+                AccordionTrigger { open: true, class: "peer-checked:bg-accent hover:bg-accent",
+                    AccordionTitle { "Accordion item 01" }
                 }
-                AccordionItem {
-                    AccordionTrigger { class: "hover:bg-accent", "Accordion item 02" }
-                    AccordionContent { "This is the Accordion description" }
+                AccordionContent { class: "pt-2",
+                    AccordionDescription { "This is the Accordion description" }
                 }
-                AccordionItem {
-                    AccordionTrigger { class: "hover:bg-accent", "Accordion item 03" }
-                    AccordionContent { "This is the Accordion description" }
+            }
+            AccordionItem {
+                AccordionTrigger { class: "peer-checked:bg-accent hover:bg-accent",
+                    AccordionTitle { "Accordion item 02" }
+                }
+                AccordionContent { class: "pt-2",
+                    AccordionDescription { "This is the Accordion description" }
+                }
+            }
+            AccordionItem {
+                AccordionTrigger { class: "peer-checked:bg-accent hover:bg-accent",
+                    AccordionTitle { "Accordion item 03" }
+                }
+                AccordionContent { class: "pt-2",
+                    AccordionDescription { "This is the Accordion description" }
                 }
             }
         }

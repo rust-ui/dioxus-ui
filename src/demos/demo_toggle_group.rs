@@ -1,53 +1,33 @@
 use dioxus::prelude::*;
+use icons::{Bold, Italic, Underline};
 
 use crate::ui::toggle_group::{ToggleGroup, ToggleGroupItem};
 
 #[component]
 pub fn DemoToggleGroup() -> Element {
-    let mut selected = use_signal(|| "center".to_string());
+    let mut bold = use_signal(|| false);
+    let mut italic = use_signal(|| false);
+    let mut underline = use_signal(|| false);
 
     rsx! {
-        div { class: "flex flex-col gap-6 items-center",
-            ToggleGroup {
-                ToggleGroupItem {
-                    title: "Align left",
-                    pressed: selected() == "left",
-                    onclick: move |_| selected.set("left".to_string()),
-                    svg {
-                        xmlns: "http://www.w3.org/2000/svg", class: "size-4",
-                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
-                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
-                        line { x1: "21", x2: "3", y1: "6", y2: "6" }
-                        line { x1: "15", x2: "3", y1: "12", y2: "12" }
-                        line { x1: "17", x2: "3", y1: "18", y2: "18" }
-                    }
-                }
-                ToggleGroupItem {
-                    title: "Align center",
-                    pressed: selected() == "center",
-                    onclick: move |_| selected.set("center".to_string()),
-                    svg {
-                        xmlns: "http://www.w3.org/2000/svg", class: "size-4",
-                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
-                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
-                        line { x1: "21", x2: "3", y1: "6", y2: "6" }
-                        line { x1: "18", x2: "6", y1: "12", y2: "12" }
-                        line { x1: "21", x2: "3", y1: "18", y2: "18" }
-                    }
-                }
-                ToggleGroupItem {
-                    title: "Align right",
-                    pressed: selected() == "right",
-                    onclick: move |_| selected.set("right".to_string()),
-                    svg {
-                        xmlns: "http://www.w3.org/2000/svg", class: "size-4",
-                        view_box: "0 0 24 24", fill: "none", stroke: "currentColor",
-                        stroke_width: "2", stroke_linecap: "round", stroke_linejoin: "round",
-                        line { x1: "21", x2: "3", y1: "6", y2: "6" }
-                        line { x1: "21", x2: "9", y1: "12", y2: "12" }
-                        line { x1: "21", x2: "7", y1: "18", y2: "18" }
-                    }
-                }
+        ToggleGroup {
+            ToggleGroupItem {
+                title: "Bold",
+                pressed: bold(),
+                onclick: move |_| bold.set(!bold()),
+                Bold {}
+            }
+            ToggleGroupItem {
+                title: "Italic",
+                pressed: italic(),
+                onclick: move |_| italic.set(!italic()),
+                Italic {}
+            }
+            ToggleGroupItem {
+                title: "Underline",
+                pressed: underline(),
+                onclick: move |_| underline.set(!underline()),
+                Underline {}
             }
         }
     }

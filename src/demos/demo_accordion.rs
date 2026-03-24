@@ -1,23 +1,33 @@
 use dioxus::prelude::*;
 
-use crate::ui::accordion::{Accordion, AccordionContent, AccordionItem, AccordionTrigger};
+use crate::ui::accordion::{Accordion, AccordionContent, AccordionDescription, AccordionItem, AccordionTitle, AccordionTrigger};
 
 #[component]
 pub fn DemoAccordion() -> Element {
     rsx! {
-        div { class: "w-full max-w-md",
-            Accordion {
-                AccordionItem {
-                    AccordionTrigger { "Is it accessible?" }
-                    AccordionContent { "Yes. It adheres to the WAI-ARIA design pattern." }
+        Accordion { class: "max-w-[400px]",
+            AccordionItem {
+                AccordionTrigger { open: true,
+                    AccordionTitle { "Accordion item 01" }
                 }
-                AccordionItem {
-                    AccordionTrigger { "Is it styled?" }
-                    AccordionContent { "Yes. It comes with default styles that match the other components." }
+                AccordionContent { class: "pt-0",
+                    AccordionDescription { "This is the Accordion description" }
                 }
-                AccordionItem {
-                    AccordionTrigger { "Is it animated?" }
-                    AccordionContent { "Yes. It uses CSS grid transitions for smooth show/hide animations." }
+            }
+            AccordionItem {
+                AccordionTrigger {
+                    AccordionTitle { "Accordion item 02" }
+                }
+                AccordionContent { class: "pt-0",
+                    AccordionDescription { "This is the Accordion description" }
+                }
+            }
+            AccordionItem {
+                AccordionTrigger {
+                    AccordionTitle { "Accordion item 03" }
+                }
+                AccordionContent { class: "pt-0",
+                    AccordionDescription { "This is the Accordion description" }
                 }
             }
         }
