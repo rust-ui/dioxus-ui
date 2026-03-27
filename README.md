@@ -26,6 +26,10 @@ dx serve --platform desktop
 dx serve --platform ios
 ```
 
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=rust-ui/dioxus-ui&type=Date)](https://star-history.com/#rust-ui/dioxus-ui&Date)
+
 ## License
 
 MIT — see [LICENSE](./LICENSE)
