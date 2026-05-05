@@ -1,0 +1,6 @@
+services:
+  app:
+    image: ${DOCKER_USERNAME}/${DOCKER_REPOSITORY}:${IMAGE_TAG}
+    ports:
+      - "5000:3000"
+    restart: always
