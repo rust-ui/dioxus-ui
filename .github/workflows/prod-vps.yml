@@ -125,7 +125,7 @@ jobs:
     - name: Smoke test
       run: |
         sleep 5
-        ${{ env.SSH }} "curl -sf http://localhost:5000/health || (docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=20 && exit 1)"
+        ${{ env.SSH }} "curl -sf http://localhost:5000/ || (docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=20 && exit 1)"
 
     - name: Cleanup old Docker images
       run: |
