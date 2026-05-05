@@ -3,7 +3,8 @@ FROM messense/rust-musl-cross:x86_64-musl AS chef
 
 RUN cargo install cargo-binstall --locked
 RUN cargo binstall cargo-chef --no-confirm
-RUN cargo binstall dioxus-cli --no-confirm --targets x86_64-unknown-linux-gnu
+RUN apt-get update && apt-get install -y libssl-dev pkg-config
+RUN cargo install dioxus-cli --version 0.7.7 --locked
 RUN rustup target add wasm32-unknown-unknown
 
 WORKDIR /app
