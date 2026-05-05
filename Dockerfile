@@ -25,6 +25,7 @@ COPY . .
 
 ENV CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc
 RUN dx build --release --fullstack
+RUN find /app/target/dx -type f | sort
 
 # ------- 4. CLEANER STAGE ------- #
 FROM scratch
