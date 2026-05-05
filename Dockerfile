@@ -24,10 +24,10 @@ RUN cargo chef cook --release --target x86_64-unknown-linux-musl --recipe-path r
 COPY . .
 
 ENV CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc
-RUN dx build --release --fullstack
+RUN dx build --release --fullstack --target x86_64-unknown-linux-musl
 
 # ------- 4. CLEANER STAGE ------- #
-FROM gcr.io/distroless/cc-debian12
+FROM scratch
 
 COPY --from=builder --chmod=755 /app/target/dx/dioxus-ui/release/web/server  /server
 COPY --from=builder /app/target/dx/dioxus-ui/release/web/public               /public
