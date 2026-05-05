@@ -1091,6 +1091,7 @@ dependencies = [
  "dioxus-stores",
  "dioxus-web 0.7.7",
  "manganis 0.7.7",
+ "serde",
  "subsecond",
  "warnings",
 ]
@@ -2004,6 +2005,7 @@ dependencies = [
  "dioxus-core-types 0.7.7",
  "dioxus-devtools 0.7.7",
  "dioxus-document 0.7.7",
+ "dioxus-fullstack-core",
  "dioxus-history 0.7.7",
  "dioxus-html 0.7.7",
  "dioxus-interpreter-js 0.7.7",
