@@ -1,8 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::ui::breadcrumb::{
-    Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage,
-    BreadcrumbSeparator,
+    Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator,
 };
 
 #[component]

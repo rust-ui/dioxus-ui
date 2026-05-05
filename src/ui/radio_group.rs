@@ -2,10 +2,7 @@ use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
 #[component]
-pub fn RadioGroup(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn RadioGroup(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!("flex flex-col gap-2", class.as_deref().unwrap_or(""));
     rsx! { div { class: "{merged}", role: "radiogroup", {children} } }
 }

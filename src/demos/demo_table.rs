@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 
-use crate::ui::table::{Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow};
+use crate::ui::table::{
+    Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow,
+};
 
 #[component]
 pub fn DemoTable() -> Element {

@@ -1,7 +1,10 @@
 use dioxus::prelude::*;
 
 use crate::ui::button::Button;
-use crate::ui::dialog::{Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger};
+use crate::ui::dialog::{
+    Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader,
+    DialogTitle, DialogTrigger,
+};
 use crate::ui::direction_provider::{Direction, DirectionProvider};
 use crate::ui::input::Input;
 use crate::ui::label::Label;

@@ -1,7 +1,9 @@
 use dioxus::prelude::*;
 
 use crate::ui::button::{Button, ButtonVariant};
-use crate::ui::empty::{Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle};
+use crate::ui::empty::{
+    Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle,
+};
 
 #[component]
 pub fn DemoEmpty() -> Element {

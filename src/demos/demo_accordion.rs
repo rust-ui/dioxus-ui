@@ -1,6 +1,9 @@
 use dioxus::prelude::*;
 
-use crate::ui::accordion::{Accordion, AccordionContent, AccordionDescription, AccordionItem, AccordionTitle, AccordionTrigger};
+use crate::ui::accordion::{
+    Accordion, AccordionContent, AccordionDescription, AccordionItem, AccordionTitle,
+    AccordionTrigger,
+};
 
 #[component]
 pub fn DemoAccordion() -> Element {

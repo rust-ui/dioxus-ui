@@ -120,8 +120,16 @@ pub fn prev_next(slug: &str) -> (Option<&'static str>, Option<&'static str>) {
     match pos {
         None => (None, None),
         Some(i) => (
-            if i > 0 { Some(REGISTRY[i - 1].slug) } else { None },
-            if i + 1 < REGISTRY.len() { Some(REGISTRY[i + 1].slug) } else { None },
+            if i > 0 {
+                Some(REGISTRY[i - 1].slug)
+            } else {
+                None
+            },
+            if i + 1 < REGISTRY.len() {
+                Some(REGISTRY[i + 1].slug)
+            } else {
+                None
+            },
         ),
     }
 }

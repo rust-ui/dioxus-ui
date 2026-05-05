@@ -2,10 +2,7 @@ use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
 #[component]
-pub fn SwitchLabel(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn SwitchLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!("text-sm font-medium", class.as_deref().unwrap_or(""));
     rsx! { span { class: "{merged}", {children} } }
 }

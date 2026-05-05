@@ -18,7 +18,11 @@ pub fn Separator(
         SeparatorOrientation::Horizontal => "w-full h-[1px]",
         SeparatorOrientation::Vertical => "h-full w-[1px]",
     };
-    let merged_class = tw_merge!("shrink-0 bg-border", orientation_class, class.as_deref().unwrap_or(""));
+    let merged_class = tw_merge!(
+        "shrink-0 bg-border",
+        orientation_class,
+        class.as_deref().unwrap_or("")
+    );
 
     rsx! {
         div { class: "{merged_class}", role: "separator" }

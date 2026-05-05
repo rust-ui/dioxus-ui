@@ -13,7 +13,9 @@ impl AlertVariant {
     fn as_str(&self) -> &'static str {
         match self {
             AlertVariant::Default => "bg-background text-foreground",
-            AlertVariant::Destructive => "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive",
+            AlertVariant::Destructive => {
+                "border-destructive/50 text-destructive dark:border-destructive [&>svg]:text-destructive"
+            }
         }
     }
 }
@@ -35,11 +37,11 @@ pub fn Alert(
 }
 
 #[component]
-pub fn AlertTitle(
-    #[props(into, default)] class: Option<String>,
-    children: Element,
-) -> Element {
-    let class = tw_merge!("mb-1 font-medium leading-none tracking-tight", class.as_deref().unwrap_or(""));
+pub fn AlertTitle(#[props(into, default)] class: Option<String>, children: Element) -> Element {
+    let class = tw_merge!(
+        "mb-1 font-medium leading-none tracking-tight",
+        class.as_deref().unwrap_or("")
+    );
     rsx! {
         div { class: "{class}", {children} }
     }
@@ -50,7 +52,10 @@ pub fn AlertDescription(
     #[props(into, default)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let class = tw_merge!("text-sm [&_p]:leading-relaxed", class.as_deref().unwrap_or(""));
+    let class = tw_merge!(
+        "text-sm [&_p]:leading-relaxed",
+        class.as_deref().unwrap_or("")
+    );
     rsx! {
         div { class: "{class}", {children} }
     }

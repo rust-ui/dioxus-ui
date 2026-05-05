@@ -1,7 +1,9 @@
 use dioxus::prelude::*;
 
 use crate::ui::direction_provider::{Direction, DirectionProvider};
-use crate::ui::table::{Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow};
+use crate::ui::table::{
+    Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow,
+};
 
 const INVOICES_RTL: &[(&str, &str, &str, &str)] = &[
     ("INV001", "مدفوع", "بطاقة ائتمان", "$250.00"),

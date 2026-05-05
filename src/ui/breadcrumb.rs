@@ -3,10 +3,7 @@ use icons::ChevronRight;
 use tw_merge::tw_merge;
 
 #[component]
-pub fn Breadcrumb(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn Breadcrumb(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     rsx! {
         nav { "aria-label": "breadcrumb", class: "{class.as_deref().unwrap_or(\"\")}",
             {children}
@@ -31,7 +28,10 @@ pub fn BreadcrumbItem(
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("inline-flex items-center gap-1.5", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "inline-flex items-center gap-1.5",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { li { class: "{merged}", {children} } }
 }
 
@@ -41,7 +41,10 @@ pub fn BreadcrumbLink(
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("transition-colors hover:text-foreground", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "transition-colors hover:text-foreground",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { a { class: "{merged}", href: "{href}", {children} } }
 }
 
@@ -50,7 +53,10 @@ pub fn BreadcrumbPage(
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("font-normal text-foreground", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "font-normal text-foreground",
+        class.as_deref().unwrap_or("")
+    );
     rsx! {
         span {
             class: "{merged}",
@@ -63,9 +69,7 @@ pub fn BreadcrumbPage(
 }
 
 #[component]
-pub fn BreadcrumbSeparator(
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn BreadcrumbSeparator(#[props(into, optional)] class: Option<String>) -> Element {
     let merged = tw_merge!("text-muted-foreground/50", class.as_deref().unwrap_or(""));
     rsx! {
         li { class: "{merged}", role: "presentation", "aria-hidden": "true",

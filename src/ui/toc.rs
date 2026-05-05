@@ -10,7 +10,13 @@ pub struct TocItem {
 /// Slugify heading text to a valid HTML id: lowercase, spaces → dashes, strip non-alphanumeric
 pub fn slugify(text: &str) -> String {
     text.chars()
-        .map(|c| if c.is_alphanumeric() { c.to_ascii_lowercase() } else { '-' })
+        .map(|c| {
+            if c.is_alphanumeric() {
+                c.to_ascii_lowercase()
+            } else {
+                '-'
+            }
+        })
         .collect::<String>()
         .split('-')
         .filter(|s| !s.is_empty())

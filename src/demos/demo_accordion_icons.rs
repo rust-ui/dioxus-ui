@@ -1,7 +1,9 @@
 use dioxus::prelude::*;
 use icons::{AlignHorizontalSpaceAround, Blocks, Compass, LogIn, PanelLeft, Search};
 
-use crate::ui::accordion::{Accordion, AccordionContent, AccordionItem, AccordionLink, AccordionTitle, AccordionTrigger};
+use crate::ui::accordion::{
+    Accordion, AccordionContent, AccordionItem, AccordionLink, AccordionTitle, AccordionTrigger,
+};
 
 #[component]
 pub fn DemoAccordionIcons() -> Element {

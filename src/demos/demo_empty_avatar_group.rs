@@ -3,7 +3,9 @@ use icons::Plus;
 
 use crate::ui::avatar::{Avatar, AvatarFallback, AvatarGroup, AvatarImage, AvatarSize};
 use crate::ui::button::{Button, ButtonSize};
-use crate::ui::empty::{Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle};
+use crate::ui::empty::{
+    Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyTitle,
+};
 
 #[component]
 pub fn DemoEmptyAvatarGroup() -> Element {

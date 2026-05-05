@@ -2,7 +2,9 @@ use dioxus::prelude::*;
 use icons::{Bell, RefreshCcw};
 
 use crate::ui::button::{Button, ButtonSize, ButtonVariant};
-use crate::ui::empty::{Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle};
+use crate::ui::empty::{
+    Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle,
+};
 
 #[component]
 pub fn DemoEmptyBackground() -> Element {

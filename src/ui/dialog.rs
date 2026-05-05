@@ -21,7 +21,9 @@ pub fn Dialog(#[props(into, optional)] class: Option<String>, children: Element)
         format!("dialog_{id}")
     });
 
-    provide_context(DialogContext { target_id: dialog_target_id });
+    provide_context(DialogContext {
+        target_id: dialog_target_id,
+    });
 
     let merged = tw_merge!("w-fit", class.as_deref().unwrap_or(""));
 
@@ -66,7 +68,11 @@ pub fn DialogContent(
     let ctx = use_context::<DialogContext>();
     let target_id = ctx.target_id.clone();
     let backdrop_id = format!("{}_backdrop", target_id);
-    let backdrop_behavior = if close_on_backdrop_click { "auto" } else { "manual" };
+    let backdrop_behavior = if close_on_backdrop_click {
+        "auto"
+    } else {
+        "manual"
+    };
 
     let merged = tw_merge!(
         "relative bg-background border rounded-2xl shadow-lg p-6 w-full max-w-[calc(100%-2rem)] sm:max-w-[425px] max-h-[85vh] overflow-y-auto fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-100 transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100",
@@ -200,13 +206,19 @@ pub fn DialogAction(#[props(into, optional)] class: Option<String>, children: El
 
 #[component]
 pub fn DialogHeader(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("flex flex-col gap-2 text-center sm:text-left", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "flex flex-col gap-2 text-center sm:text-left",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { div { class: "{merged}", {children} } }
 }
 
 #[component]
 pub fn DialogTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("text-lg leading-none font-semibold", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "text-lg leading-none font-semibold",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { h3 { class: "{merged}", {children} } }
 }
 
@@ -215,7 +227,10 @@ pub fn DialogDescription(
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("text-muted-foreground text-sm", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "text-muted-foreground text-sm",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { p { class: "{merged}", {children} } }
 }
 

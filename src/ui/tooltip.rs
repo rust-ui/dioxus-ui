@@ -11,10 +11,7 @@ pub enum TooltipPosition {
 }
 
 #[component]
-pub fn Tooltip(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn Tooltip(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!(
         "inline-block relative mx-0 whitespace-nowrap transition-all duration-300 ease-in-out group/tooltip my-[5px]",
         class.as_deref().unwrap_or("")
@@ -53,7 +50,11 @@ pub fn TooltipContent(
         ),
     };
 
-    let arrow_class = tw_merge!(SHARED, "bg-transparent border-transparent border-6", arrow_pos_class);
+    let arrow_class = tw_merge!(
+        SHARED,
+        "bg-transparent border-transparent border-6",
+        arrow_pos_class
+    );
     let content_class = tw_merge!(
         SHARED,
         "py-2 px-2.5 text-xs whitespace-nowrap shadow-lg text-background bg-foreground/90",

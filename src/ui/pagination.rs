@@ -2,11 +2,11 @@ use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
 #[component]
-pub fn Pagination(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
-    let merged = tw_merge!("flex justify-center mx-auto w-full", class.as_deref().unwrap_or(""));
+pub fn Pagination(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!(
+        "flex justify-center mx-auto w-full",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { nav { class: "{merged}", "aria-label": "pagination", {children} } }
 }
 
@@ -15,7 +15,10 @@ pub fn PaginationList(
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("flex flex-row gap-1 items-center", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "flex flex-row gap-1 items-center",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { ul { class: "{merged}", {children} } }
 }
 
@@ -64,7 +67,11 @@ pub fn PaginationPrev(
 ) -> Element {
     let merged = tw_merge!(
         "inline-flex items-center justify-center size-9 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
-        if disabled { "opacity-50 pointer-events-none" } else { "" }
+        if disabled {
+            "opacity-50 pointer-events-none"
+        } else {
+            ""
+        }
     );
     rsx! {
         button {
@@ -98,7 +105,11 @@ pub fn PaginationNext(
 ) -> Element {
     let merged = tw_merge!(
         "inline-flex items-center justify-center size-9 rounded-md text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground cursor-pointer",
-        if disabled { "opacity-50 pointer-events-none" } else { "" }
+        if disabled {
+            "opacity-50 pointer-events-none"
+        } else {
+            ""
+        }
     );
     rsx! {
         button {
@@ -126,10 +137,11 @@ pub fn PaginationNext(
 }
 
 #[component]
-pub fn PaginationEllipsis(
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
-    let merged = tw_merge!("flex items-center justify-center size-9 text-muted-foreground", class.as_deref().unwrap_or(""));
+pub fn PaginationEllipsis(#[props(into, optional)] class: Option<String>) -> Element {
+    let merged = tw_merge!(
+        "flex items-center justify-center size-9 text-muted-foreground",
+        class.as_deref().unwrap_or("")
+    );
     rsx! {
         span { class: "{merged}", "aria-hidden": "true",
             svg {

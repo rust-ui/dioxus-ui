@@ -4,4 +4,3 @@
 pub mod command_bar;
 pub mod sidenav;
 pub mod source_map;
-

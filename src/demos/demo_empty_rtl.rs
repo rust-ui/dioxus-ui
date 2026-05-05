@@ -3,7 +3,9 @@ use icons::{ArrowUpRight, FolderCode};
 
 use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 use crate::ui::direction_provider::{Direction, DirectionProvider};
-use crate::ui::empty::{Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle};
+use crate::ui::empty::{
+    Empty, EmptyContent, EmptyDescription, EmptyHeader, EmptyMedia, EmptyMediaVariant, EmptyTitle,
+};
 
 #[component]
 pub fn DemoEmptyRtl() -> Element {

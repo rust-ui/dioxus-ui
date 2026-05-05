@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 
+use crate::Route;
 use crate::ui::command_bar::{CommandBarDialog, use_command_bar_provider};
 use crate::ui::navbar::Navbar;
-use crate::Route;
 
 #[component]
 pub fn AppLayout() -> Element {

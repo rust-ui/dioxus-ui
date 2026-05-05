@@ -19,8 +19,12 @@ pub enum ToggleSize {
 impl ToggleVariant {
     fn as_str(&self) -> &'static str {
         match self {
-            ToggleVariant::Default => "bg-transparent hover:bg-muted hover:text-muted-foreground data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
-            ToggleVariant::Outline => "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground data-[state=on]:bg-accent data-[state=on]:text-accent-foreground",
+            ToggleVariant::Default => {
+                "bg-transparent hover:bg-muted hover:text-muted-foreground data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+            }
+            ToggleVariant::Outline => {
+                "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground data-[state=on]:bg-accent data-[state=on]:text-accent-foreground"
+            }
         }
     }
 }

@@ -30,7 +30,11 @@ pub fn ToggleGroup(
     #[props(default = 1)] spacing: i32,
     children: Element,
 ) -> Element {
-    provide_context(ToggleGroupCtx { variant, orientation, spacing });
+    provide_context(ToggleGroupCtx {
+        variant,
+        orientation,
+        spacing,
+    });
 
     let is_vertical = orientation == ToggleGroupOrientation::Vertical;
     let gap_style = if spacing == 0 {
@@ -42,7 +46,11 @@ pub fn ToggleGroup(
     let class = tw_merge!(
         "flex items-center rounded-md group/toggle-group w-fit",
         if is_vertical { "flex-col" } else { "" },
-        if variant == ToggleGroupVariant::Outline { "shadow-xs" } else { "" },
+        if variant == ToggleGroupVariant::Outline {
+            "shadow-xs"
+        } else {
+            ""
+        },
         class.as_deref().unwrap_or("")
     );
 

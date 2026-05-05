@@ -1,6 +1,6 @@
 pub mod converter;
 
-use pulldown_cmark::{html, Options, Parser};
+use pulldown_cmark::{Options, Parser, html};
 use serde::Deserialize;
 
 #[derive(Deserialize)]
@@ -22,7 +22,13 @@ pub fn parse_md(raw: &str) -> (Frontmatter, &str) {
             }
         }
     }
-    (Frontmatter { title: String::new(), description: String::new() }, raw)
+    (
+        Frontmatter {
+            title: String::new(),
+            description: String::new(),
+        },
+        raw,
+    )
 }
 
 pub fn markdown_to_html(md: &str) -> String {

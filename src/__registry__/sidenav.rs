@@ -7,38 +7,140 @@ pub struct SidenavItem {
 }
 
 pub static SIDENAV_ITEMS: &[SidenavItem] = &[
-    SidenavItem { label: "Accordion", slug: "accordion" },
-    SidenavItem { label: "Alert", slug: "alert" },
-    SidenavItem { label: "Alert Dialog", slug: "alert-dialog" },
-    SidenavItem { label: "Avatar", slug: "avatar" },
-    SidenavItem { label: "Badge", slug: "badge" },
-    SidenavItem { label: "Breadcrumb", slug: "breadcrumb" },
-    SidenavItem { label: "Button", slug: "button" },
-    SidenavItem { label: "Button Group", slug: "button-group" },
-    SidenavItem { label: "Card", slug: "card" },
-    SidenavItem { label: "Checkbox", slug: "checkbox" },
-    SidenavItem { label: "Chips", slug: "chips" },
-    SidenavItem { label: "Collapsible", slug: "collapsible" },
-    SidenavItem { label: "Dialog", slug: "dialog" },
-    SidenavItem { label: "Empty", slug: "empty" },
-    SidenavItem { label: "Input", slug: "input" },
-    SidenavItem { label: "Kbd", slug: "kbd" },
-    SidenavItem { label: "Label", slug: "label" },
-    SidenavItem { label: "Pagination", slug: "pagination" },
-    SidenavItem { label: "Progress", slug: "progress" },
-    SidenavItem { label: "Radio Group", slug: "radio-group" },
-    SidenavItem { label: "Select Native", slug: "select-native" },
-    SidenavItem { label: "Separator", slug: "separator" },
-    SidenavItem { label: "Skeleton", slug: "skeleton" },
-    SidenavItem { label: "Slider", slug: "slider" },
-    SidenavItem { label: "Spinner", slug: "spinner" },
-    SidenavItem { label: "Status", slug: "status" },
-    SidenavItem { label: "Switch", slug: "switch" },
-    SidenavItem { label: "Table", slug: "table" },
-    SidenavItem { label: "Tabs", slug: "tabs" },
-    SidenavItem { label: "Textarea", slug: "textarea" },
-    SidenavItem { label: "Theme Toggle", slug: "theme-toggle" },
-    SidenavItem { label: "Toggle", slug: "toggle" },
-    SidenavItem { label: "Toggle Group", slug: "toggle-group" },
-    SidenavItem { label: "Tooltip", slug: "tooltip" },
+    SidenavItem {
+        label: "Accordion",
+        slug: "accordion",
+    },
+    SidenavItem {
+        label: "Alert",
+        slug: "alert",
+    },
+    SidenavItem {
+        label: "Alert Dialog",
+        slug: "alert-dialog",
+    },
+    SidenavItem {
+        label: "Avatar",
+        slug: "avatar",
+    },
+    SidenavItem {
+        label: "Badge",
+        slug: "badge",
+    },
+    SidenavItem {
+        label: "Breadcrumb",
+        slug: "breadcrumb",
+    },
+    SidenavItem {
+        label: "Button",
+        slug: "button",
+    },
+    SidenavItem {
+        label: "Button Group",
+        slug: "button-group",
+    },
+    SidenavItem {
+        label: "Card",
+        slug: "card",
+    },
+    SidenavItem {
+        label: "Checkbox",
+        slug: "checkbox",
+    },
+    SidenavItem {
+        label: "Chips",
+        slug: "chips",
+    },
+    SidenavItem {
+        label: "Collapsible",
+        slug: "collapsible",
+    },
+    SidenavItem {
+        label: "Dialog",
+        slug: "dialog",
+    },
+    SidenavItem {
+        label: "Empty",
+        slug: "empty",
+    },
+    SidenavItem {
+        label: "Input",
+        slug: "input",
+    },
+    SidenavItem {
+        label: "Kbd",
+        slug: "kbd",
+    },
+    SidenavItem {
+        label: "Label",
+        slug: "label",
+    },
+    SidenavItem {
+        label: "Pagination",
+        slug: "pagination",
+    },
+    SidenavItem {
+        label: "Progress",
+        slug: "progress",
+    },
+    SidenavItem {
+        label: "Radio Group",
+        slug: "radio-group",
+    },
+    SidenavItem {
+        label: "Select Native",
+        slug: "select-native",
+    },
+    SidenavItem {
+        label: "Separator",
+        slug: "separator",
+    },
+    SidenavItem {
+        label: "Skeleton",
+        slug: "skeleton",
+    },
+    SidenavItem {
+        label: "Slider",
+        slug: "slider",
+    },
+    SidenavItem {
+        label: "Spinner",
+        slug: "spinner",
+    },
+    SidenavItem {
+        label: "Status",
+        slug: "status",
+    },
+    SidenavItem {
+        label: "Switch",
+        slug: "switch",
+    },
+    SidenavItem {
+        label: "Table",
+        slug: "table",
+    },
+    SidenavItem {
+        label: "Tabs",
+        slug: "tabs",
+    },
+    SidenavItem {
+        label: "Textarea",
+        slug: "textarea",
+    },
+    SidenavItem {
+        label: "Theme Toggle",
+        slug: "theme-toggle",
+    },
+    SidenavItem {
+        label: "Toggle",
+        slug: "toggle",
+    },
+    SidenavItem {
+        label: "Toggle Group",
+        slug: "toggle-group",
+    },
+    SidenavItem {
+        label: "Tooltip",
+        slug: "tooltip",
+    },
 ];

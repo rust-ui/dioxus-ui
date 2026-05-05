@@ -1,7 +1,9 @@
 use dioxus::prelude::*;
 
 use crate::ui::direction_provider::{Direction, DirectionProvider};
-use crate::ui::pagination::{Pagination, PaginationItem, PaginationLink, PaginationList, PaginationNext, PaginationPrev};
+use crate::ui::pagination::{
+    Pagination, PaginationItem, PaginationLink, PaginationList, PaginationNext, PaginationPrev,
+};
 
 #[component]
 pub fn DemoPaginationRtl() -> Element {

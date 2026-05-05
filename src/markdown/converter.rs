@@ -74,7 +74,11 @@ pub fn convert_md(md: &str, components: &MdComponents) -> Element {
         Ok(d) => d,
         Err(_) => return rsx! {},
     };
-    let children: Vec<Element> = dom.children.iter().map(|n| process_node(n, components)).collect();
+    let children: Vec<Element> = dom
+        .children
+        .iter()
+        .map(|n| process_node(n, components))
+        .collect();
     rsx! {
         {children.into_iter()}
     }
@@ -108,7 +112,11 @@ fn extract_text(nodes: &[Node]) -> String {
 }
 
 fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
-    let children: Vec<Element> = el.children.iter().map(|n| process_node(n, components)).collect();
+    let children: Vec<Element> = el
+        .children
+        .iter()
+        .map(|n| process_node(n, components))
+        .collect();
 
     // Check custom registry first — wrap in DemoWrapper for Preview/Code tabs
     if let Some(component) = components.0.get(&el.name.to_lowercase()) {
@@ -125,7 +133,9 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
 
     // Default element rendering with Tailwind classes
     match el.name.to_lowercase().as_str() {
-        "h1" => rsx! { h1 { class: "mt-2 text-3xl font-bold tracking-tight scroll-mt-28", {children.into_iter()} } },
+        "h1" => {
+            rsx! { h1 { class: "mt-2 text-3xl font-bold tracking-tight scroll-mt-28", {children.into_iter()} } }
+        }
         "h2" => {
             let text = extract_text(&el.children);
             let id = slugify(&text);
@@ -136,26 +146,44 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
             let id = slugify(&text);
             rsx! { h3 { id: "{id}", class: "mt-12 text-lg font-medium tracking-tight scroll-mt-28", {children.into_iter()} } }
         }
-        "h4" => rsx! { h4 { class: "mt-8 text-base font-medium tracking-tight scroll-mt-28", {children.into_iter()} } },
-        "p" => rsx! { p { class: "leading-relaxed [&:not(:first-child)]:mt-6", {children.into_iter()} } },
+        "h4" => {
+            rsx! { h4 { class: "mt-8 text-base font-medium tracking-tight scroll-mt-28", {children.into_iter()} } }
+        }
+        "p" => {
+            rsx! { p { class: "leading-relaxed [&:not(:first-child)]:mt-6", {children.into_iter()} } }
+        }
         "ul" => rsx! { ul { class: "pl-6 my-6 list-disc", {children.into_iter()} } },
         "ol" => rsx! { ol { class: "pl-6 my-6 list-decimal", {children.into_iter()} } },
         "li" => rsx! { li { class: "mt-2", {children.into_iter()} } },
         "a" => {
-            let href = el.attributes.get("href").and_then(|v| v.clone()).unwrap_or_default();
+            let href = el
+                .attributes
+                .get("href")
+                .and_then(|v| v.clone())
+                .unwrap_or_default();
             rsx! { a { class: "font-medium underline underline-offset-4", href: "{href}", {children.into_iter()} } }
         }
-        "code" => rsx! { code { class: "relative font-mono break-words rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-[0.8rem]", {children.into_iter()} } },
-        "pre" => rsx! { pre { class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs", {children.into_iter()} } },
+        "code" => {
+            rsx! { code { class: "relative font-mono break-words rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-[0.8rem]", {children.into_iter()} } }
+        }
+        "pre" => {
+            rsx! { pre { class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs", {children.into_iter()} } }
+        }
         "strong" | "b" => rsx! { strong { class: "font-medium", {children.into_iter()} } },
         "em" | "i" => rsx! { em { {children.into_iter()} } },
-        "blockquote" => rsx! { blockquote { class: "pl-6 mt-6 italic border-l-2", {children.into_iter()} } },
-        "table" => rsx! { div { class: "overflow-y-auto my-6 w-full rounded-xl border", table { class: "w-full text-sm border-none", {children.into_iter()} } } },
+        "blockquote" => {
+            rsx! { blockquote { class: "pl-6 mt-6 italic border-l-2", {children.into_iter()} } }
+        }
+        "table" => {
+            rsx! { div { class: "overflow-y-auto my-6 w-full rounded-xl border", table { class: "w-full text-sm border-none", {children.into_iter()} } } }
+        }
         "thead" => rsx! { thead { {children.into_iter()} } },
         "tbody" => rsx! { tbody { {children.into_iter()} } },
         "tr" => rsx! { tr { class: "m-0 border-b", {children.into_iter()} } },
         "th" => rsx! { th { class: "py-2 px-4 font-bold text-left", {children.into_iter()} } },
-        "td" => rsx! { td { class: "py-2 px-4 text-left whitespace-nowrap", {children.into_iter()} } },
+        "td" => {
+            rsx! { td { class: "py-2 px-4 text-left whitespace-nowrap", {children.into_iter()} } }
+        }
         "hr" => rsx! { hr { class: "my-4 md:my-8" } },
         _ => rsx! { {children.into_iter()} },
     }
@@ -173,8 +201,14 @@ mod tests {
     fn add_stores_key_lowercase() {
         let mut c = MdComponents::new();
         c.add("DemoCard", |_| rsx! {});
-        assert!(c.0.contains_key("democard"), "key should be stored as lowercase");
-        assert!(!c.0.contains_key("DemoCard"), "original case should not be stored");
+        assert!(
+            c.0.contains_key("democard"),
+            "key should be stored as lowercase"
+        );
+        assert!(
+            !c.0.contains_key("DemoCard"),
+            "original case should not be stored"
+        );
     }
 
     #[test]
@@ -225,7 +259,10 @@ mod tests {
         use crate::markdown::markdown_to_html;
         let html = markdown_to_html("\n<DemoButton />\n");
         eprintln!("pulldown output: {:?}", html);
-        assert!(!html.contains("&lt;"), "pulldown-cmark escaped the PascalCase tag");
+        assert!(
+            !html.contains("&lt;"),
+            "pulldown-cmark escaped the PascalCase tag"
+        );
     }
 
     #[test]
@@ -234,8 +271,14 @@ mod tests {
         let dom = Dom::parse(html).unwrap();
         eprintln!("dom children: {:?}", dom.children);
         // html_parser preserves original case — name is "DemoButton" not "demobutton"
-        let has_element = dom.children.iter().any(|n| matches!(n, Node::Element(e) if e.name.to_lowercase() == "demobutton"));
-        assert!(has_element, "html_parser did not parse <DemoButton /> as element");
+        let has_element = dom
+            .children
+            .iter()
+            .any(|n| matches!(n, Node::Element(e) if e.name.to_lowercase() == "demobutton"));
+        assert!(
+            has_element,
+            "html_parser did not parse <DemoButton /> as element"
+        );
     }
 
     #[test]

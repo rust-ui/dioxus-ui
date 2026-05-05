@@ -7,7 +7,10 @@ static ACCORDION_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
 #[component]
 pub fn Accordion(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("divide-y divide-input w-full", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "divide-y divide-input w-full",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { div { class: "{merged}", {children} } }
 }
 
@@ -105,7 +108,10 @@ pub fn AccordionDescription(
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
-    let merged = tw_merge!("text-muted-foreground text-sm", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!(
+        "text-muted-foreground text-sm",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { p { class: "{merged}", {children} } }
 }
 

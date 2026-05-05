@@ -1,7 +1,10 @@
 use dioxus::prelude::*;
 use icons::CirclePlus;
 
-use crate::ui::alert_dialog::{AlertDialog, AlertDialogBody, AlertDialogClose, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger};
+use crate::ui::alert_dialog::{
+    AlertDialog, AlertDialogBody, AlertDialogClose, AlertDialogContent, AlertDialogDescription,
+    AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger,
+};
 use crate::ui::button::Button;
 
 #[component]

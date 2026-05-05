@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 
+use crate::Route;
 use crate::ui::badge::{Badge, BadgeVariant};
 use crate::ui::button::{Button, ButtonVariant};
-use crate::Route;
 
 #[component]
 pub fn DocHeader(

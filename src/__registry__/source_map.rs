@@ -16,14 +16,18 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoAlertDialogMedia" => Some(include_str!("../demos/demo_alert_dialog_media.rs")),
         "DemoAlertDialogRtl" => Some(include_str!("../demos/demo_alert_dialog_rtl.rs")),
         "DemoAlertDialogSmall" => Some(include_str!("../demos/demo_alert_dialog_small.rs")),
-        "DemoAlertDialogSmallMedia" => Some(include_str!("../demos/demo_alert_dialog_small_media.rs")),
+        "DemoAlertDialogSmallMedia" => {
+            Some(include_str!("../demos/demo_alert_dialog_small_media.rs"))
+        }
         "DemoAlertRtl" => Some(include_str!("../demos/demo_alert_rtl.rs")),
         "DemoAvatar" => Some(include_str!("../demos/demo_avatar.rs")),
         "DemoAvatarBadge" => Some(include_str!("../demos/demo_avatar_badge.rs")),
         "DemoAvatarBadgeIcon" => Some(include_str!("../demos/demo_avatar_badge_icon.rs")),
         "DemoAvatarGroup" => Some(include_str!("../demos/demo_avatar_group.rs")),
         "DemoAvatarGroupCount" => Some(include_str!("../demos/demo_avatar_group_count.rs")),
-        "DemoAvatarGroupCountIcon" => Some(include_str!("../demos/demo_avatar_group_count_icon.rs")),
+        "DemoAvatarGroupCountIcon" => {
+            Some(include_str!("../demos/demo_avatar_group_count_icon.rs"))
+        }
         "DemoAvatarRtl" => Some(include_str!("../demos/demo_avatar_rtl.rs")),
         "DemoAvatarSize" => Some(include_str!("../demos/demo_avatar_size.rs")),
         "DemoBadge" => Some(include_str!("../demos/demo_badge.rs")),
@@ -89,10 +93,14 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoRadioButton" => Some(include_str!("../demos/demo_radio_button.rs")),
         "DemoRadioButtonCustom" => Some(include_str!("../demos/demo_radio_button_custom.rs")),
         "DemoRadioGroup" => Some(include_str!("../demos/demo_radio_group.rs")),
-        "DemoSelectNativeAutoWidth" => Some(include_str!("../demos/demo_select_native_auto_width.rs")),
+        "DemoSelectNativeAutoWidth" => {
+            Some(include_str!("../demos/demo_select_native_auto_width.rs"))
+        }
         "DemoSelectNativeError" => Some(include_str!("../demos/demo_select_native_error.rs")),
         "DemoSelectNativeGroup" => Some(include_str!("../demos/demo_select_native_group.rs")),
-        "DemoSelectNativeOverlappingLabel" => Some(include_str!("../demos/demo_select_native_overlapping_label.rs")),
+        "DemoSelectNativeOverlappingLabel" => Some(include_str!(
+            "../demos/demo_select_native_overlapping_label.rs"
+        )),
         "DemoSelectNativeTimezone" => Some(include_str!("../demos/demo_select_native_timezone.rs")),
         "DemoSeparator" => Some(include_str!("../demos/demo_separator.rs")),
         "DemoSeparatorRtl" => Some(include_str!("../demos/demo_separator_rtl.rs")),
@@ -127,7 +135,9 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoThemeToggle" => Some(include_str!("../demos/demo_theme_toggle.rs")),
         "DemoToggle" => Some(include_str!("../demos/demo_toggle.rs")),
         "DemoToggleGroup" => Some(include_str!("../demos/demo_toggle_group.rs")),
-        "DemoToggleGroupFontWeight" => Some(include_str!("../demos/demo_toggle_group_font_weight.rs")),
+        "DemoToggleGroupFontWeight" => {
+            Some(include_str!("../demos/demo_toggle_group_font_weight.rs"))
+        }
         "DemoToggleGroupOutline" => Some(include_str!("../demos/demo_toggle_group_outline.rs")),
         "DemoToggleGroupRtl" => Some(include_str!("../demos/demo_toggle_group_rtl.rs")),
         "DemoToggleGroupSpacing" => Some(include_str!("../demos/demo_toggle_group_spacing.rs")),

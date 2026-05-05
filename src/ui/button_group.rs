@@ -14,8 +14,12 @@ pub enum ButtonGroupOrientation {
 impl ButtonGroupOrientation {
     fn as_str(&self) -> &'static str {
         match self {
-            ButtonGroupOrientation::Horizontal => "[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none",
-            ButtonGroupOrientation::Vertical => "flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none",
+            ButtonGroupOrientation::Horizontal => {
+                "[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none"
+            }
+            ButtonGroupOrientation::Vertical => {
+                "flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none"
+            }
         }
     }
 }
@@ -38,9 +42,7 @@ pub fn ButtonGroup(
 }
 
 #[component]
-pub fn ButtonGroupSeparator(
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn ButtonGroupSeparator(#[props(into, optional)] class: Option<String>) -> Element {
     let merged = tw_merge!(
         "relative !m-0 self-stretch data-[orientation=vertical]:h-auto",
         class.as_deref().unwrap_or("")

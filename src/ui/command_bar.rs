@@ -62,7 +62,8 @@ pub fn CommandBarDialog() -> Element {
     // Global Cmd+K listener
     use_effect(move || {
         spawn(async move {
-            let _ = eval(r#"
+            let _ = eval(
+                r#"
                 if (!window.__cmdBarGlobalInit) {
                     window.__cmdBarGlobalInit = true;
                     document.addEventListener('keydown', function(e) {
@@ -73,7 +74,9 @@ pub fn CommandBarDialog() -> Element {
                         }
                     });
                 }
-            "#).await;
+            "#,
+            )
+            .await;
         });
     });
 
@@ -81,14 +84,16 @@ pub fn CommandBarDialog() -> Element {
     let mut open_w = state.open;
     use_effect(move || {
         spawn(async move {
-            let mut ev = eval(r#"
+            let mut ev = eval(
+                r#"
                 await new Promise(resolve => {
                     const d = document.getElementById('command-search-docs');
                     const handler = () => resolve('open');
                     if (d) d.addEventListener('cmd-open', handler, { once: true });
                     else document.addEventListener('cmd-open', handler, { once: true });
                 });
-            "#);
+            "#,
+            );
             let _ = ev.await;
             open_w.set(true);
         });
@@ -97,7 +102,9 @@ pub fn CommandBarDialog() -> Element {
     // Run RUST-UI tab/copy/keyboard JS each time dialog opens
     let is_open = (state.open)();
     use_effect(move || {
-        if !is_open { return; }
+        if !is_open {
+            return;
+        }
         spawn(async move {
             let _ = eval(r#"
             (function() {

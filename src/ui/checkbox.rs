@@ -14,7 +14,11 @@ pub fn Checkbox(
         "peer size-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
         class.as_deref().unwrap_or("")
     );
-    let bg = if state() { "bg-primary text-primary-foreground" } else { "bg-background" };
+    let bg = if state() {
+        "bg-primary text-primary-foreground"
+    } else {
+        "bg-background"
+    };
     let data_state = if state() { "checked" } else { "unchecked" };
     rsx! {
         button {
