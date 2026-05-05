@@ -2,12 +2,12 @@
 name = "dioxus-ui"
 version = "0.1.0"
 authors = ["Max Wells <maxwells.pro@proton.me>"]
-edition = "2021"
+edition = "2024"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = { version = "0.7.1", features = ["router"] }
+dioxus = { version = "0.7", features = ["router"] }
 dioxus_ui = "0.1"
 icons = { version = "0.18", features = ["dioxus"] }
 tw_merge = { version = "0.1", features = ["debug"] }
