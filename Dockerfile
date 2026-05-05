@@ -27,7 +27,7 @@ ENV CARGO_TARGET_X86_64_UNKNOWN_LINUX_MUSL_LINKER=x86_64-linux-musl-gcc
 RUN dx build --release --fullstack
 
 # ------- 4. CLEANER STAGE ------- #
-FROM scratch
+FROM gcr.io/distroless/cc-debian12
 
 COPY --from=builder --chmod=755 /app/target/dx/dioxus-ui/release/web/server  /server
 COPY --from=builder /app/target/dx/dioxus-ui/release/web/public               /public
