@@ -32,7 +32,7 @@ FROM gcr.io/distroless/cc-debian12
 COPY --from=builder --chmod=755 /app/target/dx/dioxus-ui/release/web/server  /server
 COPY --from=builder /app/target/dx/dioxus-ui/release/web/public               /public
 
-ENV DIOXUS_SITE_ADDR=0.0.0.0:3000
-EXPOSE 3000
+ENV DIOXUS_SITE_ADDR=0.0.0.0:8080
+EXPOSE 8080
 
 CMD ["/server"]
