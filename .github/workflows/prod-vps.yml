@@ -125,7 +125,12 @@ jobs:
     - name: Smoke test
       run: |
         sleep 5
-        ${{ env.SSH }} "curl -sf http://localhost:5000/ || (docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=20 && exit 1)"
+        STATUS=$(${{ env.SSH }} "curl -s -o /dev/null -w '%{http_code}' --max-time 10 http://localhost:5000/")
+        echo "HTTP status: $STATUS"
+        if [ "$STATUS" != "200" ]; then
+          ${{ env.SSH }} "docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=30"
+          exit 1
+        fi
 
     - name: Cleanup old Docker images
       run: |
