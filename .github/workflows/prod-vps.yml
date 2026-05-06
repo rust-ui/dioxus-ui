@@ -1,8 +1,8 @@
-name: Build and Deploy Dioxus SSR App
+name: 🚀 Build and Deploy Dioxus SSR App
 
 on:
-  # gh workflow run prod-vps.yml
-  # gh workflow run prod-vps.yml -f skip_build=true   ← redeploy only, no rebuild
+  # 🖥️ gh workflow run prod-vps.yml
+  # 🖥️ gh workflow run prod-vps.yml -f skip_build=true   ← redeploy only, no rebuild
   workflow_dispatch:
     inputs:
       skip_build:
@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   # fmt:
-  #   name: Format
+  #   name: 🎨 Format
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v4
@@ -34,14 +34,14 @@ jobs:
   #       run: cargo fmt --all -- --check
 
   typos:
-    name: Typos
+    name: ✏️ Typos
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: crate-ci/typos@master
 
   build:
-    name: Build
+    name: 🐳 Build
     needs: [typos]
     runs-on: ubuntu-latest
     if: github.event.inputs.skip_build != 'true'
@@ -87,7 +87,7 @@ jobs:
         cache-to: type=gha,mode=max
 
   deploy:
-    name: Deploy
+    name: 🌍 Deploy
     needs: [build]
     if: always() && (needs.build.result == 'success' || needs.build.result == 'skipped')
     runs-on: ubuntu-latest
@@ -100,31 +100,31 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
-    - name: Setup SSH key
+    - name: 🔑 Setup SSH key
       run: |
         mkdir -p ~/.ssh
         echo "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/deploy_key
         chmod 600 ~/.ssh/deploy_key
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-    - name: Copy compose file to server
+    - name: 📦 Copy compose file to server
       run: |
         ${{ env.SSH }} "mkdir -p ~/dioxus-ui"
         ${{ env.SCP }} docker-compose.shared-server.yml root@${{ secrets.SERVER_IP }}:~/dioxus-ui/
 
-    - name: Docker login on server
+    - name: 🔐 Docker login on server
       run: |
         ${{ env.SSH }} "echo '${{ secrets.DOCKER_PASSWORD }}' | docker login -u '${{ secrets.DOCKER_USERNAME }}' --password-stdin"
 
-    - name: Deploy app
+    - name: 🚢 Deploy app
       run: |
         ${{ env.SSH }} "cd ~/dioxus-ui && export DOCKER_USERNAME=${{ secrets.DOCKER_USERNAME }} && export DOCKER_REPOSITORY=dioxus-ui && export IMAGE_TAG=latest && docker compose -f docker-compose.shared-server.yml down && docker compose -f docker-compose.shared-server.yml pull && docker compose -f docker-compose.shared-server.yml up -d"
 
-    - name: Smoke test
+    - name: 🩺 Smoke test
       run: |
         sleep 5
         ${{ env.SSH }} "curl -sf http://localhost:5000/ || (docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=20 && exit 1)"
 
-    - name: Cleanup old Docker images
+    - name: 🧹 Cleanup old Docker images
       run: |
         ${{ env.SSH }} "docker image prune -af"
