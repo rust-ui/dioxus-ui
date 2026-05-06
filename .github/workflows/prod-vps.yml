@@ -70,6 +70,10 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
 
+    - name: Generate image tag
+      id: tag
+      run: echo "sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
+
     - name: Build and push Docker image
       uses: docker/build-push-action@v4
       with:
@@ -77,6 +81,7 @@ jobs:
         file: ./Dockerfile
         push: true
         tags: |
+          ${{ secrets.DOCKER_USERNAME }}/dioxus-ui:${{ steps.tag.outputs.sha }}
           ${{ secrets.DOCKER_USERNAME }}/dioxus-ui:latest
         cache-from: type=gha
         cache-to: type=gha,mode=max
@@ -117,10 +122,8 @@ jobs:
 
     - name: Smoke test
       run: |
-        sleep 10
-        ${{ env.SSH }} "docker ps"
-        ${{ env.SSH }} "docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=50"
-        ${{ env.SSH }} "curl -sv --max-time 10 http://localhost:5000/ 2>&1 | tail -20"
+        sleep 5
+        ${{ env.SSH }} "curl -sf http://localhost:5000/ || (docker compose -f ~/dioxus-ui/docker-compose.shared-server.yml logs app --tail=20 && exit 1)"
 
     - name: Cleanup old Docker images
       run: |
