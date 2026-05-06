@@ -156,6 +156,7 @@ pub fn DemoWrapper(
                     let source = demo_name.as_deref().and_then(get_demo_source);
                     if let Some(code) = source {
                         let code = code.to_string();
+                        let highlighted = crate::markdown::highlight_code::highlight_code(&code, Some("rust"));
                         let copy_id = format!("copy-btn-{id}");
                         let cid = copy_id.clone();
                         rsx! {
@@ -179,8 +180,8 @@ pub fn DemoWrapper(
                                     },
                                     "Copy"
                                 }
-                                pre { class: "overflow-x-auto py-3.5 px-4 text-xs min-h-[370px]",
-                                    code { class: "font-mono", "{code}" }
+                                pre { class: "overflow-x-auto py-3.5 px-4 text-xs min-h-[370px] font-mono",
+                                    dangerous_inner_html: "{highlighted}",
                                 }
                             }
                         }
