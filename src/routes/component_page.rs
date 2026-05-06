@@ -3,6 +3,7 @@ use dioxus::prelude::*;
 use crate::markdown::converter::{convert_md, extract_toc};
 use crate::registry::{self, prev_next};
 use crate::ui::doc_header::DocHeader;
+use crate::ui::seo_meta::SeoMeta;
 use crate::ui::toc::TocItem;
 
 #[component]
@@ -22,6 +23,12 @@ pub fn ComponentPage(name: String) -> Element {
                     p { class: "text-muted-foreground", "Component not found: {name}" }
                 },
                 Some(e) => rsx! {
+                    SeoMeta {
+                        title: format!("{} · Dioxus UI", e.title()),
+                        description: e.description(),
+                        canonical_url: format!("https://dioxus-ui.com/components/{}", e.slug),
+                        og_type: "article".to_string(),
+                    }
                     DocHeader {
                         title: e.title(),
                         description: e.description(),
