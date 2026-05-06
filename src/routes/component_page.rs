@@ -24,7 +24,7 @@ pub fn ComponentPage(name: String) -> Element {
                 },
                 Some(e) => rsx! {
                     SeoMeta {
-                        title: format!("{} · Dioxus UI", e.title()),
+                        title: format!("{} · Rust UI", e.title()),
                         description: e.description(),
                         canonical_url: format!("https://dioxus-ui.com/components/{}", e.slug),
                         og_type: "article".to_string(),

@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 const BASE_URL: &str = "https://dioxus-ui.com";
-const SITE_NAME: &str = "Dioxus UI";
+const SITE_NAME: &str = "Rust UI";
 const DEFAULT_OG_IMAGE: &str = "https://dioxus-ui.com/og-image.webp";
 
 #[component]
