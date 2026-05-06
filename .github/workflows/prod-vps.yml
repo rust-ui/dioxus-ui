@@ -119,7 +119,8 @@ jobs:
           export DOCKER_REPOSITORY=dioxus-ui
           export IMAGE_TAG=latest
           docker compose -f docker-compose.shared-server.yml pull
-          docker compose -f docker-compose.shared-server.yml up -d --force-recreate
+          docker compose -f docker-compose.shared-server.yml down --remove-orphans
+          docker compose -f docker-compose.shared-server.yml up -d
         "
 
     - name: Smoke test
