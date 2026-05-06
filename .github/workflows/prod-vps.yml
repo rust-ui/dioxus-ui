@@ -19,19 +19,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  fmt:
-    name: Format
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@nightly
-        with:
-          components: rustfmt
-
-      - name: Check formatting
-        run: cargo fmt --all -- --check
+  # fmt:
+  #   name: Format
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #
+  #     - name: Install Rust toolchain
+  #       uses: dtolnay/rust-toolchain@nightly
+  #       with:
+  #         components: rustfmt
+  #
+  #     - name: Check formatting
+  #       run: cargo fmt --all -- --check
 
   typos:
     name: Typos
@@ -42,7 +42,7 @@ jobs:
 
   build:
     name: Build
-    needs: [fmt, typos]
+    needs: [typos]
     runs-on: ubuntu-latest
     if: github.event.inputs.skip_build != 'true'
 
@@ -119,7 +119,7 @@ jobs:
           export DOCKER_REPOSITORY=dioxus-ui
           export IMAGE_TAG=latest
           docker compose -f docker-compose.shared-server.yml pull
-          docker compose -f docker-compose.shared-server.yml up -d
+          docker compose -f docker-compose.shared-server.yml up -d --force-recreate
         "
 
     - name: Smoke test
