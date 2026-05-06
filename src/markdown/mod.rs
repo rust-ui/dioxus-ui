@@ -1,4 +1,5 @@
 pub mod converter;
+pub mod highlight_code;
 
 use pulldown_cmark::{Options, Parser, html};
 use serde::Deserialize;

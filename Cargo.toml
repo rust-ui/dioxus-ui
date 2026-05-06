@@ -15,8 +15,10 @@ pulldown-cmark = { version = "0.12", default-features = false, features = ["html
 html_parser = "0.7.0"
 toml = "0.8"
 serde = { version = "1", features = ["derive"] }
+syntect = { version = "5.2", default-features = false, features = ["default-fancy", "regex-fancy"], optional = true }
+html-escape = { version = "0.2", optional = true }
 
 [features]
 default = []
-server = ["dioxus/server"]
+server = ["dioxus/server", "dep:syntect", "dep:html-escape"]
 web = ["dioxus/web"]

@@ -111,6 +111,21 @@ fn extract_text(nodes: &[Node]) -> String {
         .join("")
 }
 
+fn extract_code_block(pre: &HtmlElement) -> Option<(Option<String>, String)> {
+    for child in &pre.children {
+        if let Node::Element(code_el) = child && code_el.name == "code" {
+            let lang = code_el
+                .classes
+                .iter()
+                .find(|c| c.starts_with("language-"))
+                .map(|c| c[9..].to_string());
+            let text = extract_text(&code_el.children);
+            return Some((lang, text));
+        }
+    }
+    None
+}
+
 fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     let children: Vec<Element> = el
         .children
@@ -167,7 +182,17 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
             rsx! { code { class: "relative font-mono break-words rounded-md bg-muted px-[0.3rem] py-[0.2rem] text-[0.8rem]", {children.into_iter()} } }
         }
         "pre" => {
-            rsx! { pre { class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs", {children.into_iter()} } }
+            if let Some((lang, code_text)) = extract_code_block(el) {
+                let highlighted = crate::markdown::highlight_code::highlight_code(&code_text, lang.as_deref());
+                rsx! {
+                    pre {
+                        class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs",
+                        dangerous_inner_html: "{highlighted}",
+                    }
+                }
+            } else {
+                rsx! { pre { class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs", {children.into_iter()} } }
+            }
         }
         "strong" | "b" => rsx! { strong { class: "font-medium", {children.into_iter()} } },
         "em" | "i" => rsx! { em { {children.into_iter()} } },
