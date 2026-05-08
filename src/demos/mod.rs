@@ -3,6 +3,24 @@
 
 pub mod demo_aspect_ratio;
 pub mod demo_accordion;
+pub mod demo_bento_grid;
+pub mod demo_bento_grid6;
+pub mod demo_bottom_nav;
+pub mod demo_card_carousel;
+pub mod demo_carousel;
+pub mod demo_expandable;
+pub mod demo_faq_transition;
+pub mod demo_hover_card;
+pub mod demo_hover_card_rtl;
+pub mod demo_input_otp;
+pub mod demo_input_otp_separator;
+pub mod demo_item;
+pub mod demo_marquee;
+pub mod demo_mask;
+pub mod demo_pressable;
+pub mod demo_radio_button_group;
+pub mod demo_radio_button_group_rtl;
+pub mod demo_shimmer;
 pub mod demo_accordion_bordered;
 pub mod demo_accordion_card;
 pub mod demo_accordion_icons;

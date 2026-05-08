@@ -4,6 +4,20 @@
 pub mod accordion;
 pub mod aspect_ratio;
 pub mod alert;
+pub mod bento_grid;
+pub mod bottom_nav;
+pub mod card_carousel;
+pub mod carousel;
+pub mod expandable;
+pub mod faq_transition;
+pub mod hover_card;
+pub mod input_otp;
+pub mod item;
+pub mod marquee;
+pub mod mask;
+pub mod pressable;
+pub mod radio_button_group;
+pub mod shimmer;
 pub mod alert_dialog;
 pub mod avatar;
 pub mod badge;
@@ -49,6 +63,20 @@ use types::RegistryEntry;
 use accordion::ACCORDION;
 use aspect_ratio::ASPECT_RATIO;
 use alert::ALERT;
+use bento_grid::BENTO_GRID;
+use bottom_nav::BOTTOM_NAV;
+use card_carousel::CARD_CAROUSEL;
+use carousel::CAROUSEL;
+use expandable::EXPANDABLE;
+use faq_transition::FAQ_TRANSITION;
+use hover_card::HOVER_CARD;
+use input_otp::INPUT_OTP;
+use item::ITEM;
+use marquee::MARQUEE;
+use mask::MASK;
+use pressable::PRESSABLE;
+use radio_button_group::RADIO_BUTTON_GROUP;
+use shimmer::SHIMMER;
 use alert_dialog::ALERT_DIALOG;
 use avatar::AVATAR;
 use badge::BADGE;
@@ -92,6 +120,20 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &ACCORDION,
     &ASPECT_RATIO,
     &ALERT,
+    &BENTO_GRID,
+    &BOTTOM_NAV,
+    &CARD_CAROUSEL,
+    &CAROUSEL,
+    &EXPANDABLE,
+    &FAQ_TRANSITION,
+    &HOVER_CARD,
+    &INPUT_OTP,
+    &ITEM,
+    &MARQUEE,
+    &MASK,
+    &PRESSABLE,
+    &RADIO_BUTTON_GROUP,
+    &SHIMMER,
     &ALERT_DIALOG,
     &AVATAR,
     &BADGE,
