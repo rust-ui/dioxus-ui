@@ -1,1 +1,4 @@
 [application]
+
+[web.resource]
+dev = []

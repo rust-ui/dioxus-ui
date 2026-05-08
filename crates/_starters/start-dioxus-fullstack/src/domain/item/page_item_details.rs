@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-use uuid::Uuid;
 
 use crate::app::Route;
 use crate::components::layout::back_button::BackButton;

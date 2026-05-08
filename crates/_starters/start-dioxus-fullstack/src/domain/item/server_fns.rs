@@ -11,8 +11,7 @@ pub struct Item {
 
 #[server]
 pub async fn get_items() -> Result<Vec<Item>, ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>()
-        .ok_or_else(|| ServerFnError::new("DB pool not found in context"))?;
+    let pool = use_context::<sqlx::PgPool>();
 
     let rows = sqlx::query_as!(
         Item,
@@ -27,8 +26,7 @@ pub async fn get_items() -> Result<Vec<Item>, ServerFnError> {
 
 #[server]
 pub async fn get_item(id: Uuid) -> Result<Option<Item>, ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>()
-        .ok_or_else(|| ServerFnError::new("DB pool not found in context"))?;
+    let pool = use_context::<sqlx::PgPool>();
 
     let row = sqlx::query_as!(
         Item,
@@ -44,8 +42,7 @@ pub async fn get_item(id: Uuid) -> Result<Option<Item>, ServerFnError> {
 
 #[server]
 pub async fn create_item(title: String, description: Option<String>) -> Result<Item, ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>()
-        .ok_or_else(|| ServerFnError::new("DB pool not found in context"))?;
+    let pool = use_context::<sqlx::PgPool>();
 
     let row = sqlx::query_as!(
         Item,
@@ -62,8 +59,7 @@ pub async fn create_item(title: String, description: Option<String>) -> Result<I
 
 #[server]
 pub async fn delete_item(id: Uuid) -> Result<(), ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>()
-        .ok_or_else(|| ServerFnError::new("DB pool not found in context"))?;
+    let pool = use_context::<sqlx::PgPool>();
 
     sqlx::query!("DELETE FROM items WHERE id = $1", id)
         .execute(&pool)

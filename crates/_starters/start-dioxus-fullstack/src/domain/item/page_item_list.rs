@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::app::Route;
 use crate::components::ui::button::Button;
-use crate::components::ui::card::{Card, CardContent, CardDescription, CardHeader, CardTitle};
+use crate::components::ui::card::{CardDescription, CardHeader, CardTitle};
 use crate::components::ui::empty::{Empty, EmptyDescription, EmptyTitle};
 use crate::components::ui::input::Input;
 use crate::components::ui::skeleton::Skeleton;
@@ -64,9 +64,9 @@ pub fn ItemListPage() -> Element {
                                 let id = item.id.to_string();
                                 let id2 = id.clone();
                                 rsx! {
-                                    Card {
+                                    div {
                                         key: "{id}",
-                                        class: "cursor-pointer hover:bg-accent/50 transition-colors",
+                                        class: "cursor-pointer rounded-xl border bg-card text-card-foreground shadow hover:bg-accent/50 transition-colors",
                                         onclick: move |_| { navigator.push(Route::ItemDetails { id: id2.clone() }); },
                                         CardHeader {
                                             CardTitle { "{item.title}" }
