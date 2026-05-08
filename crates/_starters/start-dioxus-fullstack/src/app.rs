@@ -1,15 +1,14 @@
 use dioxus::prelude::*;
 
 use crate::components::hooks::use_theme_mode::use_theme_provider;
-
-const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
 use crate::components::layout::app_bottom_nav::AppBottomNav;
 use crate::components::layout::app_wrapper::AppWrapper;
 use crate::components::layout::header::Header;
-use crate::domain::home::page_home::HomePage;
-use crate::domain::item::page_item_details::ItemDetailsPage;
-use crate::domain::item::page_item_list::ItemListPage;
-use crate::domain::settings::page_settings::SettingsPage;
+use crate::domain::home::routes::Home;
+use crate::domain::item::routing::{ItemDetails, ItemList};
+use crate::domain::settings::routes::Settings;
+
+const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -40,10 +39,6 @@ pub fn App() -> Element {
     }
 }
 
-/* ========================================================== */
-/*                       LAYOUTS                              */
-/* ========================================================== */
-
 #[component]
 fn AppLayout() -> Element {
     rsx! {
@@ -55,30 +50,6 @@ fn AppLayout() -> Element {
             AppBottomNav {}
         }
     }
-}
-
-/* ========================================================== */
-/*                       PAGES                                */
-/* ========================================================== */
-
-#[component]
-fn Home() -> Element {
-    rsx! { HomePage {} }
-}
-
-#[component]
-fn Settings() -> Element {
-    rsx! { SettingsPage {} }
-}
-
-#[component]
-fn ItemList() -> Element {
-    rsx! { ItemListPage {} }
-}
-
-#[component]
-fn ItemDetails(id: String) -> Element {
-    rsx! { ItemDetailsPage { id } }
 }
 
 #[component]
