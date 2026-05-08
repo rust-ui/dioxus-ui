@@ -1,27 +1,19 @@
 use dioxus::prelude::*;
 
 use crate::ui::label::Label;
-use crate::ui::radio_group::{RadioGroup, RadioItem};
+use crate::ui::radio_button::{RadioGroup, RadioGroupItem};
 
 const FREQUENCIES: &[&str] = &["Daily", "Weekly", "Monthly"];
 
 #[component]
 pub fn DemoRadioButton() -> Element {
-    let mut selected = use_signal(|| "Weekly".to_string());
+    let value = use_signal(|| "Weekly".to_string());
 
     rsx! {
-        RadioGroup {
+        RadioGroup { value,
             for frequency in FREQUENCIES.iter() {
                 div { class: "flex gap-3 items-center",
-                    RadioItem {
-                        name: "frequency",
-                        value: *frequency,
-                        checked: selected() == *frequency,
-                        onchange: {
-                            let frequency = frequency.to_string();
-                            move |_| selected.set(frequency.clone())
-                        },
-                    }
+                    RadioGroupItem { value: *frequency, id: *frequency }
                     Label { html_for: *frequency, {*frequency} }
                 }
             }

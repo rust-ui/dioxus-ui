@@ -15,7 +15,7 @@ pub enum InputType {
 }
 
 impl InputType {
-    fn as_str(&self) -> &'static str {
+    pub fn as_str(&self) -> &'static str {
         match self {
             InputType::Text => "text",
             InputType::Email => "email",

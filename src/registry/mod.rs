@@ -2,10 +2,12 @@
 // Run `cargo run --manifest-path dioxus_ui_internals/build_registry/Cargo.toml` to regenerate.
 
 pub mod accordion;
+pub mod aspect_ratio;
 pub mod alert;
 pub mod alert_dialog;
 pub mod avatar;
 pub mod badge;
+pub mod callout;
 pub mod breadcrumb;
 pub mod button;
 pub mod button_group;
@@ -15,12 +17,17 @@ pub mod chips;
 pub mod collapsible;
 pub mod dialog;
 pub mod empty;
+pub mod field;
+pub mod image;
 pub mod input;
+pub mod input_group;
 pub mod kbd;
 pub mod label;
 pub mod pagination;
 pub mod progress;
+pub mod radio_button;
 pub mod radio_group;
+pub mod scroll_area;
 pub mod select_native;
 pub mod separator;
 pub mod skeleton;
@@ -40,10 +47,12 @@ pub mod types;
 use types::RegistryEntry;
 
 use accordion::ACCORDION;
+use aspect_ratio::ASPECT_RATIO;
 use alert::ALERT;
 use alert_dialog::ALERT_DIALOG;
 use avatar::AVATAR;
 use badge::BADGE;
+use callout::CALLOUT;
 use breadcrumb::BREADCRUMB;
 use button::BUTTON;
 use button_group::BUTTON_GROUP;
@@ -53,12 +62,17 @@ use chips::CHIPS;
 use collapsible::COLLAPSIBLE;
 use dialog::DIALOG;
 use empty::EMPTY;
+use field::FIELD;
+use image::IMAGE;
 use input::INPUT;
+use input_group::INPUT_GROUP;
 use kbd::KBD;
 use label::LABEL;
 use pagination::PAGINATION;
 use progress::PROGRESS;
+use radio_button::RADIO_BUTTON;
 use radio_group::RADIO_GROUP;
+use scroll_area::SCROLL_AREA;
 use select_native::SELECT_NATIVE;
 use separator::SEPARATOR;
 use skeleton::SKELETON;
@@ -76,10 +90,12 @@ use tooltip::TOOLTIP;
 
 pub static REGISTRY: &[&RegistryEntry] = &[
     &ACCORDION,
+    &ASPECT_RATIO,
     &ALERT,
     &ALERT_DIALOG,
     &AVATAR,
     &BADGE,
+    &CALLOUT,
     &BREADCRUMB,
     &BUTTON,
     &BUTTON_GROUP,
@@ -89,12 +105,17 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &COLLAPSIBLE,
     &DIALOG,
     &EMPTY,
+    &FIELD,
+    &IMAGE,
     &INPUT,
+    &INPUT_GROUP,
     &KBD,
     &LABEL,
     &PAGINATION,
     &PROGRESS,
+    &RADIO_BUTTON,
     &RADIO_GROUP,
+    &SCROLL_AREA,
     &SELECT_NATIVE,
     &SEPARATOR,
     &SKELETON,
