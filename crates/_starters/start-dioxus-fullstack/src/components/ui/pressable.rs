@@ -6,11 +6,8 @@ use tw_merge::tw_merge;
 pub fn Pressable(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let mut is_pressed = use_signal(|| false);
 
-    let merged = tw_merge!(
-        "transition-transform",
-        if is_pressed() { "scale-95" } else { "" },
-        class.as_deref().unwrap_or("")
-    );
+    let merged =
+        tw_merge!("transition-transform", if is_pressed() { "scale-95" } else { "" }, class.as_deref().unwrap_or(""));
 
     rsx! {
         div {

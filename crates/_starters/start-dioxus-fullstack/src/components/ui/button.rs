@@ -27,7 +27,9 @@ impl ButtonVariant {
         match self {
             ButtonVariant::Default => "bg-primary text-primary-foreground shadow hover:bg-primary/90",
             ButtonVariant::Destructive => "bg-destructive text-white shadow-sm hover:bg-destructive/90",
-            ButtonVariant::Outline => "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+            ButtonVariant::Outline => {
+                "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground"
+            }
             ButtonVariant::Secondary => "bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
             ButtonVariant::Ghost => "hover:bg-accent hover:text-accent-foreground",
             ButtonVariant::Link => "text-primary underline-offset-4 hover:underline",

@@ -27,10 +27,7 @@ fn main() {
             .await
             .expect("Failed to connect to database");
 
-        sqlx::migrate!("./migrations")
-            .run(&pool)
-            .await
-            .expect("Failed to run migrations");
+        sqlx::migrate!("./migrations").run(&pool).await.expect("Failed to run migrations");
 
         Ok(dioxus::server::router(App).layer(Extension(pool)))
     });

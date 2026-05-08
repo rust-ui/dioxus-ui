@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use icons::{CircleCheckBig, ClipboardList, Plus, Trash2};
+use icons::{CircleCheckBig, Plus, Trash2};
 
 use crate::app::Route;
 use crate::components::ui::button::{Button, ButtonSize, ButtonVariant};
