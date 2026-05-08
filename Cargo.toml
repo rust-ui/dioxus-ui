@@ -1,3 +1,6 @@
+[workspace]
+exclude = ["crates/_starters/start-dioxus-fullstack"]
+
 [package]
 name = "dioxus-ui"
 version = "0.1.0"
