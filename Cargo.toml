@@ -22,3 +22,4 @@ html-escape = { version = "0.2", optional = true }
 default = []
 server = ["dioxus/server", "dep:syntect", "dep:html-escape"]
 web = ["dioxus/web"]
+mobile = ["dioxus/mobile"]
