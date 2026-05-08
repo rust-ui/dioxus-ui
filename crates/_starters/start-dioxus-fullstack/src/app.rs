@@ -49,7 +49,7 @@ fn AppLayout() -> Element {
     rsx! {
         AppWrapper {
             Header {}
-            main { class: "overflow-y-auto flex-1 overflow-x-clip",
+            main { class: "overflow-y-auto flex-1 overflow-x-clip h-full",
                 Outlet::<Route> {}
             }
             AppBottomNav {}
