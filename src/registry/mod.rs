@@ -2,9 +2,14 @@
 // Run `cargo run --manifest-path dioxus_ui_internals/build_registry/Cargo.toml` to regenerate.
 
 pub mod accordion;
+pub mod animate;
 pub mod aspect_ratio;
 pub mod alert;
 pub mod bento_grid;
+pub mod chat;
+pub mod drawer;
+pub mod popover;
+pub mod sheet;
 pub mod bottom_nav;
 pub mod card_carousel;
 pub mod carousel;
@@ -61,9 +66,14 @@ pub mod types;
 use types::RegistryEntry;
 
 use accordion::ACCORDION;
+use animate::ANIMATE;
 use aspect_ratio::ASPECT_RATIO;
 use alert::ALERT;
 use bento_grid::BENTO_GRID;
+use chat::CHAT;
+use drawer::DRAWER;
+use popover::POPOVER;
+use sheet::SHEET;
 use bottom_nav::BOTTOM_NAV;
 use card_carousel::CARD_CAROUSEL;
 use carousel::CAROUSEL;
@@ -118,9 +128,14 @@ use tooltip::TOOLTIP;
 
 pub static REGISTRY: &[&RegistryEntry] = &[
     &ACCORDION,
+    &ANIMATE,
     &ASPECT_RATIO,
     &ALERT,
     &BENTO_GRID,
+    &CHAT,
+    &DRAWER,
+    &POPOVER,
+    &SHEET,
     &BOTTOM_NAV,
     &CARD_CAROUSEL,
     &CAROUSEL,

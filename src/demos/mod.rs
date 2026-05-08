@@ -3,7 +3,12 @@
 
 pub mod demo_aspect_ratio;
 pub mod demo_accordion;
+pub mod demo_animate;
 pub mod demo_bento_grid;
+pub mod demo_chat;
+pub mod demo_drawer;
+pub mod demo_popover;
+pub mod demo_sheet;
 pub mod demo_bento_grid6;
 pub mod demo_bottom_nav;
 pub mod demo_card_carousel;
