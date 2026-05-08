@@ -8,7 +8,7 @@ name = "start_dioxus_fullstack"
 path = "src/main.rs"
 
 [dependencies]
-dioxus = { version = "=0.7.9", features = ["router", "fullstack"] }
+dioxus = { version = "0.7", features = ["router", "fullstack"] }
 icons = { version = "0.18", features = ["dioxus"] }
 tw_merge = { version = "0.1", features = ["debug"] }
 serde = { version = "1", features = ["derive"] }
