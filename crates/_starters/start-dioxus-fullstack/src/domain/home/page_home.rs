@@ -1,6 +1,10 @@
 use dioxus::prelude::*;
 
 const LOGO_SRC: &str = "/icons/logo.png";
+const SITE_URL: &str = "https://dioxus.rust-ui.com";
+const SITE_LABEL: &str = "dioxus.rust-ui.com";
+const APP_NAME: &str = "Dioxus Fullstack";
+const APP_DESCRIPTION: &str = "Cross-platform starter — web, mobile, desktop from one codebase. Built with ";
 
 #[component]
 pub fn HomePage() -> Element {
@@ -11,14 +15,14 @@ pub fn HomePage() -> Element {
                 alt: "Logo",
                 class: "mb-6 rounded-2xl size-20",
             }
-            h1 { class: "text-2xl font-bold tracking-tight mb-3", "Dioxus Fullstack" }
+            h1 { class: "text-2xl font-bold tracking-tight mb-3", {APP_NAME} }
             p { class: "text-muted-foreground text-sm max-w-xs",
-                "Cross-platform starter — web, mobile, desktop from one codebase. Built with "
+                {APP_DESCRIPTION}
                 a {
-                    href: "https://rust-ui.com",
+                    href: SITE_URL,
                     target: "_blank",
                     class: "underline underline-offset-2 hover:text-foreground transition-colors",
-                    "rust-ui.com"
+                    {SITE_LABEL}
                 }
                 "."
             }
