@@ -10,9 +10,12 @@ use crate::domain::settings::routes::SettingsRoutes;
 #[component]
 pub fn Header() -> Element {
     rsx! {
-        // Mobile: reload button absolute-positioned with safe-area offset for iOS notch
+        // Mobile: reload + theme toggle absolute-positioned with safe-area offset for iOS notch
         div { class: "absolute right-8 sm:hidden top-[calc(env(safe-area-inset-top)+0.625rem)] z-100",
             ReloadButton {}
+        }
+        div { class: "absolute right-4 sm:hidden top-[calc(env(safe-area-inset-top)+1rem)] z-100",
+            ThemeToggle {}
         }
 
         // Desktop header

@@ -1,48 +1,26 @@
 use dioxus::prelude::*;
 
-use crate::app::Route;
-use crate::components::ui::button::{Button, ButtonVariant};
-use crate::components::ui::card::{Card, CardContent, CardDescription, CardHeader, CardTitle};
+const LOGO_SRC: &str = "/icons/logo.png";
 
 #[component]
 pub fn HomePage() -> Element {
-    let navigator = use_navigator();
-
     rsx! {
-        div { class: "flex flex-col gap-6 p-6 pt-[calc(env(safe-area-inset-top)+4rem)] sm:pt-6",
-            div { class: "flex flex-col gap-2",
-                h1 { class: "text-3xl font-bold tracking-tight", "Dioxus Fullstack" }
-                p { class: "text-muted-foreground",
-                    "Cross-platform starter — web, mobile, desktop from one codebase."
-                }
+        div { class: "flex flex-col justify-center items-center px-6 h-full text-center",
+            img {
+                src: LOGO_SRC,
+                alt: "Logo",
+                class: "mb-6 rounded-2xl size-20",
             }
-
-            div { class: "grid gap-4 sm:grid-cols-2",
-                Card {
-                    CardHeader {
-                        CardTitle { "Items" }
-                        CardDescription { "Browse and manage your items." }
-                    }
-                    CardContent {
-                        Button {
-                            onclick: move |_| { navigator.push(Route::ItemList {}); },
-                            "View Items"
-                        }
-                    }
+            h1 { class: "text-2xl font-bold tracking-tight mb-3", "Dioxus Fullstack" }
+            p { class: "text-muted-foreground text-sm max-w-xs",
+                "Cross-platform starter — web, mobile, desktop from one codebase. Built with "
+                a {
+                    href: "https://rust-ui.com",
+                    target: "_blank",
+                    class: "underline underline-offset-2 hover:text-foreground transition-colors",
+                    "rust-ui.com"
                 }
-                Card {
-                    CardHeader {
-                        CardTitle { "Settings" }
-                        CardDescription { "Configure your preferences." }
-                    }
-                    CardContent {
-                        Button {
-                            variant: ButtonVariant::Outline,
-                            onclick: move |_| { navigator.push(Route::Settings {}); },
-                            "Open Settings"
-                        }
-                    }
-                }
+                "."
             }
         }
     }
