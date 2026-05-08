@@ -1,0 +1,2 @@
+[application]
+ios_info_plist = "ios/Info.plist"
