@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 
 use crate::components::hooks::use_theme_mode::use_theme_provider;
+
+const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
 use crate::components::layout::app_bottom_nav::AppBottomNav;
 use crate::components::layout::app_wrapper::AppWrapper;
 use crate::components::layout::header::Header;
@@ -33,6 +35,7 @@ pub fn App() -> Element {
     use_theme_provider();
 
     rsx! {
+        document::Link { rel: "stylesheet", href: TAILWIND_CSS }
         Router::<Route> {}
     }
 }
