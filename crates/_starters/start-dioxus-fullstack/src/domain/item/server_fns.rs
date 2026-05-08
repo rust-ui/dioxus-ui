@@ -1,4 +1,6 @@
 use dioxus::prelude::*;
+#[cfg(feature = "server")]
+use dioxus_fullstack::FullstackContext;
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -9,9 +11,16 @@ pub struct Item {
     pub description: Option<String>,
 }
 
+#[cfg(feature = "server")]
+async fn pool() -> Result<sqlx::PgPool, ServerFnError> {
+    use dioxus::server::axum::Extension;
+    let Extension(pool) = FullstackContext::extract::<Extension<sqlx::PgPool>, _>().await?;
+    Ok(pool)
+}
+
 #[server]
 pub async fn get_items() -> Result<Vec<Item>, ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>();
+    let pool = pool().await?;
 
     let rows = sqlx::query_as!(
         Item,
@@ -26,7 +35,7 @@ pub async fn get_items() -> Result<Vec<Item>, ServerFnError> {
 
 #[server]
 pub async fn get_item(id: Uuid) -> Result<Option<Item>, ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>();
+    let pool = pool().await?;
 
     let row = sqlx::query_as!(
         Item,
@@ -42,7 +51,7 @@ pub async fn get_item(id: Uuid) -> Result<Option<Item>, ServerFnError> {
 
 #[server]
 pub async fn create_item(title: String, description: Option<String>) -> Result<Item, ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>();
+    let pool = pool().await?;
 
     let row = sqlx::query_as!(
         Item,
@@ -59,7 +68,7 @@ pub async fn create_item(title: String, description: Option<String>) -> Result<I
 
 #[server]
 pub async fn delete_item(id: Uuid) -> Result<(), ServerFnError> {
-    let pool = use_context::<sqlx::PgPool>();
+    let pool = pool().await?;
 
     sqlx::query!("DELETE FROM items WHERE id = $1", id)
         .execute(&pool)
