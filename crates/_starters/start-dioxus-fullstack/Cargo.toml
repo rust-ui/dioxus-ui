@@ -20,6 +20,17 @@ sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "macro
 dotenv = { version = "0.15", optional = true }
 anyhow = { version = "1", optional = true }
 
+[lints.clippy]
+disallowed_macros = "deny"
+dbg_macro = "deny"
+print_stdout = "deny"
+print_stderr = "deny"
+todo = "deny"
+undocumented_unsafe_blocks = "deny"
+await_holding_lock = "deny"
+unused_async = "warn"
+redundant_clone = "warn"
+
 [features]
 default = ["web"]
 server = [

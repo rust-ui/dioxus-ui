@@ -51,14 +51,12 @@ mod db {
         }
 
         pub async fn delete(pool: &PgPool, id: Uuid) -> Result<Uuid, sqlx::Error> {
-            let result = sqlx::query!(
+            sqlx::query_scalar!(
                 "DELETE FROM items WHERE id = $1 RETURNING id",
                 id
             )
             .fetch_one(pool)
-            .await?;
-
-            Ok(result.id)
+            .await
         }
     }
 }
