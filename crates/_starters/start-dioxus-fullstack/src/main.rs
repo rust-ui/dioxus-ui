@@ -23,6 +23,8 @@ fn main() {
 
         let pool = PgPoolOptions::new()
             .max_connections(5)
+            .log_statements(log::LevelFilter::Off)
+            .log_slow_statements(log::LevelFilter::Warn, std::time::Duration::from_millis(100))
             .connect(&database_url)
             .await
             .expect("Failed to connect to database");
