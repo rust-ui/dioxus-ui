@@ -7,7 +7,7 @@ use crate::components::ui::card::{Card, CardDescription};
 use crate::components::ui::empty::{Empty, EmptyDescription, EmptyTitle};
 use crate::components::ui::input::Input;
 use crate::components::ui::skeleton::Skeleton;
-use crate::domain::item::server_fns::{create_item, delete_item, get_items};
+use crate::domain::item::item_services::{create_item, delete_item, get_items};
 
 #[component]
 pub fn ItemListPage() -> Element {

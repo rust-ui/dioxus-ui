@@ -6,7 +6,7 @@ use crate::components::layout::back_button::BackButton;
 use crate::components::ui::button::{Button, ButtonVariant};
 use crate::components::ui::card::{Card, CardContent, CardHeader, CardTitle};
 use crate::components::ui::skeleton::Skeleton;
-use crate::domain::item::server_fns::{delete_item, get_item};
+use crate::domain::item::item_services::{delete_item, get_item};
 use crate::utils::param::parse_uuid;
 
 #[component]
