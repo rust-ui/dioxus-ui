@@ -1,0 +1,38 @@
+[package]
+name = "start_dioxus_fullstack"
+version = "0.1.0"
+edition = "2024"
+
+[[bin]]
+name = "start_dioxus_fullstack"
+path = "src/main.rs"
+
+[dependencies]
+dioxus = { version = "0.7", features = ["router", "fullstack"] }
+dioxus_ui = "0.1"
+icons = { version = "0.18", features = ["dioxus"] }
+tw_merge = { version = "0.1", features = ["debug"] }
+serde = { version = "1", features = ["derive"] }
+uuid = { version = "1", features = ["v4", "v7", "serde"] }
+
+# Server-only
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "macros", "uuid", "time", "json"], optional = true }
+tokio = { version = "1", features = ["rt-multi-thread", "full"], optional = true }
+dotenv = { version = "0.15", optional = true }
+anyhow = { version = "1", optional = true }
+tracing = { version = "0.1", optional = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"], optional = true }
+
+[features]
+default = []
+server = [
+    "dioxus/server",
+    "dep:sqlx",
+    "dep:tokio",
+    "dep:dotenv",
+    "dep:anyhow",
+    "dep:tracing",
+    "dep:tracing-subscriber",
+]
+web = ["dioxus/web"]
+mobile = ["dioxus/mobile"]
