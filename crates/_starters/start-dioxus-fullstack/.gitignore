@@ -11,6 +11,9 @@ node_modules/
 
 # Tailwind generated output
 public/tailwind.css
+public/style/
+assets/
+.env
 
 __TMP/
 dioxus_ui_internals/
