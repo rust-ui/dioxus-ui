@@ -1,7 +1,7 @@
 {
 	"scripts": {
-		"css": "tailwindcss -i tailwind.css -o public/tailwind.css --watch",
-		"css:build": "tailwindcss -i tailwind.css -o public/tailwind.css --minify"
+		"css": "tailwindcss -i style/tailwind.css -o public/tailwind.css --watch",
+		"css:build": "tailwindcss -i style/tailwind.css -o public/tailwind.css --minify"
 	},
 	"type": "module",
 	"dependencies": {
