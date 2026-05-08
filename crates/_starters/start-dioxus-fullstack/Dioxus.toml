@@ -1,20 +1,2 @@
 [application]
 name = "start-dioxus-fullstack"
-default_platform = "fullstack"
-out_dir = "dist"
-asset_dir = "public"
-
-[web.app]
-title = "Dioxus Fullstack Starter"
-
-[web.watcher]
-reload_html = true
-watch_path = ["src", "public", "assets"]
-
-[web.resource]
-style = []
-script = []
-
-[web.resource.dev]
-style = []
-script = []
