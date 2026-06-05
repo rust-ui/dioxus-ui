@@ -9,17 +9,15 @@ use crate::__registry__::command_bar::{COMPONENTS_ITEMS, CommandCategory, Comman
 #[derive(Clone, Copy)]
 pub struct CommandBarState {
     pub open: Signal<bool>,
-    pub query: Signal<String>,
 }
 
 pub fn use_command_bar_provider() -> CommandBarState {
     let open = use_context_provider(|| Signal::new(false));
-    let query = use_context_provider(|| Signal::new(String::new()));
-    CommandBarState { open, query }
+    CommandBarState { open }
 }
 
 fn use_command_bar() -> CommandBarState {
-    CommandBarState { open: use_context::<Signal<bool>>(), query: use_context::<Signal<String>>() }
+    CommandBarState { open: use_context::<Signal<bool>>() }
 }
 
 #[component]
@@ -29,10 +27,7 @@ pub fn CommandBarTrigger() -> Element {
     rsx! {
         button {
             class: "inline-flex items-center gap-2 whitespace-nowrap rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground flex-1 justify-start pl-3 h-8 text-sm font-normal shadow-none md:flex-none md:w-[220px] w-full",
-            onclick: move |_| {
-                state.open.set(true);
-                state.query.set(String::new());
-            },
+            onclick: move |_| state.open.set(true),
             Search { class: "size-4 shrink-0" }
             span { class: "hidden md:inline-flex", "Search..." }
             span { class: "inline-flex md:hidden", "Search documentation..." }
@@ -102,18 +97,31 @@ pub fn CommandBarDialog() -> Element {
                         }
 
                         if (dialog.dataset.ready === 'true') {
+                            const input = dialog.querySelector('[data-name="CommandInput"]');
+                            if (input) {
+                                input.value = '';
+                                setTimeout(() => input.focus(), 10);
+                            }
+                            dialog.setAttribute('data-state', 'open');
                             return;
                         }
                         dialog.dataset.ready = 'true';
 
                         const tabButtons = dialog.querySelectorAll('[data-name="CommandTabBar"] [data-tab]');
                         const groups = dialog.querySelectorAll('[data-name="CommandGroup"][data-category]');
+                        const input = dialog.querySelector('[data-name="CommandInput"]');
 
-                        const visibleItems = () => Array.from(dialog.querySelectorAll('[data-name="CommandItemLink"]'))
-                            .filter(el => el.offsetParent !== null);
+                        let activeTab = 'all';
+
+                        const visibleItems = () => Array
+                            .from(dialog.querySelectorAll('[data-name="CommandItemLink"]'))
+                            .filter(el => el.offsetParent !== null && el.style.display !== 'none');
 
                         const setSelected = (items, idx) => {
-                            items.forEach((el, i) => el.setAttribute('aria-selected', i === idx ? 'true' : 'false'));
+                            items.forEach((el, i) => {
+                                el.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+                            });
+
                             if (idx >= 0 && idx < items.length) {
                                 items[idx].scrollIntoView({ block: 'nearest' });
                             }
@@ -130,30 +138,47 @@ pub fn CommandBarDialog() -> Element {
                             }
                         };
 
+                        const filterItems = () => {
+                            const term = (input?.value || '').trim().toLowerCase();
+
+                            groups.forEach(group => {
+                                const inTab = activeTab === 'all' || group.dataset.category === activeTab;
+                                let visibleCount = 0;
+
+                                group.querySelectorAll('[data-name="CommandItemLink"]').forEach(item => {
+                                    const label = (item.getAttribute('data-search') || item.textContent || '').toLowerCase();
+                                    const matches = term === '' || label.includes(term);
+                                    item.style.display = inTab && matches ? '' : 'none';
+                                    if (inTab && matches) {
+                                        visibleCount += 1;
+                                    }
+                                });
+
+                                group.style.display = inTab && visibleCount > 0 ? '' : 'none';
+                            });
+
+                            const items = visibleItems();
+                            setSelected(items, items.length > 0 ? 0 : -1);
+                            updateCopyHint();
+                        };
+
                         const applyTab = (tab) => {
+                            activeTab = tab;
                             tabButtons.forEach(btn => {
                                 btn.setAttribute('data-active', btn.dataset.tab === tab ? 'true' : 'false');
                             });
-                            groups.forEach(group => {
-                                group.style.display = (tab === 'all' || group.dataset.category === tab) ? '' : 'none';
-                            });
 
-                            const input = dialog.querySelector('[data-name="CommandInput"]');
                             if (input && input.value !== '') {
                                 input.value = '';
-                                input.dispatchEvent(new Event('input', { bubbles: true }));
                             }
 
-                            setTimeout(() => {
-                                const items = visibleItems();
-                                setSelected(items, items.length > 0 ? 0 : -1);
-                                updateCopyHint();
-                            }, 0);
+                            filterItems();
                         };
 
                         tabButtons.forEach(btn => {
                             btn.addEventListener('click', (e) => {
                                 e.preventDefault();
+                                e.stopPropagation();
                                 applyTab(btn.dataset.tab);
                             });
                         });
@@ -181,7 +206,16 @@ pub fn CommandBarDialog() -> Element {
                             });
 
                             item.addEventListener('mouseleave', updateCopyHint);
+                            item.addEventListener('click', () => {
+                                setTimeout(() => {
+                                    dialog.dispatchEvent(new CustomEvent('cmd-close'));
+                                }, 0);
+                            });
                         });
+
+                        if (input) {
+                            input.addEventListener('input', filterItems);
+                        }
 
                         dialog.addEventListener('keydown', (e) => {
                             const items = visibleItems();
@@ -200,6 +234,7 @@ pub fn CommandBarDialog() -> Element {
                                     selected.click();
                                 }
                             } else if (e.key === 'Escape') {
+                                e.preventDefault();
                                 dialog.dispatchEvent(new CustomEvent('cmd-close'));
                             }
                         });
@@ -220,8 +255,8 @@ pub fn CommandBarDialog() -> Element {
                             }
                         });
 
-                        const input = dialog.querySelector('[data-name="CommandInput"]');
                         if (input) {
+                            input.value = '';
                             setTimeout(() => input.focus(), 10);
                         }
 
@@ -246,9 +281,12 @@ pub fn CommandBarDialog() -> Element {
             let _ = eval(
                 r#"
                 await new Promise(resolve => {
-                    const d = document.getElementById('command-search-docs');
-                    if (!d) return resolve('missing');
-                    d.addEventListener('cmd-close', resolve, { once: true });
+                    const dialog = document.getElementById('command-search-docs');
+                    if (!dialog) {
+                        resolve('missing');
+                        return;
+                    }
+                    dialog.addEventListener('cmd-close', resolve, { once: true });
                 });
             "#,
             )
@@ -263,8 +301,6 @@ pub fn CommandBarDialog() -> Element {
         };
     }
 
-    let query = (state.query)().to_lowercase();
-
     rsx! {
         div { id: "command-search-docs", "data-state": "open",
             div {
@@ -278,7 +314,7 @@ pub fn CommandBarDialog() -> Element {
                     class: "relative z-10 w-full max-w-lg rounded-xl border border-border bg-background shadow-lg overflow-hidden",
                     role: "dialog",
                     aria_modal: "true",
-                    tabindex: "-1",
+                    tabindex: "0",
                     div {
                         class: "sr-only",
                         h2 { "Search documentation..." }
@@ -293,31 +329,40 @@ pub fn CommandBarDialog() -> Element {
                             "data-name": "CommandInput",
                             class: "flex-1 py-0 h-9 rounded-none border-0 shadow-none bg-transparent px-3 text-sm outline-none placeholder:text-muted-foreground",
                             placeholder: "Search documentation...",
-                            value: "{state.query}",
-                            oninput: move |e| state.query.set(e.value()),
                         }
                     }
 
-                    div { "data-name": "CommandTabBar", class: "flex gap-1 px-3 pt-1 pb-2 border-b border-border",
-                        for (tab, label, active) in [
-                            ("all", "All", "true"),
-                            ("pages", "Pages", "false"),
-                            ("components", "Components", "false"),
-                            ("hooks", "Hooks", "false"),
-                        ] {
-                            button {
-                                "data-tab": "{tab}",
-                                "data-active": "{active}",
-                                class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
-                                "{label}"
-                            }
+                    div { class: "flex gap-1 px-3 pt-1 pb-2 border-b border-border", "data-name": "CommandTabBar",
+                        button {
+                            "data-tab": "all",
+                            "data-active": "true",
+                            class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
+                            "All"
+                        }
+                        button {
+                            "data-tab": "pages",
+                            "data-active": "false",
+                            class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
+                            "Pages"
+                        }
+                        button {
+                            "data-tab": "components",
+                            "data-active": "false",
+                            class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
+                            "Components"
+                        }
+                        button {
+                            "data-tab": "hooks",
+                            "data-active": "false",
+                            class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
+                            "Hooks"
                         }
                     }
 
                     div { id: "command_demo", tabindex: "-1", class: "max-h-[60vh] overflow-y-auto",
-                        CommandGroupView { category: CommandCategory::Pages, items: PAGES_ITEMS, query: query.clone(), on_select: move |_| state.open.set(false) }
-                        CommandGroupView { category: CommandCategory::Components, items: COMPONENTS_ITEMS, query: query.clone(), on_select: move |_| state.open.set(false) }
-                        CommandGroupView { category: CommandCategory::Hooks, items: HOOKS_ITEMS, query, on_select: move |_| state.open.set(false) }
+                        CommandGroupView { category: CommandCategory::Pages, items: PAGES_ITEMS }
+                        CommandGroupView { category: CommandCategory::Components, items: COMPONENTS_ITEMS }
+                        CommandGroupView { category: CommandCategory::Hooks, items: HOOKS_ITEMS }
                     }
 
                     div { class: "flex items-center gap-4 px-3 py-2 border-t border-border text-xs text-muted-foreground",
@@ -343,19 +388,9 @@ pub fn CommandBarDialog() -> Element {
 }
 
 #[component]
-fn CommandGroupView(
-    category: CommandCategory,
-    items: &'static [CommandItemData],
-    query: String,
-    on_select: EventHandler<MouseEvent>,
-) -> Element {
+fn CommandGroupView(category: CommandCategory, items: &'static [CommandItemData]) -> Element {
     let category_label = category.as_str();
     let category_slug = category.slug();
-    let visible_items = items
-        .iter()
-        .filter(|item| query.is_empty() || item.label.to_lowercase().contains(&query))
-        .copied()
-        .collect::<Vec<_>>();
 
     rsx! {
         div {
@@ -364,15 +399,15 @@ fn CommandGroupView(
             role: "presentation",
             class: "p-0",
             div { aria_hidden: "true", class: "p-3 text-xs font-medium text-muted-foreground", "{category_label}" }
-            for item in visible_items {
-                CommandItemLink { item, on_select }
+            for item in items.iter().copied() {
+                CommandItemLink { item }
             }
         }
     }
 }
 
 #[component]
-fn CommandItemLink(item: CommandItemData, on_select: EventHandler<MouseEvent>) -> Element {
+fn CommandItemLink(item: CommandItemData) -> Element {
     let add_cmd = item.add_cmd.unwrap_or("");
     let href = item.href;
     let label = item.label;
@@ -381,10 +416,10 @@ fn CommandItemLink(item: CommandItemData, on_select: EventHandler<MouseEvent>) -
         a {
             "data-name": "CommandItemLink",
             "data-add-cmd": "{add_cmd}",
+            "data-search": "{label}",
             href: "{href}",
             aria_selected: "false",
             class: "flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer aria-selected:bg-accent aria-selected:text-accent-foreground",
-            onclick: move |event| on_select.call(event),
             CategoryIcon { category: item.category }
             span { "{label}" }
         }
