@@ -28,11 +28,7 @@ struct Step {
 }
 
 #[component]
-pub fn JsonLdHowTo(
-    name: String,
-    #[props(default)] description: Option<String>,
-    steps: Vec<HowToStep>,
-) -> Element {
+pub fn JsonLdHowTo(name: String, #[props(default)] description: Option<String>, steps: Vec<HowToStep>) -> Element {
     let schema_steps: Vec<Step> =
         steps.into_iter().map(|s| Step { type_: "HowToStep".to_string(), name: s.name, text: s.text }).collect();
 

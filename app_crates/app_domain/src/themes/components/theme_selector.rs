@@ -27,13 +27,10 @@ pub fn ThemeSelector() -> Element {
     let h = use_signal(|| DEFAULT_H);
 
     let color_primary_memo = use_memo(move || Oklch::new(l(), c(), h()).to_oklch_string());
-    let color_secondary_memo =
-        use_memo(move || Oklch::new(l(), c(), h()).secondary_with_factor(0.9).to_oklch_string());
+    let color_secondary_memo = use_memo(move || Oklch::new(l(), c(), h()).secondary_with_factor(0.9).to_oklch_string());
 
     let theme_memo = use_memo(move || {
-        THEME_TEMPLATE
-            .replace("{primary}", &color_primary_memo())
-            .replace("{secondary}", &color_secondary_memo())
+        THEME_TEMPLATE.replace("{primary}", &color_primary_memo()).replace("{secondary}", &color_secondary_memo())
     });
 
     rsx! {
@@ -155,7 +152,11 @@ pub fn CopyCodeDialog(
         });
     };
 
-    let trigger_label = if let Some(c) = children { c } else { rsx! { "Copy code" } };
+    let trigger_label = if let Some(c) = children {
+        c
+    } else {
+        rsx! { "Copy code" }
+    };
 
     rsx! {
         Dialog {

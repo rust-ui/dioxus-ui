@@ -32,7 +32,12 @@ pub fn JsonLdBreadcrumb(items: Vec<BreadcrumbItem>) -> Element {
     let list_items: Vec<ListItem> = items
         .into_iter()
         .enumerate()
-        .map(|(idx, crumb)| ListItem { type_: "ListItem".to_string(), position: idx + 1, name: crumb.name, item: crumb.url })
+        .map(|(idx, crumb)| ListItem {
+            type_: "ListItem".to_string(),
+            position: idx + 1,
+            name: crumb.name,
+            item: crumb.url,
+        })
         .collect();
 
     let schema = BreadcrumbListSchema {
@@ -55,7 +60,10 @@ mod tests {
     fn breadcrumbs() -> Vec<BreadcrumbItem> {
         vec![
             BreadcrumbItem { name: "Home".to_string(), url: Some("https://dioxus-ui.com".to_string()) },
-            BreadcrumbItem { name: "Components".to_string(), url: Some("https://dioxus-ui.com/components".to_string()) },
+            BreadcrumbItem {
+                name: "Components".to_string(),
+                url: Some("https://dioxus-ui.com/components".to_string()),
+            },
             BreadcrumbItem { name: "Button".to_string(), url: None },
         ]
     }
