@@ -21,18 +21,18 @@ pub struct HorizontalScrollContext {
 }
 
 pub fn use_horizontal_scroll(
-    element_signal: ReadSignal<Option<web_sys::Element>>,
+    _element_signal: ReadSignal<Option<web_sys::Element>>,
     scroll_percentage: Option<f64>,
     update_delay_ms: Option<i32>,
 ) -> HorizontalScrollContext {
     let scroll_state = use_signal(HorizontalScrollState::default);
-    let scroll_pct = scroll_percentage.unwrap_or(DEFAULT_SCROLL_PERCENTAGE);
-    let delay_ms = update_delay_ms.unwrap_or(DEFAULT_UPDATE_DELAY_MS);
+    let _scroll_pct = scroll_percentage.unwrap_or(DEFAULT_SCROLL_PERCENTAGE);
+    let _delay_ms = update_delay_ms.unwrap_or(DEFAULT_UPDATE_DELAY_MS);
 
     let update_state = move || {
         #[cfg(target_arch = "wasm32")]
         {
-            if let Some(el) = element_signal.read().as_ref() {
+            if let Some(el) = _element_signal.read().as_ref() {
                 let scroll_left = el.scroll_left();
                 let scroll_width = el.scroll_width();
                 let client_width = el.client_width();
@@ -49,22 +49,22 @@ pub fn use_horizontal_scroll(
         }
     };
 
-    let scroll_by = Callback::new(move |direction: i32| {
+    let scroll_by = Callback::new(move |_direction: i32| {
         #[cfg(target_arch = "wasm32")]
         {
             use wasm_bindgen::JsCast;
-            if let Some(el) = element_signal.read().as_ref() {
+            if let Some(el) = _element_signal.read().as_ref() {
                 if let Ok(html_el) = el.clone().dyn_into::<web_sys::HtmlElement>() {
                     let container_width = html_el.client_width();
-                    let scroll_amount = (container_width as f64 * scroll_pct) as i32;
-                    html_el.set_scroll_left(html_el.scroll_left() + (scroll_amount * direction));
+                    let scroll_amount = (container_width as f64 * _scroll_pct) as i32;
+                    html_el.set_scroll_left(html_el.scroll_left() + (scroll_amount * _direction));
 
                     let closure = wasm_bindgen::closure::Closure::once_into_js(move || {
                         update_state();
                     });
                     let _ = web_sys::window().unwrap().set_timeout_with_callback_and_timeout_and_arguments_0(
                         closure.as_ref().unchecked_ref(),
-                        delay_ms,
+                        _delay_ms,
                     );
                 }
             }

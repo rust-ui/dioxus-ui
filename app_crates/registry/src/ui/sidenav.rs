@@ -56,6 +56,7 @@ pub enum SidenavCollapsible {
 }
 
 impl SidenavCollapsible {
+    #[allow(dead_code)]
     fn as_str(self) -> &'static str {
         match self {
             Self::Offcanvas => "Offcanvas",

@@ -14,10 +14,10 @@ pub fn Collapsible(
     children: Element,
 ) -> Element {
     let mut open_signal = use_signal(|| open.unwrap_or(default_open));
-    if let Some(controlled) = open {
-        if controlled != open_signal() {
-            open_signal.set(controlled);
-        }
+    if let Some(controlled) = open
+        && controlled != open_signal()
+    {
+        open_signal.set(controlled);
     }
     provide_context(CollapsibleCtx { open: open_signal });
     let open = open_signal;

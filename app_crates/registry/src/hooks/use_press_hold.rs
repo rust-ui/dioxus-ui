@@ -4,6 +4,7 @@ use std::rc::Rc;
 use dioxus::prelude::*;
 
 #[derive(Clone)]
+#[allow(dead_code)]
 pub struct UsePressHold {
     pub progress: Signal<f64>,
     pub is_holding: Signal<bool>,

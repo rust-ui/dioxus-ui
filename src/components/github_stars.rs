@@ -22,10 +22,10 @@ async fn fetch_github_stars() -> Result<u32, ServerFnError> {
 
     let cache = STARS_CACHE.get_or_init(|| std::sync::Mutex::new(None));
 
-    if let Some((count, fetched_at)) = *cache.lock().map_err(|e| ServerFnError::new(e.to_string()))? {
-        if fetched_at.elapsed().as_secs() < CACHE_TTL_SECS {
-            return Ok(count);
-        }
+    if let Some((count, fetched_at)) = *cache.lock().map_err(|e| ServerFnError::new(e.to_string()))?
+        && fetched_at.elapsed().as_secs() < CACHE_TTL_SECS
+    {
+        return Ok(count);
     }
 
     let client = reqwest::Client::new();

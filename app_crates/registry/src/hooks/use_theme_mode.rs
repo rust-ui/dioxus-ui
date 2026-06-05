@@ -5,6 +5,7 @@ pub struct ThemeMode {
     state: Signal<bool>,
 }
 
+#[cfg(target_arch = "wasm32")]
 const LOCALSTORAGE_KEY: &str = "darkmode";
 
 pub fn use_theme_mode() -> ThemeMode {
@@ -82,11 +83,11 @@ impl ThemeMode {
         false
     }
 
-    fn set_storage_state(state: bool) {
+    fn set_storage_state(_state: bool) {
         #[cfg(target_arch = "wasm32")]
         {
             if let Some(storage) = web_sys::window().and_then(|w| w.local_storage().ok().flatten()) {
-                let _ = storage.set(LOCALSTORAGE_KEY, &state.to_string());
+                let _ = storage.set(LOCALSTORAGE_KEY, &_state.to_string());
             }
         }
     }

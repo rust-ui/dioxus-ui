@@ -16,7 +16,7 @@ pub fn ChatHeader(#[props(into, optional)] class: Option<String>, children: Elem
 #[component]
 pub fn ChatBody(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let c = tw_merge!("overflow-hidden flex-1", class.as_deref().unwrap_or(""));
-    let mounted = use_hook(|| format!("document.querySelector('[data-name=\"ChatBody\"]')?.scrollTo({{top: 9999}})"));
+    let mounted = use_hook(|| "document.querySelector('[data-name=\"ChatBody\"]')?.scrollTo({top: 9999})".to_string());
     rsx! {
         div { "data-name": "ChatBody", class: "{c}", {children} }
         script { dangerous_inner_html: "{mounted}" }

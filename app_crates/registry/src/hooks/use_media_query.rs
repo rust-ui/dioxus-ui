@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 pub fn use_media_query(query: &str) -> ReadSignal<bool> {
     let is_match = use_signal(|| false);
-    let query = query.to_string();
+    let _query = query.to_string();
 
     use_effect(move || {
         #[cfg(target_arch = "wasm32")]
@@ -10,7 +10,7 @@ pub fn use_media_query(query: &str) -> ReadSignal<bool> {
             use wasm_bindgen::JsCast;
 
             let Some(window) = web_sys::window() else { return };
-            let Ok(Some(mql)) = window.match_media(&query) else { return };
+            let Ok(Some(mql)) = window.match_media(&_query) else { return };
 
             *is_match.write_unchecked() = mql.matches();
 

@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 /// Registers a document-level mousedown listener that fires the callback
 /// when a click occurs outside the element given by `element_signal`.
 /// Set the signal from an `onmounted` handler.
-pub fn use_click_outside<F>(element_signal: ReadSignal<Option<web_sys::Element>>, on_click_outside: F)
+pub fn use_click_outside<F>(_element_signal: ReadSignal<Option<web_sys::Element>>, _on_click_outside: F)
 where
     F: Fn() + Clone + 'static,
 {
@@ -12,10 +12,10 @@ where
         {
             use wasm_bindgen::JsCast;
 
-            let callback = on_click_outside.clone();
+            let callback = _on_click_outside.clone();
             let handler =
                 wasm_bindgen::closure::Closure::<dyn Fn(web_sys::MouseEvent)>::new(move |ev: web_sys::MouseEvent| {
-                    let Some(ref element) = *element_signal.read() else { return };
+                    let Some(ref element) = *_element_signal.read() else { return };
                     let Some(target) = ev.target() else { return };
                     let Ok(target_node) = target.dyn_into::<web_sys::Node>() else { return };
                     if !element.contains(Some(&target_node)) {

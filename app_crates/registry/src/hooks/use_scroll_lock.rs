@@ -1,17 +1,21 @@
+#[cfg(target_arch = "wasm32")]
 use std::cell::RefCell;
 
-use wasm_bindgen::JsCast;
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
+#[cfg(target_arch = "wasm32")]
 const EXCLUDED_DATA_NAMES: &[&str] =
     &["ScrollArea", "CommandList", "SelectContent", "MultiSelectContent", "DropdownMenuContent", "ContextMenuContent"];
 
+#[cfg(target_arch = "wasm32")]
 const FIXED_EXCLUDED: &[&str] = &["header", "nav", "aside"];
 
 #[allow(dead_code)]
 const SCROLLABLE_SELECTOR: &str =
     r#"body, [data-name="ScrollArea"], [data-radix-scroll-area-viewport], [data-scroll-area-viewport]"#;
 
+#[cfg(target_arch = "wasm32")]
 struct BodyStyles {
     position: String,
     top: String,
@@ -20,6 +24,7 @@ struct BodyStyles {
     padding_right: String,
 }
 
+#[cfg(target_arch = "wasm32")]
 struct ScrollableEntry {
     element: web_sys::HtmlElement,
     scroll_top: i32,
@@ -28,11 +33,13 @@ struct ScrollableEntry {
     padding_right: String,
 }
 
+#[cfg(target_arch = "wasm32")]
 struct FixedEntry {
     element: web_sys::HtmlElement,
     padding_right: String,
 }
 
+#[cfg(target_arch = "wasm32")]
 struct State {
     locked: bool,
     window_scroll_y: f64,
@@ -41,6 +48,7 @@ struct State {
     fixed: Vec<FixedEntry>,
 }
 
+#[cfg(target_arch = "wasm32")]
 impl State {
     const fn new() -> Self {
         Self { locked: false, window_scroll_y: 0.0, body_styles: None, scrollable: vec![], fixed: vec![] }
@@ -54,10 +62,12 @@ impl State {
     }
 }
 
+#[cfg(target_arch = "wasm32")]
 thread_local! {
     static STATE: RefCell<State> = const { RefCell::new(State::new()) };
 }
 
+#[cfg(target_arch = "wasm32")]
 fn set_style(style: &web_sys::CssStyleDeclaration, prop: &str, val: &str) {
     if val.is_empty() {
         let _ = style.remove_property(prop);
@@ -66,19 +76,22 @@ fn set_style(style: &web_sys::CssStyleDeclaration, prop: &str, val: &str) {
     }
 }
 
+#[cfg(target_arch = "wasm32")]
 fn parse_px(s: &str) -> f64 {
     s.trim_end_matches("px").parse::<f64>().unwrap_or(0.0)
 }
 
+#[cfg(target_arch = "wasm32")]
 fn is_excluded(el: &web_sys::Element) -> bool {
-    if let Some(name) = el.get_attribute("data-name") {
-        if EXCLUDED_DATA_NAMES.iter().any(|&n| n == name) {
-            return true;
-        }
+    if let Some(name) = el.get_attribute("data-name")
+        && EXCLUDED_DATA_NAMES.iter().any(|&n| n == name)
+    {
+        return true;
     }
     false
 }
 
+#[cfg(target_arch = "wasm32")]
 fn is_fixed_excluded(el: &web_sys::Element) -> bool {
     for &name in FIXED_EXCLUDED {
         let sel = format!(r#"[data-name="{name}"]"#);
@@ -188,7 +201,7 @@ pub fn lock() {
 }
 
 /// Unlock scrolling, optionally after a delay in milliseconds.
-pub fn unlock(delay_ms: u32) {
+pub fn unlock(_delay_ms: u32) {
     #[cfg(target_arch = "wasm32")]
     {
         let locked = STATE.with(|s| s.borrow().locked);
@@ -196,13 +209,13 @@ pub fn unlock(delay_ms: u32) {
             return;
         }
 
-        if delay_ms > 0 {
+        if _delay_ms > 0 {
             let closure = Closure::once_into_js(move || {
                 perform_unlock();
             });
             let _ = web_sys::window().unwrap().set_timeout_with_callback_and_timeout_and_arguments_0(
                 closure.as_ref().unchecked_ref(),
-                delay_ms as i32,
+                _delay_ms as i32,
             );
         } else {
             perform_unlock();
@@ -211,43 +224,46 @@ pub fn unlock(delay_ms: u32) {
 }
 
 pub fn is_locked() -> bool {
-    STATE.with(|s| s.borrow().locked)
-}
-
-fn perform_unlock() {
     #[cfg(target_arch = "wasm32")]
     {
-        let Some(window) = web_sys::window() else { return };
-
-        STATE.with(|state| {
-            let mut s = state.borrow_mut();
-
-            if let Some(body) = window.document().and_then(|d| d.body()) {
-                if let Some(ref orig) = s.body_styles {
-                    let st = body.style();
-                    set_style(&st, "position", &orig.position);
-                    set_style(&st, "top", &orig.top);
-                    set_style(&st, "width", &orig.width);
-                    set_style(&st, "overflow", &orig.overflow);
-                    set_style(&st, "padding-right", &orig.padding_right);
-                }
-            }
-
-            window.scroll_to_with_x_and_y(0.0, s.window_scroll_y);
-
-            for entry in &s.scrollable {
-                let st = entry.element.style();
-                set_style(&st, "overflow", &entry.overflow);
-                set_style(&st, "overflow-y", &entry.overflow_y);
-                set_style(&st, "padding-right", &entry.padding_right);
-                entry.element.set_scroll_top(entry.scroll_top);
-            }
-
-            for entry in &s.fixed {
-                set_style(&entry.element.style(), "padding-right", &entry.padding_right);
-            }
-
-            s.clear();
-        });
+        STATE.with(|s| s.borrow().locked)
     }
+    #[cfg(not(target_arch = "wasm32"))]
+    false
+}
+
+#[cfg(target_arch = "wasm32")]
+fn perform_unlock() {
+    let Some(window) = web_sys::window() else { return };
+
+    STATE.with(|state| {
+        let mut s = state.borrow_mut();
+
+        if let Some(body) = window.document().and_then(|d| d.body()) {
+            if let Some(ref orig) = s.body_styles {
+                let st = body.style();
+                set_style(&st, "position", &orig.position);
+                set_style(&st, "top", &orig.top);
+                set_style(&st, "width", &orig.width);
+                set_style(&st, "overflow", &orig.overflow);
+                set_style(&st, "padding-right", &orig.padding_right);
+            }
+        }
+
+        window.scroll_to_with_x_and_y(0.0, s.window_scroll_y);
+
+        for entry in &s.scrollable {
+            let st = entry.element.style();
+            set_style(&st, "overflow", &entry.overflow);
+            set_style(&st, "overflow-y", &entry.overflow_y);
+            set_style(&st, "padding-right", &entry.padding_right);
+            entry.element.set_scroll_top(entry.scroll_top);
+        }
+
+        for entry in &s.fixed {
+            set_style(&entry.element.style(), "padding-right", &entry.padding_right);
+        }
+
+        s.clear();
+    });
 }

@@ -24,7 +24,7 @@ impl SidenavRoutes {
         "view"
     }
 
-    pub fn as_ref(&self) -> &'static str {
+    pub fn as_str(&self) -> &'static str {
         match self {
             SidenavRoutes::Sidenav01 => "sidenav01",
             SidenavRoutes::Sidenav02 => "sidenav02",
@@ -73,13 +73,13 @@ impl SidenavRoutes {
     }
 
     pub fn to_route(self) -> String {
-        format!("{}/{}", Self::view_segment(), self.as_ref())
+        format!("{}/{}", Self::view_segment(), self.as_str())
     }
 
     pub fn from_path(path: &str) -> Self {
         // Iterate in reverse to match higher numbers first (sidenav10 before sidenav01)
         for route in Self::all().into_iter().rev() {
-            if path.contains(route.as_ref()) {
+            if path.contains(route.as_str()) {
                 return route;
             }
         }
@@ -89,7 +89,7 @@ impl SidenavRoutes {
 
 impl fmt::Display for SidenavRoutes {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.as_ref())
+        write!(f, "{}", self.as_str())
     }
 }
 
@@ -104,7 +104,7 @@ pub enum DocsRoutes {
 }
 
 impl DocsRoutes {
-    pub fn as_ref(&self) -> &'static str {
+    pub fn as_str(&self) -> &'static str {
         match self {
             DocsRoutes::Components => "components",
             DocsRoutes::Hooks => "hooks",
@@ -125,7 +125,7 @@ impl DocsRoutes {
 
 impl fmt::Display for DocsRoutes {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.as_ref())
+        write!(f, "{}", self.as_str())
     }
 }
 
@@ -150,7 +150,7 @@ pub enum ComponentsRoutes {
 }
 
 impl ComponentsRoutes {
-    pub fn as_ref(&self) -> &'static str {
+    pub fn as_str(&self) -> &'static str {
         match self {
             ComponentsRoutes::Accordion => "accordion",
             ComponentsRoutes::Alert => "alert",
@@ -204,7 +204,7 @@ impl ComponentsRoutes {
 
 impl fmt::Display for ComponentsRoutes {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.as_ref())
+        write!(f, "{}", self.as_str())
     }
 }
 
@@ -216,7 +216,7 @@ pub enum HooksRoutes {
 }
 
 impl HooksRoutes {
-    pub fn as_ref(&self) -> &'static str {
+    pub fn as_str(&self) -> &'static str {
         match self {
             HooksRoutes::UseCopyClipboard => "use-copy-clipboard",
             HooksRoutes::UseLockBodyScroll => "use-lock-body-scroll",
@@ -239,6 +239,6 @@ impl HooksRoutes {
 
 impl fmt::Display for HooksRoutes {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.as_ref())
+        write!(f, "{}", self.as_str())
     }
 }

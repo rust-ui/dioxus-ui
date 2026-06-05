@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use icons::{Check, ChevronRight, ChevronsUpDown};
+use icons::{Check, ChevronRight};
 use tw_merge::tw_merge;
 
 use crate::hooks::use_random::use_random_id_for;
