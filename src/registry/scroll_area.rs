@@ -1,9 +1,10 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_scroll_area::DemoScrollArea;
-use crate::demos::demo_scroll_area_horizontal::DemoScrollAreaHorizontal;
-use crate::demos::demo_scroll_area_rtl::DemoScrollAreaRtl;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_scroll_area::DemoScrollArea;
+use registry::demos::demo_scroll_area_horizontal::DemoScrollAreaHorizontal;
+use registry::demos::demo_scroll_area_rtl::DemoScrollAreaRtl;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static SCROLL_AREA: RegistryEntry = RegistryEntry {
     slug: "scroll-area",

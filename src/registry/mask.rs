@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_mask::DemoMask;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_mask::DemoMask;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static MASK: RegistryEntry = RegistryEntry {
     slug: "mask",

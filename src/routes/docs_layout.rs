@@ -1,9 +1,9 @@
 use dioxus::prelude::*;
 
 use crate::Route;
-use crate::ui::footer::Footer;
-use crate::ui::sidenav::Sidenav;
-use crate::ui::toc::{TableOfContents, TocItem};
+use crate::components::footer::Footer;
+use crate::components::sidenav::Sidenav;
+use crate::components::toc::{TableOfContents, TocItem};
 
 #[component]
 pub fn DocsLayout() -> Element {

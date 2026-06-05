@@ -3,9 +3,9 @@ use std::collections::HashMap;
 use dioxus::prelude::*;
 use html_parser::{Dom, Element as HtmlElement, Node};
 
+use crate::components::demo_wrapper::DemoWrapper;
+use crate::components::toc::{TocItem, slugify};
 use crate::markdown::markdown_to_html;
-use crate::ui::demo_wrapper::DemoWrapper;
-use crate::ui::toc::{TocItem, slugify};
 
 // ---------------------------------------------------------------------------
 // Types
@@ -74,11 +74,7 @@ pub fn convert_md(md: &str, components: &MdComponents) -> Element {
         Ok(d) => d,
         Err(_) => return rsx! {},
     };
-    let children: Vec<Element> = dom
-        .children
-        .iter()
-        .map(|n| process_node(n, components))
-        .collect();
+    let children: Vec<Element> = dom.children.iter().map(|n| process_node(n, components)).collect();
     rsx! {
         {children.into_iter()}
     }
@@ -113,12 +109,10 @@ fn extract_text(nodes: &[Node]) -> String {
 
 fn extract_code_block(pre: &HtmlElement) -> Option<(Option<String>, String)> {
     for child in &pre.children {
-        if let Node::Element(code_el) = child && code_el.name == "code" {
-            let lang = code_el
-                .classes
-                .iter()
-                .find(|c| c.starts_with("language-"))
-                .map(|c| c[9..].to_string());
+        if let Node::Element(code_el) = child
+            && code_el.name == "code"
+        {
+            let lang = code_el.classes.iter().find(|c| c.starts_with("language-")).map(|c| c[9..].to_string());
             let text = extract_text(&code_el.children);
             return Some((lang, text));
         }
@@ -127,11 +121,7 @@ fn extract_code_block(pre: &HtmlElement) -> Option<(Option<String>, String)> {
 }
 
 fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
-    let children: Vec<Element> = el
-        .children
-        .iter()
-        .map(|n| process_node(n, components))
-        .collect();
+    let children: Vec<Element> = el.children.iter().map(|n| process_node(n, components)).collect();
 
     // Check custom registry first — wrap in DemoWrapper for Preview/Code tabs
     if let Some(component) = components.0.get(&el.name.to_lowercase()) {
@@ -171,11 +161,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
         "ol" => rsx! { ol { class: "pl-6 my-6 list-decimal", {children.into_iter()} } },
         "li" => rsx! { li { class: "mt-2", {children.into_iter()} } },
         "a" => {
-            let href = el
-                .attributes
-                .get("href")
-                .and_then(|v| v.clone())
-                .unwrap_or_default();
+            let href = el.attributes.get("href").and_then(|v| v.clone()).unwrap_or_default();
             rsx! { a { class: "font-medium underline underline-offset-4", href: "{href}", {children.into_iter()} } }
         }
         "code" => {
@@ -226,14 +212,8 @@ mod tests {
     fn add_stores_key_lowercase() {
         let mut c = MdComponents::new();
         c.add("DemoCard", |_| rsx! {});
-        assert!(
-            c.0.contains_key("democard"),
-            "key should be stored as lowercase"
-        );
-        assert!(
-            !c.0.contains_key("DemoCard"),
-            "original case should not be stored"
-        );
+        assert!(c.0.contains_key("democard"), "key should be stored as lowercase");
+        assert!(!c.0.contains_key("DemoCard"), "original case should not be stored");
     }
 
     #[test]
@@ -284,10 +264,7 @@ mod tests {
         use crate::markdown::markdown_to_html;
         let html = markdown_to_html("\n<DemoButton />\n");
         eprintln!("pulldown output: {:?}", html);
-        assert!(
-            !html.contains("&lt;"),
-            "pulldown-cmark escaped the PascalCase tag"
-        );
+        assert!(!html.contains("&lt;"), "pulldown-cmark escaped the PascalCase tag");
     }
 
     #[test]
@@ -296,14 +273,9 @@ mod tests {
         let dom = Dom::parse(html).unwrap();
         eprintln!("dom children: {:?}", dom.children);
         // html_parser preserves original case — name is "DemoButton" not "demobutton"
-        let has_element = dom
-            .children
-            .iter()
-            .any(|n| matches!(n, Node::Element(e) if e.name.to_lowercase() == "demobutton"));
-        assert!(
-            has_element,
-            "html_parser did not parse <DemoButton /> as element"
-        );
+        let has_element =
+            dom.children.iter().any(|n| matches!(n, Node::Element(e) if e.name.to_lowercase() == "demobutton"));
+        assert!(has_element, "html_parser did not parse <DemoButton /> as element");
     }
 
     #[test]

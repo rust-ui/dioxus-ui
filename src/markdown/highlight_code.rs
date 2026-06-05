@@ -14,23 +14,18 @@ pub fn highlight_code(code: &str, language: Option<&str>) -> String {
 
 #[cfg(not(feature = "server"))]
 fn plain_escape(code: &str) -> String {
-    code.replace('&', "&amp;")
-        .replace('<', "&lt;")
-        .replace('>', "&gt;")
-        .replace('"', "&quot;")
+    code.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;").replace('"', "&quot;")
 }
 
 #[cfg(feature = "server")]
 mod server {
     use std::sync::OnceLock;
 
-    use syntect::{
-        easy::HighlightLines,
-        highlighting::ThemeSet,
-        html::{IncludeBackground, styled_line_to_highlighted_html},
-        parsing::SyntaxSet,
-        util::LinesWithEndings,
-    };
+    use syntect::easy::HighlightLines;
+    use syntect::highlighting::ThemeSet;
+    use syntect::html::{IncludeBackground, styled_line_to_highlighted_html};
+    use syntect::parsing::SyntaxSet;
+    use syntect::util::LinesWithEndings;
 
     const HIGHLIGHT_THEME: &str = "base16-ocean.dark";
 
@@ -49,19 +44,16 @@ mod server {
         let ss = syntax_set();
         let ts = theme_set();
 
-        let theme = ts
-            .themes
-            .get(HIGHLIGHT_THEME)
-            .or_else(|| ts.themes.values().next())
-            .expect("no syntect theme available");
+        let theme =
+            ts.themes.get(HIGHLIGHT_THEME).or_else(|| ts.themes.values().next()).expect("no syntect theme available");
 
         let lang = language.unwrap_or("plain");
 
         let syntax = match lang {
             "rust" => ss.find_syntax_by_name("Rust"),
-            "bash" | "sh" => ss
-                .find_syntax_by_name("Bourne Again Shell (bash)")
-                .or_else(|| ss.find_syntax_by_extension("sh")),
+            "bash" | "sh" => {
+                ss.find_syntax_by_name("Bourne Again Shell (bash)").or_else(|| ss.find_syntax_by_extension("sh"))
+            }
             "toml" => ss.find_syntax_by_name("TOML"),
             _ => ss.find_syntax_by_extension(lang),
         }

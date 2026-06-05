@@ -1,11 +1,10 @@
 use dioxus::prelude::*;
 
 pub mod __registry__;
-mod demos;
+pub mod components;
 pub mod markdown;
 pub mod registry;
 mod routes;
-mod ui;
 
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;

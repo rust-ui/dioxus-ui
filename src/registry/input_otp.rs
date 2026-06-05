@@ -1,8 +1,9 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_input_otp::DemoInputOtp;
-use crate::demos::demo_input_otp_separator::DemoInputOtpSeparator;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_input_otp::DemoInputOtp;
+use registry::demos::demo_input_otp_separator::DemoInputOtpSeparator;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static INPUT_OTP: RegistryEntry = RegistryEntry {
     slug: "input-otp",

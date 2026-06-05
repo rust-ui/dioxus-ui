@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 
+use crate::components::doc_header::DocHeader;
+use crate::components::seo_meta::SeoMeta;
+use crate::components::toc::TocItem;
 use crate::markdown::converter::{convert_md, extract_toc};
 use crate::registry::{self, prev_next};
-use crate::ui::doc_header::DocHeader;
-use crate::ui::seo_meta::SeoMeta;
-use crate::ui::toc::TocItem;
 
 #[component]
 pub fn ComponentPage(name: String) -> Element {

@@ -1,9 +1,10 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_callout::DemoCallout;
-use crate::demos::demo_callout_info::DemoCalloutInfo;
-use crate::demos::demo_callout_warning::DemoCalloutWarning;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_callout::DemoCallout;
+use registry::demos::demo_callout_info::DemoCalloutInfo;
+use registry::demos::demo_callout_warning::DemoCalloutWarning;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static CALLOUT: RegistryEntry = RegistryEntry {
     slug: "callout",

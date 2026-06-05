@@ -1,8 +1,9 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_field::DemoField;
-use crate::demos::demo_field_rtl::DemoFieldRtl;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_field::DemoField;
+use registry::demos::demo_field_rtl::DemoFieldRtl;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static FIELD: RegistryEntry = RegistryEntry {
     slug: "field",

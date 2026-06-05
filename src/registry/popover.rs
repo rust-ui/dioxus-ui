@@ -1,7 +1,8 @@
-use super::RegistryEntry;
-use crate::demos::demo_popover::DemoPopover;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_popover::DemoPopover;
+
+use super::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static POPOVER: RegistryEntry = RegistryEntry {
     slug: "popover",

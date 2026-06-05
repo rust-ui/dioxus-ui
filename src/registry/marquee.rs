@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_marquee::DemoMarquee;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_marquee::DemoMarquee;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static MARQUEE: RegistryEntry = RegistryEntry {
     slug: "marquee",

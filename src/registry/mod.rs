@@ -2,53 +2,53 @@
 // Run `cargo run --manifest-path dioxus_ui_internals/build_registry/Cargo.toml` to regenerate.
 
 pub mod accordion;
+pub mod alert;
+pub mod alert_dialog;
 pub mod animate;
 pub mod aspect_ratio;
-pub mod alert;
-pub mod bento_grid;
-pub mod chat;
-pub mod drawer;
-pub mod popover;
-pub mod sheet;
-pub mod bottom_nav;
-pub mod card_carousel;
-pub mod carousel;
-pub mod expandable;
-pub mod faq_transition;
-pub mod hover_card;
-pub mod input_otp;
-pub mod item;
-pub mod marquee;
-pub mod mask;
-pub mod pressable;
-pub mod radio_button_group;
-pub mod shimmer;
-pub mod alert_dialog;
 pub mod avatar;
 pub mod badge;
-pub mod callout;
+pub mod bento_grid;
+pub mod bottom_nav;
 pub mod breadcrumb;
 pub mod button;
 pub mod button_group;
+pub mod callout;
 pub mod card;
+pub mod card_carousel;
+pub mod carousel;
+pub mod chat;
 pub mod checkbox;
 pub mod chips;
 pub mod collapsible;
 pub mod dialog;
+pub mod drawer;
 pub mod empty;
+pub mod expandable;
+pub mod faq_transition;
 pub mod field;
+pub mod hover_card;
 pub mod image;
 pub mod input;
 pub mod input_group;
+pub mod input_otp;
+pub mod item;
 pub mod kbd;
 pub mod label;
+pub mod marquee;
+pub mod mask;
 pub mod pagination;
+pub mod popover;
+pub mod pressable;
 pub mod progress;
 pub mod radio_button;
+pub mod radio_button_group;
 pub mod radio_group;
 pub mod scroll_area;
 pub mod select_native;
 pub mod separator;
+pub mod sheet;
+pub mod shimmer;
 pub mod skeleton;
 pub mod slider;
 pub mod spinner;
@@ -63,56 +63,54 @@ pub mod toggle_group;
 pub mod tooltip;
 pub mod types;
 
-use types::RegistryEntry;
-
 use accordion::ACCORDION;
+use alert::ALERT;
+use alert_dialog::ALERT_DIALOG;
 use animate::ANIMATE;
 use aspect_ratio::ASPECT_RATIO;
-use alert::ALERT;
-use bento_grid::BENTO_GRID;
-use chat::CHAT;
-use drawer::DRAWER;
-use popover::POPOVER;
-use sheet::SHEET;
-use bottom_nav::BOTTOM_NAV;
-use card_carousel::CARD_CAROUSEL;
-use carousel::CAROUSEL;
-use expandable::EXPANDABLE;
-use faq_transition::FAQ_TRANSITION;
-use hover_card::HOVER_CARD;
-use input_otp::INPUT_OTP;
-use item::ITEM;
-use marquee::MARQUEE;
-use mask::MASK;
-use pressable::PRESSABLE;
-use radio_button_group::RADIO_BUTTON_GROUP;
-use shimmer::SHIMMER;
-use alert_dialog::ALERT_DIALOG;
 use avatar::AVATAR;
 use badge::BADGE;
-use callout::CALLOUT;
+use bento_grid::BENTO_GRID;
+use bottom_nav::BOTTOM_NAV;
 use breadcrumb::BREADCRUMB;
 use button::BUTTON;
 use button_group::BUTTON_GROUP;
+use callout::CALLOUT;
 use card::CARD;
+use card_carousel::CARD_CAROUSEL;
+use carousel::CAROUSEL;
+use chat::CHAT;
 use checkbox::CHECKBOX;
 use chips::CHIPS;
 use collapsible::COLLAPSIBLE;
 use dialog::DIALOG;
+use drawer::DRAWER;
 use empty::EMPTY;
+use expandable::EXPANDABLE;
+use faq_transition::FAQ_TRANSITION;
 use field::FIELD;
+use hover_card::HOVER_CARD;
 use image::IMAGE;
 use input::INPUT;
 use input_group::INPUT_GROUP;
+use input_otp::INPUT_OTP;
+use item::ITEM;
 use kbd::KBD;
 use label::LABEL;
+use marquee::MARQUEE;
+use mask::MASK;
 use pagination::PAGINATION;
+use popover::POPOVER;
+use pressable::PRESSABLE;
 use progress::PROGRESS;
 use radio_button::RADIO_BUTTON;
+use radio_button_group::RADIO_BUTTON_GROUP;
 use radio_group::RADIO_GROUP;
 use scroll_area::SCROLL_AREA;
 use select_native::SELECT_NATIVE;
 use separator::SEPARATOR;
+use sheet::SHEET;
+use shimmer::SHIMMER;
 use skeleton::SKELETON;
 use slider::SLIDER;
 use spinner::SPINNER;
@@ -125,6 +123,7 @@ use theme_toggle::THEME_TOGGLE;
 use toggle::TOGGLE;
 use toggle_group::TOGGLE_GROUP;
 use tooltip::TOOLTIP;
+use types::RegistryEntry;
 
 pub static REGISTRY: &[&RegistryEntry] = &[
     &ACCORDION,
@@ -198,16 +197,8 @@ pub fn prev_next(slug: &str) -> (Option<&'static str>, Option<&'static str>) {
     match pos {
         None => (None, None),
         Some(i) => (
-            if i > 0 {
-                Some(REGISTRY[i - 1].slug)
-            } else {
-                None
-            },
-            if i + 1 < REGISTRY.len() {
-                Some(REGISTRY[i + 1].slug)
-            } else {
-                None
-            },
+            if i > 0 { Some(REGISTRY[i - 1].slug) } else { None },
+            if i + 1 < REGISTRY.len() { Some(REGISTRY[i + 1].slug) } else { None },
         ),
     }
 }

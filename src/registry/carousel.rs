@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_carousel::DemoCarousel;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_carousel::DemoCarousel;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static CAROUSEL: RegistryEntry = RegistryEntry {
     slug: "carousel",

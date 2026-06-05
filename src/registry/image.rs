@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_image::DemoImage;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_image::DemoImage;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static IMAGE: RegistryEntry = RegistryEntry {
     slug: "image",

@@ -1,8 +1,9 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_bento_grid::DemoBentoGrid;
-use crate::demos::demo_bento_grid6::DemoBentoGrid6;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_bento_grid::DemoBentoGrid;
+use registry::demos::demo_bento_grid6::DemoBentoGrid6;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static BENTO_GRID: RegistryEntry = RegistryEntry {
     slug: "bento-grid",

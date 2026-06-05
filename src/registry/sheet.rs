@@ -1,7 +1,8 @@
-use super::RegistryEntry;
-use crate::demos::demo_sheet::DemoSheet;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_sheet::DemoSheet;
+
+use super::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static SHEET: RegistryEntry = RegistryEntry {
     slug: "sheet",

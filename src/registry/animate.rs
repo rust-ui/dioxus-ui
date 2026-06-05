@@ -1,7 +1,8 @@
-use super::RegistryEntry;
-use crate::demos::demo_animate::DemoAnimate;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_animate::DemoAnimate;
+
+use super::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static ANIMATE: RegistryEntry = RegistryEntry {
     slug: "animate",

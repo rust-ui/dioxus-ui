@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
+use registry::ui::button::Button;
 
 use crate::Route;
-use crate::ui::button::Button;
-use crate::ui::seo_meta::SeoMeta;
+use crate::components::seo_meta::SeoMeta;
 
 #[component]
 pub fn Home() -> Element {

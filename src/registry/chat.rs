@@ -1,7 +1,8 @@
-use super::RegistryEntry;
-use crate::demos::demo_chat::DemoChat;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_chat::DemoChat;
+
+use super::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static CHAT: RegistryEntry = RegistryEntry {
     slug: "chat",

@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_expandable::DemoExpandable;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_expandable::DemoExpandable;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static EXPANDABLE: RegistryEntry = RegistryEntry {
     slug: "expandable",

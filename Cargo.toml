@@ -1,4 +1,5 @@
 [workspace]
+members = ["app_crates/registry"]
 exclude = ["crates/_starters/start-dioxus-fullstack"]
 
 [package]
@@ -12,6 +13,7 @@ edition = "2024"
 [dependencies]
 dioxus = { version = "0.7", features = ["router", "fullstack"] }
 dioxus_ui = "0.1"
+registry = { path = "app_crates/registry" }
 icons = { version = "0.18", features = ["dioxus"] }
 tw_merge = { version = "0.1", features = ["debug"] }
 pulldown-cmark = { version = "0.12", default-features = false, features = ["html"] }
@@ -20,9 +22,10 @@ toml = "0.8"
 serde = { version = "1", features = ["derive"] }
 syntect = { version = "5.2", default-features = false, features = ["default-fancy", "regex-fancy"], optional = true }
 html-escape = { version = "0.2", optional = true }
+reqwest = { version = "0.12", features = ["json"], optional = true }
 
 [features]
 default = []
-server = ["dioxus/server", "dep:syntect", "dep:html-escape"]
+server = ["dioxus/server", "dep:syntect", "dep:html-escape", "dep:reqwest"]
 web = ["dioxus/web"]
 mobile = ["dioxus/mobile"]

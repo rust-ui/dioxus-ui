@@ -1,7 +1,8 @@
-use super::RegistryEntry;
-use crate::demos::demo_drawer::DemoDrawer;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_drawer::DemoDrawer;
+
+use super::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static DRAWER: RegistryEntry = RegistryEntry {
     slug: "drawer",

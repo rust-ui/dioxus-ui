@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_radio_button::DemoRadioButton;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_radio_button::DemoRadioButton;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static RADIO_BUTTON: RegistryEntry = RegistryEntry {
     slug: "radio-button",

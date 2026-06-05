@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_bottom_nav::DemoBottomNav;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_bottom_nav::DemoBottomNav;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static BOTTOM_NAV: RegistryEntry = RegistryEntry {
     slug: "bottom-nav",

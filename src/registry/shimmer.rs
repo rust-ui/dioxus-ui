@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_shimmer::DemoShimmer;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_shimmer::DemoShimmer;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static SHIMMER: RegistryEntry = RegistryEntry {
     slug: "shimmer",

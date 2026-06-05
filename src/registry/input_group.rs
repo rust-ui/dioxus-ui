@@ -1,10 +1,11 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_input_group::DemoInputGroup;
-use crate::demos::demo_input_group_block::DemoInputGroupBlock;
-use crate::demos::demo_input_group_rtl::DemoInputGroupRtl;
-use crate::demos::demo_input_group_text::DemoInputGroupText;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_input_group::DemoInputGroup;
+use registry::demos::demo_input_group_block::DemoInputGroupBlock;
+use registry::demos::demo_input_group_rtl::DemoInputGroupRtl;
+use registry::demos::demo_input_group_text::DemoInputGroupText;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
     slug: "input-group",

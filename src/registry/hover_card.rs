@@ -1,8 +1,9 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_hover_card::DemoHoverCard;
-use crate::demos::demo_hover_card_rtl::DemoHoverCardRtl;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_hover_card::DemoHoverCard;
+use registry::demos::demo_hover_card_rtl::DemoHoverCardRtl;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static HOVER_CARD: RegistryEntry = RegistryEntry {
     slug: "hover-card",

@@ -1,7 +1,8 @@
-use super::types::RegistryEntry;
-use crate::demos::demo_item::DemoItem;
-use crate::markdown::converter::MdComponents;
 use dioxus::prelude::*;
+use registry::demos::demo_item::DemoItem;
+
+use super::types::RegistryEntry;
+use crate::markdown::converter::MdComponents;
 
 pub static ITEM: RegistryEntry = RegistryEntry {
     slug: "item",
