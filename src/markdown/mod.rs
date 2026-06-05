@@ -15,13 +15,14 @@ pub struct Frontmatter {
 pub fn parse_md(raw: &str) -> (Frontmatter, &str) {
     let content = raw.trim();
     if let Some(rest) = content.strip_prefix("+++\n")
-        && let Some(end) = rest.find("\n+++") {
-            let toml_str = &rest[..end];
-            let body = &rest[end + 4..]; // skip "\n+++"
-            if let Ok(fm) = toml::from_str::<Frontmatter>(toml_str) {
-                return (fm, body.trim_start_matches('\n'));
-            }
+        && let Some(end) = rest.find("\n+++")
+    {
+        let toml_str = &rest[..end];
+        let body = &rest[end + 4..]; // skip "\n+++"
+        if let Ok(fm) = toml::from_str::<Frontmatter>(toml_str) {
+            return (fm, body.trim_start_matches('\n'));
         }
+    }
     (Frontmatter { title: String::new(), description: String::new() }, raw)
 }
 
