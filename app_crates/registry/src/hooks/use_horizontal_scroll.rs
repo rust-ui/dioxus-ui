@@ -62,12 +62,10 @@ pub fn use_horizontal_scroll(
                     let closure = wasm_bindgen::closure::Closure::once_into_js(move || {
                         update_state();
                     });
-                    let _ = web_sys::window()
-                        .unwrap()
-                        .set_timeout_with_callback_and_timeout_and_arguments_0(
-                            closure.as_ref().unchecked_ref(),
-                            delay_ms,
-                        );
+                    let _ = web_sys::window().unwrap().set_timeout_with_callback_and_timeout_and_arguments_0(
+                        closure.as_ref().unchecked_ref(),
+                        delay_ms,
+                    );
                 }
             }
         }

@@ -233,11 +233,7 @@ impl HooksRoutes {
     }
 
     pub fn all() -> &'static [HooksRoutes] {
-        &[
-            HooksRoutes::UseCopyClipboard,
-            HooksRoutes::UseLockBodyScroll,
-            HooksRoutes::UseRandom,
-        ]
+        &[HooksRoutes::UseCopyClipboard, HooksRoutes::UseLockBodyScroll, HooksRoutes::UseRandom]
     }
 }
 

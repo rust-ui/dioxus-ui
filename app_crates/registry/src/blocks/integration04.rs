@@ -8,10 +8,7 @@ use crate::ui::button::{Button, ButtonVariant};
 */
 
 #[component]
-fn Integration04IconBubble(
-    children: Element,
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+fn Integration04IconBubble(children: Element, #[props(into, optional)] class: Option<String>) -> Element {
     let cls = format!(
         "flex bg-white rounded-full border shadow-sm size-12 shadow-black/5 dark:bg-white/5 dark:backdrop-blur-md {}",
         class.as_deref().unwrap_or("")

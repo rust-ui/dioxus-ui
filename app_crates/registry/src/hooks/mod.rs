@@ -2,6 +2,7 @@ pub mod use_can_scroll;
 pub mod use_can_scroll_vertical;
 pub mod use_click_outside;
 pub mod use_copy_clipboard;
+pub mod use_data_scrolled;
 pub mod use_horizontal_scroll;
 pub mod use_is_mobile;
 pub mod use_media_query;

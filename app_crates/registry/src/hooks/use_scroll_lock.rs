@@ -3,14 +3,8 @@ use std::cell::RefCell;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
 
-const EXCLUDED_DATA_NAMES: &[&str] = &[
-    "ScrollArea",
-    "CommandList",
-    "SelectContent",
-    "MultiSelectContent",
-    "DropdownMenuContent",
-    "ContextMenuContent",
-];
+const EXCLUDED_DATA_NAMES: &[&str] =
+    &["ScrollArea", "CommandList", "SelectContent", "MultiSelectContent", "DropdownMenuContent", "ContextMenuContent"];
 
 const FIXED_EXCLUDED: &[&str] = &["header", "nav", "aside"];
 

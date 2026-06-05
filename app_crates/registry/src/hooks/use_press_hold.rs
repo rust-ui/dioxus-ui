@@ -66,10 +66,7 @@ impl UsePressHold {
 
             if let Ok(id) = web_sys::window()
                 .unwrap()
-                .set_interval_with_callback_and_timeout_and_arguments_0(
-                    callback.as_ref().unchecked_ref(),
-                    16,
-                )
+                .set_interval_with_callback_and_timeout_and_arguments_0(callback.as_ref().unchecked_ref(), 16)
             {
                 self.interval_id.set(Some(id));
             }
@@ -122,10 +119,7 @@ impl UsePressHold {
 
             if let Ok(id) = web_sys::window()
                 .unwrap()
-                .set_interval_with_callback_and_timeout_and_arguments_0(
-                    callback.as_ref().unchecked_ref(),
-                    16,
-                )
+                .set_interval_with_callback_and_timeout_and_arguments_0(callback.as_ref().unchecked_ref(), 16)
             {
                 self.interval_id.set(Some(id));
             }
@@ -135,11 +129,7 @@ impl UsePressHold {
     }
 }
 
-pub fn use_press_hold(
-    duration_ms: u32,
-    on_complete: Callback<()>,
-    disabled: ReadOnlySignal<bool>,
-) -> UsePressHold {
+pub fn use_press_hold(duration_ms: u32, on_complete: Callback<()>, disabled: ReadOnlySignal<bool>) -> UsePressHold {
     UsePressHold {
         progress: use_signal(|| 0.0),
         is_holding: use_signal(|| false),

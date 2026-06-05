@@ -1,12 +1,12 @@
 pub mod faq01;
 pub mod faq02;
 pub mod faq03;
-pub mod footer_logos;
 pub mod footer01;
 pub mod footer02;
 pub mod footer03;
 pub mod footer04;
 pub mod footer05;
+pub mod footer_logos;
 pub mod header01;
 pub mod integration01;
 pub mod integration02;
