@@ -4,6 +4,5 @@ pub mod doc_header;
 pub mod footer;
 pub mod github_stars;
 pub mod navbar;
-pub mod seo_meta;
 pub mod sidenav;
 pub mod toc;

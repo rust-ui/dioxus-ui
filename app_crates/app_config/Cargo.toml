@@ -1,0 +1,14 @@
+[package]
+name = "app_config"
+version = "0.1.0"
+edition = "2024"
+
+[features]
+default = []
+web = ["dioxus/web"]
+server = ["dioxus/server"]
+
+[dependencies]
+dioxus = { version = "0.7", features = ["fullstack"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1.0"

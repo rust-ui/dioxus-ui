@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::components::doc_header::DocHeader;
-use crate::components::seo_meta::SeoMeta;
+use app_config::SeoMeta;
 use crate::components::toc::TocItem;
 use crate::markdown::converter::{convert_md, extract_toc};
 use crate::registry::{self, prev_next};
