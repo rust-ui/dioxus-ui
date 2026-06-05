@@ -50,6 +50,11 @@ dependencies = [
 [[package]]
 name = "app_domain"
 version = "0.1.0"
+dependencies = [
+ "dioxus",
+ "icons",
+ "registry",
+]
 
 [[package]]
 name = "app_routes"

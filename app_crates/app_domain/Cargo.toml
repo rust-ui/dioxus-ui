@@ -2,3 +2,13 @@
 name = "app_domain"
 version = "0.1.0"
 edition = "2024"
+
+[dependencies]
+dioxus = { version = "0.7", features = ["router", "fullstack"] }
+registry = { path = "../registry" }
+icons = { version = "0.18", features = ["dioxus"] }
+
+[features]
+default = []
+web = ["dioxus/web"]
+server = ["dioxus/server"]
