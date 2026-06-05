@@ -1,5 +1,5 @@
 [workspace]
-members = ["app_crates/registry"]
+members = ["app_crates/registry", "app_crates/app_routes"]
 exclude = ["crates/_starters/start-dioxus-fullstack"]
 
 [package]
