@@ -2947,8 +2947,14 @@ version = "0.1.0"
 dependencies = [
  "dioxus",
  "icons",
+ "js-sys",
  "serde",
+ "serde_json",
+ "strum 0.27.2",
+ "time",
  "tw_merge",
+ "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]
