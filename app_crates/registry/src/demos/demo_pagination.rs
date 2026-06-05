@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::ui::pagination::{
-    Pagination, PaginationEllipsis, PaginationItem, PaginationLink, PaginationList, PaginationNext, PaginationPrev,
+    Pagination, PaginationItem, PaginationLink, PaginationList, PaginationNext, PaginationPrev,
 };
 
 #[component]

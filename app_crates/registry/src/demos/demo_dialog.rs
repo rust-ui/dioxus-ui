@@ -1,6 +1,5 @@
 use dioxus::prelude::*;
 
-use crate::ui::button::Button;
 use crate::ui::dialog::{
     Dialog, DialogAction, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader,
     DialogTitle, DialogTrigger,

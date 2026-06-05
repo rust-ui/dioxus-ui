@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 use icons::Search;
 
-use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 use crate::ui::input::{Input, InputType};
 
 #[component]

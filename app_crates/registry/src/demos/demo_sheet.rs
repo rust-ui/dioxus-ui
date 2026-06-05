@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::ui::button::{Button, ButtonVariant};
+use crate::ui::button::Button;
 use crate::ui::sheet::{
     Sheet, SheetBody, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetSide, SheetTitle,
     SheetTrigger,
