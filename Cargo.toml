@@ -12,7 +12,6 @@ edition = "2024"
 
 [dependencies]
 dioxus = { version = "0.7", features = ["router", "fullstack"] }
-dioxus_ui = "0.1"
 registry = { path = "app_crates/registry" }
 icons = { version = "0.18", features = ["dioxus"] }
 tw_merge = { version = "0.1", features = ["debug"] }
