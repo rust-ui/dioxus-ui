@@ -21,7 +21,7 @@ pub struct HorizontalScrollContext {
 }
 
 pub fn use_horizontal_scroll(
-    element_signal: ReadOnlySignal<Option<web_sys::Element>>,
+    element_signal: ReadSignal<Option<web_sys::Element>>,
     scroll_percentage: Option<f64>,
     update_delay_ms: Option<i32>,
 ) -> HorizontalScrollContext {

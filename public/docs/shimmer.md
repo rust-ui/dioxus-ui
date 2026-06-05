@@ -17,7 +17,7 @@ use crate::ui::shimmer::Shimmer;
 
 ```rust
 rsx! {
-    Shimmer { loading: ReadOnlySignal::new(loading),
+    Shimmer { loading: ReadSignal::new(loading),
         Card { "Content that shimmers while loading" }
     }
 }

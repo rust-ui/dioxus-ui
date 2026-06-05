@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 /// Registers a document-level mousedown listener that fires the callback
 /// when a click occurs outside the element given by `element_signal`.
 /// Set the signal from an `onmounted` handler.
-pub fn use_click_outside<F>(element_signal: ReadOnlySignal<Option<web_sys::Element>>, on_click_outside: F)
+pub fn use_click_outside<F>(element_signal: ReadSignal<Option<web_sys::Element>>, on_click_outside: F)
 where
     F: Fn() + Clone + 'static,
 {

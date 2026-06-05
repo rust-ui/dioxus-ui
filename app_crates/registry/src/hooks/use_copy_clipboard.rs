@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 const DEFAULT_TIMEOUT_MS: i32 = 2000;
 
-pub fn use_copy_clipboard(timeout_ms: Option<i32>) -> (impl Fn(&str) + Clone, ReadOnlySignal<bool>) {
+pub fn use_copy_clipboard(timeout_ms: Option<i32>) -> (impl Fn(&str) + Clone, ReadSignal<bool>) {
     let copied = use_signal(|| false);
     let timeout = timeout_ms.unwrap_or(DEFAULT_TIMEOUT_MS);
 

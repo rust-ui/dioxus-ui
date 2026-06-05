@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 /// Returns (on_scroll_handler, can_scroll_up, can_scroll_down).
 /// Attach on_scroll to the scrollable element's onscroll event.
-pub fn use_can_scroll_vertical() -> (impl Fn(Event<ScrollData>) + Clone, ReadOnlySignal<bool>, ReadOnlySignal<bool>) {
+pub fn use_can_scroll_vertical() -> (impl Fn(Event<ScrollData>) + Clone, ReadSignal<bool>, ReadSignal<bool>) {
     let can_up = use_signal(|| false);
     let can_down = use_signal(|| false);
 

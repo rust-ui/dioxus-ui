@@ -41,10 +41,10 @@ pub fn ThemeSelector() -> Element {
                     l,
                     c,
                     h,
-                    color_primary_memo: ReadOnlySignal::from(color_primary_memo),
-                    color_secondary_memo: ReadOnlySignal::from(color_secondary_memo),
+                    color_primary_memo: ReadSignal::from(color_primary_memo),
+                    color_secondary_memo: ReadSignal::from(color_secondary_memo),
                 }
-                CopyCodeDialog { theme: ReadOnlySignal::from(theme_memo) }
+                CopyCodeDialog { theme: ReadSignal::from(theme_memo) }
             }
         }
     }
@@ -59,8 +59,8 @@ pub fn OklchSelector(
     mut l: Signal<f32>,
     mut c: Signal<f32>,
     mut h: Signal<f32>,
-    color_primary_memo: ReadOnlySignal<String>,
-    color_secondary_memo: ReadOnlySignal<String>,
+    color_primary_memo: ReadSignal<String>,
+    color_secondary_memo: ReadSignal<String>,
 ) -> Element {
     use_effect(move || {
         let primary = color_primary_memo();
@@ -76,9 +76,7 @@ pub fn OklchSelector(
     rsx! {
         div { class: "w-full",
             small { class: "text-sm font-medium leading-none", "Lightness (L)" }
-            span { class: "ml-2 text-xs text-muted-foreground",
-                "({l} / {MAX_L})"
-            }
+            span { class: "ml-2 text-xs text-muted-foreground", "({l} / {MAX_L})" }
             Slider {
                 class: "text-muted-foreground",
                 min: 0.0,
@@ -93,9 +91,7 @@ pub fn OklchSelector(
         }
         div { class: "w-full",
             small { class: "text-sm font-medium leading-none", "Chroma (C)" }
-            span { class: "ml-2 text-xs text-muted-foreground",
-                "({c} / {MAX_C})"
-            }
+            span { class: "ml-2 text-xs text-muted-foreground", "({c} / {MAX_C})" }
             Slider {
                 class: "text-muted-foreground",
                 min: 0.0,
@@ -110,9 +106,7 @@ pub fn OklchSelector(
         }
         div { class: "w-full",
             small { class: "text-sm font-medium leading-none", "Hue (H)" }
-            span { class: "ml-2 text-xs text-muted-foreground",
-                "({h} / {MAX_H})"
-            }
+            span { class: "ml-2 text-xs text-muted-foreground", "({h} / {MAX_H})" }
             Slider {
                 class: "text-muted-foreground",
                 min: 0.0,
@@ -134,7 +128,7 @@ pub fn OklchSelector(
 
 #[component]
 pub fn CopyCodeDialog(
-    theme: ReadOnlySignal<String>,
+    theme: ReadSignal<String>,
     children: Option<Element>,
     #[props(default)] trigger_variant: ButtonVariant,
     #[props(default)] trigger_size: ButtonSize,

@@ -11,7 +11,7 @@ pub struct UsePressHold {
     last_update: Rc<Cell<f64>>,
     duration: f64,
     on_complete: Callback<()>,
-    disabled: ReadOnlySignal<bool>,
+    disabled: ReadSignal<bool>,
 }
 
 impl UsePressHold {
@@ -129,7 +129,7 @@ impl UsePressHold {
     }
 }
 
-pub fn use_press_hold(duration_ms: u32, on_complete: Callback<()>, disabled: ReadOnlySignal<bool>) -> UsePressHold {
+pub fn use_press_hold(duration_ms: u32, on_complete: Callback<()>, disabled: ReadSignal<bool>) -> UsePressHold {
     UsePressHold {
         progress: use_signal(|| 0.0),
         is_holding: use_signal(|| false),
