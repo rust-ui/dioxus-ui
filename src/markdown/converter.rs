@@ -235,7 +235,7 @@ mod tests {
     #[test]
     fn parse_md_extracts_frontmatter() {
         use crate::markdown::parse_md;
-        let raw = "---\ntitle: Button\ndescription: A button.\n---\n## Usage\nHello";
+        let raw = "+++\ntitle = \"Button\"\ndescription = \"A button.\"\n+++\n## Usage\nHello";
         let (fm, body) = parse_md(raw);
         assert_eq!(fm.title, "Button");
         assert_eq!(fm.description, "A button.");
