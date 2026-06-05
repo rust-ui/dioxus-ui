@@ -1,11 +1,10 @@
 use dioxus::document::eval;
 use dioxus::prelude::*;
-use icons::Search;
+use icons::{Anchor, ArrowDown, ArrowRight, ArrowUp, CircleDashed, CornerDownLeft, Search};
+use registry::ui::input_group::{InputGroup, InputGroupAddon};
+use registry::ui::kbd::Kbd;
 
-use crate::__registry__::command_bar::COMPONENTS_ITEMS;
-use crate::Route;
-
-// ── Shared state ─────────────────────────────────────────────────────────────
+use crate::__registry__::command_bar::{COMPONENTS_ITEMS, CommandCategory, CommandItemData, HOOKS_ITEMS, PAGES_ITEMS};
 
 #[derive(Clone, Copy)]
 pub struct CommandBarState {
@@ -13,7 +12,6 @@ pub struct CommandBarState {
     pub query: Signal<String>,
 }
 
-/// Call once at the AppLayout level to provide command bar state to children.
 pub fn use_command_bar_provider() -> CommandBarState {
     let open = use_context_provider(|| Signal::new(false));
     let query = use_context_provider(|| Signal::new(String::new()));
@@ -23,8 +21,6 @@ pub fn use_command_bar_provider() -> CommandBarState {
 fn use_command_bar() -> CommandBarState {
     CommandBarState { open: use_context::<Signal<bool>>(), query: use_context::<Signal<String>>() }
 }
-
-// ── Trigger (lives inside Navbar) ─────────────────────────────────────────────
 
 #[component]
 pub fn CommandBarTrigger() -> Element {
@@ -38,7 +34,7 @@ pub fn CommandBarTrigger() -> Element {
                 state.query.set(String::new());
             },
             Search { class: "size-4 shrink-0" }
-            span { class: "hidden md:inline-flex", "Search docs..." }
+            span { class: "hidden md:inline-flex", "Search..." }
             span { class: "inline-flex md:hidden", "Search documentation..." }
             kbd {
                 class: "flex gap-1 items-center px-1.5 h-5 font-mono font-medium rounded border opacity-100 pointer-events-none select-none bg-muted text-[10px] ml-auto",
@@ -49,159 +45,217 @@ pub fn CommandBarTrigger() -> Element {
     }
 }
 
-// ── Dialog (lives in AppLayout, outside sticky/backdrop-filter header) ────────
-
 #[component]
 pub fn CommandBarDialog() -> Element {
     let mut state = use_command_bar();
-    let nav = navigator();
 
-    // Global Cmd+K listener
     use_effect(move || {
+        let mut open = state.open;
         spawn(async move {
             let _ = eval(
                 r#"
                 if (!window.__cmdBarGlobalInit) {
                     window.__cmdBarGlobalInit = true;
                     document.addEventListener('keydown', function(e) {
-                        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
                             e.preventDefault();
-                            const d = document.getElementById('command-search-docs');
-                            if (d) d.dispatchEvent(new CustomEvent('cmd-open'));
+                            document.dispatchEvent(new CustomEvent('cmd-open'));
                         }
                     });
                 }
             "#,
             )
             .await;
+
+            loop {
+                let _ = eval(
+                    r#"
+                    await new Promise(resolve => {
+                        document.addEventListener('cmd-open', resolve, { once: true });
+                    });
+                "#,
+                )
+                .await;
+                open.set(true);
+            }
         });
     });
 
-    // Listen for cmd-open event → open dialog
-    let mut open_w = state.open;
-    use_effect(move || {
-        spawn(async move {
-            let mut ev = eval(
-                r#"
-                await new Promise(resolve => {
-                    const d = document.getElementById('command-search-docs');
-                    const handler = () => resolve('open');
-                    if (d) d.addEventListener('cmd-open', handler, { once: true });
-                    else document.addEventListener('cmd-open', handler, { once: true });
-                });
-            "#,
-            );
-            let _ = ev.await;
-            open_w.set(true);
-        });
-    });
-
-    // Run RUST-UI tab/copy/keyboard JS each time dialog opens
     let is_open = (state.open)();
     use_effect(move || {
         if !is_open {
             return;
         }
+
         spawn(async move {
-            let _ = eval(r#"
-            (function() {
-                const setup = () => {
-                    const dialog = document.querySelector('#command-search-docs');
-                    const copyFooter = document.getElementById('cmd-copy-footer');
-                    const copyLabel = document.getElementById('cmd-copy-label');
-                    if (!dialog || !copyFooter || !copyLabel) { setTimeout(setup, 50); return; }
+            let _ = eval(
+                r#"
+                (function() {
+                    const setup = () => {
+                        const dialog = document.querySelector('#command-search-docs');
+                        const copyFooter = document.getElementById('cmd-copy-footer');
+                        const copyLabel = document.getElementById('cmd-copy-label');
 
-                    // ── Tab switching ───────────────────────────────────
-                    const tabButtons = dialog.querySelectorAll('[data-name="CommandTabBar"] [data-tab]');
-                    const groups = dialog.querySelectorAll('[data-name="CommandGroup"][data-category]');
+                        if (!dialog || !copyFooter || !copyLabel) {
+                            setTimeout(setup, 50);
+                            return;
+                        }
 
-                    const applyTab = (tab) => {
-                        tabButtons.forEach(btn => btn.setAttribute('data-active', btn.dataset.tab === tab ? 'true' : 'false'));
-                        groups.forEach(g => { g.style.display = (tab === 'all' || g.dataset.category === tab) ? '' : 'none'; });
-                        const input = dialog.querySelector('[data-name="CommandInput"]');
-                        if (input && input.value !== '') { input.value = ''; input.dispatchEvent(new Event('input')); }
-                    };
+                        if (dialog.dataset.ready === 'true') {
+                            return;
+                        }
+                        dialog.dataset.ready = 'true';
 
-                    tabButtons.forEach(btn => btn.addEventListener('click', (e) => { e.preventDefault(); applyTab(btn.dataset.tab); }));
+                        const tabButtons = dialog.querySelectorAll('[data-name="CommandTabBar"] [data-tab]');
+                        const groups = dialog.querySelectorAll('[data-name="CommandGroup"][data-category]');
 
-                    // ── Copy hint ───────────────────────────────────────
-                    const updateCopyHint = () => {
-                        const sel = dialog.querySelector('[data-name="CommandItemLink"][aria-selected="true"]');
-                        const slug = sel?.getAttribute('data-add-cmd');
-                        if (slug) { copyLabel.textContent = 'ui add ' + slug; copyFooter.style.display = ''; }
-                        else { copyFooter.style.display = 'none'; }
-                    };
+                        const visibleItems = () => Array.from(dialog.querySelectorAll('[data-name="CommandItemLink"]'))
+                            .filter(el => el.offsetParent !== null);
 
-                    const ariaObs = new MutationObserver(mutations => {
-                        for (const m of mutations) { if (m.attributeName === 'aria-selected') { updateCopyHint(); break; } }
-                    });
+                        const setSelected = (items, idx) => {
+                            items.forEach((el, i) => el.setAttribute('aria-selected', i === idx ? 'true' : 'false'));
+                            if (idx >= 0 && idx < items.length) {
+                                items[idx].scrollIntoView({ block: 'nearest' });
+                            }
+                        };
 
-                    const attachItemListeners = () => {
+                        const updateCopyHint = () => {
+                            const selected = dialog.querySelector('[data-name="CommandItemLink"][aria-selected="true"]');
+                            const slug = selected?.getAttribute('data-add-cmd');
+                            if (slug) {
+                                copyLabel.textContent = 'ui add ' + slug;
+                                copyFooter.style.display = '';
+                            } else {
+                                copyFooter.style.display = 'none';
+                            }
+                        };
+
+                        const applyTab = (tab) => {
+                            tabButtons.forEach(btn => {
+                                btn.setAttribute('data-active', btn.dataset.tab === tab ? 'true' : 'false');
+                            });
+                            groups.forEach(group => {
+                                group.style.display = (tab === 'all' || group.dataset.category === tab) ? '' : 'none';
+                            });
+
+                            const input = dialog.querySelector('[data-name="CommandInput"]');
+                            if (input && input.value !== '') {
+                                input.value = '';
+                                input.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+
+                            setTimeout(() => {
+                                const items = visibleItems();
+                                setSelected(items, items.length > 0 ? 0 : -1);
+                                updateCopyHint();
+                            }, 0);
+                        };
+
+                        tabButtons.forEach(btn => {
+                            btn.addEventListener('click', (e) => {
+                                e.preventDefault();
+                                applyTab(btn.dataset.tab);
+                            });
+                        });
+
+                        const ariaObserver = new MutationObserver((mutations) => {
+                            for (const m of mutations) {
+                                if (m.attributeName === 'aria-selected') {
+                                    updateCopyHint();
+                                    break;
+                                }
+                            }
+                        });
+
                         dialog.querySelectorAll('[data-name="CommandItemLink"]').forEach(item => {
-                            ariaObs.observe(item, { attributes: true, attributeFilter: ['aria-selected'] });
+                            ariaObserver.observe(item, { attributes: true, attributeFilter: ['aria-selected'] });
+
                             item.addEventListener('mouseenter', () => {
                                 const slug = item.getAttribute('data-add-cmd');
-                                if (slug) { copyLabel.textContent = 'ui add ' + slug; copyFooter.style.display = ''; }
-                                else { copyFooter.style.display = 'none'; }
+                                if (slug) {
+                                    copyLabel.textContent = 'ui add ' + slug;
+                                    copyFooter.style.display = '';
+                                } else {
+                                    copyFooter.style.display = 'none';
+                                }
                             });
+
                             item.addEventListener('mouseleave', updateCopyHint);
                         });
-                    };
-                    attachItemListeners();
 
-                    // ── Keyboard navigation ──────────────────────────────
-                    const getVisible = () => Array.from(dialog.querySelectorAll('[data-name="CommandItemLink"]')).filter(el => el.offsetParent !== null);
-                    const setSelected = (items, idx) => {
-                        items.forEach((el, i) => el.setAttribute('aria-selected', i === idx ? 'true' : 'false'));
-                        if (idx >= 0 && idx < items.length) items[idx].scrollIntoView({ block: 'nearest' });
-                    };
+                        dialog.addEventListener('keydown', (e) => {
+                            const items = visibleItems();
+                            const current = items.findIndex(el => el.getAttribute('aria-selected') === 'true');
 
-                    dialog.addEventListener('keydown', (e) => {
-                        const items = getVisible();
-                        const cur = items.findIndex(el => el.getAttribute('aria-selected') === 'true');
-                        if (e.key === 'ArrowDown') { e.preventDefault(); setSelected(items, Math.min(cur + 1, items.length - 1)); }
-                        else if (e.key === 'ArrowUp') { e.preventDefault(); setSelected(items, Math.max(cur - 1, 0)); }
-                        else if (e.key === 'Enter') { const s = items[cur]; if (s) { e.preventDefault(); s.click(); } }
-                        else if (e.key === 'Escape') { dialog.dispatchEvent(new CustomEvent('cmd-close')); }
-                    });
-
-                    // ── ⌘C copy ─────────────────────────────────────────
-                    document.addEventListener('keydown', (e) => {
-                        if (dialog.getAttribute('data-state') !== 'open') return;
-                        if ((e.metaKey || e.ctrlKey) && e.key === 'c') {
-                            const sel = dialog.querySelector('[data-name="CommandItemLink"][aria-selected="true"]');
-                            const slug = sel?.getAttribute('data-add-cmd');
-                            if (slug) {
+                            if (e.key === 'ArrowDown') {
                                 e.preventDefault();
-                                navigator.clipboard.writeText('ui add ' + slug).catch(() => {});
-                                const orig = copyLabel.textContent;
-                                copyLabel.textContent = 'Copied!';
-                                setTimeout(() => { copyLabel.textContent = orig; }, 1500);
+                                setSelected(items, Math.min(current + 1, items.length - 1));
+                            } else if (e.key === 'ArrowUp') {
+                                e.preventDefault();
+                                setSelected(items, Math.max(current - 1, 0));
+                            } else if (e.key === 'Enter') {
+                                const selected = items[current];
+                                if (selected) {
+                                    e.preventDefault();
+                                    selected.click();
+                                }
+                            } else if (e.key === 'Escape') {
+                                dialog.dispatchEvent(new CustomEvent('cmd-close'));
                             }
+                        });
+
+                        document.addEventListener('keydown', (e) => {
+                            if (dialog.getAttribute('data-state') !== 'open') return;
+                            if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'c') {
+                                const selected = dialog.querySelector('[data-name="CommandItemLink"][aria-selected="true"]');
+                                const slug = selected?.getAttribute('data-add-cmd');
+                                if (slug) {
+                                    e.preventDefault();
+                                    const cmd = 'ui add ' + slug;
+                                    navigator.clipboard.writeText(cmd).catch(() => {});
+                                    const orig = copyLabel.textContent;
+                                    copyLabel.textContent = 'Copied!';
+                                    setTimeout(() => { copyLabel.textContent = orig; }, 1500);
+                                }
+                            }
+                        });
+
+                        const input = dialog.querySelector('[data-name="CommandInput"]');
+                        if (input) {
+                            setTimeout(() => input.focus(), 10);
                         }
-                    });
 
-                    // Focus input
-                    const input = dialog.querySelector('[data-name="CommandInput"]');
-                    if (input) setTimeout(() => input.focus(), 10);
+                        applyTab('all');
+                    };
 
-                    applyTab('all');
-                };
-                setup();
-            })();
-            "#).await;
+                    setup();
+                })();
+            "#,
+            )
+            .await;
         });
     });
 
-    let filtered: Vec<_> = COMPONENTS_ITEMS
-        .iter()
-        .filter(|item| {
-            let q = (state.query)().to_lowercase();
-            q.is_empty() || item.label.to_lowercase().contains(&q)
-        })
-        .collect();
+    use_effect(move || {
+        if !is_open {
+            return;
+        }
 
-    let kbd_cls = "inline-flex items-center justify-center rounded border border-border px-1.5 h-5 font-mono font-medium text-[10px] bg-muted text-muted-foreground";
+        let mut open = state.open;
+        spawn(async move {
+            let _ = eval(
+                r#"
+                await new Promise(resolve => {
+                    const d = document.getElementById('command-search-docs');
+                    if (!d) return resolve('missing');
+                    d.addEventListener('cmd-close', resolve, { once: true });
+                });
+            "#,
+            )
+            .await;
+            open.set(false);
+        });
+    });
 
     if !(state.open)() {
         return rsx! {
@@ -209,108 +263,141 @@ pub fn CommandBarDialog() -> Element {
         };
     }
 
+    let query = (state.query)().to_lowercase();
+
     rsx! {
-        div {
-            id: "command-search-docs",
-            "data-state": "open",
-            // Full-viewport overlay — rendered at AppLayout level, outside sticky header
+        div { id: "command-search-docs", "data-state": "open",
             div {
                 class: "fixed inset-0 z-50 flex items-start justify-center",
                 style: "padding-top: 10vh;",
-                // Backdrop
                 div {
                     class: "absolute inset-0 bg-black/50",
                     onclick: move |_| state.open.set(false),
                 }
-                // Panel
                 div {
                     class: "relative z-10 w-full max-w-lg rounded-xl border border-border bg-background shadow-lg overflow-hidden",
                     role: "dialog",
                     aria_modal: "true",
-                    div { class: "sr-only", h2 { "Search documentation..." } p { "Search for a command to run..." } }
+                    tabindex: "-1",
+                    div {
+                        class: "sr-only",
+                        h2 { "Search documentation..." }
+                        p { "Search for a command to run..." }
+                    }
 
-                    // Search input
-                    div { class: "flex items-center gap-2 border-b border-border bg-input/50 px-3", style: "height: 2.25rem;",
-                        Search { class: "size-4 shrink-0 text-muted-foreground" }
+                    InputGroup { class: "h-9 bg-input/50 rounded-none border-x-0 border-t-0 shadow-none",
+                        InputGroupAddon {
+                            Search {}
+                        }
                         input {
                             "data-name": "CommandInput",
-                            class: "flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground border-0 shadow-none",
-                            style: "height: 2.25rem;",
+                            class: "flex-1 py-0 h-9 rounded-none border-0 shadow-none bg-transparent px-3 text-sm outline-none placeholder:text-muted-foreground",
                             placeholder: "Search documentation...",
                             value: "{state.query}",
                             oninput: move |e| state.query.set(e.value()),
                         }
                     }
 
-                    // Tab bar
                     div { "data-name": "CommandTabBar", class: "flex gap-1 px-3 pt-1 pb-2 border-b border-border",
-                        button {
-                            "data-tab": "all", "data-active": "true",
-                            class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
-                            "All"
-                        }
-                        button {
-                            "data-tab": "components", "data-active": "false",
-                            class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
-                            "Components"
-                        }
-                    }
-
-                    // List
-                    div { id: "command_demo", tabindex: "-1", style: "max-height: 60vh; overflow-y: auto;",
-                        div {
-                            "data-name": "CommandGroup", "data-category": "components",
-                            role: "presentation", class: "p-0",
-                            div { aria_hidden: "true", class: "p-3 text-xs font-medium text-muted-foreground", "Components" }
-                            if filtered.is_empty() {
-                                p { class: "px-4 py-6 text-center text-sm text-muted-foreground", "No results found." }
-                            }
-                            for item in &filtered {
-                                {
-                                    let slug = item.href.trim_start_matches("/components/").to_string();
-                                    let label = item.label;
-                                    rsx! {
-                                        button {
-                                            "data-name": "CommandItemLink",
-                                            "data-add-cmd": slug.clone(),
-                                            aria_selected: "false",
-                                            class: "flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer aria-selected:bg-accent aria-selected:text-accent-foreground",
-                                            onclick: {
-                                                let slug = slug.clone();
-                                                let nav = nav.clone();
-                                                move |_| {
-                                                    state.open.set(false);
-                                                    nav.push(Route::ComponentPage { name: slug.clone() });
-                                                }
-                                            },
-                                            Search { class: "size-3.5 text-muted-foreground shrink-0" }
-                                            span { "{label}" }
-                                        }
-                                    }
-                                }
+                        for (tab, label, active) in [
+                            ("all", "All", "true"),
+                            ("pages", "Pages", "false"),
+                            ("components", "Components", "false"),
+                            ("hooks", "Hooks", "false"),
+                        ] {
+                            button {
+                                "data-tab": "{tab}",
+                                "data-active": "{active}",
+                                class: "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground",
+                                "{label}"
                             }
                         }
                     }
 
-                    // Footer
+                    div { id: "command_demo", tabindex: "-1", class: "max-h-[60vh] overflow-y-auto",
+                        CommandGroupView { category: CommandCategory::Pages, items: PAGES_ITEMS, query: query.clone(), on_select: move |_| state.open.set(false) }
+                        CommandGroupView { category: CommandCategory::Components, items: COMPONENTS_ITEMS, query: query.clone(), on_select: move |_| state.open.set(false) }
+                        CommandGroupView { category: CommandCategory::Hooks, items: HOOKS_ITEMS, query, on_select: move |_| state.open.set(false) }
+                    }
+
                     div { class: "flex items-center gap-4 px-3 py-2 border-t border-border text-xs text-muted-foreground",
                         div { class: "flex gap-2 items-center",
-                            kbd { class: "{kbd_cls}", "↑" }
-                            kbd { class: "{kbd_cls}", "↓" }
+                            Kbd { ArrowUp {} }
+                            Kbd { ArrowDown {} }
                             span { "Navigate" }
                         }
                         div { class: "flex gap-2 items-center",
-                            kbd { class: "{kbd_cls}", "↵" }
+                            Kbd { CornerDownLeft {} }
                             span { "Go to Page" }
                         }
                         div { id: "cmd-copy-footer", class: "flex gap-2 items-center ml-auto", style: "display: none;",
-                            kbd { class: "{kbd_cls}", "⌘" }
-                            kbd { class: "{kbd_cls}", "C" }
+                            Kbd { "⌘" }
+                            Kbd { "C" }
                             span { id: "cmd-copy-label" }
                         }
                     }
                 }
             }
+        }
+    }
+}
+
+#[component]
+fn CommandGroupView(
+    category: CommandCategory,
+    items: &'static [CommandItemData],
+    query: String,
+    on_select: EventHandler<MouseEvent>,
+) -> Element {
+    let category_label = category.as_str();
+    let category_slug = category.slug();
+    let visible_items = items
+        .iter()
+        .filter(|item| query.is_empty() || item.label.to_lowercase().contains(&query))
+        .copied()
+        .collect::<Vec<_>>();
+
+    rsx! {
+        div {
+            "data-name": "CommandGroup",
+            "data-category": "{category_slug}",
+            role: "presentation",
+            class: "p-0",
+            div { aria_hidden: "true", class: "p-3 text-xs font-medium text-muted-foreground", "{category_label}" }
+            for item in visible_items {
+                CommandItemLink { item, on_select }
+            }
+        }
+    }
+}
+
+#[component]
+fn CommandItemLink(item: CommandItemData, on_select: EventHandler<MouseEvent>) -> Element {
+    let add_cmd = item.add_cmd.unwrap_or("");
+    let href = item.href;
+    let label = item.label;
+
+    rsx! {
+        a {
+            "data-name": "CommandItemLink",
+            "data-add-cmd": "{add_cmd}",
+            href: "{href}",
+            aria_selected: "false",
+            class: "flex w-full items-center gap-2 px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground transition-colors cursor-pointer aria-selected:bg-accent aria-selected:text-accent-foreground",
+            onclick: move |event| on_select.call(event),
+            CategoryIcon { category: item.category }
+            span { "{label}" }
+        }
+    }
+}
+
+#[component]
+fn CategoryIcon(category: CommandCategory) -> Element {
+    rsx! {
+        match category {
+            CommandCategory::Pages => rsx! { ArrowRight { class: "size-4 text-muted-foreground shrink-0" } },
+            CommandCategory::Components => rsx! { CircleDashed { class: "size-4 text-muted-foreground shrink-0" } },
+            CommandCategory::Hooks => rsx! { Anchor { class: "size-4 text-muted-foreground shrink-0" } },
         }
     }
 }
