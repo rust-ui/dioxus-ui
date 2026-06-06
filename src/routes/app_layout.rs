@@ -9,10 +9,12 @@ pub fn AppLayout() -> Element {
     use_command_bar_provider();
 
     rsx! {
-        div { class: "min-h-screen bg-background",
+        div { class: "flex flex-col h-full",
             Navbar {}
             CommandBarDialog {}
-            Outlet::<Route> {}
+            main { class: "overflow-y-auto flex-1 overflow-x-clip",
+                Outlet::<Route> {}
+            }
         }
     }
 }

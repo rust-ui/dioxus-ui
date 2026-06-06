@@ -26,6 +26,9 @@ syntect = { version = "5.2", default-features = false, features = ["default-fanc
 html-escape = { version = "0.2", optional = true }
 reqwest = { version = "0.12", features = ["json"], optional = true }
 
+[build-dependencies]
+time = { version = "0.3", features = ["local-offset"] }
+
 [features]
 default = ["web"]
 server = ["dioxus/server", "dep:syntect", "dep:html-escape", "dep:reqwest"]

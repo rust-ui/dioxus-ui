@@ -11,7 +11,7 @@ pub fn DocsLayout() -> Element {
     let toc = use_context_provider(|| Signal::new(Vec::<TocItem>::new()));
 
     rsx! {
-        div { class: "flex flex-col min-h-screen bg-background",
+        div { class: "flex flex-col min-h-full",
             div { class: "flex-1",
                 div { class: "container mx-auto flex items-start",
                     Sidenav {}

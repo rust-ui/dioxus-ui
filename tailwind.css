@@ -159,9 +159,14 @@
   }
   html {
     @apply bg-background;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
   body {
     @apply h-full bg-background text-foreground;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
   }

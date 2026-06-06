@@ -1,7 +1,7 @@
 {
-  "name": "Rust/UI - Leptos Rust UI Components Library",
-  "short_name": "Rust/UI Leptos",
-  "description": "Leptos Rust UI components library. Cross-platform component registry for Rust fullstack applications. Build your UI once and deploy to iOS, Android, Desktop, and Web.",
+  "name": "Rust/UI - Dioxus Rust UI Components Library",
+  "short_name": "Rust/UI Dioxus",
+  "description": "Dioxus Rust UI components library. Cross-platform component registry for Rust fullstack applications. Build your UI once and deploy to iOS, Android, Desktop, and Web.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#000000",

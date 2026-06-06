@@ -3,6 +3,7 @@ pub mod demo_wrapper;
 pub mod doc_header;
 pub mod footer;
 pub mod github_stars;
+pub mod logos;
 pub mod navbar;
 pub mod sidenav;
 pub mod toc;

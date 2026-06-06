@@ -10,6 +10,8 @@ use icons::Download;
 use registry::hooks::use_theme_mode::use_theme_mode;
 use registry::ui::button::{Button, ButtonSize, ButtonVariant};
 
+use crate::components::footer::Footer;
+use crate::components::logos::ferris::Ferris;
 use crate::routes::home_page_sparkles::{
     SparklesColor, SparklesDescription, SparklesEffect, SparklesHeader, SparklesSection,
 };
@@ -79,6 +81,8 @@ pub fn Home() -> Element {
 
             ThemesBlocks {}
         }
+
+        Footer {}
     }
 }
 
@@ -91,6 +95,7 @@ fn SectionHeader() -> Element {
             }
 
             SparklesHeader { class: "-mt-[230px]",
+                Ferris { width: 150, height: 150 }
                 h1 { class: "text-3xl font-bold text-center lg:text-4xl text-pretty",
                     "Build once, run Everywhere."
                 }

@@ -60,6 +60,7 @@ fn App() -> Element {
     });
 
     rsx! {
+        document::Title { "Rust/UI" }
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "icon", r#type: "image/png", sizes: "16x16", href: FAVICON_16 }
         document::Link { rel: "icon", r#type: "image/png", sizes: "32x32", href: FAVICON_32 }
