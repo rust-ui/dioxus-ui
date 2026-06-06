@@ -2,16 +2,13 @@ pub mod use_copy_clipboard;
 pub mod use_lock_body_scroll;
 pub mod use_random;
 
-use crate::registry::types::RegistryEntry;
 use use_copy_clipboard::USE_COPY_CLIPBOARD;
 use use_lock_body_scroll::USE_LOCK_BODY_SCROLL;
 use use_random::USE_RANDOM;
 
-pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[
-    &USE_COPY_CLIPBOARD,
-    &USE_LOCK_BODY_SCROLL,
-    &USE_RANDOM,
-];
+use crate::registry::types::RegistryEntry;
+
+pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[&USE_COPY_CLIPBOARD, &USE_LOCK_BODY_SCROLL, &USE_RANDOM];
 
 pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
     HOOKS_REGISTRY.iter().copied().find(|e| e.slug == slug)

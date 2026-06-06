@@ -27,6 +27,7 @@ pub mod empty;
 pub mod expandable;
 pub mod faq_transition;
 pub mod field;
+pub mod hooks;
 pub mod hover_card;
 pub mod image;
 pub mod input;
@@ -60,7 +61,6 @@ pub mod textarea;
 pub mod theme_toggle;
 pub mod toggle;
 pub mod toggle_group;
-pub mod hooks;
 pub mod tooltip;
 pub mod types;
 

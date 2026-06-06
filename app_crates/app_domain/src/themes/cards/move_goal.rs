@@ -63,67 +63,67 @@ pub fn CardMoveGoal() -> Element {
 #[component]
 pub fn ChartMoveGoal() -> Element {
     rsx! {
-        div { class: "recharts-responsive-container", style: "width: 100%; height: 100%; min-width: 0px;",
-            div {
-                class: "recharts-wrapper",
-                role: "region",
-                style: "position: relative; cursor: default; width: 100%; height: 100%; max-height: 60px; max-width: 372px;",
-                svg {
-                    class: "opacity-50 recharts-surface fill-secondary",
-                    width: "372",
-                    height: "60",
-                    view_box: "0 0 372 60",
-                    style: "width: 100%; height: 100%;",
-                    title {}
-                    desc {}
-g { class: "recharts-layer recharts-bar",
-                        g { class: "recharts-layer recharts-bar-rectangles",
-                            g { class: "recharts-layer",
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "7.7846153846153845", y: "5", width: "22", height: "50", radius: "0", class: "recharts-rectangle", d: "M 7.7846153846153845,5 h 22 v 50 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "35.63076923076923", y: "17.5", width: "22", height: "37.5", radius: "0", class: "recharts-rectangle", d: "M 35.63076923076923,17.5 h 22 v 37.5 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "63.47692307692308", y: "30", width: "22", height: "25", radius: "0", class: "recharts-rectangle", d: "M 63.47692307692308,30 h 22 v 25 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "91.32307692307693", y: "17.5", width: "22", height: "37.5", radius: "0", class: "recharts-rectangle", d: "M 91.32307692307693,17.5 h 22 v 37.5 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "119.16923076923077", y: "30", width: "22", height: "25", radius: "0", class: "recharts-rectangle", d: "M 119.16923076923077,30 h 22 v 25 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "147.01538461538462", y: "20.25", width: "22", height: "34.75", radius: "0", class: "recharts-rectangle", d: "M 147.01538461538462,20.25 h 22 v 34.75 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "174.8615384615385", y: "31.375000000000004", width: "22", height: "23.624999999999996", radius: "0", class: "recharts-rectangle", d: "M 174.8615384615385,31.375000000000004 h 22 v 23.624999999999996 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "202.70769230769233", y: "25.125", width: "22", height: "29.875", radius: "0", class: "recharts-rectangle", d: "M 202.70769230769233,25.125 h 22 v 29.875 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "230.55384615384617", y: "17.5", width: "22", height: "37.5", radius: "0", class: "recharts-rectangle", d: "M 230.55384615384617,17.5 h 22 v 37.5 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "258.4", y: "30", width: "22", height: "25", radius: "0", class: "recharts-rectangle", d: "M 258.4,30 h 22 v 25 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "286.24615384615385", y: "20.25", width: "22", height: "34.75", radius: "0", class: "recharts-rectangle", d: "M 286.24615384615385,20.25 h 22 v 34.75 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "314.0923076923077", y: "31.375000000000004", width: "22", height: "23.624999999999996", radius: "0", class: "recharts-rectangle", d: "M 314.0923076923077,31.375000000000004 h 22 v 23.624999999999996 h -22 Z" }
-                                }
-                                g { class: "recharts-layer recharts-bar-rectangle",
-                                    path { x: "341.9384615384616", y: "11.374999999999998", width: "22", height: "43.625", radius: "0", class: "recharts-rectangle", d: "M 341.9384615384616,11.374999999999998 h 22 v 43.625 h -22 Z" }
+            div { class: "recharts-responsive-container", style: "width: 100%; height: 100%; min-width: 0px;",
+                div {
+                    class: "recharts-wrapper",
+                    role: "region",
+                    style: "position: relative; cursor: default; width: 100%; height: 100%; max-height: 60px; max-width: 372px;",
+                    svg {
+                        class: "opacity-50 recharts-surface fill-secondary",
+                        width: "372",
+                        height: "60",
+                        view_box: "0 0 372 60",
+                        style: "width: 100%; height: 100%;",
+                        title {}
+                        desc {}
+    g { class: "recharts-layer recharts-bar",
+                            g { class: "recharts-layer recharts-bar-rectangles",
+                                g { class: "recharts-layer",
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "7.7846153846153845", y: "5", width: "22", height: "50", radius: "0", class: "recharts-rectangle", d: "M 7.7846153846153845,5 h 22 v 50 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "35.63076923076923", y: "17.5", width: "22", height: "37.5", radius: "0", class: "recharts-rectangle", d: "M 35.63076923076923,17.5 h 22 v 37.5 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "63.47692307692308", y: "30", width: "22", height: "25", radius: "0", class: "recharts-rectangle", d: "M 63.47692307692308,30 h 22 v 25 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "91.32307692307693", y: "17.5", width: "22", height: "37.5", radius: "0", class: "recharts-rectangle", d: "M 91.32307692307693,17.5 h 22 v 37.5 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "119.16923076923077", y: "30", width: "22", height: "25", radius: "0", class: "recharts-rectangle", d: "M 119.16923076923077,30 h 22 v 25 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "147.01538461538462", y: "20.25", width: "22", height: "34.75", radius: "0", class: "recharts-rectangle", d: "M 147.01538461538462,20.25 h 22 v 34.75 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "174.8615384615385", y: "31.375000000000004", width: "22", height: "23.624999999999996", radius: "0", class: "recharts-rectangle", d: "M 174.8615384615385,31.375000000000004 h 22 v 23.624999999999996 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "202.70769230769233", y: "25.125", width: "22", height: "29.875", radius: "0", class: "recharts-rectangle", d: "M 202.70769230769233,25.125 h 22 v 29.875 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "230.55384615384617", y: "17.5", width: "22", height: "37.5", radius: "0", class: "recharts-rectangle", d: "M 230.55384615384617,17.5 h 22 v 37.5 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "258.4", y: "30", width: "22", height: "25", radius: "0", class: "recharts-rectangle", d: "M 258.4,30 h 22 v 25 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "286.24615384615385", y: "20.25", width: "22", height: "34.75", radius: "0", class: "recharts-rectangle", d: "M 286.24615384615385,20.25 h 22 v 34.75 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "314.0923076923077", y: "31.375000000000004", width: "22", height: "23.624999999999996", radius: "0", class: "recharts-rectangle", d: "M 314.0923076923077,31.375000000000004 h 22 v 23.624999999999996 h -22 Z" }
+                                    }
+                                    g { class: "recharts-layer recharts-bar-rectangle",
+                                        path { x: "341.9384615384616", y: "11.374999999999998", width: "22", height: "43.625", radius: "0", class: "recharts-rectangle", d: "M 341.9384615384616,11.374999999999998 h 22 v 43.625 h -22 Z" }
+                                    }
                                 }
                             }
+                            g { class: "recharts-layer" }
                         }
-                        g { class: "recharts-layer" }
                     }
                 }
             }
         }
-    }
 }

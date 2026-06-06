@@ -1,5 +1,5 @@
-use dioxus::prelude::*;
 use ::registry::hooks::use_theme_mode::ThemeMode;
+use dioxus::prelude::*;
 
 pub mod __registry__;
 pub mod components;

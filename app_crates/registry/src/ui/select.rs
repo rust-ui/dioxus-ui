@@ -42,10 +42,7 @@ pub fn Select(
 /* ========================================================== */
 
 #[component]
-pub fn SelectTrigger(
-    children: Element,
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn SelectTrigger(children: Element, #[props(into, optional)] class: Option<String>) -> Element {
     let ctx = use_context::<SelectContext>();
     let merged = tw_merge!(
         "w-full px-3 h-9 inline-flex items-center justify-between text-sm font-medium whitespace-nowrap rounded-md transition-colors focus:outline-none focus:ring-1 focus:ring-ring [&_svg:not([class*='size-'])]:size-4 border bg-background border-input hover:bg-accent hover:text-accent-foreground",
@@ -69,10 +66,7 @@ pub fn SelectTrigger(
 /* ========================================================== */
 
 #[component]
-pub fn SelectContent(
-    children: Element,
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn SelectContent(children: Element, #[props(into, optional)] class: Option<String>) -> Element {
     let ctx = use_context::<SelectContext>();
     let (on_scroll, can_scroll_up, can_scroll_down) = use_can_scroll_vertical();
 

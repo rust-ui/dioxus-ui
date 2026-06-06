@@ -1,7 +1,5 @@
 use ::dioxus::prelude::*;
-use icons::dioxus::*;
-use icons::dioxus::Link as LucideLink;
-use icons::dioxus::Router as LucideRouter;
+use icons::dioxus::{Link as LucideLink, Router as LucideRouter, *};
 
 type IconRenderFn = fn(&str) -> Element;
 type IconEntry = (IconRenderFn, &'static str);

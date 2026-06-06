@@ -3,9 +3,8 @@ use registry::blocks::footer_logos::{BrandFooter, LogoDiscord, LogoLinkedIn, Log
 use registry::ui::button::Button;
 use registry::ui::card::{Card, CardContent, CardDescription, CardTitle};
 use registry::ui::footer::{
-    Footer, FooterBrand, FooterBrandLink, FooterContainer, FooterCopyright, FooterDescription,
-    FooterExternalLink, FooterGrid, FooterLink, FooterLinks, FooterLinksSection, FooterSection,
-    FooterSectionsGrid, FooterTitle,
+    Footer, FooterBrand, FooterBrandLink, FooterContainer, FooterCopyright, FooterDescription, FooterExternalLink,
+    FooterGrid, FooterLink, FooterLinks, FooterLinksSection, FooterSection, FooterSectionsGrid, FooterTitle,
 };
 
 const ROUTE_ACCORDION: &str = "/components/accordion";
@@ -20,8 +19,7 @@ const ROUTE_USE_HORIZONTAL_SCROLL: &str = "/hooks/use-horizontal-scroll";
 const ROUTE_HOME: &str = "/";
 const URL_RUSTIFY: &str = "https://rustify.rs/";
 const URL_YOUTUBE: &str = "https://www.youtube.com/@rustify-rs";
-const URL_LINKEDIN_SHARE: &str =
-    "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdioxus-ui.com";
+const URL_LINKEDIN_SHARE: &str = "https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fdioxus-ui.com";
 
 #[component]
 pub fn AppFooter() -> Element {

@@ -30,11 +30,8 @@ pub fn Home() -> Element {
         let ct = color_theme();
         let is_dark = theme_mode.is_dark();
 
-        let vars: Vec<(&'static str, &'static str)> = if is_dark {
-            ct.dark_vars().to_vec()
-        } else {
-            ct.light_vars().to_vec()
-        };
+        let vars: Vec<(&'static str, &'static str)> =
+            if is_dark { ct.dark_vars().to_vec() } else { ct.light_vars().to_vec() };
         let label = ct.label();
 
         spawn(async move {
@@ -49,10 +46,7 @@ pub fn Home() -> Element {
             for (key, val) in &vars {
                 set_js.push_str(&format!("el.style.setProperty('{}', '{}');", key, val));
             }
-            set_js.push_str(&format!(
-                "el.setAttribute('data-color-theme', '{}');",
-                label
-            ));
+            set_js.push_str(&format!("el.setAttribute('data-color-theme', '{}');", label));
             set_js.push_str("})();");
             dioxus::document::eval(&set_js).await.ok();
         });
