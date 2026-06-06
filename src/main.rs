@@ -21,6 +21,7 @@ const APPLE_TOUCH_ICON: Asset = asset!("/public/icons/apple-touch-icon.png");
 const MANIFEST: Asset = asset!("/public/manifest.json");
 const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
 const LOCK_SCROLL_JS: Asset = asset!("/public/hooks/lock_scroll.js");
+const CHART_INIT_JS: Asset = asset!("/public/app_components/chart_init.js");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -68,6 +69,7 @@ fn App() -> Element {
         document::Link { rel: "manifest", href: MANIFEST }
         document::Link { rel: "stylesheet", href: TAILWIND_CSS }
         document::Script { src: LOCK_SCROLL_JS }
+        document::Script { src: CHART_INIT_JS }
         Router::<Route> {}
     }
 }

@@ -13,6 +13,7 @@ pub mod button_group;
 pub mod callout;
 pub mod card;
 pub mod card_carousel;
+pub mod charts;
 pub mod carousel;
 pub mod chat;
 pub mod checkbox;
