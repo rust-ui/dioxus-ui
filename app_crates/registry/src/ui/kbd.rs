@@ -4,7 +4,7 @@ use tw_merge::tw_merge;
 #[component]
 pub fn Kbd(#[props(into, default)] class: Option<String>, children: Element) -> Element {
     let class = tw_merge!(
-        "inline-flex items-center gap-1 rounded border border-border bg-muted px-1.5 py-0.5 font-mono text-xs text-muted-foreground",
+        "bg-muted text-muted-foreground pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm px-1 font-sans text-xs font-medium select-none [&_svg:not([class*='size-'])]:size-3",
         class.as_deref().unwrap_or("")
     );
     rsx! {

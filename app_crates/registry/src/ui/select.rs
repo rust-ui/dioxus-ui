@@ -48,7 +48,7 @@ pub fn SelectTrigger(
 ) -> Element {
     let ctx = use_context::<SelectContext>();
     let merged = tw_merge!(
-        "w-full px-3 h-9 inline-flex items-center justify-between text-sm font-medium whitespace-nowrap rounded-md transition-colors focus:outline-none focus:ring-1 focus:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground",
+        "w-full px-3 h-9 inline-flex items-center justify-between text-sm font-medium whitespace-nowrap rounded-md transition-colors focus:outline-none focus:ring-1 focus:ring-ring [&_svg:not([class*='size-'])]:size-4 border bg-background border-input hover:bg-accent hover:text-accent-foreground",
         class.as_deref().unwrap_or("")
     );
     rsx! {
