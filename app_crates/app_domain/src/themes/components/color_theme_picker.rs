@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use registry::ui::select_native::SelectNative;
+use registry::ui::select::{Select, SelectContent, SelectGroup, SelectOption, SelectTrigger};
 
 #[derive(Clone, Copy, PartialEq, Default)]
 pub enum ColorTheme {
@@ -164,29 +164,38 @@ impl ColorTheme {
 #[component]
 pub fn ColorThemePicker(mut color_theme: Signal<ColorTheme>) -> Element {
     rsx! {
-        div { class: "flex items-center gap-2 w-full",
-            span {
-                class: "flex-shrink-0 rounded-full border size-4 border-border/50",
-                style: "background-color:{color_theme().swatch()}"
+        Select {
+            class: "w-full",
+            default_value: color_theme().label().to_string(),
+            on_change: move |val: Option<String>| {
+                if let Some(ct) = val.as_deref().and_then(ColorTheme::from_label) {
+                    color_theme.set(ct);
+                }
+            },
+            SelectTrigger {
+                span { class: "text-sm text-muted-foreground", "Theme" }
+                span { class: "mr-auto ml-2 text-sm font-medium", "{color_theme().label()}" }
+                span {
+                    class: "flex-shrink-0 mr-1 rounded-full border size-4 border-border/50",
+                    style: "background-color:{color_theme().swatch()}"
+                }
             }
-            SelectNative {
-                class: "w-full",
-                onchange: move |e: FormEvent| {
-                    if let Some(ct) = ColorTheme::from_label(&e.value()) {
-                        color_theme.set(ct);
-                    }
-                },
-                {ColorTheme::ALL.iter().map(|ct| {
-                    let label = ct.label();
-                    rsx! {
-                        option {
-                            key: "{label}",
-                            value: "{label}",
-                            selected: *ct == color_theme(),
-                            "{label}"
+            SelectContent { class: "w-full",
+                SelectGroup {
+                    {ColorTheme::ALL.iter().map(|ct| {
+                        let label = ct.label();
+                        let swatch = ct.swatch();
+                        rsx! {
+                            SelectOption { key: "{label}", value: label,
+                                span {
+                                    class: "flex-shrink-0 rounded-full border size-3.5 border-border/50",
+                                    style: "background-color:{swatch}"
+                                }
+                                "{label}"
+                            }
                         }
-                    }
-                })}
+                    })}
+                }
             }
         }
     }

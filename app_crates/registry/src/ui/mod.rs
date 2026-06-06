@@ -46,6 +46,7 @@ pub mod radio_button;
 pub mod radio_button_group;
 pub mod radio_group;
 pub mod scroll_area;
+pub mod select;
 pub mod select_native;
 pub mod separator;
 pub mod sheet;

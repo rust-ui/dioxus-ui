@@ -10,7 +10,7 @@ use icons::Download;
 use registry::hooks::use_theme_mode::use_theme_mode;
 use registry::ui::button::{Button, ButtonSize, ButtonVariant};
 
-use crate::components::footer::Footer;
+use crate::components::app_footer::AppFooter;
 use crate::components::logos::ferris::Ferris;
 use crate::routes::home_page_sparkles::{
     SparklesColor, SparklesDescription, SparklesEffect, SparklesHeader, SparklesSection,
@@ -82,7 +82,7 @@ pub fn Home() -> Element {
             ThemesBlocks {}
         }
 
-        Footer {}
+        AppFooter {}
     }
 }
 

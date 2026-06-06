@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @source "./src/**/*.rs";
+@source "./app_crates/**/*.rs";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -163,8 +164,12 @@
     height: 100dvh;
     overflow: hidden;
   }
+  body,
+  #main {
+    @apply h-full;
+  }
   body {
-    @apply h-full bg-background text-foreground;
+    @apply bg-background text-foreground;
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
     font-synthesis-weight: none;
