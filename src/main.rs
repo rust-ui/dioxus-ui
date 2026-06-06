@@ -62,6 +62,13 @@ fn App() -> Element {
 
     rsx! {
         document::Title { "Rust/UI" }
+        // TODO: Dioxus injects a <div id="main"> between <body> and the App component.
+        // Leptos doesn't have this wrapper, so the h-full chain works natively:
+        //   html(100dvh) → body(h-full) → AppWrapper div(h-full) → main(flex-1 overflow-y-auto)
+        // In Dioxus the chain is broken because #main has no height, so flex-1 on <main> collapses.
+        // Ideal fix: find a way to pass h-full to the Dioxus mount div without a style tag.
+        // For now we inject it inline so it wins over any stylesheet ordering issues.
+        document::Style { "#main {{ height: 100%; }}" }
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "icon", r#type: "image/png", sizes: "16x16", href: FAVICON_16 }
         document::Link { rel: "icon", r#type: "image/png", sizes: "32x32", href: FAVICON_32 }
