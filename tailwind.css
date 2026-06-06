@@ -186,4 +186,7 @@
   dialog {
     margin: auto;
   }
+  svg[data-name]:not([class*='size-']) {
+    @apply size-4;
+  }
 }
