@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use ::registry::hooks::use_theme_mode::ThemeMode;
 
 pub mod __registry__;
 pub mod components;
@@ -43,6 +44,21 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+    let theme_mode = ThemeMode::init();
+
+    // TODO: replace with <Html class=...> once Dioxus supports reactive html-element attributes (like leptos_meta `<Html {..} class=...>`)
+    use_effect(move || {
+        let is_dark = theme_mode.is_dark();
+        spawn(async move {
+            let js = if is_dark {
+                "document.documentElement.classList.add('dark');"
+            } else {
+                "document.documentElement.classList.remove('dark');"
+            };
+            dioxus::document::eval(js).await.ok();
+        });
+    });
+
     rsx! {
         document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "icon", r#type: "image/png", sizes: "16x16", href: FAVICON_16 }
