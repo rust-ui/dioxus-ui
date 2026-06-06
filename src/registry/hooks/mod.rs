@@ -1,0 +1,29 @@
+pub mod use_copy_clipboard;
+pub mod use_lock_body_scroll;
+pub mod use_random;
+
+use crate::registry::types::RegistryEntry;
+use use_copy_clipboard::USE_COPY_CLIPBOARD;
+use use_lock_body_scroll::USE_LOCK_BODY_SCROLL;
+use use_random::USE_RANDOM;
+
+pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[
+    &USE_COPY_CLIPBOARD,
+    &USE_LOCK_BODY_SCROLL,
+    &USE_RANDOM,
+];
+
+pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
+    HOOKS_REGISTRY.iter().copied().find(|e| e.slug == slug)
+}
+
+pub fn prev_next(slug: &str) -> (Option<&'static str>, Option<&'static str>) {
+    let pos = HOOKS_REGISTRY.iter().position(|e| e.slug == slug);
+    match pos {
+        None => (None, None),
+        Some(i) => (
+            if i > 0 { Some(HOOKS_REGISTRY[i - 1].slug) } else { None },
+            if i + 1 < HOOKS_REGISTRY.len() { Some(HOOKS_REGISTRY[i + 1].slug) } else { None },
+        ),
+    }
+}

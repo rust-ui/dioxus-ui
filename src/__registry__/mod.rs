@@ -3,4 +3,5 @@
 
 pub mod command_bar;
 pub mod sidenav;
+pub mod sidenav_hooks;
 pub mod source_map;
