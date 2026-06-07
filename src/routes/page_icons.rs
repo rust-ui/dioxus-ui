@@ -16,11 +16,11 @@ type IconFn = fn(&str) -> Element;
 pub fn PageIcons() -> Element {
     const SIZE_ID: &str = "icon-size-select";
 
-    let mut search_text = use_signal(|| String::new());
+    let mut search_text = use_signal(String::new);
     let mut display_size = use_signal(|| "size-6".to_string());
-    let mut class_color = use_signal(|| String::new());
+    let mut class_color = use_signal(String::new);
 
-    let mut selected_icon_name = use_signal(|| String::new());
+    let mut selected_icon_name = use_signal(String::new);
     let mut selected_icon_fn: Signal<Option<IconFn>> = use_signal(|| None);
 
     let filtered_icons = use_memo(move || {

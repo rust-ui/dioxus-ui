@@ -80,10 +80,10 @@ impl std::fmt::Display for BlockIdKebab {
     }
 }
 
-// ─── from_str ────────────────────────────────────────────────────────────────
+// ─── from_kebab ──────────────────────────────────────────────────────────────
 
 impl BlockIdKebab {
-    pub fn from_str(s: &str) -> Option<Self> {
+    pub fn from_kebab(s: &str) -> Option<Self> {
         match s {
             "faq-01" => Some(Self::Faq01),
             "faq-02" => Some(Self::Faq02),

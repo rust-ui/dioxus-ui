@@ -21,7 +21,7 @@ pub fn Home() -> Element {
     let title = "Dioxus Components · Rust UI Component Library | Rust/UI".to_string();
     let description = "Beautiful Rust UI components for Dioxus applications. Cross-platform component library for modern fullstack web apps - build once, deploy everywhere.".to_string();
 
-    let color_theme = use_signal(|| ColorTheme::default());
+    let color_theme = use_signal(ColorTheme::default);
     let theme_mode = use_theme_mode();
 
     let css_signal = use_memo(move || ThemeName::default().css_string(0.5, color_theme(), Default::default()));
