@@ -172,7 +172,8 @@ pub fn CopyCodeDialog(
                             }
                             Button {
                                 variant: ButtonVariant::Outline,
-                                class: "absolute top-4 right-4",
+                                // TODO. Normally, no need to add [&_svg:not([class*='size-'])]:size-4 but it does not work without...
+                                class: "absolute top-4 right-4 [&_svg:not([class*='size-'])]:size-4 ",
                                 onclick: handle_copy,
                                 if copied() {
                                     Check {}

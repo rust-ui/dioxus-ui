@@ -6,5 +6,6 @@ pub mod footer;
 pub mod github_stars;
 pub mod logos;
 pub mod navbar;
+pub mod navigation;
 pub mod sidenav;
 pub mod toc;

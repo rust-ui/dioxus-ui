@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use registry::demos::demo_date_picker::DemoDatePicker;
 
 use super::cards::chat::CardChat;
 use super::cards::cookie_settings::CardCookieSettings;
@@ -69,7 +70,8 @@ fn LeftSide() -> Element {
 fn RightSide() -> Element {
     rsx! {
         div { class: "space-y-4 lg:col-span-6 xl:col-span-5 xl:space-y-4",
-            div { class: "hidden gap-1 md:grid",
+            div { class: "hidden gap-1 md:grid sm:grid-cols-[280px_1fr]",
+                DemoDatePicker {}
                 CardMoveGoal {}
                 CardExerciseMinutes {}
             }

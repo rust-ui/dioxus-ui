@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::Route;
 use crate::components::command_bar::{CommandBarDialog, use_command_bar_provider};
-use crate::components::navbar::Navbar;
+use crate::components::navigation::header_home::HeaderHome;
 
 #[component]
 pub fn AppLayout() -> Element {
@@ -10,7 +10,7 @@ pub fn AppLayout() -> Element {
 
     rsx! {
         div { class: "flex flex-col h-full",
-            Navbar {}
+            HeaderHome {}
             CommandBarDialog {}
             main { class: "overflow-y-auto flex-1 overflow-x-clip",
                 Outlet::<Route> {}
