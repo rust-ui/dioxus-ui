@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 use registry::ui::badge::{Badge, BadgeVariant};
 use registry::ui::button::{Button, ButtonVariant};
 
+use crate::registry::types::RegistryEntry;
 use crate::Route;
 
 #[component]
@@ -9,8 +10,8 @@ pub fn DocHeader(
     title: String,
     description: String,
     tags: Vec<&'static str>,
-    prev: Option<&'static str>,
-    next: Option<&'static str>,
+    prev: Option<&'static RegistryEntry>,
+    next: Option<&'static RegistryEntry>,
 ) -> Element {
     rsx! {
         div { class: "mb-2",
@@ -28,13 +29,13 @@ pub fn DocHeader(
                 h1 { class: "text-4xl font-bold tracking-tight", "{title}" }
                 div { class: "flex gap-2 shrink-0 pt-1",
                     if let Some(p) = prev {
-                        Link { to: Route::ComponentPage { name: p.to_string() },
-                            Button { variant: ButtonVariant::Ghost, "← {p}" }
+                        Link { to: Route::ComponentPage { name: p.slug.to_string() },
+                            Button { variant: ButtonVariant::Ghost, "← {p.title()}" }
                         }
                     }
                     if let Some(n) = next {
-                        Link { to: Route::ComponentPage { name: n.to_string() },
-                            Button { variant: ButtonVariant::Ghost, "{n} →" }
+                        Link { to: Route::ComponentPage { name: n.slug.to_string() },
+                            Button { variant: ButtonVariant::Ghost, "{n.title()} →" }
                         }
                     }
                 }

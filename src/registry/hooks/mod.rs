@@ -14,13 +14,13 @@ pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
     HOOKS_REGISTRY.iter().copied().find(|e| e.slug == slug)
 }
 
-pub fn prev_next(slug: &str) -> (Option<&'static str>, Option<&'static str>) {
+pub fn prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'static RegistryEntry>) {
     let pos = HOOKS_REGISTRY.iter().position(|e| e.slug == slug);
     match pos {
         None => (None, None),
         Some(i) => (
-            if i > 0 { Some(HOOKS_REGISTRY[i - 1].slug) } else { None },
-            if i + 1 < HOOKS_REGISTRY.len() { Some(HOOKS_REGISTRY[i + 1].slug) } else { None },
+            if i > 0 { Some(HOOKS_REGISTRY[i - 1]) } else { None },
+            if i + 1 < HOOKS_REGISTRY.len() { Some(HOOKS_REGISTRY[i + 1]) } else { None },
         ),
     }
 }

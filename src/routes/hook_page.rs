@@ -8,6 +8,7 @@ use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
 use crate::markdown::converter::{convert_md, extract_toc};
 use crate::registry::hooks::{self, prev_next};
+use crate::registry::types::RegistryEntry;
 
 #[component]
 pub fn HookPage(name: String) -> Element {
@@ -51,24 +52,27 @@ pub fn HookPage(name: String) -> Element {
 }
 
 #[component]
-fn HookBottomNav(prev: Option<&'static str>, next: Option<&'static str>) -> Element {
+fn HookBottomNav(
+    prev: Option<&'static RegistryEntry>,
+    next: Option<&'static RegistryEntry>,
+) -> Element {
     rsx! {
         div { class: "flex justify-between items-center mt-8",
             if let Some(p) = prev {
                 a {
-                    href: "/hooks/{p}",
+                    href: "/hooks/{p.slug}",
                     class: "py-0 px-2 h-8 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground z-50",
                     ChevronLeft {}
-                    span { "{p}" }
+                    span { "{p.title()}" }
                 }
             } else {
                 div {}
             }
             if let Some(n) = next {
                 a {
-                    href: "/hooks/{n}",
+                    href: "/hooks/{n.slug}",
                     class: "py-0 px-2 h-8 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground z-50",
-                    span { "{n}" }
+                    span { "{n.title()}" }
                     ChevronRight {}
                 }
             } else {

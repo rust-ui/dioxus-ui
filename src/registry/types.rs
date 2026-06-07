@@ -1,6 +1,7 @@
 use crate::markdown::converter::MdComponents;
 use crate::markdown::parse_md;
 
+#[derive(PartialEq)]
 pub struct RegistryEntry {
     pub slug: &'static str,
     pub raw: &'static str,
