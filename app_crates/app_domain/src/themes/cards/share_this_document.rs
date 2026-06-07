@@ -4,7 +4,7 @@ use registry::ui::button::{Button, ButtonVariant};
 use registry::ui::card::{Card, CardContent, CardDescription, CardHeader, CardTitle};
 use registry::ui::input::Input;
 use registry::ui::label::Label;
-use registry::ui::select_native::SelectNative;
+use registry::ui::select::{Select, SelectContent, SelectGroup, SelectOption, SelectTrigger, SelectValue};
 
 const PERMISSIONS: [&str; 2] = ["Can Edit", "Can View"];
 
@@ -40,10 +40,17 @@ pub fn CardShareThisDocument() -> Element {
                                     p { class: "text-sm text-muted-foreground", "m@example.com" }
                                 }
                             }
-                            SelectNative { class: "ml-auto w-[110px]",
-                                {PERMISSIONS.iter().map(|p| rsx! {
-                                    option { key: "{p}", value: "{p}", selected: *p == PERMISSIONS[0], "{p}" }
-                                })}
+                            Select { default_value: PERMISSIONS[0],
+                                SelectTrigger { class: "ml-auto w-[110px]",
+                                    SelectValue { placeholder: PERMISSIONS[0] }
+                                }
+                                SelectContent {
+                                    SelectGroup {
+                                        {PERMISSIONS.iter().map(|p| rsx! {
+                                            SelectOption { key: "{p}", value: *p, "{p}" }
+                                        })}
+                                    }
+                                }
                             }
                         }
                         div { class: "flex justify-between items-center space-x-4",
@@ -56,10 +63,17 @@ pub fn CardShareThisDocument() -> Element {
                                     p { class: "text-sm text-muted-foreground", "b@example.com" }
                                 }
                             }
-                            SelectNative { class: "ml-auto w-[110px]",
-                                {PERMISSIONS.iter().map(|p| rsx! {
-                                    option { key: "{p}", value: "{p}", selected: *p == PERMISSIONS[0], "{p}" }
-                                })}
+                            Select { default_value: PERMISSIONS[0],
+                                SelectTrigger { class: "ml-auto w-[110px]",
+                                    SelectValue { placeholder: PERMISSIONS[0] }
+                                }
+                                SelectContent {
+                                    SelectGroup {
+                                        {PERMISSIONS.iter().map(|p| rsx! {
+                                            SelectOption { key: "{p}", value: *p, "{p}" }
+                                        })}
+                                    }
+                                }
                             }
                         }
                         div { class: "flex justify-between items-center space-x-4",
@@ -72,10 +86,17 @@ pub fn CardShareThisDocument() -> Element {
                                     p { class: "text-sm text-muted-foreground", "p@example.com" }
                                 }
                             }
-                            SelectNative { class: "ml-auto w-[110px]",
-                                {PERMISSIONS.iter().map(|p| rsx! {
-                                    option { key: "{p}", value: "{p}", selected: *p == PERMISSIONS[1], "{p}" }
-                                })}
+                            Select { default_value: PERMISSIONS[1],
+                                SelectTrigger { class: "ml-auto w-[110px]",
+                                    SelectValue { placeholder: PERMISSIONS[1] }
+                                }
+                                SelectContent {
+                                    SelectGroup {
+                                        {PERMISSIONS.iter().map(|p| rsx! {
+                                            SelectOption { key: "{p}", value: *p, "{p}" }
+                                        })}
+                                    }
+                                }
                             }
                         }
                     }

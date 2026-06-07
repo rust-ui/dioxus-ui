@@ -3,7 +3,7 @@ use registry::ui::button::{Button, ButtonVariant};
 use registry::ui::card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
 use registry::ui::input::Input;
 use registry::ui::label::Label;
-use registry::ui::select_native::SelectNative;
+use registry::ui::select::{Select, SelectContent, SelectGroup, SelectOption, SelectTrigger, SelectValue};
 use registry::ui::textarea::Textarea;
 
 const AREAS: [&str; 4] = ["Billing", "Team", "Account", "Support"];
@@ -21,20 +21,32 @@ pub fn CardReportIssue() -> Element {
                 div { class: "grid gap-4 sm:grid-cols-2",
                     div { class: "grid gap-2",
                         Label { "Area" }
-                        SelectNative {
-                            option { value: "", disabled: true, selected: true, "Select area" }
-                            {AREAS.iter().map(|area| rsx! {
-                                option { key: "{area}", value: "{area}", "{area}" }
-                            })}
+                        Select {
+                            SelectTrigger {
+                                SelectValue { placeholder: "Select area" }
+                            }
+                            SelectContent {
+                                SelectGroup {
+                                    {AREAS.iter().map(|area| rsx! {
+                                        SelectOption { key: "{area}", value: *area, "{area}" }
+                                    })}
+                                }
+                            }
                         }
                     }
                     div { class: "grid gap-2",
                         Label { "Security Level" }
-                        SelectNative {
-                            option { value: "", disabled: true, selected: true, "Select level" }
-                            {SECURITY_LEVELS.iter().map(|level| rsx! {
-                                option { key: "{level}", value: "{level}", "{level}" }
-                            })}
+                        Select {
+                            SelectTrigger {
+                                SelectValue { placeholder: "Select level" }
+                            }
+                            SelectContent {
+                                SelectGroup {
+                                    {SECURITY_LEVELS.iter().map(|level| rsx! {
+                                        SelectOption { key: "{level}", value: *level, "{level}" }
+                                    })}
+                                }
+                            }
                         }
                     }
                 }

@@ -4,7 +4,7 @@ use registry::ui::button::Button;
 use registry::ui::card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
 use registry::ui::input::Input;
 use registry::ui::label::Label;
-use registry::ui::select_native::SelectNative;
+use registry::ui::select::{Select, SelectContent, SelectGroup, SelectOption, SelectTrigger, SelectValue};
 
 #[derive(Clone, Copy, PartialEq)]
 enum PaymentMethod {
@@ -20,18 +20,8 @@ pub fn CardPaymentMethod() -> Element {
     let mut payment_method = use_signal(|| PaymentMethod::Card);
 
     let months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
+        "January", "February", "March", "April", "May", "June",
+        "July", "August", "September", "October", "November", "December",
     ];
     let years: Vec<String> = (2024..=2034).map(|y| y.to_string()).collect();
 
@@ -85,20 +75,32 @@ pub fn CardPaymentMethod() -> Element {
                 div { class: "grid grid-cols-3 gap-2",
                     div { class: "grid gap-2",
                         Label { html_for: "month", "Expires" }
-                        SelectNative { id: "month",
-                            option { value: "", disabled: true, selected: true, "Month" }
-                            {months.iter().map(|m| rsx! {
-                                option { key: "{m}", value: "{m}", "{m}" }
-                            })}
+                        Select {
+                            SelectTrigger { class: "w-[85px]",
+                                SelectValue { placeholder: "Month" }
+                            }
+                            SelectContent {
+                                SelectGroup {
+                                    {months.iter().map(|m| rsx! {
+                                        SelectOption { key: "{m}", value: *m, "{m}" }
+                                    })}
+                                }
+                            }
                         }
                     }
                     div { class: "grid gap-2",
                         Label { html_for: "year", "Year" }
-                        SelectNative { id: "year",
-                            option { value: "", disabled: true, selected: true, "Year" }
-                            {years.iter().map(|y| rsx! {
-                                option { key: "{y}", value: "{y}", "{y}" }
-                            })}
+                        Select {
+                            SelectTrigger {
+                                SelectValue { placeholder: "Year" }
+                            }
+                            SelectContent { class: "w-[100px]",
+                                SelectGroup {
+                                    {years.iter().map(|y| rsx! {
+                                        SelectOption { key: "{y}", value: y.as_str(), "{y}" }
+                                    })}
+                                }
+                            }
                         }
                     }
                     div { class: "grid gap-2",

@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use registry::ui::avatar::{Avatar, AvatarFallback};
 use registry::ui::card::{Card, CardContent, CardDescription, CardHeader, CardTitle};
-use registry::ui::select_native::SelectNative;
+use registry::ui::select::{Select, SelectContent, SelectGroup, SelectOption, SelectTrigger, SelectValue};
 
 const ROLES: [&str; 2] = ["Owner", "Member"];
 
@@ -24,10 +24,17 @@ pub fn CardTeamMembers() -> Element {
                             p { class: "text-sm text-muted-foreground", "m@example.com" }
                         }
                     }
-                    SelectNative { class: "ml-auto w-[100px]",
-                        {ROLES.iter().map(|role| rsx! {
-                            option { key: "{role}", value: "{role}", selected: *role == ROLES[0], "{role}" }
-                        })}
+                    Select { default_value: ROLES[0],
+                        SelectTrigger { class: "ml-auto w-[100px]",
+                            SelectValue { placeholder: ROLES[0] }
+                        }
+                        SelectContent {
+                            SelectGroup {
+                                {ROLES.iter().map(|role| rsx! {
+                                    SelectOption { key: "{role}", value: *role, "{role}" }
+                                })}
+                            }
+                        }
                     }
                 }
                 div { class: "flex justify-between items-center space-x-4",
@@ -40,10 +47,17 @@ pub fn CardTeamMembers() -> Element {
                             p { class: "text-sm text-muted-foreground", "p@example.com" }
                         }
                     }
-                    SelectNative { class: "ml-auto w-[100px]",
-                        {ROLES.iter().map(|role| rsx! {
-                            option { key: "{role}", value: "{role}", selected: *role == ROLES[1], "{role}" }
-                        })}
+                    Select { default_value: ROLES[1],
+                        SelectTrigger { class: "ml-auto w-[100px]",
+                            SelectValue { placeholder: ROLES[1] }
+                        }
+                        SelectContent {
+                            SelectGroup {
+                                {ROLES.iter().map(|role| rsx! {
+                                    SelectOption { key: "{role}", value: *role, "{role}" }
+                                })}
+                            }
+                        }
                     }
                 }
                 div { class: "flex justify-between items-center space-x-4",
@@ -56,10 +70,17 @@ pub fn CardTeamMembers() -> Element {
                             p { class: "text-sm text-muted-foreground", "i@example.com" }
                         }
                     }
-                    SelectNative { class: "ml-auto w-[100px]",
-                        {ROLES.iter().map(|role| rsx! {
-                            option { key: "{role}", value: "{role}", selected: *role == ROLES[1], "{role}" }
-                        })}
+                    Select { default_value: ROLES[1],
+                        SelectTrigger { class: "ml-auto w-[100px]",
+                            SelectValue { placeholder: ROLES[1] }
+                        }
+                        SelectContent {
+                            SelectGroup {
+                                {ROLES.iter().map(|role| rsx! {
+                                    SelectOption { key: "{role}", value: *role, "{role}" }
+                                })}
+                            }
+                        }
                     }
                 }
             }
