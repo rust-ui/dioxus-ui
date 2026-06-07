@@ -25,11 +25,14 @@ serde = { version = "1", features = ["derive"] }
 syntect = { version = "5.2", default-features = false, features = ["default-fancy", "regex-fancy"], optional = true }
 html-escape = { version = "0.2", optional = true }
 reqwest = { version = "0.12", features = ["json"], optional = true }
+resend-rs = { version = "0.19", default-features = false, features = ["rustls-tls"], optional = true }
+validator = { version = "0.20", features = ["derive"], optional = true }
+tracing = { version = "0.1", optional = true }
 
 [build-dependencies]
 time = { version = "0.3", features = ["local-offset"] }
 
 [features]
 default = ["web"]
-server = ["dioxus/server", "dep:syntect", "dep:html-escape", "dep:reqwest"]
+server = ["dioxus/server", "dep:syntect", "dep:html-escape", "dep:reqwest", "dep:resend-rs", "dep:validator", "dep:tracing"]
 web = ["dioxus/web"]

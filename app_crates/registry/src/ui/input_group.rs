@@ -142,9 +142,12 @@ pub fn InputGroupInput(
     #[props(into, optional)] placeholder: Option<String>,
     #[props(into, optional)] name: Option<String>,
     #[props(into, optional)] id: Option<String>,
+    #[props(into, optional)] value: Option<String>,
+    #[props(into, optional)] autocomplete: Option<String>,
     #[props(optional)] disabled: bool,
     #[props(optional)] readonly: bool,
     #[props(optional)] required: bool,
+    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
 ) -> Element {
     let merged = tw_merge!(
         "flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent",
@@ -160,9 +163,16 @@ pub fn InputGroupInput(
             placeholder: placeholder,
             name: name,
             id: id,
+            value: value,
+            autocomplete: autocomplete,
             disabled: disabled,
             readonly: readonly,
             required: required,
+            oninput: move |e| {
+                if let Some(handler) = &oninput {
+                    handler.call(e);
+                }
+            },
         }
     }
 }

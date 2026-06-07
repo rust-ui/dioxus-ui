@@ -24,7 +24,7 @@ struct SelectContext {
 pub fn Select(
     children: Element,
     #[props(into, optional)] class: Option<String>,
-    #[props(optional)] default_value: Option<String>,
+    #[props(into, optional)] default_value: Option<String>,
     #[props(optional)] on_change: EventHandler<Option<String>>,
 ) -> Element {
     let target_id = use_random_id_for("select");
@@ -57,6 +57,23 @@ pub fn SelectTrigger(children: Element, #[props(into, optional)] class: Option<S
             tabindex: "0",
             {children}
             ChevronDown { class: "text-muted-foreground shrink-0 ml-2" }
+        }
+    }
+}
+
+/* ========================================================== */
+/*                   ✨ SELECT VALUE ✨                       */
+/* ========================================================== */
+
+#[component]
+pub fn SelectValue(#[props(into, optional)] placeholder: Option<String>) -> Element {
+    let ctx = use_context::<SelectContext>();
+    let text = use_memo(move || {
+        ctx.value.read().clone().unwrap_or_else(|| placeholder.clone().unwrap_or_default())
+    });
+    rsx! {
+        span { "data-name": "SelectValue", class: "text-sm text-muted-foreground truncate",
+            {text}
         }
     }
 }

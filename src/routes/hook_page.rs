@@ -1,7 +1,9 @@
 use app_config::SeoMeta;
 use dioxus::prelude::*;
+use icons::{ChevronLeft, ChevronRight};
 
 use crate::components::doc_header::DocHeader;
+use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
 use crate::markdown::converter::{convert_md, extract_toc};
 use crate::registry::hooks::{self, prev_next};
@@ -36,7 +38,39 @@ pub fn HookPage(name: String) -> Element {
                         next,
                     }
                     {convert_md(e.body_md(), &(e.components)())}
+                    div { class: "mt-14 mb-6",
+                        NewsletterSignup {}
+                    }
+                    HookBottomNav { prev, next }
                 },
+            }
+        }
+    }
+}
+
+#[component]
+fn HookBottomNav(prev: Option<&'static str>, next: Option<&'static str>) -> Element {
+    rsx! {
+        div { class: "flex justify-between items-center mt-8",
+            if let Some(p) = prev {
+                a {
+                    href: "/hooks/{p}",
+                    class: "py-0 px-2 h-8 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground z-50",
+                    ChevronLeft {}
+                    span { "{p}" }
+                }
+            } else {
+                div {}
+            }
+            if let Some(n) = next {
+                a {
+                    href: "/hooks/{n}",
+                    class: "py-0 px-2 h-8 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground z-50",
+                    span { "{n}" }
+                    ChevronRight {}
+                }
+            } else {
+                div {}
             }
         }
     }
