@@ -106,6 +106,53 @@ impl ColorTheme {
         }
     }
 
+    pub fn to_index(self) -> usize {
+        match self {
+            ColorTheme::None => 0,
+            ColorTheme::Amber => 1,
+            ColorTheme::Blue => 2,
+            ColorTheme::Cyan => 3,
+            ColorTheme::Emerald => 4,
+            ColorTheme::Fuchsia => 5,
+            ColorTheme::Green => 6,
+            ColorTheme::Indigo => 7,
+            ColorTheme::Lime => 8,
+            ColorTheme::Orange => 9,
+            ColorTheme::Pink => 10,
+            ColorTheme::Purple => 11,
+            ColorTheme::Red => 12,
+            ColorTheme::Rose => 13,
+            ColorTheme::Sky => 14,
+            ColorTheme::Teal => 15,
+            ColorTheme::Violet => 16,
+            ColorTheme::Yellow => 17,
+        }
+    }
+
+    pub fn from_index(idx: u32) -> Option<Self> {
+        match idx {
+            0 => Some(ColorTheme::None),
+            1 => Some(ColorTheme::Amber),
+            2 => Some(ColorTheme::Blue),
+            3 => Some(ColorTheme::Cyan),
+            4 => Some(ColorTheme::Emerald),
+            5 => Some(ColorTheme::Fuchsia),
+            6 => Some(ColorTheme::Green),
+            7 => Some(ColorTheme::Indigo),
+            8 => Some(ColorTheme::Lime),
+            9 => Some(ColorTheme::Orange),
+            10 => Some(ColorTheme::Pink),
+            11 => Some(ColorTheme::Purple),
+            12 => Some(ColorTheme::Red),
+            13 => Some(ColorTheme::Rose),
+            14 => Some(ColorTheme::Sky),
+            15 => Some(ColorTheme::Teal),
+            16 => Some(ColorTheme::Violet),
+            17 => Some(ColorTheme::Yellow),
+            _ => None,
+        }
+    }
+
     pub fn from_label(label: &str) -> Option<Self> {
         Self::ALL.iter().copied().find(|ct| ct.label() == label)
     }

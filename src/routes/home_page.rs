@@ -24,7 +24,7 @@ pub fn Home() -> Element {
     let color_theme = use_signal(|| ColorTheme::default());
     let theme_mode = use_theme_mode();
 
-    let css_signal = use_memo(move || ThemeName::default().css_string(0.5, color_theme()));
+    let css_signal = use_memo(move || ThemeName::default().css_string(0.5, color_theme(), Default::default()));
 
     use_effect(move || {
         let ct = color_theme();

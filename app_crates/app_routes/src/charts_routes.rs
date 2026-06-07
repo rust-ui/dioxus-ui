@@ -14,6 +14,15 @@ pub enum ChartRoutes {
 }
 
 impl ChartRoutes {
+    pub const ALL: &'static [ChartRoutes] = &[
+        ChartRoutes::AreaChart,
+        ChartRoutes::BarChart,
+        ChartRoutes::LineChart,
+        ChartRoutes::PieChart,
+        ChartRoutes::RadarChart,
+        ChartRoutes::RadialChart,
+    ];
+
     pub fn base_segment() -> &'static str {
         "charts"
     }

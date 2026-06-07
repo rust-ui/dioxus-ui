@@ -50,6 +50,12 @@ pub fn NavMobile() -> Element {
                         onclick: move |_| open.set(false),
                         "Icons"
                     }
+                    Link {
+                        class: "py-2 px-3 text-sm rounded-md hover:bg-accent",
+                        to: Route::AreaChartPage {},
+                        onclick: move |_| open.set(false),
+                        "Charts"
+                    }
                 }
             }
         }

@@ -8,6 +8,10 @@ pub mod registry;
 mod routes;
 mod domain;
 
+use domain::blocks::routing::blocks_layout::BlocksLayout;
+use domain::blocks::routing::blocks_pages::{
+    FaqBlocks, FootersBlocks, HeadersBlocks, IntegrationsBlocks, LoginBlocks, SidenavBlocks,
+};
 use domain::charts::routing::charts_layout::ChartsLayout;
 use domain::charts::routing::charts_pages::{
     AreaChartPage, BarChartPage, LineChartPage, PieChartPage, RadarChartPage, RadialChartPage,
@@ -18,6 +22,7 @@ use routes::docs_layout::DocsLayout;
 use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
+use domain::create::page_create::PageCreate;
 use routes::page_icons::PageIcons;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");
@@ -43,6 +48,21 @@ enum Route {
             #[route("/hooks/:name")]
             HookPage { name: String },
         #[end_layout]
+        #[layout(BlocksLayout)]
+            #[redirect("/blocks", || Route::LoginBlocks {})]
+            #[route("/blocks/login")]
+            LoginBlocks {},
+            #[route("/blocks/sidenav")]
+            SidenavBlocks {},
+            #[route("/blocks/headers")]
+            HeadersBlocks {},
+            #[route("/blocks/footers")]
+            FootersBlocks {},
+            #[route("/blocks/faq")]
+            FaqBlocks {},
+            #[route("/blocks/integrations")]
+            IntegrationsBlocks {},
+        #[end_layout]
         #[layout(ChartsLayout)]
             #[redirect("/charts", || Route::AreaChartPage {})]
             #[route("/charts/area-chart")]
@@ -60,6 +80,8 @@ enum Route {
         #[end_layout]
         #[route("/icons")]
         PageIcons {},
+        #[route("/create")]
+        PageCreate {},
 }
 
 fn main() {

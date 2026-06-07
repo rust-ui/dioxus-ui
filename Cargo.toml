@@ -29,6 +29,16 @@ resend-rs = { version = "0.19", default-features = false, features = ["rustls-tl
 validator = { version = "0.20", features = ["derive"], optional = true }
 tracing = { version = "0.1", optional = true }
 strum = { version = "0.28", features = ["derive"] }
+wasm-bindgen = "0.2"
+web-sys = { version = "0.3", features = [
+  "Window",
+  "Document",
+  "Element",
+  "HtmlElement",
+  "CssStyleDeclaration",
+  "Location",
+  "History",
+] }
 
 [build-dependencies]
 time = { version = "0.3", features = ["local-offset"] }

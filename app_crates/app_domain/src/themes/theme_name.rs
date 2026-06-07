@@ -1,4 +1,5 @@
 use super::components::color_theme_picker::ColorTheme;
+use super::components::font_picker::FontName;
 
 #[derive(Clone, Copy, PartialEq, Default)]
 pub enum ThemeName {
@@ -13,6 +14,65 @@ pub enum ThemeName {
 }
 
 impl ThemeName {
+    pub const ALL: &'static [ThemeName] = &[
+        ThemeName::Neutral,
+        ThemeName::Stone,
+        ThemeName::Zinc,
+        ThemeName::Mauve,
+        ThemeName::Olive,
+        ThemeName::Mist,
+        ThemeName::Taupe,
+    ];
+
+    pub fn label(&self) -> &'static str {
+        match self {
+            ThemeName::Neutral => "Neutral",
+            ThemeName::Stone => "Stone",
+            ThemeName::Zinc => "Zinc",
+            ThemeName::Mauve => "Mauve",
+            ThemeName::Olive => "Olive",
+            ThemeName::Mist => "Mist",
+            ThemeName::Taupe => "Taupe",
+        }
+    }
+
+    pub fn swatch(&self) -> &'static str {
+        match self {
+            ThemeName::Neutral => "#737373",
+            ThemeName::Stone => "#79716b",
+            ThemeName::Zinc => "#71717a",
+            ThemeName::Mauve => "#7c6e7c",
+            ThemeName::Olive => "#6b7045",
+            ThemeName::Mist => "#5f7070",
+            ThemeName::Taupe => "#736050",
+        }
+    }
+
+    pub fn to_index(self) -> usize {
+        match self {
+            ThemeName::Neutral => 0,
+            ThemeName::Stone => 1,
+            ThemeName::Zinc => 2,
+            ThemeName::Mauve => 3,
+            ThemeName::Olive => 4,
+            ThemeName::Mist => 5,
+            ThemeName::Taupe => 6,
+        }
+    }
+
+    pub fn from_index(idx: u32) -> Option<Self> {
+        match idx {
+            0 => Some(ThemeName::Neutral),
+            1 => Some(ThemeName::Stone),
+            2 => Some(ThemeName::Zinc),
+            3 => Some(ThemeName::Mauve),
+            4 => Some(ThemeName::Olive),
+            5 => Some(ThemeName::Mist),
+            6 => Some(ThemeName::Taupe),
+            _ => None,
+        }
+    }
+
     pub fn light_vars(&self) -> &'static [(&'static str, &'static str)] {
         match self {
             ThemeName::Neutral => NEUTRAL_LIGHT,
@@ -37,8 +97,8 @@ impl ThemeName {
         }
     }
 
-    pub fn css_string(&self, radius: f32, color_theme: ColorTheme) -> String {
-        let mut out = format!(":root {{\n  --radius: {radius}rem;\n");
+    pub fn css_string(&self, radius: f32, color_theme: ColorTheme, font: FontName) -> String {
+        let mut out = format!(":root {{\n  --radius: {radius}rem;\n  --font-sans: {};\n", font.css_value());
         for (k, v) in self.light_vars() {
             out.push_str(&format!("  {k}: {v};\n"));
         }

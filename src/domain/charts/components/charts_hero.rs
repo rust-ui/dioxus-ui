@@ -1,6 +1,5 @@
 use app_routes::ChartRoutes;
 use dioxus::prelude::*;
-use strum::IntoEnumIterator;
 
 #[component]
 pub fn ChartsHero() -> Element {
@@ -20,7 +19,7 @@ fn ChartsNavigation() -> Element {
                 "data-name": "__ChartsNav",
                 class: "overflow-x-auto relative [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden [touch-action:pan-x]",
                 div { class: "flex gap-0 items-center",
-                    for route in ChartRoutes::iter() {
+                    for route in ChartRoutes::ALL.iter().copied() {
                         a {
                             href: route.to_route(),
                             class: "flex justify-center items-center px-4 h-7 text-base font-medium text-center whitespace-nowrap shrink-0",

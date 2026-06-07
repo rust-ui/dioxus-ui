@@ -1301,6 +1301,8 @@ dependencies = [
  "tracing",
  "tw_merge",
  "validator",
+ "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]
