@@ -3,6 +3,7 @@ use dioxus::prelude::*;
 use icons::{ChevronLeft, ChevronRight};
 
 use crate::components::doc_header::DocHeader;
+use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
 use crate::markdown::converter::{convert_md, extract_toc};
@@ -43,6 +44,7 @@ pub fn ComponentPage(name: String) -> Element {
                         NewsletterSignup {}
                     }
                     DocBottomNav { prev, next }
+                    FooterLayout {}
                 },
             }
         }
