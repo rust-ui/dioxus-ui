@@ -263,8 +263,22 @@ pub fn DropdownMenuItem(#[props(into, optional)] class: Option<String>, children
 }
 
 #[component]
-pub fn DropdownMenuLink(#[props(into, optional)] href: Option<String>, children: Element) -> Element {
-    rsx! { a { "data-name": "DropdownMenuLink", class: "w-full inline-flex gap-2 items-center", href: "{href.as_deref().unwrap_or(\"#\")}", {children} } }
+pub fn DropdownMenuLink(
+    #[props(into, optional)] href: Option<String>,
+    #[props(into, optional)] target: Option<String>,
+    #[props(into, optional)] rel: Option<String>,
+    children: Element,
+) -> Element {
+    rsx! {
+        a {
+            "data-name": "DropdownMenuLink",
+            class: "w-full inline-flex gap-2 items-center",
+            href: "{href.as_deref().unwrap_or(\"#\")}",
+            target: target,
+            rel: rel,
+            {children}
+        }
+    }
 }
 
 #[component]

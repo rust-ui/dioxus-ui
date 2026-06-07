@@ -6,7 +6,12 @@ pub mod components;
 pub mod markdown;
 pub mod registry;
 mod routes;
+mod domain;
 
+use domain::charts::routing::charts_layout::ChartsLayout;
+use domain::charts::routing::charts_pages::{
+    AreaChartPage, BarChartPage, LineChartPage, PieChartPage, RadarChartPage, RadialChartPage,
+};
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
@@ -37,6 +42,21 @@ enum Route {
             ComponentPage { name: String },
             #[route("/hooks/:name")]
             HookPage { name: String },
+        #[end_layout]
+        #[layout(ChartsLayout)]
+            #[redirect("/charts", || Route::AreaChartPage {})]
+            #[route("/charts/area-chart")]
+            AreaChartPage {},
+            #[route("/charts/bar-chart")]
+            BarChartPage {},
+            #[route("/charts/line-chart")]
+            LineChartPage {},
+            #[route("/charts/pie-chart")]
+            PieChartPage {},
+            #[route("/charts/radar-chart")]
+            RadarChartPage {},
+            #[route("/charts/radial-chart")]
+            RadialChartPage {},
         #[end_layout]
         #[route("/icons")]
         PageIcons {},

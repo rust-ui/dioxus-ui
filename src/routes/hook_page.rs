@@ -36,6 +36,9 @@ pub fn HookPage(name: String) -> Element {
                         title: e.title(),
                         description: e.description(),
                         tags: e.tags.to_vec(),
+                        raw: e.raw,
+                        slug: e.slug,
+                        section: "hooks".to_string(),
                         prev,
                         next,
                     }
