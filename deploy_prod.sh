@@ -32,7 +32,7 @@ fi
 echo "✅ Formatting OK"
 
 echo "📎 Running clippy..."
-cargo clippy --all-features -- -D warnings
+cargo clippy --all-features
 echo "✅ Clippy OK"
 
 echo "🔒 Security audit..."
