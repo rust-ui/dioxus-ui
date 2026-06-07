@@ -2,6 +2,8 @@ use app_domain::icons::all_icons::ALL_ICONS;
 use dioxus::document::eval;
 use dioxus::prelude::*;
 use icons::RotateCw;
+
+use crate::components::navigation::header_docs::HeaderDocs;
 use registry::ui::card::{Card, CardContent, CardHeader, CardTitle};
 use registry::ui::drawer::{Drawer, DrawerBody, DrawerClose, DrawerContent, DrawerHandle, DrawerTitle, DrawerTrigger};
 use registry::ui::input::{Input, InputType};
@@ -36,6 +38,7 @@ pub fn PageIcons() -> Element {
     });
 
     rsx! {
+        HeaderDocs {}
         div { class: "flex overflow-hidden flex-1",
             aside { class: "hidden overflow-y-auto p-4 md:block w-[270px] bg-muted",
                 Card { class: "flex flex-col gap-6 bg-background",

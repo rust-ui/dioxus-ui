@@ -4,7 +4,7 @@ use icons::{
 };
 use registry::ui::header::{
     Header, IconWrapper, InsetCard, NavMenu, NavMenuContent, NavMenuContentInset, NavMenuFixed, NavMenuHomeLink,
-    NavMenuItem, NavMenuLinkGrid, NavMenuLinkTitle, NavMenuLinkDescription, NavMenuList, NavMenuMiddle,
+    NavMenuItem, NavMenuLink, NavMenuLinkGrid, NavMenuLinkTitle, NavMenuLinkDescription, NavMenuList, NavMenuMiddle,
     NavMenuTitle, NavMenuTrigger, NavMenuWrapper,
 };
 use registry::ui::theme_toggle::ThemeToggle;

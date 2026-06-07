@@ -2,17 +2,14 @@ use dioxus::prelude::*;
 
 use crate::Route;
 use crate::components::command_bar::{CommandBarDialog, use_command_bar_provider};
-use crate::components::navigation::header_home::HeaderHome;
-
 #[component]
 pub fn AppLayout() -> Element {
     use_command_bar_provider();
 
     rsx! {
         div { class: "flex flex-col h-full",
-            HeaderHome {}
             CommandBarDialog {}
-            main { class: "overflow-y-auto flex-1 overflow-x-clip",
+            main { id: "data-scroll-target", class: "overflow-y-auto flex-1 overflow-x-clip",
                 Outlet::<Route> {}
             }
         }

@@ -10,6 +10,7 @@ mod routes;
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
+use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
 use routes::page_icons::PageIcons;
@@ -27,6 +28,10 @@ const CHART_INIT_JS: Asset = asset!("/public/app_components/chart_init.js");
 #[rustfmt::skip]
 enum Route {
     #[layout(AppLayout)]
+        #[layout(HomeLayout)]
+            #[route("/")]
+            Home {},
+        #[end_layout]
         #[layout(DocsLayout)]
             #[route("/components/:name")]
             ComponentPage { name: String },
@@ -35,8 +40,6 @@ enum Route {
         #[end_layout]
         #[route("/icons")]
         PageIcons {},
-        #[route("/")]
-        Home {},
 }
 
 fn main() {
