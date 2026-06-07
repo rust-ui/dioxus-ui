@@ -1,13 +1,13 @@
 pub mod app_footer;
-pub mod footer_layout;
-pub mod newsletter_signup;
 pub mod command_bar;
 pub mod demo_wrapper;
 pub mod doc_header;
 pub mod footer;
+pub mod footer_layout;
 pub mod github_stars;
 pub mod logos;
 pub mod navbar;
 pub mod navigation;
+pub mod newsletter_signup;
 pub mod sidenav;
 pub mod toc;

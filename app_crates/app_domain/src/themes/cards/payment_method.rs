@@ -20,8 +20,18 @@ pub fn CardPaymentMethod() -> Element {
     let mut payment_method = use_signal(|| PaymentMethod::Card);
 
     let months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December",
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
     ];
     let years: Vec<String> = (2024..=2034).map(|y| y.to_string()).collect();
 

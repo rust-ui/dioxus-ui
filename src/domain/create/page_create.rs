@@ -46,10 +46,8 @@ pub fn PageCreate() -> Element {
     let (init_theme, init_radius, init_ct, init_font) = use_hook(|| {
         #[cfg(target_arch = "wasm32")]
         if let Some(search) = web_sys::window().and_then(|w| w.location().search().ok()) {
-            let code = search
-                .trim_start_matches('?')
-                .split('&')
-                .find_map(|p| p.strip_prefix("preset=").map(str::to_owned));
+            let code =
+                search.trim_start_matches('?').split('&').find_map(|p| p.strip_prefix("preset=").map(str::to_owned));
             if let Some(decoded) = code.as_deref().and_then(decode_preset) {
                 return decoded;
             }

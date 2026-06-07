@@ -55,10 +55,7 @@ pub fn ComponentPage(name: String) -> Element {
 }
 
 #[component]
-fn DocBottomNav(
-    prev: Option<&'static RegistryEntry>,
-    next: Option<&'static RegistryEntry>,
-) -> Element {
+fn DocBottomNav(prev: Option<&'static RegistryEntry>, next: Option<&'static RegistryEntry>) -> Element {
     rsx! {
         div { class: "flex justify-between items-center mt-8",
             if let Some(p) = prev {

@@ -3,10 +3,10 @@ use dioxus::prelude::*;
 
 pub mod __registry__;
 pub mod components;
+mod domain;
 pub mod markdown;
 pub mod registry;
 mod routes;
-mod domain;
 
 use domain::blocks::routing::blocks_layout::BlocksLayout;
 use domain::blocks::routing::blocks_pages::{
@@ -16,13 +16,13 @@ use domain::charts::routing::charts_layout::ChartsLayout;
 use domain::charts::routing::charts_pages::{
     AreaChartPage, BarChartPage, LineChartPage, PieChartPage, RadarChartPage, RadialChartPage,
 };
+use domain::create::page_create::PageCreate;
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
 use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
-use domain::create::page_create::PageCreate;
 use routes::page_icons::PageIcons;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");

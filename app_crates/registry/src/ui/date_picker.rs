@@ -95,10 +95,8 @@ pub fn DatePickerCell(
 ) -> Element {
     let current_date = if day > 0 && !disabled { Date::from_calendar_date(year, month, day).ok() } else { None };
 
-    let is_current =
-        current_date.map(|d| d == *start_date.read() || d == *end_date.read()).unwrap_or(false);
-    let is_selected =
-        current_date.map(|d| d > *start_date.read() && d < *end_date.read()).unwrap_or(false);
+    let is_current = current_date.map(|d| d == *start_date.read() || d == *end_date.read()).unwrap_or(false);
+    let is_selected = current_date.map(|d| d > *start_date.read() && d < *end_date.read()).unwrap_or(false);
 
     let cell_class = tw_merge!(
         "inline-flex items-center justify-center text-sm size-9 rounded-md select-none",

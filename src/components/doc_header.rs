@@ -8,13 +8,13 @@ use registry::ui::breadcrumb::{
 use registry::ui::button::{Button, ButtonSize, ButtonVariant};
 use registry::ui::button_group::ButtonGroup;
 use registry::ui::dropdown_menu::{
-    DropdownMenu, DropdownMenuAlign, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem,
-    DropdownMenuLink, DropdownMenuTrigger,
+    DropdownMenu, DropdownMenuAlign, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLink,
+    DropdownMenuTrigger,
 };
 use registry::ui::separator::Separator;
 
-use crate::registry::types::RegistryEntry;
 use crate::Route;
+use crate::registry::types::RegistryEntry;
 
 const COPY_TIMEOUT_MS: i32 = 2000;
 

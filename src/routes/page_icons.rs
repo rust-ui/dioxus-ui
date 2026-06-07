@@ -2,13 +2,13 @@ use app_domain::icons::all_icons::ALL_ICONS;
 use dioxus::document::eval;
 use dioxus::prelude::*;
 use icons::RotateCw;
-
-use crate::components::navigation::header_docs::HeaderDocs;
 use registry::ui::card::{Card, CardContent, CardHeader, CardTitle};
 use registry::ui::drawer::{Drawer, DrawerBody, DrawerClose, DrawerContent, DrawerHandle, DrawerTitle, DrawerTrigger};
 use registry::ui::input::{Input, InputType};
 use registry::ui::scroll_area::ScrollArea;
 use registry::ui::select_native::{LabelNative, SelectNative};
+
+use crate::components::navigation::header_docs::HeaderDocs;
 
 type IconFn = fn(&str) -> Element;
 

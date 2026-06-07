@@ -68,9 +68,7 @@ pub fn SelectTrigger(children: Element, #[props(into, optional)] class: Option<S
 #[component]
 pub fn SelectValue(#[props(into, optional)] placeholder: Option<String>) -> Element {
     let ctx = use_context::<SelectContext>();
-    let text = use_memo(move || {
-        ctx.value.read().clone().unwrap_or_else(|| placeholder.clone().unwrap_or_default())
-    });
+    let text = use_memo(move || ctx.value.read().clone().unwrap_or_else(|| placeholder.clone().unwrap_or_default()));
     rsx! {
         span { "data-name": "SelectValue", class: "text-sm text-muted-foreground truncate",
             {text}

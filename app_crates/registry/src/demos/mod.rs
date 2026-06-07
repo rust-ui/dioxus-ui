@@ -1,5 +1,4 @@
 pub mod demo_accordion;
-pub mod demo_date_picker;
 pub mod demo_accordion_bordered;
 pub mod demo_accordion_card;
 pub mod demo_accordion_icons;
@@ -67,6 +66,7 @@ pub mod demo_collapsible_basic;
 pub mod demo_collapsible_file_tree;
 pub mod demo_collapsible_rtl;
 pub mod demo_collapsible_settings;
+pub mod demo_date_picker;
 pub mod demo_dialog;
 pub mod demo_dialog_rtl;
 pub mod demo_dialog_scrollable;

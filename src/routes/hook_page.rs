@@ -55,10 +55,7 @@ pub fn HookPage(name: String) -> Element {
 }
 
 #[component]
-fn HookBottomNav(
-    prev: Option<&'static RegistryEntry>,
-    next: Option<&'static RegistryEntry>,
-) -> Element {
+fn HookBottomNav(prev: Option<&'static RegistryEntry>, next: Option<&'static RegistryEntry>) -> Element {
     rsx! {
         div { class: "flex justify-between items-center mt-8",
             if let Some(p) = prev {
