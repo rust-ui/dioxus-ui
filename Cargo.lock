@@ -52,7 +52,7 @@ name = "app_domain"
 version = "0.1.0"
 dependencies = [
  "dioxus",
- "icons",
+ "icons 0.18.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "registry",
 ]
 
@@ -1253,7 +1253,7 @@ dependencies = [
  "dioxus",
  "html-escape",
  "html_parser",
- "icons",
+ "icons 0.18.2",
  "pulldown-cmark",
  "registry",
  "reqwest",
@@ -1924,6 +1924,15 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "f31827a206f56af32e590ba56d5d2d085f558508192593743f16b2306495269f"
 dependencies = [
  "cc",
+]
+
+[[package]]
+name = "icons"
+version = "0.18.2"
+dependencies = [
+ "dioxus",
+ "strum 0.28.0",
+ "tw_merge",
 ]
 
 [[package]]
@@ -2956,7 +2965,7 @@ name = "registry"
 version = "0.1.0"
 dependencies = [
  "dioxus",
- "icons",
+ "icons 0.18.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "js-sys",
  "serde",
  "serde_json",

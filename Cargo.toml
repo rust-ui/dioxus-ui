@@ -16,7 +16,7 @@ registry = { path = "app_crates/registry" }
 app_config = { path = "app_crates/app_config" }
 app_routes = { path = "app_crates/app_routes" }
 app_domain = { path = "app_crates/app_domain" }
-icons = { version = "0.18", features = ["dioxus"] }
+icons = { path = "../crates/icons", features = ["dioxus", "dioxus_animated"] }
 tw_merge = { version = "0.1", features = ["debug"] }
 pulldown-cmark = { version = "0.12", default-features = false, features = ["html"] }
 html_parser = "0.7.0"
