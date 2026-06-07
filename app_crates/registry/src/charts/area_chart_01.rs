@@ -133,7 +133,7 @@ const CHART_DATA: &[ChartDataPoint] = &[
 
 #[component]
 pub fn AreaChart01() -> Element {
-    let mut time_range = use_signal(|| TimeRange::default());
+    let mut time_range = use_signal(TimeRange::default);
 
     let json_values = use_memo(move || {
         let range = time_range();

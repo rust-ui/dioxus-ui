@@ -14,7 +14,7 @@ use crate::components::github_stars::GithubStars;
 
 #[component]
 pub fn HeaderHome() -> Element {
-    let mut is_mobile_menu_open = use_signal(|| false); #[allow(unused_mut)]
+    let is_mobile_menu_open = use_signal(|| false);
     let data_state = move || if is_mobile_menu_open() { "active" } else { "inactive" };
 
     rsx! {

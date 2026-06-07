@@ -175,7 +175,7 @@ pub fn SelectOption(
 ) -> Element {
     let ctx = use_context::<SelectContext>();
     let mut value_signal = ctx.value;
-    let on_change = ctx.on_change.clone();
+    let on_change = ctx.on_change;
     let val = value.clone();
     let val_check = value.clone();
 
