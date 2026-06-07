@@ -1,10 +1,11 @@
 use dioxus::prelude::*;
 use icons::{
-    AlignHorizontalSpaceAround, Blocks, CalendarDays, Compass, Frame, LogIn, Menu, PanelLeftOpen, Search, Wind, X,
+    AlignHorizontalSpaceAround, BlocksAnimate, CalendarDaysAnimate, CompassAnimate, FrameAnimate, LogIn, Menu,
+    PanelLeftOpenAnimate, SearchAnimate, WindAnimate, X,
 };
 use registry::ui::header::{
     Header, IconWrapper, InsetCard, NavMenu, NavMenuContent, NavMenuContentInset, NavMenuFixed, NavMenuHomeLink,
-    NavMenuItem, NavMenuLink, NavMenuLinkGrid, NavMenuLinkTitle, NavMenuLinkDescription, NavMenuList, NavMenuMiddle,
+    NavMenuItem, NavMenuLink, NavMenuLinkDescription, NavMenuLinkGrid, NavMenuLinkTitle, NavMenuList, NavMenuMiddle,
     NavMenuTitle, NavMenuTrigger, NavMenuWrapper,
 };
 use registry::ui::theme_toggle::ThemeToggle;
@@ -32,12 +33,14 @@ pub fn HeaderHome() -> Element {
                         NavMenuMiddle {
                             NavMenu {
                                 NavMenuList {
-                                    RegistryNavMenu {}
+                                    FirstNavMenu {}
+                                    SecondNavMenu {}
 
                                     NavMenuItem {
-                                        NavMenuLinkGrid { href: "/icons", class: "items-center",
-                                            span { class: "text-sm font-medium text-foreground", "Icons" }
-                                        }
+                                        NavMenuLink { href: "/icons", "Icons" }
+                                    }
+                                    NavMenuItem {
+                                        NavMenuLink { href: "/create", "Create" }
                                     }
                                 }
                             }
@@ -58,7 +61,7 @@ pub fn HeaderHome() -> Element {
 /* ========================================================== */
 
 #[component]
-fn RegistryNavMenu() -> Element {
+fn FirstNavMenu() -> Element {
     rsx! {
         NavMenuItem {
             NavMenuTrigger { href: "/components/button", "Registry" }
@@ -69,7 +72,7 @@ fn RegistryNavMenu() -> Element {
                         ul { class: "mt-1 space-y-2",
                             li {
                                 NavMenuLinkGrid { href: "/components/button",
-                                    IconWrapper { Blocks { class: "text-foreground" } }
+                                    IconWrapper { BlocksAnimate { class: "text-foreground" } }
                                     div { class: "space-y-0.5",
                                         NavMenuLinkTitle { "Components" }
                                         NavMenuLinkDescription { "Find any components" }
@@ -78,7 +81,7 @@ fn RegistryNavMenu() -> Element {
                             }
                             li {
                                 NavMenuLinkGrid { href: "/icons",
-                                    IconWrapper { Search { class: "text-foreground" } }
+                                    IconWrapper { SearchAnimate { class: "text-foreground" } }
                                     div { class: "space-y-0.5",
                                         NavMenuLinkTitle { "Icons" }
                                         NavMenuLinkDescription { "More than 1600 icons" }
@@ -87,7 +90,7 @@ fn RegistryNavMenu() -> Element {
                             }
                             li {
                                 NavMenuLinkGrid { href: "/hooks/use-copy-clipboard",
-                                    IconWrapper { Compass { class: "text-foreground" } }
+                                    IconWrapper { CompassAnimate { class: "text-foreground" } }
                                     div { class: "space-y-0.5",
                                         NavMenuLinkTitle { "Hooks" }
                                         NavMenuLinkDescription { "Reusable logic functions" }
@@ -101,19 +104,19 @@ fn RegistryNavMenu() -> Element {
                         ul { class: "mt-1",
                             li {
                                 NavMenuLinkGrid { class: "items-center", href: "/components/introduction",
-                                    IconWrapper { Frame { class: "text-foreground" } }
+                                    IconWrapper { FrameAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Introduction" }
                                 }
                             }
                             li {
                                 NavMenuLinkGrid { class: "items-center", href: "/components/installation",
-                                    IconWrapper { Wind { class: "text-foreground" } }
+                                    IconWrapper { WindAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Installation" }
                                 }
                             }
                             li {
                                 NavMenuLinkGrid { class: "items-center", href: "/components/changelog",
-                                    IconWrapper { CalendarDays { class: "text-foreground" } }
+                                    IconWrapper { CalendarDaysAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Changelog" }
                                 }
                             }
@@ -130,7 +133,7 @@ fn RegistryNavMenu() -> Element {
 /* ========================================================== */
 
 #[component]
-fn BlocksNavMenu() -> Element {
+fn SecondNavMenu() -> Element {
     rsx! {
         NavMenuItem {
             NavMenuTrigger { href: "/blocks/login", "Blocks" }
@@ -150,7 +153,7 @@ fn BlocksNavMenu() -> Element {
                             }
                             li {
                                 NavMenuLinkGrid { href: "/blocks/sidenav",
-                                    IconWrapper { PanelLeftOpen { class: "text-foreground" } }
+                                    IconWrapper { PanelLeftOpenAnimate { class: "text-foreground" } }
                                     div { class: "space-y-0.5",
                                         NavMenuLinkTitle { "Sidenav" }
                                         NavMenuLinkDescription { "Sidenav Blocks" }
@@ -166,6 +169,13 @@ fn BlocksNavMenu() -> Element {
                                     }
                                 }
                             }
+                        }
+                    }
+                    div { class: "p-2 w-full",
+                        NavMenuLink {
+                            class: "items-start font-normal underline text-primary",
+                            href: "/blocks/login",
+                            "Browse all Blocks"
                         }
                     }
                 }
@@ -204,8 +214,8 @@ fn MobileMenuTrigger(is_open: Signal<bool>) -> Element {
             "aria-label": "Open Menu",
             class: "block relative z-20 p-2.5 -m-2.5 -mr-3 cursor-pointer md:hidden",
             onclick: move |_| is_open.set(!is_open()),
-            Menu { class: "m-auto duration-200 in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 size-5" }
-            X { class: "absolute inset-0 m-auto opacity-0 duration-200 scale-0 -rotate-180 in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 size-5" }
+            Menu { class: "m-auto duration-200 lucide lucide-menu in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 size-5" }
+            X { class: "absolute inset-0 m-auto opacity-0 duration-200 scale-0 -rotate-180 lucide lucide-x in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 size-5" }
         }
     }
 }
@@ -216,8 +226,10 @@ fn MobileMenuTrigger(is_open: Signal<bool>) -> Element {
 
 #[component]
 fn MobileMenu(is_open: Signal<bool>) -> Element {
+    let display_class = move || if is_open() { "flex" } else { "hidden" };
+
     rsx! {
-        div { class: if is_open() { "flex flex-col gap-4 mt-6 w-full md:hidden mb-4" } else { "hidden" },
+        div { class: "flex-col gap-4 mt-6 w-full md:hidden mb-4 {display_class()}",
             div { class: "flex flex-row gap-3 items-center w-full",
                 CommandBarTrigger {}
                 GithubStars {}
