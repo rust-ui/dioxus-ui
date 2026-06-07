@@ -35,6 +35,22 @@ pub fn NavDesktop() -> Element {
                 to: Route::PageIcons {},
                 "Icons"
             }
+            a {
+                class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
+                href: "/blocks",
+                "Blocks"
+            }
+            Link {
+                class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
+                active_class: "bg-accent",
+                to: Route::AreaChartPage {},
+                "Charts"
+            }
+            a {
+                class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
+                href: "/create",
+                "Create"
+            }
         }
     }
 }
