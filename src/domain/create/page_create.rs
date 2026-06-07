@@ -55,12 +55,12 @@ pub fn PageCreate() -> Element {
         (ThemeName::default(), 0.5_f32, ColorTheme::default(), FontName::default())
     });
 
-    let mut theme = use_signal(move || init_theme);
-    let mut radius = use_signal(move || init_radius);
-    let mut color_theme = use_signal(move || init_ct);
-    let mut font = use_signal(move || init_font);
+    let theme = use_signal(move || init_theme);
+    let radius = use_signal(move || init_radius);
+    let color_theme = use_signal(move || init_ct);
+    let font = use_signal(move || init_font);
 
-    let theme_mode = use_theme_mode();
+    let _theme_mode = use_theme_mode();
 
     // Remove injected CSS vars when navigating away from this page.
     use_drop(move || {
@@ -80,14 +80,13 @@ pub fn PageCreate() -> Element {
 
     // Inject CSS vars on the <html> element reactively.
     use_effect(move || {
-        let theme_name = theme();
-        let radius_val = radius();
-        let color_theme_val = color_theme();
-        let font_val = font();
-        let is_dark = theme_mode.is_dark();
-
         #[cfg(target_arch = "wasm32")]
         {
+            let theme_name = theme();
+            let is_dark = _theme_mode.is_dark();
+            let radius_val = radius();
+            let color_theme_val = color_theme();
+            let font_val = font();
             use wasm_bindgen::JsCast;
             let Some(document) = web_sys::window().and_then(|w| w.document()) else { return };
             let Some(root) = document.document_element() else { return };

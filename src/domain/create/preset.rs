@@ -35,6 +35,7 @@ fn to_base62(mut n: u32) -> String {
     String::from_utf8(bytes).unwrap_or_default()
 }
 
+#[cfg(target_arch = "wasm32")]
 fn from_base62(s: &str) -> Option<u32> {
     let mut result: u32 = 0;
     for b in s.bytes() {
@@ -53,6 +54,7 @@ pub fn encode_preset(theme: ThemeName, radius: f32, color_theme: ColorTheme, fon
     format!("{}{}", VERSION, to_base62(bits))
 }
 
+#[cfg(target_arch = "wasm32")]
 pub fn decode_preset(code: &str) -> Option<(ThemeName, f32, ColorTheme, FontName)> {
     let mut chars = code.chars();
     if chars.next()? != VERSION {
