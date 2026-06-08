@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 
 use crate::domain::test::components::demo_node_canvas::DemoNodeCanvas;
 use crate::domain::test::components::demo_node_canvas_locked_mode::DemoNodeCanvasLockedMode;
+use crate::domain::test::components::demo_node_canvas_multiselect::DemoNodeCanvasMultiselect;
 use crate::domain::test::components::demo_node_canvas_minimap::DemoNodeCanvasMinimap;
 use crate::domain::test::components::demo_node_canvas_status::DemoNodeCanvasStatus;
 use crate::domain::test::components::demo_node_canvas_toolbar::DemoNodeCanvasToolbar;
@@ -46,6 +47,14 @@ pub fn TestPage() -> Element {
                 }
             }
             DemoNodeCanvasLockedMode {}
+
+            div { class: "flex flex-col gap-1",
+                h2 { class: "text-xl font-semibold tracking-tight", "Node Canvas — Multi-select" }
+                p { class: "text-sm text-muted-foreground",
+                    "Shift+click to add nodes to selection. Drag moves all selected. Del removes all."
+                }
+            }
+            DemoNodeCanvasMultiselect {}
 
             div { class: "flex flex-col gap-1",
                 h2 { class: "text-xl font-semibold tracking-tight", "Toolbar" }

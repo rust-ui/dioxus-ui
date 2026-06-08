@@ -1,5 +1,6 @@
 pub mod demo_node_canvas;
 pub mod demo_node_canvas_locked_mode;
+pub mod demo_node_canvas_multiselect;
 pub mod demo_node_canvas_minimap;
 pub mod demo_node_canvas_status;
 pub mod demo_node_canvas_toolbar;
