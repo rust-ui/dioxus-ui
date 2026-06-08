@@ -209,6 +209,10 @@ impl NodeCanvasState {
         *self.next_id.write() = n + 1;
         let snap_x = (x / 20.0).round() * 20.0;
         let snap_y = (y / 20.0).round() * 20.0;
+        // positions must be pushed before nodes: writing nodes triggers a re-render,
+        // and the render loop indexes into positions by node idx — if positions is
+        // shorter than nodes at that moment, pos() panics with index out of bounds.
+        self.positions.write().push((snap_x, snap_y));
         self.nodes.write().push(CanvasNode {
             id: format!("node-{n}"),
             initial_x: snap_x,
@@ -220,7 +224,6 @@ impl NodeCanvasState {
             description: "New node".to_string(),
             kind: NodeKind::Agent,
         });
-        self.positions.write().push((snap_x, snap_y));
     }
 
     // ── node drag ────────────────────────────────────────────────────────────
