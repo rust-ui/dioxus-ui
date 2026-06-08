@@ -16,6 +16,9 @@
 | Connecting preview line       | live bezier to cursor      |
 | Undo / redo                   | Ctrl+Z / Ctrl+Y            |
 | Minimap overlay               | scaled world view          |
+| Minimap click-to-pan          | click to center viewport   |
+| Touch / trackpad support      | pinch-zoom + 1-finger pan  |
+| Locked / read-only mode       | `toggle_locked()`, banner  |
 
 ---
 
@@ -36,11 +39,11 @@
 | **Duplicate node** — Ctrl+D shortcut                                          | Medium     | 🟠 Mid   |
 | **Auto-layout (dagre)** — compute acyclic layout from edges                   | Hard       | 🟠 Mid   |
 | **Rubber-band multi-select** — drag empty canvas to draw selection rect       | Hard       | 🟠 Mid   |
-| **Minimap click-to-pan** — click minimap position to jump viewport            | Easy       | 🟡 Low   |
-| **Read-only / locked mode** — prop that disables all mutations                | Easy       | 🟡 Low   |
+| ~~**Minimap click-to-pan** — click minimap position to jump viewport~~        | ~~Easy~~   | ✅ Done  |
+| ~~**Read-only / locked mode** — prop that disables all mutations~~            | ~~Easy~~   | ✅ Done  |
 | **Edge label** — text label rendered at bezier midpoint                       | Medium     | 🟡 Low   |
 | **Alignment guides** — snap lines when dragging near other nodes              | Medium     | 🟡 Low   |
-| **Touch / trackpad support** — pinch-to-zoom, two-finger pan                  | Medium     | 🟡 Low   |
+| ~~**Touch / trackpad support** — pinch-to-zoom, two-finger pan~~              | ~~Medium~~ | ✅ Done  |
 | **Edge style picker** — solid / dashed / dotted per edge                      | Medium     | 🟡 Low   |
 | **Search / filter nodes** — highlight matching nodes, dim others              | Medium     | 🟡 Low   |
 | **Node resize handle** — drag right edge to change `width`                    | Hard       | 🟡 Low   |
