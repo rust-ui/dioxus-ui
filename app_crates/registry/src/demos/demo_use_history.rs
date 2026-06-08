@@ -45,21 +45,16 @@ fn DemoUseHistoryInner() -> Element {
 
             // Color swatches
             div { class: "flex gap-2 items-center",
-                {COLORS.iter().map(|(name, color_class)| {
-                    let name = *name;
-                    let color_class = *color_class;
-                    let is_active = use_memo(move || active() == name);
-                    rsx! {
-                        button {
-                            class: "size-8 rounded-full transition-all duration-200 {color_class} data-[active=true]:ring-2 data-[active=true]:ring-offset-2 data-[active=true]:ring-current",
-                            "data-color": name,
-                            "data-active": if is_active() { "true" } else { "false" },
-                            onclick: move |_| {
-                                history.push(format!("?color={name}"));
-                            },
-                        }
+                for (name, color_class) in COLORS.iter().copied() {
+                    button {
+                        class: "size-8 rounded-full transition-all duration-200 {color_class} data-[active=true]:ring-2 data-[active=true]:ring-offset-2 data-[active=true]:ring-current",
+                        "data-color": name,
+                        "data-active": if active() == name { "true" } else { "false" },
+                        onclick: move |_| {
+                            history.push(format!("?color={name}"));
+                        },
                     }
-                }).collect::<Vec<_>>()}
+                }
             }
 
             // Current state

@@ -13,7 +13,7 @@ pub fn DemoFieldCheckbox() -> Element {
             FieldSet {
                 FieldLegend { variant: FieldLegendVariant::Label, "Show these items on the desktop" }
                 FieldDescription { "Select the items you want to show on the desktop." }
-                FieldGroup { "data-slot": "checkbox-group",
+                FieldGroup { data_slot: "checkbox-group",
                     Field { variant: FieldVariant::Horizontal,
                         Checkbox { }
                         FieldLabel { class: "font-normal", "Hard disks" }

@@ -10,7 +10,7 @@ use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 pub fn DemoAnimateGroup() -> Element {
     let mut trigger_signal = use_signal(|| false);
 
-    let handle_click = move || {
+    let mut handle_click = move || {
         trigger_signal.with_mut(|value| *value = !*value);
     };
 

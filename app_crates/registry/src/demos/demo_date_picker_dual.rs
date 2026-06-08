@@ -63,13 +63,15 @@ pub fn DemoDatePickerDual() -> Element {
         }
 
         let Some(new_date) = Date::from_calendar_date(year, month, day).ok() else { return };
+        let mut start_signal = start_date_signal;
+        let mut end_signal = end_date_signal;
 
         // If clicking before or at start date, set as new start
         // Otherwise set as end date
-        if new_date <= start_date_signal() {
-            start_date_signal.set(new_date);
+        if new_date <= start_signal() {
+            start_signal.set(new_date);
         } else {
-            end_date_signal.set(new_date);
+            end_signal.set(new_date);
         }
     };
 

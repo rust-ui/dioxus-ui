@@ -34,3 +34,9 @@ pub struct ToastData {
     pub level: ToastLevel,
     pub position: ToastPosition,
 }
+
+impl PartialEq for ToastData {
+    fn eq(&self, other: &Self) -> bool {
+        self.id == other.id
+    }
+}

@@ -73,16 +73,14 @@ pub fn FormDescription(#[props(into, optional)] class: Option<String>, children:
 #[component]
 pub fn FormProvider<T: FormData>(form: FormHook<T>, children: Element) -> Element {
     let set_value_fn: crate::hooks::use_form::SetValueFn = Arc::new({
-        let mut f = form;
         move |field: &str, value: String| {
-            f.set_value(field, value);
+            form.set_value(field, value);
         }
     });
 
     let touch_field_fn: crate::hooks::use_form::TouchFieldFn = Arc::new({
-        let mut f = form;
         move |field: &str| {
-            f.touch_field(field);
+            form.touch_field(field);
         }
     });
 
@@ -94,13 +92,13 @@ pub fn FormProvider<T: FormData>(form: FormHook<T>, children: Element) -> Elemen
         touch_field: touch_field_fn,
     };
 
-    provide_context(ctx);
+    use_context_provider(|| ctx);
     rsx! { {children} }
 }
 
 #[component]
 pub fn Form(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let _ctx = use_context::<FormContext>();
+    let _ctx = consume_context::<FormContext>();
     let merged = tw_merge!("w-full", class.as_deref().unwrap_or(""));
     rsx! { form { class: "{merged}", {children} } }
 }
@@ -211,7 +209,7 @@ pub fn FormLabel(
     let field_name = if let Some(f) = html_for {
         f
     } else {
-        use_context::<FieldContext>().map(|ctx| ctx.name).unwrap_or_default()
+        consume_context::<FieldContext>().name
     };
 
     let merged = tw_merge!(
@@ -220,7 +218,7 @@ pub fn FormLabel(
     );
 
     rsx! {
-        Label { "data-name": "FormLabel", class: "{merged}", html_for: field_name,
+        Label { class: "{merged}", html_for: field_name,
             {children}
         }
     }
@@ -305,24 +303,22 @@ pub fn FormError(
     }
 
     // Otherwise, try to get error from field context
-    let field_ctx = use_context::<FieldContext>();
-    let form_ctx = use_context::<FormContext>();
+    let field_ctx = consume_context::<FieldContext>();
+    let form_ctx = consume_context::<FormContext>();
 
-    if let (Some(field_ctx), Some(form_ctx)) = (field_ctx, form_ctx) {
-        let field_name = field_ctx.name.clone();
-        let merged = tw_merge!("text-destructive text-sm font-normal", class.as_deref().unwrap_or(""));
-        let is_touched = form_ctx.touched_signal.read().contains(&field_name);
-        if !is_touched {
-            return rsx! { {} };
-        }
-        let err = form_ctx.errors_signal.read().get(&field_name).and_then(|e| e.clone());
-        if let Some(err) = err {
-            return rsx! {
-                div { role: "alert", "data-name": "FormError", class: "{merged}",
-                    span { "{err}" }
-                }
-            };
-        }
+    let field_name = field_ctx.name.clone();
+    let merged = tw_merge!("text-destructive text-sm font-normal", class.as_deref().unwrap_or(""));
+    let is_touched = form_ctx.touched_signal.read().contains(&field_name);
+    if !is_touched {
+        return rsx! { {} };
+    }
+    let err = form_ctx.errors_signal.read().get(&field_name).and_then(|e| e.clone());
+    if let Some(err) = err {
+        return rsx! {
+            div { role: "alert", "data-name": "FormError", class: "{merged}",
+                span { "{err}" }
+            }
+        };
     }
 
     rsx! { {} }
@@ -334,15 +330,15 @@ pub fn FormError(
 
 #[component]
 pub fn FormField(#[props(into)] field: String, children: Element) -> Element {
-    provide_context(FieldContext { name: field.clone() });
+    use_context_provider(|| FieldContext { name: field.clone() });
 
-    let ctx = use_context::<FormContext>();
+    let ctx = consume_context::<FormContext>();
     let is_touched = ctx.touched_signal.read().contains(&field);
     let has_error = ctx.errors_signal.read().get(&field).is_some_and(|e| e.is_some());
     let invalid = if is_touched && has_error { "true" } else { "false" };
 
     rsx! {
-        FormFieldWrapper { "data-name": "FormField", data_invalid: invalid.to_string(),
+        FormFieldWrapper { data_invalid: invalid.to_string(),
             {children}
         }
     }
@@ -354,18 +350,14 @@ pub fn FormInput(
     #[props(into, optional)] r#type: Option<String>,
     #[props(into, optional)] id: Option<String>,
 ) -> Element {
-    let field_name = use_context::<FieldContext>().map(|ctx| ctx.name).unwrap_or_default();
-    let form_ctx = use_context::<FormContext>();
+    let field_name = consume_context::<FieldContext>().name;
+    let form_ctx = consume_context::<FormContext>();
     let field_id = id.unwrap_or_else(|| field_name.clone());
     let input_type = r#type.unwrap_or_else(|| "text".to_string());
 
-    let current_value = form_ctx
-        .as_ref()
-        .map(|ctx| ctx.values_signal.read().get(&field_name).cloned().unwrap_or_default())
-        .unwrap_or_default();
-
-    let set_value = form_ctx.as_ref().map(|ctx| ctx.set_value.clone());
-    let touch_fn = form_ctx.as_ref().map(|ctx| ctx.touch_field.clone());
+    let current_value = form_ctx.values_signal.read().get(&field_name).cloned().unwrap_or_default();
+    let set_value = form_ctx.set_value.clone();
+    let touch_fn = form_ctx.touch_field.clone();
     let field_name_input = field_name.clone();
     let field_name_blur = field_name.clone();
 
@@ -379,14 +371,10 @@ pub fn FormInput(
             value: "{current_value}",
             class: "placeholder:text-muted-foreground border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
             oninput: move |ev| {
-                if let Some(ref sv) = set_value {
-                    sv(&field_name_input, ev.value());
-                }
+                set_value(&field_name_input, ev.value());
             },
             onblur: move |_| {
-                if let Some(ref tf) = touch_fn {
-                    tf(&field_name_blur);
-                }
+                touch_fn(&field_name_blur);
             }
         }
     }

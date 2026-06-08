@@ -75,6 +75,7 @@ pub fn MultiSelectOption(
     children: Element,
     #[props(into, optional)] class: Option<String>,
     #[props(into, optional)] value: Option<String>,
+    #[props(default = false)] disabled: bool,
 ) -> Element {
     let multi_select_ctx = use_context::<MultiSelectContext>();
 
@@ -98,17 +99,20 @@ pub fn MultiSelectOption(
             "data-name": "MultiSelectOption",
             class: "{merged}",
             role: "option",
+            disabled,
             "aria-selected": if is_selected() { "true" } else { "false" },
             onclick: move |ev| {
                 ev.prevent_default();
                 ev.stop_propagation();
                 if let Some(val) = value.clone() {
-                    let mut values = multi_select_ctx.values_signal.write();
-                    if values.contains(&val) {
-                        values.remove(&val);
-                    } else {
-                        values.insert(val);
-                    }
+                    let mut values_signal = multi_select_ctx.values_signal;
+                    values_signal.with_mut(|values| {
+                        if values.contains(&val) {
+                            values.remove(&val);
+                        } else {
+                            values.insert(val);
+                        }
+                    });
                 }
             },
             {children}

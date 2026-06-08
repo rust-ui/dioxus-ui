@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 use wasm_bindgen::JsCast;
-use web_sys::{DragEvent, Element, HtmlElement};
+use web_sys::Element as WebElement;
 
 #[component]
 pub fn DraggableZone(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
@@ -10,8 +10,6 @@ pub fn DraggableZone(#[props(into, optional)] class: Option<String>, children: E
         div { "data-name": "DraggableZone", class: "{merged}", {children} }
     }
 }
-
-pub use DraggableZone;
 
 /* ========================================================== */
 /*                     COMPONENTS                             */
@@ -108,17 +106,24 @@ pub fn DraggableItem(#[props(into)] text: String) -> Element {
 
 /// Returns the element after which the dragged item should be inserted,
 /// based on the cursor's Y position. Returns `None` to append at the end.
-fn get_drag_after_element(container: &Element, y: f64) -> Option<HtmlElement> {
+fn get_drag_after_element(container: &WebElement, y: f64) -> Option<WebElement> {
     let items = container.query_selector_all(".draggable:not(.dragging)").ok()?;
 
     let mut closest_offset = f64::NEG_INFINITY;
-    let mut closest: Option<HtmlElement> = None;
+    let mut closest: Option<WebElement> = None;
 
     for i in 0..items.length() {
         let Some(node) = items.get(i) else { continue };
-        let Ok(el) = node.dyn_into::<HtmlElement>() else { continue };
-        let rect = el.get_bounding_client_rect();
-        let offset = y - rect.top() - rect.height() / 2.0;
+        let Ok(el) = node.dyn_into::<WebElement>() else { continue };
+        let top = js_sys::Reflect::get(el.as_ref(), &wasm_bindgen::JsValue::from_str("offsetTop"))
+            .ok()
+            .and_then(|v| v.as_f64())
+            .unwrap_or(0.0);
+        let height = js_sys::Reflect::get(el.as_ref(), &wasm_bindgen::JsValue::from_str("offsetHeight"))
+            .ok()
+            .and_then(|v| v.as_f64())
+            .unwrap_or(0.0);
+        let offset = y - top - height / 2.0;
         if offset < 0.0 && offset > closest_offset {
             closest_offset = offset;
             closest = Some(el);

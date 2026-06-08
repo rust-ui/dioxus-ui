@@ -64,10 +64,13 @@ pub fn DemoDatePickerDualFull() -> Element {
     };
 
     let handle_day_click = move |day: u8, month: Month, year: i32| {
-        state_signal.with_mut(|state| state.handle_day_selection(day, month, year));
-        let s = state_signal();
-        start_date_signal.set(s.start_date);
-        end_date_signal.set(s.end_date);
+        let mut state = state_signal;
+        state.with_mut(|state| state.handle_day_selection(day, month, year));
+        let s = state();
+        let mut start_signal = start_date_signal;
+        start_signal.set(s.start_date);
+        let mut end_signal = end_date_signal;
+        end_signal.set(s.end_date);
     };
 
     let (left_month, left_year) =

@@ -45,7 +45,8 @@ impl UseHistory {
             let search = web_sys::window()
                 .and_then(|w| w.location().search().ok())
                 .unwrap_or_default();
-            hook.history.write().push(search);
+            let mut history = hook.history;
+            history.with_mut(|h| h.push(search));
         });
 
         // Register ⌘Z / ⌘⇧Z / ⌃Y shortcuts
@@ -93,9 +94,13 @@ impl UseHistory {
         let idx = self.index.peek().clone();
 
         // Truncate forward history
-        self.history.write().truncate(idx + 1);
-        self.history.write().push(url.clone());
-        self.index.set(idx + 1);
+        let mut history = self.history;
+        history.with_mut(|h| {
+            h.truncate(idx + 1);
+            h.push(url.clone());
+        });
+        let mut index = self.index;
+        index.set(idx + 1);
 
         Self::replace_state(&url);
     }
@@ -107,14 +112,16 @@ impl UseHistory {
             return;
         }
 
-        self.is_navigating.set(true);
+        let mut is_navigating = self.is_navigating;
+        is_navigating.set(true);
         let new_idx = idx - 1;
-        self.index.set(new_idx);
+        let mut index = self.index;
+        index.set(new_idx);
 
         let url = self.history.peek().get(new_idx).cloned().unwrap_or_default();
         Self::replace_state(&url);
 
-        self.is_navigating.set(false);
+        is_navigating.set(false);
     }
 
     /// Navigate forwards (redo).
@@ -125,14 +132,16 @@ impl UseHistory {
             return;
         }
 
-        self.is_navigating.set(true);
+        let mut is_navigating = self.is_navigating;
+        is_navigating.set(true);
         let new_idx = idx + 1;
-        self.index.set(new_idx);
+        let mut index = self.index;
+        index.set(new_idx);
 
         let url = self.history.peek().get(new_idx).cloned().unwrap_or_default();
         Self::replace_state(&url);
 
-        self.is_navigating.set(false);
+        is_navigating.set(false);
     }
 
     /// `true` when there is a previous state to undo to.
@@ -178,5 +187,5 @@ impl UseHistory {
 
 /// Access the `UseHistory` context initialized by `UseHistory::init()`.
 pub fn use_history() -> UseHistory {
-    use_context::<UseHistory>()
+    consume_context::<UseHistory>()
 }

@@ -17,13 +17,13 @@ pub struct VirtualScrollState {
     /// Last visible row index (exclusive)
     pub end_index: Memo<usize>,
     /// Total height of the virtual container in pixels
-    pub total_height: ReadOnlySignal<usize>,
+    pub total_height: ReadSignal<usize>,
 }
 
 /// Get the virtual scroll context from a parent VirtualizedGrid.
 /// Returns None if used outside of a VirtualizedGrid.
 pub fn use_virtual_scroll_context() -> Option<VirtualScrollState> {
-    use_context::<VirtualScrollState>()
+    Some(consume_context::<VirtualScrollState>())
 }
 
 /// Hook for virtual scrolling in data grids.
@@ -38,8 +38,8 @@ pub fn use_virtual_scroll_context() -> Option<VirtualScrollState> {
 /// # Returns
 /// * `VirtualScrollState` with start/end indices and total height
 pub fn use_virtual_scroll(
-    container_element: ReadOnlySignal<Option<web_sys::Element>>,
-    total_rows: ReadOnlySignal<usize>,
+    container_element: ReadSignal<Option<web_sys::Element>>,
+    total_rows: ReadSignal<usize>,
 ) -> VirtualScrollState {
     let scroll_top_signal = use_signal(|| 0usize);
     let container_height_signal = use_signal(|| 600usize); // Default height
@@ -70,8 +70,8 @@ pub fn use_virtual_scroll(
 
         // Set up scroll listener with mounted check
         let is_mounted_for_handler = Arc::clone(&is_mounted_for_scroll);
-        let mut scroll_top_signal_clone = scroll_top_signal.clone();
-        let mut container_height_signal_clone = container_height_signal.clone();
+        let mut scroll_top_signal_clone = scroll_top_signal;
+        let mut container_height_signal_clone = container_height_signal;
         let el_clone = el.clone();
         let scroll_handler = Closure::wrap(Box::new(move || {
             // Check if still mounted before accessing signals
@@ -80,7 +80,7 @@ pub fn use_virtual_scroll(
             }
             scroll_top_signal_clone.set(el_clone.scroll_top().max(0) as usize);
             container_height_signal_clone.set(el_clone.client_height().max(0) as usize);
-        }) as Box<dyn Fn()>);
+        }) as Box<dyn FnMut()>);
 
         let _ = el.add_event_listener_with_callback("scroll", scroll_handler.as_ref().unchecked_ref());
 

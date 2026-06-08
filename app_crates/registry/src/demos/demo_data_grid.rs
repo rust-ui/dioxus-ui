@@ -330,11 +330,12 @@ pub fn DataGridFull() -> Element {
                                     let mut is_active_signal = use_signal(|| row.is_active);
                                     let is_selected = selected_indices_signal.read().contains(&index());
                                     let row_clone = row.clone();
+                                    let row_for_render = row_clone.clone();
 
                                     let render_cell_content = move |col: Column| -> Element {
                                         match col {
                                             Column::Website => {
-                                                let url = row_clone.website.clone();
+                                                let url = row_for_render.website.clone();
                                                 let url_display = url.clone();
                                                 rsx! {
                                                     div {
@@ -351,7 +352,7 @@ pub fn DataGridFull() -> Element {
                                                 }
                                             }
                                             Column::Skills => {
-                                                let skills = row_clone.skills.clone();
+                                                let skills = row_for_render.skills.clone();
                                                 rsx! {
                                                     div { class: "flex overflow-hidden flex-wrap gap-1 items-center",
                                                         for skill in skills {
@@ -364,13 +365,13 @@ pub fn DataGridFull() -> Element {
                                                 rsx! {
                                                     Checkbox {
                                                         checked: is_active_signal(),
-                                                        on_change: move |checked| is_active_signal.set(checked),
+                                                        on_checked_change: move |checked| is_active_signal.set(checked),
                                                     }
                                                 }
                                             }
                                             Column::Select | Column::Attachments => rsx! { div {} },
                                             _ => {
-                                                let value = col.get_value(&row_clone);
+                                                let value = col.get_value(&row_for_render);
                                                 rsx! { GridCellContent { "{value}" } }
                                             }
                                         }
@@ -382,7 +383,7 @@ pub fn DataGridFull() -> Element {
                                                 div { class: "py-1.5 px-3 size-full",
                                                     Checkbox {
                                                         checked: is_selected,
-                                                        on_change: move |checked| {
+                                                        on_checked_change: move |checked| {
                                                             let idx = index();
                                                             selected_indices_signal.with_mut(|selected| {
                                                                 if checked { selected.insert(idx); } else { selected.remove(&idx); }
@@ -402,8 +403,8 @@ pub fn DataGridFull() -> Element {
                                             // Non-pinned cells
                                             for (col, _width) in PINNABLE_COLUMNS.iter().copied() {
                                                 {
-                                                    let is_active = active_cell_signal.read().map(|(r, c)| r == index() && c == col).unwrap_or(false);
-                                                    let is_context = context_menu_cell_signal.read().map(|(r, c)| r == index() && c == col).unwrap_or(false);
+                                                    let is_active = active_cell_signal().map(|(r, c)| r == index() && c == col).unwrap_or(false);
+                                                    let is_context = context_menu_cell_signal().map(|(r, c)| r == index() && c == col).unwrap_or(false);
                                                     let in_range = drag_selection.is_cell_in_range(index(), col);
                                                     let is_visible = col.is_visible(pinned_columns_signal, visible_columns_signal);
                                                     let value_for_copy = col.get_value(&row_clone);
@@ -496,7 +497,7 @@ pub fn GridHeaderDataGrid(
                     div { class: "py-1.5 px-3 size-full",
                         Checkbox {
                             checked: all_checked,
-                            on_change: move |checked| handle_select_all.call(checked),
+                            on_checked_change: move |checked| handle_select_all.call(checked),
                         }
                     }
                 }
@@ -580,7 +581,7 @@ fn PressHoldDeleteRow(
         context_menu_cell_signal.set(None);
     });
 
-    let press_hold = use_press_hold(1500, on_delete, disabled.into());
+    let press_hold = use_press_hold(1500, on_delete, false);
 
     let ph1 = press_hold.clone();
     let ph2 = press_hold.clone();
@@ -588,7 +589,7 @@ fn PressHoldDeleteRow(
     let ph4 = press_hold.clone();
 
     let progress_style = move || {
-        let width_percent = press_hold.progress() * 100.0;
+        let width_percent = (press_hold.progress_signal)() * 100.0;
         format!(
             "position: absolute; left: 0; top: 0; bottom: 0; width: {width_percent:.1}%; background: rgba(239, 68, 68, 0.3); pointer-events: none; border-radius: inherit;"
         )

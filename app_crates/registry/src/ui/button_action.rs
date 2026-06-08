@@ -23,7 +23,7 @@ pub fn ButtonAction(
         class.as_deref().unwrap_or("")
     );
 
-    let progress_width = press_hold.progress_signal();
+    let progress_width = (press_hold.progress_signal)();
     let progress_style = format!(
         "position: absolute; left: 0; top: 0; bottom: 0; width: {:.1}%; background: rgba(0, 0, 0, 0.25); pointer-events: none; border-radius: inherit;",
         progress_width * 100.0

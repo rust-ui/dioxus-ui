@@ -6,13 +6,13 @@ use dioxus::prelude::*;
 #[derive(Clone)]
 #[allow(dead_code)]
 pub struct UsePressHold {
-    pub progress: Signal<f64>,
-    pub is_holding: Signal<bool>,
+    pub progress_signal: Signal<f64>,
+    pub is_holding_signal: Signal<bool>,
     interval_id: Rc<Cell<Option<i32>>>,
     last_update: Rc<Cell<f64>>,
     duration: f64,
     on_complete: Callback<()>,
-    disabled: ReadSignal<bool>,
+    disabled: bool,
 }
 
 impl UsePressHold {
@@ -25,12 +25,12 @@ impl UsePressHold {
     }
 
     pub fn on_pointer_down(&self) {
-        if *self.disabled.read() {
+        if self.disabled {
             return;
         }
 
         self.clear_interval();
-        let mut is_holding = self.is_holding;
+        let mut is_holding = self.is_holding_signal;
         is_holding.set(true);
         self.last_update.set(js_sys::Date::now());
 
@@ -38,8 +38,8 @@ impl UsePressHold {
         {
             use wasm_bindgen::JsCast;
 
-            let progress = self.progress;
-            let is_holding = self.is_holding;
+            let progress = self.progress_signal;
+            let is_holding = self.is_holding_signal;
             let interval_id = Rc::clone(&self.interval_id);
             let last_update = Rc::clone(&self.last_update);
             let duration = self.duration;
@@ -78,10 +78,10 @@ impl UsePressHold {
 
     pub fn on_pointer_up(&self) {
         self.clear_interval();
-        let mut is_holding = self.is_holding;
+        let mut is_holding = self.is_holding_signal;
         is_holding.set(false);
 
-        if *self.progress.read() <= 0.0 {
+        if *self.progress_signal.read() <= 0.0 {
             return;
         }
 
@@ -91,8 +91,8 @@ impl UsePressHold {
         {
             use wasm_bindgen::JsCast;
 
-            let progress = self.progress;
-            let is_holding = self.is_holding;
+            let progress = self.progress_signal;
+            let is_holding = self.is_holding_signal;
             let interval_id = Rc::clone(&self.interval_id);
             let last_update = Rc::clone(&self.last_update);
             let duration = self.duration;
@@ -130,10 +130,10 @@ impl UsePressHold {
     }
 }
 
-pub fn use_press_hold(duration_ms: u32, on_complete: Callback<()>, disabled: ReadSignal<bool>) -> UsePressHold {
+pub fn use_press_hold(duration_ms: u32, on_complete: Callback<()>, disabled: bool) -> UsePressHold {
     UsePressHold {
-        progress: use_signal(|| 0.0),
-        is_holding: use_signal(|| false),
+        progress_signal: use_signal(|| 0.0),
+        is_holding_signal: use_signal(|| false),
         interval_id: Rc::new(Cell::new(None)),
         last_update: Rc::new(Cell::new(0.0)),
         duration: duration_ms as f64,

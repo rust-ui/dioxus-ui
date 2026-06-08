@@ -467,7 +467,7 @@ pub fn InputPhone(
                 PopoverTrigger {
                     class: "gap-1 px-3 w-auto rounded-r-none border-r-0",
                     disabled: disabled,
-                    "aria-label": "Select country",
+                    aria_label: "Select country",
                     span { class: "text-base", "{flag}" }
                     span { class: "text-xs text-muted-foreground", "{dial}" }
                     ChevronsUpDown { class: "ml-1 opacity-50 size-3" }
@@ -509,7 +509,7 @@ pub fn InputPhone(
                     placeholder: placeholder,
                     disabled: disabled,
                     value: formatted_value,
-                    oninput: move |ev| {
+                    oninput: move |ev: FormEvent| {
                         let format = PhoneFormat::for_country(selected_country());
                         let phone = PhoneNumber::new(&ev.value(), format.max_digits);
                         value.set(phone);

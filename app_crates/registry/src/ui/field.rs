@@ -13,13 +13,22 @@ pub fn FieldSet(#[props(into, optional)] class: Option<String>, children: Elemen
 }
 
 #[component]
-pub fn FieldGroup(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn FieldGroup(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] data_slot: Option<String>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!(
         "group/field-group @container/field-group flex flex-col gap-7 w-full has-[>[data-name=CheckboxGroup]]:gap-3 [&>[data-name=FieldGroup]]:gap-4",
         class.as_deref().unwrap_or("")
     );
     rsx! {
-        div { "data-name": "FieldGroup", class: "{merged}", {children} }
+        div {
+            "data-name": "FieldGroup",
+            class: "{merged}",
+            "data-slot": data_slot.as_deref(),
+            {children}
+        }
     }
 }
 
@@ -126,8 +135,10 @@ pub fn Field(
 pub fn FieldLabel(
     #[props(into, optional)] class: Option<String>,
     #[props(into, optional)] html_for: Option<String>,
+    #[props(into, optional)] r#for: Option<String>,
     children: Element,
 ) -> Element {
+    let field_target = html_for.or(r#for).unwrap_or_default();
     let merged = tw_merge!(
         "group/field-label peer/field-label flex gap-2 leading-snug w-fit group-data-[disabled=true]/field:opacity-50 has-[>[data-name=Field]]:w-full has-[>[data-name=Field]]:flex-col has-[>[data-name=Field]]:rounded-md has-[>[data-name=Field]]:border has-data-[state=checked]:bg-primary/5 has-data-[state=checked]:border-primary dark:has-data-[state=checked]:bg-primary/10 has-[:checked]:bg-primary/5 has-[:checked]:border-primary dark:has-[:checked]:bg-primary/10",
         "text-sm font-medium leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
@@ -136,7 +147,7 @@ pub fn FieldLabel(
     rsx! {
         label {
             "data-slot": "field-label",
-            r#for: html_for.as_deref().unwrap_or(""),
+            r#for: "{field_target}",
             class: "{merged}",
             {children}
         }

@@ -6,6 +6,8 @@ pub enum ButtonVariant {
     #[default]
     Default,
     Destructive,
+    Warning,
+    Success,
     Outline,
     Secondary,
     Ghost,
@@ -23,10 +25,14 @@ pub enum ButtonSize {
 }
 
 impl ButtonVariant {
-    fn as_str(&self) -> &'static str {
+    pub(crate) fn as_str(&self) -> &'static str {
         match self {
             ButtonVariant::Default => "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
             ButtonVariant::Destructive => "bg-destructive text-white shadow-xs hover:bg-destructive/90",
+            // TODO. not bg-warning, see leptos.
+            ButtonVariant::Warning => "bg-warning text-warning-foreground shadow-xs hover:bg-warning/90",
+            // TODO. not bg-success, see leptos.
+            ButtonVariant::Success => "bg-success text-success-foreground shadow-xs hover:bg-success/90",
             ButtonVariant::Outline => "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground",
             ButtonVariant::Secondary => "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
             ButtonVariant::Ghost => "hover:bg-accent hover:text-accent-foreground",
@@ -36,7 +42,7 @@ impl ButtonVariant {
 }
 
 impl ButtonSize {
-    fn as_str(&self) -> &'static str {
+    pub(crate) fn as_str(&self) -> &'static str {
         match self {
             ButtonSize::Default => "h-9 px-4 py-2",
             ButtonSize::Sm => "h-8 rounded-md px-3 text-xs",
@@ -49,6 +55,7 @@ impl ButtonSize {
 #[component]
 pub fn Button(
     #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] id: Option<String>,
     #[props(default = ButtonVariant::default())] variant: ButtonVariant,
     #[props(default = ButtonSize::default())] size: ButtonSize,
     #[props(optional)] disabled: bool,
@@ -56,6 +63,10 @@ pub fn Button(
     // TODO: replace button_type with a proper ButtonType enum (e.g. ButtonType::Submit/Reset/Button)
     #[props(into, optional)] button_type: Option<String>,
     #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
+    #[props(optional)] onpointerdown: Option<EventHandler<PointerEvent>>,
+    #[props(optional)] onpointerup: Option<EventHandler<PointerEvent>>,
+    #[props(optional)] onpointerleave: Option<EventHandler<PointerEvent>>,
+    #[props(optional)] onpointercancel: Option<EventHandler<PointerEvent>>,
     children: Element,
 ) -> Element {
     let merged_class = tw_merge!(
@@ -67,16 +78,37 @@ pub fn Button(
 
     if let Some(url) = href {
         rsx! {
-            a { class: "{merged_class}", href: "{url}", {children} }
+            a { id: id.as_deref(), class: "{merged_class}", href: "{url}", {children} }
         }
     } else {
         rsx! {
             button {
+                id: id.as_deref(),
                 class: "{merged_class}",
                 r#type: button_type.as_deref().unwrap_or("button"),
-                disabled: disabled,
+                disabled,
                 onclick: move |e| {
                     if let Some(handler) = &onclick {
+                        handler.call(e);
+                    }
+                },
+                onpointerdown: move |e| {
+                    if let Some(handler) = &onpointerdown {
+                        handler.call(e);
+                    }
+                },
+                onpointerup: move |e| {
+                    if let Some(handler) = &onpointerup {
+                        handler.call(e);
+                    }
+                },
+                onpointerleave: move |e| {
+                    if let Some(handler) = &onpointerleave {
+                        handler.call(e);
+                    }
+                },
+                onpointercancel: move |e| {
+                    if let Some(handler) = &onpointercancel {
                         handler.call(e);
                     }
                 },

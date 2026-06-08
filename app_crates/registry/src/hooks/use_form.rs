@@ -6,16 +6,16 @@ use serde::{Deserialize, Serialize};
 use serde_json;
 
 /// Trait alias for types that can be used with forms
-pub trait FormData: Clone + Default + Serialize + for<'de> Deserialize<'de> + Send + Sync + 'static {}
+pub trait FormData: Clone + Default + Serialize + for<'de> Deserialize<'de> + 'static {}
 
 /// Blanket implementation for all types that satisfy the bounds
-impl<T> FormData for T where T: Clone + Default + Serialize + for<'de> Deserialize<'de> + Send + Sync + 'static {}
+impl<T> FormData for T where T: Clone + Default + Serialize + for<'de> Deserialize<'de> + 'static {}
 
 /// Type alias for form field value setter function
-pub type SetValueFn = Arc<dyn Fn(&str, String) + Send + Sync>;
+pub type SetValueFn = Arc<dyn Fn(&str, String)>;
 
 /// Type alias for form field touch function (called on blur)
-pub type TouchFieldFn = Arc<dyn Fn(&str) + Send + Sync>;
+pub type TouchFieldFn = Arc<dyn Fn(&str)>;
 
 pub struct Form<T> {
     pub values_signal: Signal<HashMap<String, String>>,
@@ -31,6 +31,14 @@ impl<T> Clone for Form<T> {
 }
 
 impl<T> Copy for Form<T> {}
+
+impl<T> PartialEq for Form<T> {
+    fn eq(&self, other: &Self) -> bool {
+        self.values_signal == other.values_signal
+            && self.errors_signal == other.errors_signal
+            && self.touched_signal == other.touched_signal
+    }
+}
 
 impl<T> Form<T>
 where
@@ -54,17 +62,19 @@ where
     }
 
     /// Updates the field value without triggering validation.
-    pub fn set_value(&mut self, field: &str, value: String) {
+    pub fn set_value(&self, field: &str, value: String) {
         let field = field.to_string();
-        self.values_signal.with_mut(|values| {
+        let mut values_signal = self.values_signal;
+        values_signal.with_mut(|values| {
             values.insert(field.clone(), value);
         });
     }
 
     /// Marks a field as touched (called on blur).
-    pub fn touch_field(&mut self, field: &str) {
+    pub fn touch_field(&self, field: &str) {
         let field = field.to_string();
-        self.touched_signal.with_mut(|touched| {
+        let mut touched_signal = self.touched_signal;
+        touched_signal.with_mut(|touched| {
             touched.insert(field.clone());
         });
     }
@@ -102,10 +112,13 @@ where
         self.errors_signal.read().values().all(Option::is_none)
     }
 
-    pub fn reset(&mut self) {
-        self.values_signal.set(Default::default());
-        self.errors_signal.set(Default::default());
-        self.touched_signal.set(Default::default());
+    pub fn reset(&self) {
+        let mut values_signal = self.values_signal;
+        values_signal.set(Default::default());
+        let mut errors_signal = self.errors_signal;
+        errors_signal.set(Default::default());
+        let mut touched_signal = self.touched_signal;
+        touched_signal.set(Default::default());
     }
 
     pub fn get_data(&self) -> Option<T> {

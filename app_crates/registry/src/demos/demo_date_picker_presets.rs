@@ -50,16 +50,19 @@ pub fn DemoDatePickerPresets() -> Element {
         let year = display_date().year();
         let month = display_date().month();
         let Some(new_date) = Date::from_calendar_date(year, month, day).ok() else { return };
-        selected_date.set(new_date);
+        let mut selected_signal = selected_date;
+        selected_signal.set(new_date);
     };
 
     let apply_preset = move |days: i64| {
         let preset_date = today + Duration::days(days);
-        selected_date.set(preset_date);
+        let mut selected_signal = selected_date;
+        selected_signal.set(preset_date);
         let Some(month_start) = Date::from_calendar_date(preset_date.year(), preset_date.month(), 1).ok() else {
             return;
         };
-        display_date.set(month_start);
+        let mut display_signal = display_date;
+        display_signal.set(month_start);
     };
 
     let presets: Vec<(&str, i64)> =
@@ -109,41 +112,35 @@ pub fn DemoDatePickerPresets() -> Element {
                             }
                         }
                         tbody {
-                            {weeks.into_iter().map(|week| {
-                                rsx! {
-                                    DatePickerRow {
-                                        {week.into_iter().map(|DatePickerDay { day, disabled }| {
-                                            rsx! {
-                                                DatePickerCell {
-                                                    day: day,
-                                                    year: year,
-                                                    month: month,
-                                                    disabled: disabled,
-                                                    start_date: selected_date,
-                                                    end_date: selected_date,
-                                                    on_click: handle_day_click,
-                                                }
-                                            }
-                                        })}
+                            for week in weeks {
+                                DatePickerRow {
+                                    for DatePickerDay { day, disabled } in week {
+                                        DatePickerCell {
+                                            day: day,
+                                            year: year,
+                                            month: month,
+                                            disabled: disabled,
+                                            start_date: selected_date,
+                                            end_date: selected_date,
+                                            on_click: handle_day_click,
+                                        }
                                     }
                                 }
-                            })}
+                            }
                         }
                     }
                 }
             }
             CardFooter { class: "flex flex-wrap gap-2 border-t",
-                {presets.into_iter().map(|(label, days)| {
-                    rsx! {
-                        Button {
-                            variant: ButtonVariant::Outline,
-                            size: ButtonSize::Sm,
-                            class: "flex-1",
-                            onclick: move |_| apply_preset(days),
-                            {label}
-                        }
+                for (label, days) in presets {
+                    Button {
+                        variant: ButtonVariant::Outline,
+                        size: ButtonSize::Sm,
+                        class: "flex-1",
+                        onclick: move |_| apply_preset(days),
+                        {label}
                     }
-                })}
+                }
             }
         }
     }

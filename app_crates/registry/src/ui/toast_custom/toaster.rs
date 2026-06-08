@@ -34,14 +34,12 @@ pub fn Toaster(#[props(default = false)] stacked: bool) -> Element {
 /* ========================================================== */
 
 pub fn provide_toaster() {
-    if use_context::<ToasterContext>().is_none() {
-        provide_context(ToasterContext::default());
-    }
+    use_context_provider(ToasterContext::default);
 }
 
 #[must_use]
 pub fn expect_toaster() -> ToasterContext {
-    use_context::<ToasterContext>()
+    consume_context::<ToasterContext>()
 }
 
 /* ========================================================== */

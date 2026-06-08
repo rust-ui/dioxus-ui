@@ -44,33 +44,83 @@ pub fn CommandDescription(#[props(into, optional)] class: Option<String>, childr
 }
 
 #[component]
-pub fn CommandList(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn CommandList(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] id: Option<String>,
+    #[props(into, optional)] tabindex: Option<String>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!(
         "overflow-y-auto overflow-x-hidden max-h-[300px] scroll-py-1 no__scrollbar min-h-80 scroll-pt-2 scroll-pb-1.5",
         class.as_deref().unwrap_or("")
     );
-    rsx! { div { "data-name": "CommandList", class: "{merged}", {children} } }
+    rsx! {
+        div {
+            "data-name": "CommandList",
+            class: "{merged}",
+            id: id.as_deref(),
+            tabindex: tabindex.as_deref(),
+            {children}
+        }
+    }
 }
 
 #[component]
-pub fn CommandGroup(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn CommandGroup(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] role: Option<String>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!("overflow-hidden p-1 text-foreground", class.as_deref().unwrap_or(""));
-    rsx! { div { "data-name": "CommandGroup", class: "{merged}", {children} } }
+    rsx! {
+        div {
+            "data-name": "CommandGroup",
+            class: "{merged}",
+            role: role.as_deref(),
+            {children}
+        }
+    }
 }
 
 #[component]
-pub fn CommandItemLink(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn CommandItemLink(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] href: Option<String>,
+    #[props(into, optional)] target: Option<String>,
+    #[props(into, optional)] rel: Option<String>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!(
         "data-[selected=true]:text-accent-foreground [&_svg:not([class*='text-'])]:text-muted-foreground relative flex cursor-default hover:cursor-pointer items-center gap-2 px-2 py-1.5 text-sm outline-hidden select-none data-[disabled=true]:pointer-events-none data-[disabled=true]:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[selected=true]:border-input data-[selected=true]:bg-muted/50 hover:bg-muted h-9 rounded-md border border-transparent font-medium",
         class.as_deref().unwrap_or("")
     );
-    rsx! { a { "data-name": "CommandItemLink", class: "{merged}", {children} } }
+    rsx! {
+        a {
+            "data-name": "CommandItemLink",
+            class: "{merged}",
+            href: href.as_deref(),
+            target: target.as_deref(),
+            rel: rel.as_deref(),
+            {children}
+        }
+    }
 }
 
 #[component]
-pub fn CommandGroupLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn CommandGroupLabel(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] aria_hidden: Option<String>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!("text-muted-foreground px-2 py-1.5 text-xs font-medium", class.as_deref().unwrap_or(""));
-    rsx! { div { "data-name": "CommandGroupLabel", class: "{merged}", {children} } }
+    rsx! {
+        div {
+            "data-name": "CommandGroupLabel",
+            class: "{merged}",
+            "aria-hidden": aria_hidden.as_deref(),
+            {children}
+        }
+    }
 }
 
 #[component]
@@ -89,7 +139,7 @@ pub fn CommandFooter(#[props(into, optional)] class: Option<String>, children: E
 #[component]
 pub fn CommandDialogProvider(children: Element, #[props(into)] id: String) -> Element {
     let context = CommandDialogContext { dialog_id: id };
-    provide_context(context);
+    use_context_provider(|| context);
     rsx! { {children} }
 }
 
@@ -100,7 +150,6 @@ pub fn CommandDialogTrigger(children: Element, #[props(into, optional)] class: O
 
     rsx! {
         Button {
-            "data-name": "CommandDialogTrigger",
             class: class.unwrap_or_default(),
             variant: ButtonVariant::Outline,
             id: "{trigger_id}",
@@ -260,14 +309,14 @@ pub fn Command(
     #[props(into, optional)] class: Option<String>,
     /// When false, disables client-side filtering (use for server-side search).
     /// Default: true (client-side filtering enabled).
-    #[props(default: true)]
+    #[props(default = true)]
     should_filter: bool,
 ) -> Element {
-    let dialog_context = use_context::<CommandDialogContext>();
+    let dialog_context = try_use_context::<CommandDialogContext>();
     let search_query_signal = use_signal(String::new);
     let command_context = CommandContext { search_query_signal, should_filter };
 
-    provide_context(command_context);
+    use_context_provider(|| command_context);
 
     let merged_class = tw_merge!(
         "flex overflow-hidden flex-col w-full h-full bg-transparent rounded-none text-popover-foreground",
@@ -536,7 +585,8 @@ pub fn CommandInput(
             value: "{(command_context.search_query_signal)()}",
             oninput: move |ev| {
                 let value = ev.value();
-                command_context.search_query_signal.set(value.clone());
+                let mut search_query_signal = command_context.search_query_signal;
+                search_query_signal.set(value.clone());
                 if let Some(cb) = on_search_change {
                     cb.call(value);
                 }
@@ -561,9 +611,9 @@ pub fn CommandItem(
     #[props(into, optional)] class: Option<String>,
     #[props(into, optional)] value: Option<String>,
     #[props(optional)] on_select: Option<EventHandler<()>>,
-    #[props(default: false)] selected: bool,
+    #[props(default = false)] selected: bool,
     /// Reserve space for check icon even when not selected (for alignment)
-    #[props(default: false)]
+    #[props(default = false)]
     reserve_check_space: bool,
 ) -> Element {
     let command_context = use_context::<CommandContext>();

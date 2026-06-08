@@ -3,7 +3,8 @@ use std::collections::HashSet;
 use dioxus::prelude::*;
 
 use crate::ui::multi_select::{
-    MultiSelect, MultiSelectContent, MultiSelectGroup, MultiSelectOption, MultiSelectTrigger, MultiSelectValue,
+    MultiSelect, MultiSelectContent, MultiSelectGroup, MultiSelectItem, MultiSelectOption, MultiSelectTrigger,
+    MultiSelectValue,
 };
 
 const FRUITS: &[&str] = &["Apple", "Banana", "Orange", "Strawberry", "Mango"];
@@ -33,13 +34,13 @@ pub fn DemoMultiSelect() -> Element {
 
                     MultiSelectContent {
                         MultiSelectGroup {
-                            {FRUITS.iter().map(|fruit| {
-                                rsx! {
+                            for fruit in FRUITS.iter() {
+                                MultiSelectItem {
                                     MultiSelectOption { value: *fruit,
                                         {*fruit}
                                     }
                                 }
-                            }).collect::<Vec<_>>()}
+                            }
                         }
                     }
                 }

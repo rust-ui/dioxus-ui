@@ -51,8 +51,7 @@ pub fn DemoContextMenuAction() -> Element {
 
 #[component]
 fn PressHoldAction(on_complete: Callback<()>) -> Element {
-    let disabled = use_signal(|| false);
-    let press_hold = use_press_hold(1500, on_complete, disabled.into());
+    let press_hold = use_press_hold(1500, on_complete, false);
 
     let ph1 = press_hold.clone();
     let ph2 = press_hold.clone();
@@ -60,7 +59,7 @@ fn PressHoldAction(on_complete: Callback<()>) -> Element {
     let ph4 = press_hold.clone();
 
     let progress_style = move || {
-        let width_percent = (press_hold.progress)() * 100.0;
+        let width_percent = (press_hold.progress_signal)() * 100.0;
         format!(
             "position: absolute; left: 0; top: 0; bottom: 0; width: {width_percent:.1}%; background: rgba(34, 197, 94, 0.3); pointer-events: none; border-radius: inherit;"
         )

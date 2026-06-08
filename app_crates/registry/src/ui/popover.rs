@@ -20,32 +20,24 @@ struct PopoverContext {
 }
 
 #[derive(Clone, Copy, PartialEq, Default)]
-pub enum PopoverSide {
+pub enum PopoverAlign {
+    Start,
+    StartOuter,
+    End,
+    EndOuter,
     #[default]
-    Bottom,
-    Top,
-    Left,
-    Right,
-}
-
-impl PopoverSide {
-    fn position_area(self) -> &'static str {
-        match self {
-            Self::Bottom => "bottom center",
-            Self::Top => "top center",
-            Self::Left => "left center",
-            Self::Right => "right center",
-        }
-    }
+    Center,
 }
 
 #[component]
-pub fn Popover(#[props(default = PopoverSide::Bottom)] side: PopoverSide, children: Element) -> Element {
+pub fn Popover(
+    #[props(default = PopoverAlign::Center)] align: PopoverAlign,
+    children: Element,
+) -> Element {
     let id = use_popover_id();
-    let anchor_name = format!("--popover-anchor-{id}");
+    let anchor_name = format!("--anchor_{id}");
     let trigger_id = format!("popover-trigger-{id}");
-    let content_id = format!("popover-content-{id}");
-    let position_area = side.position_area();
+    let content_id = format!("popover_{id}");
 
     provide_context(PopoverContext {
         anchor_name: anchor_name.clone(),
@@ -53,8 +45,31 @@ pub fn Popover(#[props(default = PopoverSide::Bottom)] side: PopoverSide, childr
         content_id: content_id.clone(),
     });
 
+    let (position_styles, transform_origin) = match align {
+        PopoverAlign::Start => (
+            format!("left: anchor(left); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"),
+            "left top".to_string(),
+        ),
+        PopoverAlign::StartOuter => (
+            format!("right: anchor(left); top: anchor(top); margin-right: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"),
+            "right top".to_string(),
+        ),
+        PopoverAlign::End => (
+            format!("right: anchor(right); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"),
+            "right top".to_string(),
+        ),
+        PopoverAlign::EndOuter => (
+            format!("left: anchor(right); top: anchor(top); margin-left: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"),
+            "left top".to_string(),
+        ),
+        PopoverAlign::Center => (
+            "position-area: block-start;".to_string(),
+            "center top".to_string(),
+        ),
+    };
+
     let css = format!(
-        "#{content_id} {{ position: fixed; position-anchor: {anchor_name}; position-area: {position_area}; margin: 4px; }}"
+        "#{content_id} {{ position: fixed; position-anchor: {anchor_name}; {position_styles} transform-origin: {transform_origin}; }}"
     );
 
     let tid = trigger_id.clone();
@@ -90,7 +105,12 @@ pub fn Popover(#[props(default = PopoverSide::Bottom)] side: PopoverSide, childr
 }
 
 #[component]
-pub fn PopoverTrigger(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn PopoverTrigger(
+    #[props(into, optional)] class: Option<String>,
+    #[props(default = false)] disabled: bool,
+    #[props(into, optional)] aria_label: Option<String>,
+    children: Element,
+) -> Element {
     let ctx = use_context::<PopoverContext>();
     rsx! {
         button {
@@ -100,6 +120,8 @@ pub fn PopoverTrigger(#[props(into, optional)] class: Option<String>, children: 
                 "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 cursor-pointer",
                 class.as_deref().unwrap_or("")
             ),
+            disabled,
+            "aria-label": aria_label.as_deref(),
             style: "anchor-name: {ctx.anchor_name};",
             {children}
         }
@@ -123,4 +145,16 @@ pub fn PopoverContent(#[props(into, optional)] class: Option<String>, children: 
             {children}
         }
     }
+}
+
+#[component]
+pub fn PopoverTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("font-medium leading-none", class.as_deref().unwrap_or(""));
+    rsx! { p { "data-name": "PopoverTitle", class: "{merged}", {children} } }
+}
+
+#[component]
+pub fn PopoverDescription(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("text-sm text-muted-foreground mt-1", class.as_deref().unwrap_or(""));
+    rsx! { p { "data-name": "PopoverDescription", class: "{merged}", {children} } }
 }
