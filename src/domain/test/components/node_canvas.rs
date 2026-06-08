@@ -28,6 +28,7 @@ pub fn NodeCanvas(
     nodes: Vec<CanvasNode>,
     edges: Vec<CanvasEdge>,
     children: Element,
+    #[props(optional)] overlay: Option<Element>,
 ) -> Element {
     let is_busy = state.is_dragging() || state.is_panning();
     let edge_paths = state.edge_paths(&nodes, &edges, NODE_H);
@@ -117,8 +118,7 @@ pub fn NodeCanvas(
             }
 
             // ── overlays (viewport space, not transformed) ───────────────────
-            ZoomControls { state, nodes: nodes.clone() }
-            Minimap { state, nodes, edges }
+            {overlay}
         }
     }
 }
@@ -261,16 +261,16 @@ pub fn Minimap(
     }
 }
 
-// ── ZoomControls ──────────────────────────────────────────────────────────────
+// ── CanvasControls ────────────────────────────────────────────────────────────
 
 #[component]
-pub fn ZoomControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element {
+pub fn CanvasControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element {
     let pct = (state.zoom_value() * 100.0).round() as i32;
     let mut state = state;
 
     rsx! {
         div {
-            class: "absolute bottom-3 left-3 flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
+            class: "absolute top-3 right-3 flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
 
             span {
                 class: "text-[11px] text-muted-foreground tabular-nums w-9 text-center",

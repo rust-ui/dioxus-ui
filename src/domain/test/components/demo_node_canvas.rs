@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
 use super::node::{Node, NodeContent, NodeDescription, NodeHeader, NodeTitle};
-use super::node_canvas::{NodeCanvas, NodeWrapper};
+use super::node_canvas::{CanvasControls, Minimap, NodeCanvas, NodeWrapper};
 use crate::domain::test::hooks::use_node_canvas::{
     use_node_canvas, CanvasEdge, CanvasNode,
 };
@@ -29,7 +29,14 @@ pub fn DemoNodeCanvas() -> Element {
     let state = use_node_canvas(&ns);
 
     rsx! {
-        NodeCanvas { state, nodes: ns, edges: edges(),
+        NodeCanvas {
+            state,
+            nodes: ns,
+            edges: edges(),
+            overlay: rsx! {
+                CanvasControls { state, nodes: nodes() }
+                Minimap { state, nodes: nodes(), edges: edges() }
+            },
 
             // 0 — Trigger node (no input handle, one output)
             NodeWrapper { state, idx: 0, width: 192.0,
