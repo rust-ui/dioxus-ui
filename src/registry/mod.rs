@@ -40,7 +40,6 @@ pub mod expandable;
 pub mod faq_transition;
 pub mod field;
 pub mod form;
-pub mod hooks;
 pub mod hover_card;
 pub mod image;
 pub mod input;
@@ -82,7 +81,9 @@ pub mod theme_toggle;
 pub mod toast;
 pub mod toggle;
 pub mod toggle_group;
+pub mod toolbar;
 pub mod tooltip;
+pub mod hooks;
 pub mod types;
 
 use accordion::ACCORDION;
@@ -165,6 +166,7 @@ use theme_toggle::THEME_TOGGLE;
 use toast::TOAST;
 use toggle::TOGGLE;
 use toggle_group::TOGGLE_GROUP;
+use toolbar::TOOLBAR;
 use tooltip::TOOLTIP;
 use types::RegistryEntry;
 
@@ -249,6 +251,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &TOAST,
     &TOGGLE,
     &TOGGLE_GROUP,
+    &TOOLBAR,
     &TOOLTIP,
 ];
 

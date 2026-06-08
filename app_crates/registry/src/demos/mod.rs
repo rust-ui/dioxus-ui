@@ -271,6 +271,7 @@ pub mod demo_toggle_group_outline;
 pub mod demo_toggle_group_rtl;
 pub mod demo_toggle_group_spacing;
 pub mod demo_toggle_group_vertical;
+pub mod demo_toolbar;
 pub mod demo_tooltip;
 pub mod demo_tooltip_rtl;
 pub mod demo_use_history;

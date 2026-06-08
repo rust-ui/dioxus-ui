@@ -87,5 +87,6 @@ pub static SIDENAV_ITEMS: &[SidenavItem] = &[
     SidenavItem { label: "Toast", slug: "toast" },
     SidenavItem { label: "Toggle", slug: "toggle" },
     SidenavItem { label: "Toggle Group", slug: "toggle-group" },
+    SidenavItem { label: "Toolbar", slug: "toolbar" },
     SidenavItem { label: "Tooltip", slug: "tooltip" },
 ];

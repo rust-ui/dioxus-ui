@@ -2,20 +2,20 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_kbd::DemoKbd;
+use registry::demos::demo_toolbar::DemoToolbar;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
 
-pub static KBD: RegistryEntry = RegistryEntry {
-    slug: "kbd",
-    raw: include_str!("../../public/docs/kbd.md"),
+pub static TOOLBAR: RegistryEntry = RegistryEntry {
+    slug: "toolbar",
+    raw: include_str!("../../public/docs/toolbar.md"),
     tags: &[],
-    components: kbd_components,
+    components: toolbar_components,
 };
 
-fn kbd_components() -> MdComponents {
+fn toolbar_components() -> MdComponents {
     let mut c = MdComponents::new();
-    c.add("DemoKbd", |_| rsx! { DemoKbd {} });
+    c.add("DemoToolbar", |_| rsx! { DemoToolbar {} });
     c
 }

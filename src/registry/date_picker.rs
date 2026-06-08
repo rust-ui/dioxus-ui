@@ -3,12 +3,12 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_date_picker::DemoDatePicker;
-use registry::demos::demo_date_picker_booked::DemoDatePickerBooked;
 use registry::demos::demo_date_picker_dropdown::DemoDatePickerDropdown;
 use registry::demos::demo_date_picker_dual::DemoDatePickerDual;
 use registry::demos::demo_date_picker_dual_full::DemoDatePickerDualFull;
 use registry::demos::demo_date_picker_presets::DemoDatePickerPresets;
 use registry::demos::demo_date_picker_time::DemoDatePickerTime;
+use registry::demos::demo_date_picker_booked::DemoDatePickerBooked;
 use registry::demos::demo_date_picker_week_numbers::DemoDatePickerWeekNumbers;
 
 use super::RegistryEntry;

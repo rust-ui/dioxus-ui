@@ -4,15 +4,15 @@
 use dioxus::prelude::*;
 use registry::demos::demo_dropdown_menu::DemoDropdownMenu;
 use registry::demos::demo_dropdown_menu_destructive::DemoDropdownMenuDestructive;
-use registry::demos::demo_dropdown_menu_end::DemoDropdownMenuEnd;
-use registry::demos::demo_dropdown_menu_end_outer::DemoDropdownMenuEndOuter;
-use registry::demos::demo_dropdown_menu_radio::DemoDropdownMenuRadio;
-use registry::demos::demo_dropdown_menu_rtl::DemoDropdownMenuRtl;
-use registry::demos::demo_dropdown_menu_select::DemoDropdownMenuSelect;
 use registry::demos::demo_dropdown_menu_start::DemoDropdownMenuStart;
+use registry::demos::demo_dropdown_menu_end::DemoDropdownMenuEnd;
 use registry::demos::demo_dropdown_menu_start_outer::DemoDropdownMenuStartOuter;
+use registry::demos::demo_dropdown_menu_end_outer::DemoDropdownMenuEndOuter;
 use registry::demos::demo_dropdown_menu_user::DemoDropdownMenuUser;
 use registry::demos::demo_dropdown_menu_user_icon::DemoDropdownMenuUserIcon;
+use registry::demos::demo_dropdown_menu_radio::DemoDropdownMenuRadio;
+use registry::demos::demo_dropdown_menu_select::DemoDropdownMenuSelect;
+use registry::demos::demo_dropdown_menu_rtl::DemoDropdownMenuRtl;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
