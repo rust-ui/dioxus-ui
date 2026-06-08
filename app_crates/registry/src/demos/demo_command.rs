@@ -105,9 +105,5 @@ const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Alert Dialog", href: "/components/alert-dialog", category: CommandCategory::Components },
     CommandItemData { label: "Avatar", href: "/components/avatar", category: CommandCategory::Components },
     CommandItemData { label: "Badge", href: "/components/badge", category: CommandCategory::Components },
-    CommandItemData {
-        label: "Breadcrumb",
-        href: "/components/breadcrumb",
-        category: CommandCategory::Components,
-    },
+    CommandItemData { label: "Breadcrumb", href: "/components/breadcrumb", category: CommandCategory::Components },
 ];

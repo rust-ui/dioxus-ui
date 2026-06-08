@@ -17,10 +17,7 @@ pub fn MenubarGroup(#[props(into, optional)] class: Option<String>, children: El
 
 #[component]
 pub fn MenubarLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!(
-        "px-1.5 py-1 text-sm font-medium data-inset:pl-7",
-        class.as_deref().unwrap_or("")
-    );
+    let merged = tw_merge!("px-1.5 py-1 text-sm font-medium data-inset:pl-7", class.as_deref().unwrap_or(""));
     rsx! { div { class: "{merged}", {children} } }
 }
 
@@ -101,10 +98,7 @@ struct MenubarRadioContext<T: Clone + PartialEq + Send + Sync + 'static> {
 }
 
 #[component]
-pub fn MenubarRadioGroup<T: Clone + PartialEq + Send + Sync + 'static>(
-    children: Element,
-    value: Signal<T>,
-) -> Element {
+pub fn MenubarRadioGroup<T: Clone + PartialEq + Send + Sync + 'static>(children: Element, value: Signal<T>) -> Element {
     provide_context(MenubarRadioContext { value_signal: value });
 
     rsx! {
@@ -211,10 +205,7 @@ pub fn MenubarMenu(children: Element) -> Element {
     let menubar_ctx = use_context::<MenubarContext>();
     let menu_id = use_random_id_for("menubarmenu");
 
-    provide_context(MenubarMenuContext {
-        menu_id,
-        menubar_id: menubar_ctx.menubar_id,
-    });
+    provide_context(MenubarMenuContext { menu_id, menubar_id: menubar_ctx.menubar_id });
 
     rsx! {
         div { "data-name": "MenubarMenu", class: "relative", {children} }
@@ -390,8 +381,7 @@ pub fn MenubarContent(#[props(into, optional)] class: Option<String>, children: 
                 setupMenu();
             }}
         }})();"#,
-        menu_id,
-        menubar_id,
+        menu_id, menubar_id,
     );
 
     rsx! {

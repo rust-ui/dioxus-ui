@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 
-use crate::ui::carousel::{Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselOrientation, CarouselPrevious};
+use crate::ui::carousel::{
+    Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselOrientation, CarouselPrevious,
+};
 
 #[component]
 pub fn DemoCarouselOrientation() -> Element {

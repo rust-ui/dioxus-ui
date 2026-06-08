@@ -41,10 +41,8 @@ pub fn FormGroup(
 
 #[component]
 pub fn FormContent(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!(
-        "group/field-content flex flex-1 flex-col gap-1.5 leading-snug",
-        class.as_deref().unwrap_or("")
-    );
+    let merged =
+        tw_merge!("group/field-content flex flex-1 flex-col gap-1.5 leading-snug", class.as_deref().unwrap_or(""));
     rsx! { div { "data-name": "FormContent", class: "{merged}", {children} } }
 }
 
@@ -167,8 +165,12 @@ impl FormFieldVariant {
     fn class(&self) -> &'static str {
         match self {
             FormFieldVariant::Vertical => "flex-col [&>*]:w-full [&>.hidden]:w-auto",
-            FormFieldVariant::Horizontal => "flex-row items-center [&>[data-name=FieldLabel]]:flex-auto has-[>[data-name=FormContent]]:items-start has-[>[data-name=FormContent]]:[&>[role=checkbox],[role=radio]]:mt-px",
-            FormFieldVariant::Responsive => "flex-col [&>*]:w-full [&>.hidden]:w-auto @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:[&>[data-name=FieldLabel]]:flex-auto @md/field-group:has-[>[data-name=FormContent]]:items-start @md/field-group:has-[>[data-name=FormContent]]:[&>[role=checkbox],[role=radio]]:mt-px",
+            FormFieldVariant::Horizontal => {
+                "flex-row items-center [&>[data-name=FieldLabel]]:flex-auto has-[>[data-name=FormContent]]:items-start has-[>[data-name=FormContent]]:[&>[role=checkbox],[role=radio]]:mt-px"
+            }
+            FormFieldVariant::Responsive => {
+                "flex-col [&>*]:w-full [&>.hidden]:w-auto @md/field-group:flex-row @md/field-group:items-center @md/field-group:[&>*]:w-auto @md/field-group:[&>[data-name=FieldLabel]]:flex-auto @md/field-group:has-[>[data-name=FormContent]]:items-start @md/field-group:has-[>[data-name=FormContent]]:[&>[role=checkbox],[role=radio]]:mt-px"
+            }
         }
     }
 }
@@ -206,11 +208,7 @@ pub fn FormLabel(
     #[props(into, optional)] html_for: Option<String>,
     children: Element,
 ) -> Element {
-    let field_name = if let Some(f) = html_for {
-        f
-    } else {
-        consume_context::<FieldContext>().name
-    };
+    let field_name = if let Some(f) = html_for { f } else { consume_context::<FieldContext>().name };
 
     let merged = tw_merge!(
         "group/form-label peer/form-label flex gap-2 leading-snug w-fit group-data-[disabled=true]/field:opacity-50 has-[>[data-name=Field]]:w-full has-[>[data-name=Field]]:flex-col has-[>[data-name=Field]]:rounded-md has-[>[data-name=Field]]:border [&>*]:data-[name=Field]:p-4 has-data-[state=checked]:bg-primary/5 has-data-[state=checked]:border-primary dark:has-data-[state=checked]:bg-primary/10",

@@ -32,19 +32,13 @@ impl UseHistory {
     /// Sets up `⌘Z` / `⌘⇧Z` / `⌃Y` keyboard shortcuts on the document.
     #[must_use]
     pub fn init() -> Self {
-        let hook = Self {
-            history: use_signal(Vec::new),
-            index: use_signal(|| 0),
-            is_navigating: use_signal(|| false),
-        };
+        let hook = Self { history: use_signal(Vec::new), index: use_signal(|| 0), is_navigating: use_signal(|| false) };
 
         provide_context(hook);
 
         // Seed the stack with the current query string
         use_effect(move || {
-            let search = web_sys::window()
-                .and_then(|w| w.location().search().ok())
-                .unwrap_or_default();
+            let search = web_sys::window().and_then(|w| w.location().search().ok()).unwrap_or_default();
             let mut history = hook.history;
             history.with_mut(|h| h.push(search));
         });

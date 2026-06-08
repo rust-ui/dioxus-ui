@@ -89,9 +89,8 @@ pub fn DemoDataTableFilters() -> Element {
         payments
     });
 
-    let has_active_filters = use_memo(move || {
-        !status_filter_signal.with(|s| s.is_empty()) || !email_filter_signal.with(|s| s.is_empty())
-    });
+    let has_active_filters =
+        use_memo(move || !status_filter_signal.with(|s| s.is_empty()) || !email_filter_signal.with(|s| s.is_empty()));
 
     let active_status_count = use_memo(move || status_filter_signal.with(|s| s.len()));
 

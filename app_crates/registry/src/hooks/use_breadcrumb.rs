@@ -28,12 +28,9 @@ pub fn use_breadcrumb_after_segment(start_segment: &str) -> Vec<(String, String,
 /* ========================================================== */
 
 fn build_breadcrumb_items(start_segment: &str, inclusive: bool) -> Vec<(String, String, bool)> {
-    let path = web_sys::window()
-        .and_then(|w| w.location().pathname().ok())
-        .unwrap_or_default();
+    let path = web_sys::window().and_then(|w| w.location().pathname().ok()).unwrap_or_default();
 
-    let segments: Vec<String> =
-        path.split('/').filter(|segment| !segment.is_empty()).map(String::from).collect();
+    let segments: Vec<String> = path.split('/').filter(|segment| !segment.is_empty()).map(String::from).collect();
 
     segments
         .iter()

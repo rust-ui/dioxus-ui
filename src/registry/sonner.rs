@@ -3,8 +3,8 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_sonner::DemoSonner;
-use registry::demos::demo_sonner_variants::DemoSonnerVariants;
 use registry::demos::demo_sonner_positions::DemoSonnerPositions;
+use registry::demos::demo_sonner_variants::DemoSonnerVariants;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;

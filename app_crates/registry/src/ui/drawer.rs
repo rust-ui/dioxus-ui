@@ -71,10 +71,18 @@ pub fn DrawerContent(
 
     let is_floating = variant == DrawerVariant::Floating;
     let position_class = match position {
-        DrawerPosition::Bottom => "inset-x-0 bottom-0 rounded-t-[10px] border-t data-[state=closed]:translate-y-full data-[state=open]:translate-y-0",
-        DrawerPosition::Top => "inset-x-0 top-0 rounded-b-[10px] border-b data-[state=closed]:-translate-y-full data-[state=open]:translate-y-0",
-        DrawerPosition::Left => "inset-y-0 left-0 h-full w-[80vw] max-w-sm rounded-r-[10px] border-r data-[state=closed]:-translate-x-full data-[state=open]:translate-x-0",
-        DrawerPosition::Right => "inset-y-0 right-0 h-full w-[80vw] max-w-sm rounded-l-[10px] border-l data-[state=closed]:translate-x-full data-[state=open]:translate-x-0",
+        DrawerPosition::Bottom => {
+            "inset-x-0 bottom-0 rounded-t-[10px] border-t data-[state=closed]:translate-y-full data-[state=open]:translate-y-0"
+        }
+        DrawerPosition::Top => {
+            "inset-x-0 top-0 rounded-b-[10px] border-b data-[state=closed]:-translate-y-full data-[state=open]:translate-y-0"
+        }
+        DrawerPosition::Left => {
+            "inset-y-0 left-0 h-full w-[80vw] max-w-sm rounded-r-[10px] border-r data-[state=closed]:-translate-x-full data-[state=open]:translate-x-0"
+        }
+        DrawerPosition::Right => {
+            "inset-y-0 right-0 h-full w-[80vw] max-w-sm rounded-l-[10px] border-l data-[state=closed]:translate-x-full data-[state=open]:translate-x-0"
+        }
     };
     let floating_class = if is_floating { "m-4 rounded-[10px] border" } else { "" };
 

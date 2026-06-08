@@ -1,5 +1,5 @@
-use icons::RotateCcw;
 use dioxus::prelude::*;
+use icons::RotateCcw;
 
 use crate::ui::animate::{AnimateGroup, AnimateGroupItem, AnimateVariant};
 use crate::ui::button::{Button, ButtonSize, ButtonVariant};

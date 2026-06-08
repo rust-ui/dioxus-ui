@@ -4,9 +4,7 @@ use std::rc::Rc;
 
 use wasm_bindgen::JsCast;
 use wasm_bindgen::closure::Closure;
-use web_sys::{
-    Element, Event, EventTarget, HtmlElement, HtmlInputElement, Node,
-};
+use web_sys::{Element, Event, EventTarget, HtmlElement, HtmlInputElement, Node};
 
 const OTP_ROOT_SELECTOR: &str = "[data-otp-root]";
 const OTP_INPUT_SELECTOR: &str = "input[data-otp-input]";

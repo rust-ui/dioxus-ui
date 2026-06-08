@@ -217,9 +217,8 @@ pub fn DataGridFull() -> Element {
     let mut selected_indices_signal = use_signal(HashSet::<usize>::new);
 
     // Sort signals per column
-    let sort_signals: Signal<HashMap<Column, Signal<SortDirection>>> = use_signal(|| {
-        PINNABLE_COLUMNS.iter().map(|(col, _)| (*col, Signal::new(SortDirection::None))).collect()
-    });
+    let sort_signals: Signal<HashMap<Column, Signal<SortDirection>>> =
+        use_signal(|| PINNABLE_COLUMNS.iter().map(|(col, _)| (*col, Signal::new(SortDirection::None))).collect());
 
     let mut pinned_columns_signal: Signal<HashSet<Column>> = use_signal(HashSet::new);
     let mut visible_columns_signal: Signal<HashSet<String>> =

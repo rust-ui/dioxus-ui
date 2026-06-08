@@ -67,13 +67,8 @@ impl ToasterContext {
 
     /// Removes the toast corresponding with the supplied `ToastId`.
     pub fn remove(&self, toast_id: ToastId) {
-        let index = self
-            .queue_signal
-            .peek()
-            .iter()
-            .enumerate()
-            .find(|(_, toast)| toast.id == toast_id)
-            .map(|(index, _)| index);
+        let index =
+            self.queue_signal.peek().iter().enumerate().find(|(_, toast)| toast.id == toast_id).map(|(index, _)| index);
 
         if let Some(index) = index {
             let mut queue = self.queue_signal.peek().clone();
@@ -89,9 +84,6 @@ impl ToasterContext {
 
 impl Default for ToasterContext {
     fn default() -> Self {
-        ToasterContext {
-            stats: Arc::new(Mutex::new(ToasterStats::default())),
-            queue_signal: use_signal(Vec::new),
-        }
+        ToasterContext { stats: Arc::new(Mutex::new(ToasterStats::default())), queue_signal: use_signal(Vec::new) }
     }
 }

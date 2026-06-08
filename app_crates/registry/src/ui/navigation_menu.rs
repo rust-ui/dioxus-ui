@@ -36,10 +36,8 @@ struct NavigationMenuItemContext {
 pub fn NavigationMenu(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let menu_id = use_random_id_for("navmenu");
     provide_context(NavigationMenuContext { menu_id: menu_id.clone() });
-    let merged = tw_merge!(
-        "relative z-10 flex max-w-max flex-1 items-center justify-center",
-        class.as_deref().unwrap_or("")
-    );
+    let merged =
+        tw_merge!("relative z-10 flex max-w-max flex-1 items-center justify-center", class.as_deref().unwrap_or(""));
 
     let script = format!(
         r#"(function() {{
@@ -178,10 +176,8 @@ pub fn NavigationMenu(#[props(into, optional)] class: Option<String>, children: 
 
 #[component]
 pub fn NavigationMenuList(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!(
-        "group flex flex-1 list-none items-center justify-center gap-1",
-        class.as_deref().unwrap_or("")
-    );
+    let merged =
+        tw_merge!("group flex flex-1 list-none items-center justify-center gap-1", class.as_deref().unwrap_or(""));
 
     rsx! {
         ul { "data-name": "NavigationMenuList", class: "{merged}", {children} }

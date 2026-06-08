@@ -40,6 +40,7 @@ pub mod expandable;
 pub mod faq_transition;
 pub mod field;
 pub mod form;
+pub mod hooks;
 pub mod hover_card;
 pub mod image;
 pub mod input;
@@ -82,7 +83,6 @@ pub mod toast;
 pub mod toggle;
 pub mod toggle_group;
 pub mod tooltip;
-pub mod hooks;
 pub mod types;
 
 use accordion::ACCORDION;

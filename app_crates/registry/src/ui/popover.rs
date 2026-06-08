@@ -30,10 +30,7 @@ pub enum PopoverAlign {
 }
 
 #[component]
-pub fn Popover(
-    #[props(default = PopoverAlign::Center)] align: PopoverAlign,
-    children: Element,
-) -> Element {
+pub fn Popover(#[props(default = PopoverAlign::Center)] align: PopoverAlign, children: Element) -> Element {
     let id = use_popover_id();
     let anchor_name = format!("--anchor_{id}");
     let trigger_id = format!("popover-trigger-{id}");
@@ -47,25 +44,30 @@ pub fn Popover(
 
     let (position_styles, transform_origin) = match align {
         PopoverAlign::Start => (
-            format!("left: anchor(left); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"),
+            format!(
+                "left: anchor(left); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"
+            ),
             "left top".to_string(),
         ),
         PopoverAlign::StartOuter => (
-            format!("right: anchor(left); top: anchor(top); margin-right: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"),
+            format!(
+                "right: anchor(left); top: anchor(top); margin-right: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"
+            ),
             "right top".to_string(),
         ),
         PopoverAlign::End => (
-            format!("right: anchor(right); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"),
+            format!(
+                "right: anchor(right); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"
+            ),
             "right top".to_string(),
         ),
         PopoverAlign::EndOuter => (
-            format!("left: anchor(right); top: anchor(top); margin-left: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"),
+            format!(
+                "left: anchor(right); top: anchor(top); margin-left: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"
+            ),
             "left top".to_string(),
         ),
-        PopoverAlign::Center => (
-            "position-area: block-start;".to_string(),
-            "center top".to_string(),
-        ),
+        PopoverAlign::Center => ("position-area: block-start;".to_string(), "center top".to_string()),
     };
 
     let css = format!(

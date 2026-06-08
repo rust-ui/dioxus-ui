@@ -73,10 +73,8 @@ pub fn DemoDatePickerDualFull() -> Element {
         end_signal.set(s.end_date);
     };
 
-    let (left_month, left_year) =
-        DatePickerDualState::get_display_month(display_month_date_signal(), 0);
-    let (right_month, right_year) =
-        DatePickerDualState::get_display_month(display_month_date_signal(), 1);
+    let (left_month, left_year) = DatePickerDualState::get_display_month(display_month_date_signal(), 0);
+    let (right_month, right_year) = DatePickerDualState::get_display_month(display_month_date_signal(), 1);
 
     let left_days = DatePickerDualState::calculate_calendar_data(left_year, left_month);
     let right_days = DatePickerDualState::calculate_calendar_data(right_year, right_month);

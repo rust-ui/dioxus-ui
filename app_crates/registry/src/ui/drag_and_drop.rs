@@ -53,16 +53,11 @@ pub fn Draggable(#[props(into, optional)] class: Option<String>, children: Eleme
                 e.prevent_default();
                 // Find the closest container
                 let target = e.target().and_then(|t| t.dyn_into::<HtmlElement>().ok());
-                let container = target.and_then(|el| {
-                    el.closest("[data-name='DraggableZone']").ok().flatten()
-                });
+                let container = target.and_then(|el| el.closest("[data-name='DraggableZone']").ok().flatten());
                 let Some(container) = container else { return };
 
-                let dragging = container
-                    .query_selector(".dragging")
-                    .ok()
-                    .flatten()
-                    .and_then(|n| n.dyn_into::<HtmlElement>().ok());
+                let dragging =
+                    container.query_selector(".dragging").ok().flatten().and_then(|n| n.dyn_into::<HtmlElement>().ok());
                 let Some(dragging_el) = dragging else { return };
 
                 let after_el = get_drag_after_element(&container, e.client_y() as f64);

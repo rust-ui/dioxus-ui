@@ -16,20 +16,28 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoAlertDialogMedia" => Some(include_str!("../../app_crates/registry/src/demos/demo_alert_dialog_media.rs")),
         "DemoAlertDialogRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_alert_dialog_rtl.rs")),
         "DemoAlertDialogSmall" => Some(include_str!("../../app_crates/registry/src/demos/demo_alert_dialog_small.rs")),
-        "DemoAlertDialogSmallMedia" => Some(include_str!("../../app_crates/registry/src/demos/demo_alert_dialog_small_media.rs")),
+        "DemoAlertDialogSmallMedia" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_alert_dialog_small_media.rs"))
+        }
         "DemoAlertRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_alert_rtl.rs")),
         "DemoAnimate" => Some(include_str!("../../app_crates/registry/src/demos/demo_animate.rs")),
         "DemoAnimateGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_animate_group.rs")),
         "DemoAspectRatio" => Some(include_str!("../../app_crates/registry/src/demos/demo_aspect_ratio.rs")),
-        "DemoAspectRatioPortrait" => Some(include_str!("../../app_crates/registry/src/demos/demo_aspect_ratio_portrait.rs")),
-        "DemoAspectRatioSquare" => Some(include_str!("../../app_crates/registry/src/demos/demo_aspect_ratio_square.rs")),
+        "DemoAspectRatioPortrait" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_aspect_ratio_portrait.rs"))
+        }
+        "DemoAspectRatioSquare" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_aspect_ratio_square.rs"))
+        }
         "DemoAutoForm" => Some(include_str!("../../app_crates/registry/src/demos/demo_auto_form.rs")),
         "DemoAvatar" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar.rs")),
         "DemoAvatarBadge" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_badge.rs")),
         "DemoAvatarBadgeIcon" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_badge_icon.rs")),
         "DemoAvatarGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_group.rs")),
         "DemoAvatarGroupCount" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_group_count.rs")),
-        "DemoAvatarGroupCountIcon" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_group_count_icon.rs")),
+        "DemoAvatarGroupCountIcon" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_group_count_icon.rs"))
+        }
         "DemoAvatarRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_rtl.rs")),
         "DemoAvatarSize" => Some(include_str!("../../app_crates/registry/src/demos/demo_avatar_size.rs")),
         "DemoBadge" => Some(include_str!("../../app_crates/registry/src/demos/demo_badge.rs")),
@@ -43,7 +51,9 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoBentoGrid6" => Some(include_str!("../../app_crates/registry/src/demos/demo_bento_grid6.rs")),
         "DemoBottomNav" => Some(include_str!("../../app_crates/registry/src/demos/demo_bottom_nav.rs")),
         "DemoBreadcrumb" => Some(include_str!("../../app_crates/registry/src/demos/demo_breadcrumb.rs")),
-        "DemoBreadcrumbDropdown" => Some(include_str!("../../app_crates/registry/src/demos/demo_breadcrumb_dropdown.rs")),
+        "DemoBreadcrumbDropdown" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_breadcrumb_dropdown.rs"))
+        }
         "DemoBreadcrumbRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_breadcrumb_rtl.rs")),
         "DemoButton" => Some(include_str!("../../app_crates/registry/src/demos/demo_button.rs")),
         "DemoButtonAction" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_action.rs")),
@@ -52,8 +62,12 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoButtonGroupIcon" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_icon.rs")),
         "DemoButtonGroupInput" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_input.rs")),
         "DemoButtonGroupRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_rtl.rs")),
-        "DemoButtonGroupSelect" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_select.rs")),
-        "DemoButtonGroupSeparator" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_separator.rs")),
+        "DemoButtonGroupSelect" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_select.rs"))
+        }
+        "DemoButtonGroupSeparator" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_separator.rs"))
+        }
         "DemoButtonGroupSizes" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_group_sizes.rs")),
         "DemoButtonHref" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_href.rs")),
         "DemoButtonOverride" => Some(include_str!("../../app_crates/registry/src/demos/demo_button_override.rs")),
@@ -75,10 +89,14 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoCardSm" => Some(include_str!("../../app_crates/registry/src/demos/demo_card_sm.rs")),
         "DemoCarousel" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel.rs")),
         "DemoCarouselApi" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_api.rs")),
-        "DemoCarouselOrientation" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_orientation.rs")),
+        "DemoCarouselOrientation" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_orientation.rs"))
+        }
         "DemoCarouselRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_rtl.rs")),
         "DemoCarouselSize" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_size.rs")),
-        "DemoCarouselSnapScroll" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_snap_scroll.rs")),
+        "DemoCarouselSnapScroll" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_snap_scroll.rs"))
+        }
         "DemoCarouselSpacing" => Some(include_str!("../../app_crates/registry/src/demos/demo_carousel_spacing.rs")),
         "DemoChat" => Some(include_str!("../../app_crates/registry/src/demos/demo_chat.rs")),
         "DemoCheckbox" => Some(include_str!("../../app_crates/registry/src/demos/demo_checkbox.rs")),
@@ -86,33 +104,53 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoChips" => Some(include_str!("../../app_crates/registry/src/demos/demo_chips.rs")),
         "DemoCollapsible" => Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible.rs")),
         "DemoCollapsibleBasic" => Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible_basic.rs")),
-        "DemoCollapsibleFileTree" => Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible_file_tree.rs")),
+        "DemoCollapsibleFileTree" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible_file_tree.rs"))
+        }
         "DemoCollapsibleRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible_rtl.rs")),
-        "DemoCollapsibleSettings" => Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible_settings.rs")),
+        "DemoCollapsibleSettings" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_collapsible_settings.rs"))
+        }
         "DemoCombobox" => Some(include_str!("../../app_crates/registry/src/demos/demo_combobox.rs")),
         "DemoCommand" => Some(include_str!("../../app_crates/registry/src/demos/demo_command.rs")),
         "DemoCommandDialog" => Some(include_str!("../../app_crates/registry/src/demos/demo_command_dialog.rs")),
         "DemoContextMenu" => Some(include_str!("../../app_crates/registry/src/demos/demo_context_menu.rs")),
-        "DemoContextMenuAction" => Some(include_str!("../../app_crates/registry/src/demos/demo_context_menu_action.rs")),
+        "DemoContextMenuAction" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_context_menu_action.rs"))
+        }
         "DemoContextMenuRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_context_menu_rtl.rs")),
         "DemoDataGrid" => Some(include_str!("../../app_crates/registry/src/demos/demo_data_grid.rs")),
         "DemoDataTable" => Some(include_str!("../../app_crates/registry/src/demos/demo_data_table.rs")),
         "DemoDataTableFilters" => Some(include_str!("../../app_crates/registry/src/demos/demo_data_table_filters.rs")),
         "DemoDatePicker" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker.rs")),
         "DemoDatePickerBooked" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_booked.rs")),
-        "DemoDatePickerDropdown" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_dropdown.rs")),
+        "DemoDatePickerDropdown" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_dropdown.rs"))
+        }
         "DemoDatePickerDual" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_dual.rs")),
-        "DemoDatePickerDualFull" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_dual_full.rs")),
-        "DemoDatePickerPresets" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_presets.rs")),
+        "DemoDatePickerDualFull" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_dual_full.rs"))
+        }
+        "DemoDatePickerPresets" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_presets.rs"))
+        }
         "DemoDatePickerTime" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_time.rs")),
-        "DemoDatePickerWeekNumbers" => Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_week_numbers.rs")),
+        "DemoDatePickerWeekNumbers" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_date_picker_week_numbers.rs"))
+        }
         "DemoDialog" => Some(include_str!("../../app_crates/registry/src/demos/demo_dialog.rs")),
         "DemoDialogRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_dialog_rtl.rs")),
         "DemoDialogScrollable" => Some(include_str!("../../app_crates/registry/src/demos/demo_dialog_scrollable.rs")),
-        "DemoDialogStickyFooter" => Some(include_str!("../../app_crates/registry/src/demos/demo_dialog_sticky_footer.rs")),
+        "DemoDialogStickyFooter" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dialog_sticky_footer.rs"))
+        }
         "DemoDirectionProvider" => Some(include_str!("../../app_crates/registry/src/demos/demo_direction_provider.rs")),
-        "DemoDirectionProviderDefault" => Some(include_str!("../../app_crates/registry/src/demos/demo_direction_provider_default.rs")),
-        "DemoDirectionProviderRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_direction_provider_rtl.rs")),
+        "DemoDirectionProviderDefault" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_direction_provider_default.rs"))
+        }
+        "DemoDirectionProviderRtl" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_direction_provider_rtl.rs"))
+        }
         "DemoDocker" => Some(include_str!("../../app_crates/registry/src/demos/demo_docker.rs")),
         "DemoDragAndDrop" => Some(include_str!("../../app_crates/registry/src/demos/demo_drag_and_drop.rs")),
         "DemoDrawer" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer.rs")),
@@ -120,23 +158,43 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoDrawerFamily" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_family.rs")),
         "DemoDrawerFocus" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_focus.rs")),
         "DemoDrawerNested" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_nested.rs")),
-        "DemoDrawerNonDismissable" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_non_dismissable.rs")),
+        "DemoDrawerNonDismissable" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_non_dismissable.rs"))
+        }
         "DemoDrawerRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_rtl.rs")),
         "DemoDrawerScrollable" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_scrollable.rs")),
         "DemoDrawerSide" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_side.rs")),
-        "DemoDrawerSideFloating" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_side_floating.rs")),
-        "DemoDrawerSideScrollable" => Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_side_scrollable.rs")),
+        "DemoDrawerSideFloating" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_side_floating.rs"))
+        }
+        "DemoDrawerSideScrollable" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_drawer_side_scrollable.rs"))
+        }
         "DemoDropdownMenu" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu.rs")),
-        "DemoDropdownMenuDestructive" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_destructive.rs")),
+        "DemoDropdownMenuDestructive" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_destructive.rs"))
+        }
         "DemoDropdownMenuEnd" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_end.rs")),
-        "DemoDropdownMenuEndOuter" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_end_outer.rs")),
-        "DemoDropdownMenuRadio" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_radio.rs")),
+        "DemoDropdownMenuEndOuter" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_end_outer.rs"))
+        }
+        "DemoDropdownMenuRadio" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_radio.rs"))
+        }
         "DemoDropdownMenuRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_rtl.rs")),
-        "DemoDropdownMenuSelect" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_select.rs")),
-        "DemoDropdownMenuStart" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_start.rs")),
-        "DemoDropdownMenuStartOuter" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_start_outer.rs")),
+        "DemoDropdownMenuSelect" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_select.rs"))
+        }
+        "DemoDropdownMenuStart" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_start.rs"))
+        }
+        "DemoDropdownMenuStartOuter" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_start_outer.rs"))
+        }
         "DemoDropdownMenuUser" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_user.rs")),
-        "DemoDropdownMenuUserIcon" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_user_icon.rs")),
+        "DemoDropdownMenuUserIcon" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_user_icon.rs"))
+        }
         "DemoDropzone" => Some(include_str!("../../app_crates/registry/src/demos/demo_dropzone.rs")),
         "DemoEmpty" => Some(include_str!("../../app_crates/registry/src/demos/demo_empty.rs")),
         "DemoEmptyAvatarGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_empty_avatar_group.rs")),
@@ -171,11 +229,17 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoInputOtp" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_otp.rs")),
         "DemoInputOtpDisabled" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_otp_disabled.rs")),
         "DemoInputOtpRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_otp_rtl.rs")),
-        "DemoInputOtpSeparator" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_otp_separator.rs")),
+        "DemoInputOtpSeparator" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_input_otp_separator.rs"))
+        }
         "DemoInputPhone" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_phone.rs")),
-        "DemoInputPhoneDisabled" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_phone_disabled.rs")),
+        "DemoInputPhoneDisabled" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_input_phone_disabled.rs"))
+        }
         "DemoInputPrompt" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_prompt.rs")),
-        "DemoInputPromptWithTools" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_prompt_with_tools.rs")),
+        "DemoInputPromptWithTools" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_input_prompt_with_tools.rs"))
+        }
         "DemoInputRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_rtl.rs")),
         "DemoItem" => Some(include_str!("../../app_crates/registry/src/demos/demo_item.rs")),
         "DemoItemDropdownMenu" => Some(include_str!("../../app_crates/registry/src/demos/demo_item_dropdown_menu.rs")),
@@ -190,10 +254,16 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoMenubarRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_menubar_rtl.rs")),
         "DemoMultiSelect" => Some(include_str!("../../app_crates/registry/src/demos/demo_multi_select.rs")),
         "DemoMultiSelectAlign" => Some(include_str!("../../app_crates/registry/src/demos/demo_multi_select_align.rs")),
-        "DemoMultiSelectScrollable" => Some(include_str!("../../app_crates/registry/src/demos/demo_multi_select_scrollable.rs")),
+        "DemoMultiSelectScrollable" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_multi_select_scrollable.rs"))
+        }
         "DemoNavigationMenu" => Some(include_str!("../../app_crates/registry/src/demos/demo_navigation_menu.rs")),
-        "DemoNavigationMenuComplex" => Some(include_str!("../../app_crates/registry/src/demos/demo_navigation_menu_complex.rs")),
-        "DemoNavigationMenuRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_navigation_menu_rtl.rs")),
+        "DemoNavigationMenuComplex" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_navigation_menu_complex.rs"))
+        }
+        "DemoNavigationMenuRtl" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_navigation_menu_rtl.rs"))
+        }
         "DemoPagination" => Some(include_str!("../../app_crates/registry/src/demos/demo_pagination.rs")),
         "DemoPaginationRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_pagination_rtl.rs")),
         "DemoPopover" => Some(include_str!("../../app_crates/registry/src/demos/demo_popover.rs")),
@@ -201,31 +271,51 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoPopoverEndOuter" => Some(include_str!("../../app_crates/registry/src/demos/demo_popover_end_outer.rs")),
         "DemoPopoverRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_popover_rtl.rs")),
         "DemoPopoverStart" => Some(include_str!("../../app_crates/registry/src/demos/demo_popover_start.rs")),
-        "DemoPopoverStartOuter" => Some(include_str!("../../app_crates/registry/src/demos/demo_popover_start_outer.rs")),
+        "DemoPopoverStartOuter" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_popover_start_outer.rs"))
+        }
         "DemoPressable" => Some(include_str!("../../app_crates/registry/src/demos/demo_pressable.rs")),
         "DemoProgress" => Some(include_str!("../../app_crates/registry/src/demos/demo_progress.rs")),
-        "DemoProgressControlled" => Some(include_str!("../../app_crates/registry/src/demos/demo_progress_controlled.rs")),
+        "DemoProgressControlled" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_progress_controlled.rs"))
+        }
         "DemoProgressLabel" => Some(include_str!("../../app_crates/registry/src/demos/demo_progress_label.rs")),
         "DemoProgressRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_progress_rtl.rs")),
         "DemoRadioButton" => Some(include_str!("../../app_crates/registry/src/demos/demo_radio_button.rs")),
-        "DemoRadioButtonCustom" => Some(include_str!("../../app_crates/registry/src/demos/demo_radio_button_custom.rs")),
+        "DemoRadioButtonCustom" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_radio_button_custom.rs"))
+        }
         "DemoRadioButtonGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_radio_button_group.rs")),
-        "DemoRadioButtonGroupRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_radio_button_group_rtl.rs")),
+        "DemoRadioButtonGroupRtl" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_radio_button_group_rtl.rs"))
+        }
         "DemoRadioChoiceCard" => Some(include_str!("../../app_crates/registry/src/demos/demo_radio_choice_card.rs")),
         "DemoRadioGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_radio_group.rs")),
         "DemoRangeSlider" => Some(include_str!("../../app_crates/registry/src/demos/demo_range_slider.rs")),
         "DemoRangeSliderDual" => Some(include_str!("../../app_crates/registry/src/demos/demo_range_slider_dual.rs")),
         "DemoResizable" => Some(include_str!("../../app_crates/registry/src/demos/demo_resizable.rs")),
         "DemoScrollArea" => Some(include_str!("../../app_crates/registry/src/demos/demo_scroll_area.rs")),
-        "DemoScrollAreaHorizontal" => Some(include_str!("../../app_crates/registry/src/demos/demo_scroll_area_horizontal.rs")),
+        "DemoScrollAreaHorizontal" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_scroll_area_horizontal.rs"))
+        }
         "DemoScrollAreaRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_scroll_area_rtl.rs")),
         "DemoScrollAreaSnap" => Some(include_str!("../../app_crates/registry/src/demos/demo_scroll_area_snap.rs")),
         "DemoSelect" => Some(include_str!("../../app_crates/registry/src/demos/demo_select.rs")),
-        "DemoSelectNativeAutoWidth" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_auto_width.rs")),
-        "DemoSelectNativeError" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_error.rs")),
-        "DemoSelectNativeGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_group.rs")),
-        "DemoSelectNativeOverlappingLabel" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_overlapping_label.rs")),
-        "DemoSelectNativeTimezone" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_timezone.rs")),
+        "DemoSelectNativeAutoWidth" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_auto_width.rs"))
+        }
+        "DemoSelectNativeError" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_error.rs"))
+        }
+        "DemoSelectNativeGroup" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_group.rs"))
+        }
+        "DemoSelectNativeOverlappingLabel" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_overlapping_label.rs"))
+        }
+        "DemoSelectNativeTimezone" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_select_native_timezone.rs"))
+        }
         "DemoSelectRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_rtl.rs")),
         "DemoSelectScrollable" => Some(include_str!("../../app_crates/registry/src/demos/demo_select_scrollable.rs")),
         "DemoSeparator" => Some(include_str!("../../app_crates/registry/src/demos/demo_separator.rs")),
@@ -233,7 +323,9 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoSheet" => Some(include_str!("../../app_crates/registry/src/demos/demo_sheet.rs")),
         "DemoSheetDirections" => Some(include_str!("../../app_crates/registry/src/demos/demo_sheet_directions.rs")),
         "DemoSheetExperimental" => Some(include_str!("../../app_crates/registry/src/demos/demo_sheet_experimental.rs")),
-        "DemoSheetNoCloseButton" => Some(include_str!("../../app_crates/registry/src/demos/demo_sheet_no_close_button.rs")),
+        "DemoSheetNoCloseButton" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_sheet_no_close_button.rs"))
+        }
         "DemoSheetRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_sheet_rtl.rs")),
         "DemoShimmer" => Some(include_str!("../../app_crates/registry/src/demos/demo_shimmer.rs")),
         "DemoSkeleton" => Some(include_str!("../../app_crates/registry/src/demos/demo_skeleton.rs")),
@@ -273,11 +365,19 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoToastVariants" => Some(include_str!("../../app_crates/registry/src/demos/demo_toast_variants.rs")),
         "DemoToggle" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle.rs")),
         "DemoToggleGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group.rs")),
-        "DemoToggleGroupFontWeight" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_font_weight.rs")),
-        "DemoToggleGroupOutline" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_outline.rs")),
+        "DemoToggleGroupFontWeight" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_font_weight.rs"))
+        }
+        "DemoToggleGroupOutline" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_outline.rs"))
+        }
         "DemoToggleGroupRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_rtl.rs")),
-        "DemoToggleGroupSpacing" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_spacing.rs")),
-        "DemoToggleGroupVertical" => Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_vertical.rs")),
+        "DemoToggleGroupSpacing" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_spacing.rs"))
+        }
+        "DemoToggleGroupVertical" => {
+            Some(include_str!("../../app_crates/registry/src/demos/demo_toggle_group_vertical.rs"))
+        }
         "DemoTooltip" => Some(include_str!("../../app_crates/registry/src/demos/demo_tooltip.rs")),
         "DemoTooltipRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_tooltip_rtl.rs")),
         "DemoUseHistory" => Some(include_str!("../../app_crates/registry/src/demos/demo_use_history.rs")),

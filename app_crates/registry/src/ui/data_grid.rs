@@ -144,8 +144,7 @@ pub trait DataGridColumn: PinnableColumn + AsRef<str> + Send + Sync + 'static {
         pinned_columns_signal: Signal<HashSet<Self>>,
         visible_columns_signal: Signal<HashSet<String>>,
     ) -> bool {
-        !pinned_columns_signal.read().contains(&self)
-            && visible_columns_signal.read().contains(self.as_ref())
+        !pinned_columns_signal.read().contains(&self) && visible_columns_signal.read().contains(self.as_ref())
     }
 }
 
@@ -228,7 +227,8 @@ pub fn Grid(
     #[props(into, optional)] class: Option<String>,
 ) -> Element {
     // NOTE: Avoid `select-none` here to allow text selection via double-click
-    let merged_class = tw_merge!("grid overflow-auto relative rounded-md border focus:outline-none", class.as_deref().unwrap_or(""));
+    let merged_class =
+        tw_merge!("grid overflow-auto relative rounded-md border focus:outline-none", class.as_deref().unwrap_or(""));
 
     rsx! {
         div {
@@ -250,11 +250,7 @@ pub fn Grid(
 /* ========================================================== */
 
 #[component]
-pub fn GridBody(
-    children: Element,
-    style: Signal<String>,
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn GridBody(children: Element, style: Signal<String>, #[props(into, optional)] class: Option<String>) -> Element {
     let merged_class = tw_merge!("grid relative", class.as_deref().unwrap_or(""));
 
     rsx! {
@@ -320,10 +316,7 @@ const PINNED_Z_INDEX: i32 = 51;
 /* ========================================================== */
 
 #[component]
-pub fn GridCellWrapper(
-    children: Element,
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn GridCellWrapper(children: Element, #[props(into, optional)] class: Option<String>) -> Element {
     let merged_class = tw_merge!(
         "py-1.5 px-2 text-sm text-left cursor-default outline-none size-full has-data-[slot=checkbox]:pt-2.5 **:data-[name=GridCellContent]:line-clamp-1",
         class.as_deref().unwrap_or("")
@@ -346,7 +339,10 @@ pub fn GridHeaderCell(
     #[props(into, optional)] class: Option<String>,
     #[props(optional)] visible: Option<bool>,
 ) -> Element {
-    let merged_class = tw_merge!("relative border-r opacity-100 bg-background data-[visible=false]:hidden", class.as_deref().unwrap_or(""));
+    let merged_class = tw_merge!(
+        "relative border-r opacity-100 bg-background data-[visible=false]:hidden",
+        class.as_deref().unwrap_or("")
+    );
 
     let formatted_style = format!("width: calc(var(--header-{column}-size) * 1px);");
     let visible_str = visible.unwrap_or(true).to_string();
@@ -657,10 +653,7 @@ where
 /* ========================================================== */
 
 #[component]
-pub fn DataGridToolbar(
-    children: Element,
-    #[props(into, optional)] class: Option<String>,
-) -> Element {
+pub fn DataGridToolbar(children: Element, #[props(into, optional)] class: Option<String>) -> Element {
     let merged_class = tw_merge!("flex gap-4 justify-between items-center mb-4", class.as_deref().unwrap_or(""));
 
     rsx! {

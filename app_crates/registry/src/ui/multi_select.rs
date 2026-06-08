@@ -38,8 +38,7 @@ struct MultiSelectContext {
 
 #[component]
 pub fn MultiSelectLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged =
-        tw_merge!("text-muted-foreground px-2 py-1.5 text-xs font-medium", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("text-muted-foreground px-2 py-1.5 text-xs font-medium", class.as_deref().unwrap_or(""));
     rsx! { li { "data-name": "MultiSelectLabel", class: "{merged}", {children} } }
 }
 
@@ -81,11 +80,7 @@ pub fn MultiSelectOption(
 
     let value_clone = value.clone();
     let is_selected = use_memo(move || {
-        if let Some(ref val) = value_clone {
-            (multi_select_ctx.values_signal)().contains(val)
-        } else {
-            false
-        }
+        if let Some(ref val) = value_clone { (multi_select_ctx.values_signal)().contains(val) } else { false }
     });
 
     let merged = tw_merge!(
@@ -165,11 +160,7 @@ pub fn MultiSelectTrigger(
         class.as_deref().unwrap_or("")
     );
 
-    let button_id = if !id_str.is_empty() {
-        id_str
-    } else {
-        format!("trigger_{}", multi_select_ctx.target_id)
-    };
+    let button_id = if !id_str.is_empty() { id_str } else { format!("trigger_{}", multi_select_ctx.target_id) };
 
     rsx! {
         button {

@@ -3,11 +3,11 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_skeleton::DemoSkeleton;
-use registry::demos::demo_skeleton_image::DemoSkeletonImage;
 use registry::demos::demo_skeleton_avatar::DemoSkeletonAvatar;
-use registry::demos::demo_skeleton_text::DemoSkeletonText;
 use registry::demos::demo_skeleton_form::DemoSkeletonForm;
+use registry::demos::demo_skeleton_image::DemoSkeletonImage;
 use registry::demos::demo_skeleton_table::DemoSkeletonTable;
+use registry::demos::demo_skeleton_text::DemoSkeletonText;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
