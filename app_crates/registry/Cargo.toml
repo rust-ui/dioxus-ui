@@ -32,6 +32,10 @@ web-sys = { version = "0.3", features = [
   "CssStyleDeclaration",
   "NodeList",
   "ScrollToOptions",
+  "MutationObserver",
+  "MutationObserverInit",
+  "MutationRecord",
+  "InputEvent",
 ] }
 
 [features]
