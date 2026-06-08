@@ -451,10 +451,10 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
                     width: "{vp_w:.1}",
                     height: "{vp_h:.1}",
                     rx: "2",
-                    fill: "hsl(var(--primary) / 0.08)",
-                    stroke: "hsl(var(--primary) / 0.5)",
-                    "stroke-width": "1",
-                    "stroke-dasharray": "2 1",
+                    fill: "none",
+                    stroke: "hsl(var(--primary))",
+                    "stroke-width": "1.5",
+                    "stroke-dasharray": "3 2",
                 }
             }
         }
