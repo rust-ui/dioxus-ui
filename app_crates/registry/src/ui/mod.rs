@@ -84,4 +84,5 @@ pub mod theme_toggle;
 pub mod toast_custom;
 pub mod toggle;
 pub mod toggle_group;
+pub mod toolbar;
 pub mod tooltip;
