@@ -24,6 +24,7 @@ use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
 use routes::page_icons::PageIcons;
+use routes::test_page::TestPage;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");
 const FAVICON_16: Asset = asset!("/public/icons/favicon-16x16.png");
@@ -82,6 +83,8 @@ enum Route {
         PageIcons {},
         #[route("/create")]
         PageCreate {},
+        #[route("/test-page")]
+        TestPage {},
 }
 
 fn main() {

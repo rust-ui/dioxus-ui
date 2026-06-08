@@ -6,4 +6,5 @@ pub mod home_page;
 pub mod home_page_sparkles;
 pub mod hook_page;
 pub mod page_icons;
+pub mod test_page;
 pub mod test_server_functions;
