@@ -12,6 +12,7 @@ edition = "2024"
 
 [dependencies]
 dioxus = { version = "0.7", features = ["router", "fullstack"] }
+dioxus-html = { version = "0.7" }
 registry = { path = "app_crates/registry" }
 app_config = { path = "app_crates/app_config" }
 app_routes = { path = "app_crates/app_routes" }
