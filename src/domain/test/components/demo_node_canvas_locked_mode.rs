@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use icons::{Lock, LockOpen};
 use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
 
-use super::node_canvas::{CanvasControls, DefaultNodeContent, Minimap, NodeCanvas, NodeWrapper};
+use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
 use crate::domain::test::hooks::use_node_canvas::{
     use_node_canvas, CanvasEdge, CanvasNode, NodeKind,
 };
@@ -102,7 +102,6 @@ pub fn DemoNodeCanvasLockedMode() -> Element {
                     }
                 }
 
-                Minimap { state }
                 CanvasControls { state }
             },
 
