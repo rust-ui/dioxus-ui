@@ -1286,6 +1286,7 @@ dependencies = [
  "app_domain",
  "app_routes",
  "dioxus",
+ "dioxus-html",
  "html-escape",
  "html_parser",
  "icons",

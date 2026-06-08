@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
 use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 
-use crate::domain::test::hooks::use_node_canvas::{CanvasNode, NodeCanvasState, NodeKind};
+use crate::domain::test::hooks::use_node_canvas::{CanvasNode, NodeCanvasState};
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
@@ -151,7 +151,7 @@ pub fn NodeWrapper(
 ) -> Element {
     // Guard against stale renders during deletion
     let node = { state.nodes.read().get(idx).cloned() };
-    let Some(node) = node else { return None };
+    let Some(node) = node else { return rsx! {} };
 
     let (x, y)      = state.pos(idx);
     let is_active   = state.active_idx()   == Some(idx);
@@ -178,7 +178,10 @@ pub fn NodeWrapper(
                 ev.stop_propagation();
                 let c = ev.data().client_coordinates();
                 state.select_node(idx);
-                state.start_drag(idx, c.x, c.y);
+                // handle's onmousedown fires first (inner→outer); if connecting already started, skip drag
+                if !state.is_connecting() {
+                    state.start_drag(idx, c.x, c.y);
+                }
             },
 
             {children}
@@ -191,6 +194,8 @@ pub fn NodeWrapper(
                         if is_connecting { " ring-2 ring-primary/40 scale-125" } else { "" },
                     ),
                     style: "transform: translate(50%, -50%); cursor: crosshair; z-index: 10;",
+                    "data-testid": "source-handle",
+                    "data-node-id": "{node.id}",
                     onmousedown: move |ev| {
                         ev.stop_propagation();
                         state.start_connect(node_id.clone(), from_x, from_y);
@@ -206,6 +211,8 @@ pub fn NodeWrapper(
                         if is_connecting { " ring-2 ring-primary/40 scale-125" } else { "" },
                     ),
                     style: "transform: translate(-50%, -50%); cursor: crosshair; z-index: 10;",
+                    "data-testid": "target-handle",
+                    "data-node-id": "{node.id}",
                     onmouseup: move |ev| {
                         ev.stop_propagation();
                         state.finish_connect(to_id.clone());
