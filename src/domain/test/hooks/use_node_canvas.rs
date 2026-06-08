@@ -117,7 +117,8 @@ pub struct NodeCanvasState {
     touch_pinch:    Signal<Option<PinchState>>,
     pub history:    UseHistoryStack<Vec<(f64, f64)>>,
     next_id:        Signal<usize>,
-    pub locked:     Signal<bool>,
+    pub locked:       Signal<bool>,
+    pub snap_to_grid: Signal<bool>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
@@ -137,7 +138,8 @@ impl PartialEq for NodeCanvasState {
             && self.connecting  == other.connecting
             && self.touch_pinch == other.touch_pinch
             && self.history     == other.history
-            && self.locked      == other.locked
+            && self.locked        == other.locked
+            && self.snap_to_grid  == other.snap_to_grid
     }
 }
 
@@ -185,6 +187,15 @@ impl NodeCanvasState {
     pub fn toggle_locked(&mut self) {
         let v = *self.locked.read();
         self.locked.set(!v);
+    }
+
+    pub fn is_snap_to_grid(&self) -> bool { *self.snap_to_grid.read() }
+
+    pub fn set_snap_to_grid(&mut self, v: bool) { self.snap_to_grid.set(v); }
+
+    pub fn toggle_snap_to_grid(&mut self) {
+        let v = *self.snap_to_grid.read();
+        self.snap_to_grid.set(!v);
     }
 
     // ── connect ───────────────────────────────────────────────────────────────
@@ -263,10 +274,11 @@ impl NodeCanvasState {
     // ── add node ─────────────────────────────────────────────────────────────
 
     pub fn add_node(&mut self, x: f64, y: f64) {
-        let n = *self.next_id.read();
+        let n    = *self.next_id.read();
         *self.next_id.write() = n + 1;
-        let snap_x = (x / 20.0).round() * 20.0;
-        let snap_y = (y / 20.0).round() * 20.0;
+        let snap = *self.snap_to_grid.read();
+        let snap_x = if snap { (x / 20.0).round() * 20.0 } else { x };
+        let snap_y = if snap { (y / 20.0).round() * 20.0 } else { y };
         // positions must be pushed before nodes: writing nodes triggers a re-render,
         // and the render loop indexes into positions by node idx — if positions is
         // shorter than nodes at that moment, pos() panics with index out of bounds.
@@ -321,16 +333,18 @@ impl NodeCanvasState {
             Some(d) => d,
             None    => return,
         };
-        let z = *self.zoom.read();
-        let dx = (mx - d.mouse_start_x) / z;
-        let dy = (my - d.mouse_start_y) / z;
+        let z    = *self.zoom.read();
+        let snap = *self.snap_to_grid.read();
+        let dx   = (mx - d.mouse_start_x) / z;
+        let dy   = (my - d.mouse_start_y) / z;
         for (idx, sx, sy) in &d.starts {
             let raw_x = (sx + dx).max(0.0);
             let raw_y = (sy + dy).max(0.0);
-            self.positions.write()[*idx] = (
-                (raw_x / 20.0).round() * 20.0,
-                (raw_y / 20.0).round() * 20.0,
-            );
+            self.positions.write()[*idx] = if snap {
+                ((raw_x / 20.0).round() * 20.0, (raw_y / 20.0).round() * 20.0)
+            } else {
+                (raw_x, raw_y)
+            };
         }
     }
 
@@ -528,6 +542,7 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
         history:      UseHistoryStack::new(initial),
         next_id:      use_signal(|| next_id),
         locked:       use_signal(|| false),
+        snap_to_grid: use_signal(|| false),
     }
 }
 
