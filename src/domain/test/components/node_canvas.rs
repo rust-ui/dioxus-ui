@@ -276,7 +276,10 @@ pub fn NodeWrapper(
                 let shift = data.modifiers().contains(Modifiers::SHIFT);
                 if shift {
                     state.toggle_select(idx);
-                } else {
+                } else if !state.is_selected(idx) {
+                    // Clicking an unselected node without Shift: select only this one.
+                    // Clicking an already-selected node without Shift: keep the full
+                    // selection so dragging moves all selected nodes together.
                     state.select_node(idx);
                 }
                 // handle's onmousedown fires first (inner→outer); if connecting already started, skip drag
