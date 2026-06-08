@@ -76,9 +76,11 @@ impl NodeCanvasState {
             let z = *self.zoom.read();
             let dx = (mx - d.mouse_start_x) / z;
             let dy = (my - d.mouse_start_y) / z;
+            let raw_x = (d.node_start_x + dx).max(0.0);
+            let raw_y = (d.node_start_y + dy).max(0.0);
             self.positions.write()[d.node_idx] = (
-                (d.node_start_x + dx).max(0.0),
-                (d.node_start_y + dy).max(0.0),
+                (raw_x / 20.0).round() * 20.0,
+                (raw_y / 20.0).round() * 20.0,
             );
         }
     }
@@ -172,6 +174,27 @@ impl NodeCanvasState {
     pub fn zoom_reset(&mut self) {
         self.pan.set((0.0, 0.0));
         self.zoom.set(1.0);
+    }
+
+    pub fn fit_to_view(&mut self, nodes: &[CanvasNode], viewport_w: f64, viewport_h: f64, node_h: f64) {
+        if nodes.is_empty() { return; }
+        let padding = 48.0;
+        let pos = self.positions.read();
+        let min_x = nodes.iter().enumerate().map(|(i, _)| pos[i].0).fold(f64::INFINITY, f64::min);
+        let min_y = nodes.iter().enumerate().map(|(i, _)| pos[i].1).fold(f64::INFINITY, f64::min);
+        let max_x = nodes.iter().enumerate().map(|(i, n)| pos[i].0 + n.width).fold(f64::NEG_INFINITY, f64::max);
+        let max_y = nodes.iter().enumerate().map(|(i, _)| pos[i].1 + node_h).fold(f64::NEG_INFINITY, f64::max);
+        drop(pos);
+        let content_w = (max_x - min_x).max(1.0);
+        let content_h = (max_y - min_y).max(1.0);
+        let z = ((viewport_w - padding * 2.0) / content_w)
+            .min((viewport_h - padding * 2.0) / content_h)
+            .clamp(0.2, 4.0);
+        self.zoom.set(z);
+        self.pan.set((
+            (viewport_w - content_w * z) / 2.0 - min_x * z,
+            (viewport_h - content_h * z) / 2.0 - min_y * z,
+        ));
     }
 
     pub fn world_transform(&self) -> String {

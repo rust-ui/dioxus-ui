@@ -4,6 +4,9 @@ use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 
 use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeCanvasState};
 
+const VIEWPORT_W: f64 = 800.0;
+const VIEWPORT_H: f64 = 450.0;
+
 pub const NODE_H: f64 = 72.0;
 
 // ── NodeCanvas ────────────────────────────────────────────────────────────────
@@ -91,6 +94,7 @@ pub fn NodeCanvas(
                     class: "absolute inset-0 pointer-events-none overflow-visible",
                     width: "3000",
                     height: "2000",
+                    style { "@keyframes edge-flow {{ to {{ stroke-dashoffset: -18; }} }}" }
                     for d in &edge_paths {
                         path {
                             d: d.as_str(),
@@ -99,6 +103,8 @@ pub fn NodeCanvas(
                             class: "text-border",
                             "stroke-width": "1.5",
                             "stroke-linecap": "round",
+                            "stroke-dasharray": "6 3",
+                            style: "animation: edge-flow 1.2s linear infinite;",
                         }
                     }
                 }
@@ -107,7 +113,7 @@ pub fn NodeCanvas(
             }
 
             // ── zoom controls (viewport space, not transformed) ───────────────
-            ZoomControls { state }
+            ZoomControls { state, nodes }
         }
     }
 }
@@ -147,7 +153,7 @@ pub fn NodeWrapper(
 // ── ZoomControls ──────────────────────────────────────────────────────────────
 
 #[component]
-pub fn ZoomControls(state: NodeCanvasState) -> Element {
+pub fn ZoomControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element {
     let pct = (state.zoom_value() * 100.0).round() as i32;
     let mut state = state;
 
@@ -171,6 +177,11 @@ pub fn ZoomControls(state: NodeCanvasState) -> Element {
                 "+"
             }
             div { class: "w-px h-4 bg-border mx-0.5" }
+            button {
+                class: "text-[11px] px-1.5 py-0.5 rounded hover:bg-accent text-muted-foreground transition-colors",
+                onclick: move |_| { state.fit_to_view(&nodes, VIEWPORT_W, VIEWPORT_H, NODE_H); },
+                "fit"
+            }
             button {
                 class: "text-[11px] px-1.5 py-0.5 rounded hover:bg-accent text-muted-foreground transition-colors",
                 onclick: move |_| { state.zoom_reset(); },
