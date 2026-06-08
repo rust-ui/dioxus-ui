@@ -92,6 +92,14 @@ struct PanState {
     pan_start_y: f64,
 }
 
+#[derive(Clone, Copy)]
+struct PinchState {
+    prev_dist: f64,
+    /// Element-relative midpoint between the two fingers.
+    cx: f64,
+    cy: f64,
+}
+
 // ── NodeCanvasState ───────────────────────────────────────────────────────────
 
 pub struct NodeCanvasState {
@@ -104,8 +112,10 @@ pub struct NodeCanvasState {
     pub selected:   Signal<Option<usize>>,
     pub connecting: Signal<Option<ConnectingState>>,
     canvas_drag:    Signal<Option<PanState>>,
+    touch_pinch:    Signal<Option<PinchState>>,
     pub history:    UseHistoryStack<Vec<(f64, f64)>>,
     next_id:        Signal<usize>,
+    pub locked:     Signal<bool>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
@@ -122,8 +132,10 @@ impl PartialEq for NodeCanvasState {
             && self.pan       == other.pan
             && self.zoom      == other.zoom
             && self.selected  == other.selected
-            && self.connecting == other.connecting
-            && self.history   == other.history
+            && self.connecting  == other.connecting
+            && self.touch_pinch == other.touch_pinch
+            && self.history     == other.history
+            && self.locked      == other.locked
     }
 }
 
@@ -140,6 +152,19 @@ impl NodeCanvasState {
 
     pub fn deselect(&mut self) {
         self.selected.set(None);
+    }
+
+    // ── locked mode ───────────────────────────────────────────────────────────
+
+    pub fn is_locked(&self) -> bool { *self.locked.read() }
+
+    pub fn set_locked(&mut self, v: bool) {
+        self.locked.set(v);
+    }
+
+    pub fn toggle_locked(&mut self) {
+        let v = *self.locked.read();
+        self.locked.set(!v);
     }
 
     // ── connect ───────────────────────────────────────────────────────────────
@@ -317,6 +342,44 @@ impl NodeCanvasState {
         self.canvas_drag.set(None);
     }
 
+    // ── touch pinch ───────────────────────────────────────────────────────────
+
+    pub fn is_pinching(&self) -> bool {
+        self.touch_pinch.read().is_some()
+    }
+
+    pub fn start_pinch(&mut self, dist: f64, cx: f64, cy: f64) {
+        // Stop any single-touch pan before entering pinch mode.
+        self.stop_pan();
+        self.touch_pinch.set(Some(PinchState { prev_dist: dist, cx, cy }));
+    }
+
+    pub fn update_pinch(&mut self, dist: f64, cx: f64, cy: f64) {
+        let prev = match *self.touch_pinch.read() {
+            Some(p) => p,
+            None    => return,
+        };
+        if prev.prev_dist > 1.0 {
+            let scale = dist / prev.prev_dist;
+            self.zoom_at_scale(cx, cy, scale);
+        }
+        self.touch_pinch.set(Some(PinchState { prev_dist: dist, cx, cy }));
+    }
+
+    pub fn stop_pinch(&mut self) {
+        self.touch_pinch.set(None);
+    }
+
+    /// Zoom around (ex, ey) by an arbitrary scale factor — used by pinch gesture.
+    pub fn zoom_at_scale(&mut self, ex: f64, ey: f64, scale: f64) {
+        let old_z = *self.zoom.read();
+        let new_z = (old_z * scale).clamp(0.2, 4.0);
+        let ratio = new_z / old_z;
+        let (px, py) = *self.pan.read();
+        self.pan.set((ex - (ex - px) * ratio, ey - (ey - py) * ratio));
+        self.zoom.set(new_z);
+    }
+
     // ── zoom ─────────────────────────────────────────────────────────────────
 
     pub fn zoom_value(&self) -> f64 { *self.zoom.read() }
@@ -416,9 +479,11 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
         zoom:       use_signal(|| 1.0),
         selected:   use_signal(|| None),
         connecting: use_signal(|| None),
-        canvas_drag: use_signal(|| None),
-        history:    UseHistoryStack::new(initial),
-        next_id:    use_signal(|| next_id),
+        canvas_drag:  use_signal(|| None),
+        touch_pinch:  use_signal(|| None),
+        history:      UseHistoryStack::new(initial),
+        next_id:      use_signal(|| next_id),
+        locked:       use_signal(|| false),
     }
 }
 

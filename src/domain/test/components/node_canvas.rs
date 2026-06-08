@@ -28,18 +28,36 @@ pub fn NodeCanvas(
     children: Element,
     #[props(optional)] overlay: Option<Element>,
 ) -> Element {
-    let is_busy = state.is_dragging() || state.is_panning();
+    let is_busy   = state.is_dragging() || state.is_panning();
+    let locked    = state.is_locked();
     let edge_paths = state.edge_paths(NODE_H);
     let transform = state.world_transform();
     let mut state = state;
+    // Top-left of the canvas element in the viewport — used to convert touch
+    // client coordinates to canvas-space coordinates for pinch-zoom pivot.
+    let mut canvas_origin = use_signal(|| (0.0_f64, 0.0_f64));
 
     rsx! {
         div {
             class: "relative rounded-lg border bg-background overflow-hidden select-none outline-none",
-            style: format!("height: 450px; cursor: {};", if is_busy { "grabbing" } else { "grab" }),
+            // touch-action: none — tells the browser we handle all touch gestures
+            // ourselves, preventing native scroll/zoom from fighting our handlers.
+            style: format!(
+                "height: 450px; cursor: {}; touch-action: none;",
+                if locked { "default" } else if is_busy { "grabbing" } else { "grab" }
+            ),
             tabindex: "0",
 
+            onmounted: move |data| {
+                spawn(async move {
+                    if let Ok(rect) = data.get_client_rect().await {
+                        canvas_origin.set((rect.min_x(), rect.min_y()));
+                    }
+                });
+            },
+
             onkeydown: move |ev| {
+                if locked { return; }
                 let data = ev.data();
                 let mods = data.modifiers();
                 let ctrl = mods.contains(Modifiers::CONTROL) || mods.contains(Modifiers::META);
@@ -63,6 +81,7 @@ pub fn NodeCanvas(
             },
 
             onmousedown: move |ev| {
+                if locked { return; }
                 let c = ev.data().client_coordinates();
                 state.deselect();
                 if state.is_connecting() {
@@ -72,6 +91,7 @@ pub fn NodeCanvas(
                 }
             },
             onmousemove: move |ev| {
+                if locked { return; }
                 let c = ev.data().client_coordinates();
                 state.update_drag(c.x, c.y);
                 state.update_pan(c.x, c.y);
@@ -81,6 +101,7 @@ pub fn NodeCanvas(
             onmouseup: move |_| { state.stop_drag(); state.stop_pan(); state.cancel_connect(); },
             onmouseleave: move |_| { state.stop_drag(); state.stop_pan(); state.cancel_connect(); },
             onwheel: move |ev| {
+                if locked { return; }
                 ev.prevent_default();
                 let pos = ev.data().element_coordinates();
                 let delta_y = match ev.data().delta() {
@@ -89,6 +110,75 @@ pub fn NodeCanvas(
                     WheelDelta::Pages(p)  => p.y * 400.0,
                 };
                 state.zoom_at(pos.x, pos.y, delta_y);
+            },
+
+            // ── touch (single-finger pan + two-finger pinch-zoom) ────────────
+            ontouchstart: move |ev| {
+                if locked { return; }
+                ev.prevent_default();
+                let touches = ev.data().touches();
+                match touches.len() {
+                    1 => {
+                        state.stop_pinch();
+                        state.deselect();
+                        state.start_pan(touches[0].client_x(), touches[0].client_y());
+                    }
+                    2 => {
+                        state.stop_pan();
+                        let dist = touch_dist(
+                            touches[0].client_x(), touches[0].client_y(),
+                            touches[1].client_x(), touches[1].client_y(),
+                        );
+                        let (ox, oy) = *canvas_origin.read();
+                        let cx = (touches[0].client_x() + touches[1].client_x()) / 2.0 - ox;
+                        let cy = (touches[0].client_y() + touches[1].client_y()) / 2.0 - oy;
+                        state.start_pinch(dist, cx, cy);
+                    }
+                    _ => {}
+                }
+            },
+            ontouchmove: move |ev| {
+                if locked { return; }
+                ev.prevent_default();
+                let touches = ev.data().touches();
+                match touches.len() {
+                    1 if !state.is_pinching() => {
+                        state.update_pan(touches[0].client_x(), touches[0].client_y());
+                    }
+                    2 => {
+                        let dist = touch_dist(
+                            touches[0].client_x(), touches[0].client_y(),
+                            touches[1].client_x(), touches[1].client_y(),
+                        );
+                        let (ox, oy) = *canvas_origin.read();
+                        let cx = (touches[0].client_x() + touches[1].client_x()) / 2.0 - ox;
+                        let cy = (touches[0].client_y() + touches[1].client_y()) / 2.0 - oy;
+                        state.update_pinch(dist, cx, cy);
+                    }
+                    _ => {}
+                }
+            },
+            ontouchend: move |ev| {
+                // `touches()` on touchend = remaining touches (finger just lifted excluded).
+                let touches = ev.data().touches();
+                match touches.len() {
+                    0 => {
+                        state.stop_drag();
+                        state.stop_pan();
+                        state.stop_pinch();
+                    }
+                    1 => {
+                        // One finger lifted from a two-finger gesture — transition to pan.
+                        state.stop_pinch();
+                        if !locked { state.start_pan(touches[0].client_x(), touches[0].client_y()); }
+                    }
+                    _ => {}
+                }
+            },
+            ontouchcancel: move |_| {
+                state.stop_drag();
+                state.stop_pan();
+                state.stop_pinch();
             },
 
             // ── world (transformed) ──────────────────────────────────────────
@@ -157,6 +247,7 @@ pub fn NodeWrapper(
     let is_active   = state.active_idx()   == Some(idx);
     let is_selected = state.selected_idx() == Some(idx);
     let is_connecting = state.is_connecting();
+    let locked = state.is_locked();
 
     let width    = node.width;
     let node_id  = node.id.clone();
@@ -172,10 +263,11 @@ pub fn NodeWrapper(
                 if is_active   { " shadow-lg" } else { "" },
                 if is_selected { " ring-2 ring-primary ring-offset-1 ring-offset-background rounded-md" } else { "" },
             ),
-            style: format!("left: {x:.1}px; top: {y:.1}px; width: {width:.0}px; cursor: grab;"),
+            style: format!("left: {x:.1}px; top: {y:.1}px; width: {width:.0}px; cursor: {};", if locked { "default" } else { "grab" }),
 
             onmousedown: move |ev| {
                 ev.stop_propagation();
+                if locked { return; }
                 let c = ev.data().client_coordinates();
                 state.select_node(idx);
                 // handle's onmousedown fires first (inner→outer); if connecting already started, skip drag
@@ -198,7 +290,7 @@ pub fn NodeWrapper(
                     "data-node-id": "{node.id}",
                     onmousedown: move |ev| {
                         ev.stop_propagation();
-                        state.start_connect(node_id.clone(), from_x, from_y);
+                        if !locked { state.start_connect(node_id.clone(), from_x, from_y); }
                     },
                 }
             }
@@ -254,6 +346,7 @@ pub fn DefaultNodeContent(node: CanvasNode) -> Element {
 pub fn Minimap(state: NodeCanvasState) -> Element {
     let scale_x = MINI_W / WORLD_REF_W;
     let scale_y = MINI_H / WORLD_REF_H;
+    let mut state = state;
 
     let pos_snap   = state.positions.read().clone();
     let nodes_snap = state.nodes.read().clone();
@@ -298,10 +391,21 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
 
     rsx! {
         div {
-            class: "rounded-md border bg-background/90 backdrop-blur-sm shadow-sm overflow-hidden pointer-events-none",
+            class: "rounded-md border bg-background/90 backdrop-blur-sm shadow-sm overflow-hidden cursor-pointer",
             style: format!(
                 "position: absolute; bottom: 12px; right: 12px; width: {MINI_W}px; height: {MINI_H}px;"
             ),
+            // Click-to-pan: convert minimap element coords → world coords → center viewport there.
+            onclick: move |ev| {
+                let ec = ev.data().element_coordinates();
+                let world_x = ec.x / scale_x;
+                let world_y = ec.y / scale_y;
+                let zoom = state.zoom_value();
+                state.pan.set((
+                    VIEWPORT_W / 2.0 - world_x * zoom,
+                    VIEWPORT_H / 2.0 - world_y * zoom,
+                ));
+            },
 
             svg {
                 width: "{MINI_W}",
@@ -343,6 +447,14 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
             }
         }
     }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+fn touch_dist(ax: f64, ay: f64, bx: f64, by: f64) -> f64 {
+    let dx = ax - bx;
+    let dy = ay - by;
+    (dx * dx + dy * dy).sqrt()
 }
 
 // ── CanvasControls ────────────────────────────────────────────────────────────
