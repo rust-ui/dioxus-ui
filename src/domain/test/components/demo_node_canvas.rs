@@ -55,7 +55,7 @@ pub fn DemoNodeCanvas() -> Element {
             },
 
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
-                NodeWrapper { key: "{node.id}", state, idx: i, width: node.width,
+                NodeWrapper { key: "{node.id}", state, idx: i,
                     DefaultNodeContent { node }
                 }
             }

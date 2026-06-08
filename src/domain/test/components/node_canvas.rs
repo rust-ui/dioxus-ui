@@ -65,15 +65,21 @@ pub fn NodeCanvas(
             onmousedown: move |ev| {
                 let c = ev.data().client_coordinates();
                 state.deselect();
-                state.start_pan(c.x, c.y);
+                if state.is_connecting() {
+                    state.cancel_connect();
+                } else {
+                    state.start_pan(c.x, c.y);
+                }
             },
             onmousemove: move |ev| {
                 let c = ev.data().client_coordinates();
                 state.update_drag(c.x, c.y);
                 state.update_pan(c.x, c.y);
+                let ec = ev.data().element_coordinates();
+                state.update_connect_mouse(ec.x, ec.y);
             },
-            onmouseup: move |_| { state.stop_drag(); state.stop_pan(); },
-            onmouseleave: move |_| { state.stop_drag(); state.stop_pan(); },
+            onmouseup: move |_| { state.stop_drag(); state.stop_pan(); state.cancel_connect(); },
+            onmouseleave: move |_| { state.stop_drag(); state.stop_pan(); state.cancel_connect(); },
             onwheel: move |ev| {
                 ev.prevent_default();
                 let pos = ev.data().element_coordinates();
@@ -113,6 +119,17 @@ pub fn NodeCanvas(
                             style: "animation: edge-flow 1.2s linear infinite;",
                         }
                     }
+                    if let Some(preview) = state.connecting_preview() {
+                        path {
+                            d: preview.as_str(),
+                            fill: "none",
+                            stroke: "hsl(var(--primary))",
+                            "stroke-width": "1.5",
+                            "stroke-linecap": "round",
+                            "stroke-dasharray": "5 4",
+                            style: "opacity: 0.8;",
+                        }
+                    }
                 }
 
                 {children}
@@ -130,12 +147,22 @@ pub fn NodeCanvas(
 pub fn NodeWrapper(
     state: NodeCanvasState,
     idx: usize,
-    width: f64,
     children: Element,
 ) -> Element {
-    let (x, y) = state.pos(idx);
-    let is_active  = state.active_idx()  == Some(idx);
+    // Guard against stale renders during deletion
+    let node = { state.nodes.read().get(idx).cloned() };
+    let Some(node) = node else { return None };
+
+    let (x, y)      = state.pos(idx);
+    let is_active   = state.active_idx()   == Some(idx);
     let is_selected = state.selected_idx() == Some(idx);
+    let is_connecting = state.is_connecting();
+
+    let width    = node.width;
+    let node_id  = node.id.clone();
+    let from_x   = x + width;
+    let from_y   = y + NODE_H / 2.0;
+    let to_id    = node.id.clone();
     let mut state = state;
 
     rsx! {
@@ -155,6 +182,36 @@ pub fn NodeWrapper(
             },
 
             {children}
+
+            // ── source handle (right) ─────────────────────────────────────
+            if node.has_source {
+                div {
+                    class: format!(
+                        "absolute right-0 top-1/2 size-3 rounded-full border-2 border-primary bg-background transition-colors{}",
+                        if is_connecting { " ring-2 ring-primary/40 scale-125" } else { "" },
+                    ),
+                    style: "transform: translate(50%, -50%); cursor: crosshair; z-index: 10;",
+                    onmousedown: move |ev| {
+                        ev.stop_propagation();
+                        state.start_connect(node_id.clone(), from_x, from_y);
+                    },
+                }
+            }
+
+            // ── target handle (left) ──────────────────────────────────────
+            if node.has_target {
+                div {
+                    class: format!(
+                        "absolute left-0 top-1/2 size-3 rounded-full border-2 border-primary bg-background transition-colors{}",
+                        if is_connecting { " ring-2 ring-primary/40 scale-125" } else { "" },
+                    ),
+                    style: "transform: translate(-50%, -50%); cursor: crosshair; z-index: 10;",
+                    onmouseup: move |ev| {
+                        ev.stop_propagation();
+                        state.finish_connect(to_id.clone());
+                    },
+                }
+            }
         }
     }
 }
@@ -167,8 +224,8 @@ pub fn DefaultNodeContent(node: CanvasNode) -> Element {
 
     rsx! {
         Node {
-            target: node.has_target,
-            source: node.has_source,
+            target: false,
+            source: false,
             NodeHeader {
                 span { class: format!("size-2 rounded-full shrink-0 {}", node.kind.dot_color()) }
                 NodeTitle { class: node.kind.text_color(), "{node.label}" }

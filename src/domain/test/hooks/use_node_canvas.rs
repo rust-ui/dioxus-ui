@@ -62,6 +62,17 @@ pub struct CanvasEdge {
     pub to: String,
 }
 
+// ── ConnectingState ───────────────────────────────────────────────────────────
+
+#[derive(Clone)]
+pub struct ConnectingState {
+    pub from_node_id: String,
+    pub from_x: f64,
+    pub from_y: f64,
+    pub mouse_x: f64,
+    pub mouse_y: f64,
+}
+
 // ── Internal drag/pan state ───────────────────────────────────────────────────
 
 #[derive(Clone, Copy)]
@@ -84,16 +95,17 @@ struct PanState {
 // ── NodeCanvasState ───────────────────────────────────────────────────────────
 
 pub struct NodeCanvasState {
-    pub nodes:    Signal<Vec<CanvasNode>>,
-    pub edges:    Signal<Vec<CanvasEdge>>,
-    pub positions: Signal<Vec<(f64, f64)>>,
-    pub drag:      Signal<Option<DragState>>,
-    pub pan:       Signal<(f64, f64)>,
-    pub zoom:      Signal<f64>,
-    pub selected:  Signal<Option<usize>>,
-    canvas_drag:   Signal<Option<PanState>>,
-    pub history:   UseHistoryStack<Vec<(f64, f64)>>,
-    next_id:       Signal<usize>,
+    pub nodes:      Signal<Vec<CanvasNode>>,
+    pub edges:      Signal<Vec<CanvasEdge>>,
+    pub positions:  Signal<Vec<(f64, f64)>>,
+    pub drag:       Signal<Option<DragState>>,
+    pub pan:        Signal<(f64, f64)>,
+    pub zoom:       Signal<f64>,
+    pub selected:   Signal<Option<usize>>,
+    pub connecting: Signal<Option<ConnectingState>>,
+    canvas_drag:    Signal<Option<PanState>>,
+    pub history:    UseHistoryStack<Vec<(f64, f64)>>,
+    next_id:        Signal<usize>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
@@ -103,14 +115,15 @@ impl Clone for NodeCanvasState {
 }
 impl PartialEq for NodeCanvasState {
     fn eq(&self, other: &Self) -> bool {
-        self.nodes     == other.nodes
-            && self.edges    == other.edges
+        self.nodes      == other.nodes
+            && self.edges     == other.edges
             && self.positions == other.positions
-            && self.drag     == other.drag
-            && self.pan      == other.pan
-            && self.zoom     == other.zoom
-            && self.selected == other.selected
-            && self.history  == other.history
+            && self.drag      == other.drag
+            && self.pan       == other.pan
+            && self.zoom      == other.zoom
+            && self.selected  == other.selected
+            && self.connecting == other.connecting
+            && self.history   == other.history
     }
 }
 
@@ -127,6 +140,53 @@ impl NodeCanvasState {
 
     pub fn deselect(&mut self) {
         self.selected.set(None);
+    }
+
+    // ── connect ───────────────────────────────────────────────────────────────
+
+    pub fn is_connecting(&self) -> bool {
+        self.connecting.read().is_some()
+    }
+
+    pub fn start_connect(&mut self, from_node_id: String, from_x: f64, from_y: f64) {
+        self.connecting.set(Some(ConnectingState {
+            from_node_id,
+            from_x, from_y,
+            mouse_x: from_x, mouse_y: from_y,
+        }));
+    }
+
+    pub fn update_connect_mouse(&mut self, ex: f64, ey: f64) {
+        if self.connecting.read().is_none() { return; }
+        let (pan_x, pan_y) = *self.pan.read();
+        let zoom = *self.zoom.read();
+        let wx = (ex - pan_x) / zoom;
+        let wy = (ey - pan_y) / zoom;
+        if let Some(cs) = self.connecting.write().as_mut() {
+            cs.mouse_x = wx;
+            cs.mouse_y = wy;
+        }
+    }
+
+    pub fn finish_connect(&mut self, to_node_id: String) {
+        let cs = self.connecting.read().clone();
+        self.connecting.set(None);
+        let Some(cs) = cs else { return };
+        if cs.from_node_id == to_node_id { return; }
+        let already = self.edges.read().iter()
+            .any(|e| e.from == cs.from_node_id && e.to == to_node_id);
+        if !already {
+            self.edges.write().push(CanvasEdge { from: cs.from_node_id, to: to_node_id });
+        }
+    }
+
+    pub fn cancel_connect(&mut self) {
+        self.connecting.set(None);
+    }
+
+    pub fn connecting_preview(&self) -> Option<String> {
+        let cs = self.connecting.read().clone()?;
+        Some(bezier_path(cs.from_x, cs.from_y, cs.mouse_x, cs.mouse_y))
     }
 
     // ── delete ───────────────────────────────────────────────────────────────
@@ -345,16 +405,17 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
     let initial: Vec<(f64, f64)> = nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect();
     let next_id = nodes.len();
     NodeCanvasState {
-        nodes:       use_signal(|| nodes),
-        edges:       use_signal(|| edges),
-        positions:   use_signal(|| initial.clone()),
-        drag:        use_signal(|| None),
-        pan:         use_signal(|| (0.0, 0.0)),
-        zoom:        use_signal(|| 1.0),
-        selected:    use_signal(|| None),
+        nodes:      use_signal(|| nodes),
+        edges:      use_signal(|| edges),
+        positions:  use_signal(|| initial.clone()),
+        drag:       use_signal(|| None),
+        pan:        use_signal(|| (0.0, 0.0)),
+        zoom:       use_signal(|| 1.0),
+        selected:   use_signal(|| None),
+        connecting: use_signal(|| None),
         canvas_drag: use_signal(|| None),
-        history:     UseHistoryStack::new(initial),
-        next_id:     use_signal(|| next_id),
+        history:    UseHistoryStack::new(initial),
+        next_id:    use_signal(|| next_id),
     }
 }
 
