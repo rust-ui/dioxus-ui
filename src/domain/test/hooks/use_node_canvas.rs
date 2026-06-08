@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use dioxus::prelude::*;
 
 use super::use_history_stack::UseHistoryStack;
@@ -75,13 +77,13 @@ pub struct ConnectingState {
 
 // ── Internal drag/pan state ───────────────────────────────────────────────────
 
-#[derive(Clone, Copy)]
+#[derive(Clone)]
 pub struct DragState {
     pub node_idx: usize,
     pub mouse_start_x: f64,
     pub mouse_start_y: f64,
-    pub node_start_x: f64,
-    pub node_start_y: f64,
+    /// Start positions of every node being dragged: (idx, start_x, start_y).
+    pub starts: Vec<(usize, f64, f64)>,
 }
 
 #[derive(Clone, Copy)]
@@ -109,7 +111,7 @@ pub struct NodeCanvasState {
     pub drag:       Signal<Option<DragState>>,
     pub pan:        Signal<(f64, f64)>,
     pub zoom:       Signal<f64>,
-    pub selected:   Signal<Option<usize>>,
+    pub selected:   Signal<HashSet<usize>>,
     pub connecting: Signal<Option<ConnectingState>>,
     canvas_drag:    Signal<Option<PanState>>,
     touch_pinch:    Signal<Option<PinchState>>,
@@ -142,16 +144,34 @@ impl PartialEq for NodeCanvasState {
 impl NodeCanvasState {
     // ── selection ────────────────────────────────────────────────────────────
 
+    /// Returns the single selected index (first in set), for backward compat.
     pub fn selected_idx(&self) -> Option<usize> {
-        *self.selected.read()
+        self.selected.read().iter().next().copied()
     }
 
+    pub fn is_selected(&self, idx: usize) -> bool {
+        self.selected.read().contains(&idx)
+    }
+
+    /// Select only this node (clears multi-selection).
     pub fn select_node(&mut self, idx: usize) {
-        self.selected.set(Some(idx));
+        let mut s = self.selected.write();
+        s.clear();
+        s.insert(idx);
+    }
+
+    /// Add to or remove from current selection (Shift+click).
+    pub fn toggle_select(&mut self, idx: usize) {
+        let mut s = self.selected.write();
+        if s.contains(&idx) {
+            s.remove(&idx);
+        } else {
+            s.insert(idx);
+        }
     }
 
     pub fn deselect(&mut self) {
-        self.selected.set(None);
+        self.selected.write().clear();
     }
 
     // ── locked mode ───────────────────────────────────────────────────────────
@@ -217,12 +237,25 @@ impl NodeCanvasState {
     // ── delete ───────────────────────────────────────────────────────────────
 
     pub fn delete_selected(&mut self) {
-        let Some(idx) = *self.selected.read() else { return };
-        let id = self.nodes.read()[idx].id.clone();
-        self.nodes.write().remove(idx);
-        self.positions.write().remove(idx);
-        self.edges.write().retain(|e| e.from != id && e.to != id);
-        self.selected.set(None);
+        // Collect indices sorted descending so removals don't shift remaining indices.
+        let mut indices: Vec<usize> = self.selected.read().iter().cloned().collect();
+        if indices.is_empty() { return; }
+        indices.sort_unstable_by(|a, b| b.cmp(a));
+
+        let ids: Vec<String> = {
+            let nodes = self.nodes.read();
+            indices.iter().filter_map(|&i| nodes.get(i).map(|n| n.id.clone())).collect()
+        };
+
+        for &idx in &indices {
+            self.nodes.write().remove(idx);
+            self.positions.write().remove(idx);
+        }
+        for id in &ids {
+            self.edges.write().retain(|e| e.from != *id && e.to != *id);
+        }
+
+        self.selected.write().clear();
         let snap = self.positions.read().clone();
         self.history.push(snap);
     }
@@ -262,28 +295,39 @@ impl NodeCanvasState {
     }
 
     pub fn active_idx(&self) -> Option<usize> {
-        (*self.drag.read()).map(|d| d.node_idx)
+        self.drag.read().as_ref().map(|d| d.node_idx)
     }
 
     pub fn start_drag(&mut self, idx: usize, mx: f64, my: f64) {
-        let (nx, ny) = self.positions.read()[idx];
+        // If clicked node isn't in the current selection, select it alone.
+        if !self.selected.read().contains(&idx) {
+            self.select_node(idx);
+        }
+        let starts: Vec<(usize, f64, f64)> = {
+            let pos = self.positions.read();
+            let sel = self.selected.read();
+            sel.iter().map(|&i| (i, pos[i].0, pos[i].1)).collect()
+        };
         self.drag.set(Some(DragState {
             node_idx: idx,
             mouse_start_x: mx,
             mouse_start_y: my,
-            node_start_x: nx,
-            node_start_y: ny,
+            starts,
         }));
     }
 
     pub fn update_drag(&mut self, mx: f64, my: f64) {
-        if let Some(d) = *self.drag.read() {
-            let z = *self.zoom.read();
-            let dx = (mx - d.mouse_start_x) / z;
-            let dy = (my - d.mouse_start_y) / z;
-            let raw_x = (d.node_start_x + dx).max(0.0);
-            let raw_y = (d.node_start_y + dy).max(0.0);
-            self.positions.write()[d.node_idx] = (
+        let d = match self.drag.read().clone() {
+            Some(d) => d,
+            None    => return,
+        };
+        let z = *self.zoom.read();
+        let dx = (mx - d.mouse_start_x) / z;
+        let dy = (my - d.mouse_start_y) / z;
+        for (idx, sx, sy) in &d.starts {
+            let raw_x = (sx + dx).max(0.0);
+            let raw_y = (sy + dy).max(0.0);
+            self.positions.write()[*idx] = (
                 (raw_x / 20.0).round() * 20.0,
                 (raw_y / 20.0).round() * 20.0,
             );
@@ -477,7 +521,7 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
         drag:       use_signal(|| None),
         pan:        use_signal(|| (0.0, 0.0)),
         zoom:       use_signal(|| 1.0),
-        selected:   use_signal(|| None),
+        selected:   use_signal(HashSet::new),
         connecting: use_signal(|| None),
         canvas_drag:  use_signal(|| None),
         touch_pinch:  use_signal(|| None),

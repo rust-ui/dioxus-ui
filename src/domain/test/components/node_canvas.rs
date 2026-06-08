@@ -247,10 +247,10 @@ pub fn NodeWrapper(
     let Some(node) = node else { return rsx! {} };
 
     let (x, y)      = state.pos(idx);
-    let is_active   = state.active_idx()   == Some(idx);
-    let is_selected = state.selected_idx() == Some(idx);
+    let is_active     = state.active_idx() == Some(idx);
+    let is_selected   = state.is_selected(idx);
     let is_connecting = state.is_connecting();
-    let locked = state.is_locked();
+    let locked        = state.is_locked();
 
     let width    = node.width;
     let node_id  = node.id.clone();
@@ -271,10 +271,16 @@ pub fn NodeWrapper(
             onmousedown: move |ev| {
                 ev.stop_propagation();
                 if locked { return; }
-                let c = ev.data().client_coordinates();
-                state.select_node(idx);
+                let data = ev.data();
+                let c    = data.client_coordinates();
+                let shift = data.modifiers().contains(Modifiers::SHIFT);
+                if shift {
+                    state.toggle_select(idx);
+                } else {
+                    state.select_node(idx);
+                }
                 // handle's onmousedown fires first (inner→outer); if connecting already started, skip drag
-                if !state.is_connecting() {
+                if !state.is_connecting() && state.is_selected(idx) {
                     state.start_drag(idx, c.x, c.y);
                 }
             },

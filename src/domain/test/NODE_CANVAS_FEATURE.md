@@ -19,6 +19,7 @@
 | Minimap click-to-pan          | click to center viewport   |
 | Touch / trackpad support      | pinch-zoom + 1-finger pan  |
 | Locked / read-only mode       | `toggle_locked()`, banner  |
+| Multi-select                  | Shift+click, multi-drag    |
 
 ---
 
@@ -34,7 +35,7 @@
 | **Keyboard move selected node** — arrow keys nudge by grid step               | Easy       | 🟠 Mid   |
 | **Node status badge** — running / error / done indicator on node              | Easy       | 🟠 Mid   |
 | **Right-click context menu** — add/delete/duplicate at cursor                 | Medium     | 🟠 Mid   |
-| **Multi-select** — Shift+click to select many                                 | Medium     | 🟠 Mid   |
+| ~~**Multi-select** — Shift+click to select many~~                             | ~~Medium~~ | ✅ Done  |
 | **Copy / paste nodes** — Ctrl+C/V clones selection with offset                | Medium     | 🟠 Mid   |
 | **Duplicate node** — Ctrl+D shortcut                                          | Medium     | 🟠 Mid   |
 | **Auto-layout (dagre)** — compute acyclic layout from edges                   | Hard       | 🟠 Mid   |
