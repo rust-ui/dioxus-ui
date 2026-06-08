@@ -1,4 +1,5 @@
 pub mod demo_node_canvas;
+pub mod demo_node_canvas_copy_paste;
 pub mod demo_node_canvas_locked_mode;
 pub mod demo_node_canvas_multiselect;
 pub mod demo_node_canvas_minimap;

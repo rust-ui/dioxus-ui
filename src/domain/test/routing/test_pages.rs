@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::domain::test::components::demo_node_canvas::DemoNodeCanvas;
+use crate::domain::test::components::demo_node_canvas_copy_paste::DemoNodeCanvasCopyPaste;
 use crate::domain::test::components::demo_node_canvas_locked_mode::DemoNodeCanvasLockedMode;
 use crate::domain::test::components::demo_node_canvas_multiselect::DemoNodeCanvasMultiselect;
 use crate::domain::test::components::demo_node_canvas_minimap::DemoNodeCanvasMinimap;
@@ -55,6 +56,14 @@ pub fn TestPage() -> Element {
                 }
             }
             DemoNodeCanvasMultiselect {}
+
+            div { class: "flex flex-col gap-1",
+                h2 { class: "text-xl font-semibold tracking-tight", "Node Canvas — Copy / Paste" }
+                p { class: "text-sm text-muted-foreground",
+                    "Select nodes, Ctrl+C to copy, Ctrl+V to paste (offset +20px each time)."
+                }
+            }
+            DemoNodeCanvasCopyPaste {}
 
             div { class: "flex flex-col gap-1",
                 h2 { class: "text-xl font-semibold tracking-tight", "Toolbar" }

@@ -71,6 +71,14 @@ pub fn NodeCanvas(
                         ev.prevent_default();
                         state.redo();
                     }
+                    Key::Character(ref k) if ctrl && k == "c" => {
+                        ev.prevent_default();
+                        state.copy_selected();
+                    }
+                    Key::Character(ref k) if ctrl && k == "v" => {
+                        ev.prevent_default();
+                        state.paste_nodes();
+                    }
                     Key::Delete | Key::Backspace => {
                         ev.prevent_default();
                         state.delete_selected();
@@ -423,6 +431,19 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
                 width: "{MINI_W}",
                 height: "{MINI_H}",
 
+                // Viewport rect drawn first so nodes render on top of it.
+                rect {
+                    x: "{vp_x:.1}",
+                    y: "{vp_y:.1}",
+                    width: "{vp_w:.1}",
+                    height: "{vp_h:.1}",
+                    rx: "2",
+                    fill: "hsl(var(--primary) / 0.06)",
+                    stroke: "hsl(var(--primary) / 0.5)",
+                    "stroke-width": "1",
+                    "stroke-dasharray": "3 2",
+                }
+
                 for d in &edge_paths {
                     path {
                         d: d.as_str(),
@@ -445,17 +466,6 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
                     }
                 }
 
-                rect {
-                    x: "{vp_x:.1}",
-                    y: "{vp_y:.1}",
-                    width: "{vp_w:.1}",
-                    height: "{vp_h:.1}",
-                    rx: "2",
-                    fill: "none",
-                    stroke: "hsl(var(--primary))",
-                    "stroke-width": "1.5",
-                    "stroke-dasharray": "3 2",
-                }
             }
         }
     }

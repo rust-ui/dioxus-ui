@@ -119,6 +119,8 @@ pub struct NodeCanvasState {
     next_id:        Signal<usize>,
     pub locked:       Signal<bool>,
     pub snap_to_grid: Signal<bool>,
+    /// Clipboard stores (node, x, y) at time of copy. Each paste offsets by +20.
+    clipboard: Signal<Vec<(CanvasNode, f64, f64)>>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
@@ -269,6 +271,69 @@ impl NodeCanvasState {
         self.selected.write().clear();
         let snap = self.positions.read().clone();
         self.history.push(snap);
+    }
+
+    // ── copy / paste ─────────────────────────────────────────────────────────
+
+    pub fn copy_selected(&mut self) {
+        let sel: Vec<usize> = self.selected.read().iter().cloned().collect();
+        if sel.is_empty() { return; }
+        let nodes = self.nodes.read();
+        let pos   = self.positions.read();
+        let cb: Vec<(CanvasNode, f64, f64)> = sel.iter()
+            .filter_map(|&i| nodes.get(i).map(|n| (n.clone(), pos[i].0, pos[i].1)))
+            .collect();
+        self.clipboard.set(cb);
+    }
+
+    pub fn paste_nodes(&mut self) {
+        let clipboard = self.clipboard.read().clone();
+        if clipboard.is_empty() { return; }
+
+        let mut new_indices = Vec::new();
+        let mut new_clipboard = Vec::new();
+
+        for (node, x, y) in &clipboard {
+            let nx = x + 20.0;
+            let ny = y + 20.0;
+            new_clipboard.push((node.clone(), nx, ny));
+
+            let n = *self.next_id.read();
+            *self.next_id.write() = n + 1;
+            let new_node = CanvasNode {
+                id:        format!("node-{n}"),
+                initial_x: nx,
+                initial_y: ny,
+                ..node.clone()
+            };
+            let new_idx = self.positions.read().len();
+            // positions before nodes (render order invariant)
+            self.positions.write().push((nx, ny));
+            self.nodes.write().push(new_node);
+            new_indices.push(new_idx);
+        }
+
+        // Update clipboard offset so repeated Ctrl+V keeps shifting.
+        self.clipboard.set(new_clipboard);
+
+        {
+            let mut sel = self.selected.write();
+            sel.clear();
+            for idx in new_indices {
+                sel.insert(idx);
+            }
+        }
+
+        let snap = self.positions.read().clone();
+        self.history.push(snap);
+    }
+
+    pub fn has_clipboard(&self) -> bool {
+        !self.clipboard.read().is_empty()
+    }
+
+    pub fn clipboard_count(&self) -> usize {
+        self.clipboard.read().len()
     }
 
     // ── add node ─────────────────────────────────────────────────────────────
@@ -543,6 +608,7 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
         next_id:      use_signal(|| next_id),
         locked:       use_signal(|| false),
         snap_to_grid: use_signal(|| false),
+        clipboard:    use_signal(|| Vec::new()),
     }
 }
 
