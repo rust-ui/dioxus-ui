@@ -2,21 +2,67 @@ use dioxus::prelude::*;
 
 use super::use_history_stack::UseHistoryStack;
 
+// ── NodeKind ──────────────────────────────────────────────────────────────────
+
+#[derive(Clone, PartialEq)]
+pub enum NodeKind {
+    Trigger,
+    Data,
+    Agent,
+    Output,
+}
+
+impl NodeKind {
+    pub fn dot_color(&self) -> &'static str {
+        match self {
+            NodeKind::Trigger => "bg-yellow-500",
+            NodeKind::Data    => "bg-blue-500",
+            NodeKind::Agent   => "bg-purple-500",
+            NodeKind::Output  => "bg-green-500",
+        }
+    }
+
+    pub fn text_color(&self) -> &'static str {
+        match self {
+            NodeKind::Trigger => "text-yellow-600 dark:text-yellow-400",
+            NodeKind::Data    => "text-blue-600 dark:text-blue-400",
+            NodeKind::Agent   => "text-purple-600 dark:text-purple-400",
+            NodeKind::Output  => "text-green-600 dark:text-green-400",
+        }
+    }
+
+    pub fn label(&self) -> &'static str {
+        match self {
+            NodeKind::Trigger => "Trigger",
+            NodeKind::Data    => "Data",
+            NodeKind::Agent   => "Agent",
+            NodeKind::Output  => "Output",
+        }
+    }
+}
+
+// ── Data types ────────────────────────────────────────────────────────────────
+
 #[derive(Clone, PartialEq)]
 pub struct CanvasNode {
-    pub id: &'static str,
+    pub id: String,
     pub initial_x: f64,
     pub initial_y: f64,
     pub width: f64,
     pub has_target: bool,
     pub has_source: bool,
+    pub label: String,
+    pub description: String,
+    pub kind: NodeKind,
 }
 
 #[derive(Clone, PartialEq)]
 pub struct CanvasEdge {
-    pub from: &'static str,
-    pub to: &'static str,
+    pub from: String,
+    pub to: String,
 }
+
+// ── Internal drag/pan state ───────────────────────────────────────────────────
 
 #[derive(Clone, Copy)]
 pub struct DragState {
@@ -35,17 +81,88 @@ struct PanState {
     pan_start_y: f64,
 }
 
-#[derive(Clone, Copy, PartialEq)]
+// ── NodeCanvasState ───────────────────────────────────────────────────────────
+
 pub struct NodeCanvasState {
+    pub nodes:    Signal<Vec<CanvasNode>>,
+    pub edges:    Signal<Vec<CanvasEdge>>,
     pub positions: Signal<Vec<(f64, f64)>>,
-    pub drag: Signal<Option<DragState>>,
-    pub pan: Signal<(f64, f64)>,
-    pub zoom: Signal<f64>,
-    canvas_drag: Signal<Option<PanState>>,
-    pub history: UseHistoryStack<Vec<(f64, f64)>>,
+    pub drag:      Signal<Option<DragState>>,
+    pub pan:       Signal<(f64, f64)>,
+    pub zoom:      Signal<f64>,
+    pub selected:  Signal<Option<usize>>,
+    canvas_drag:   Signal<Option<PanState>>,
+    pub history:   UseHistoryStack<Vec<(f64, f64)>>,
+    next_id:       Signal<usize>,
+}
+
+// Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
+impl Copy for NodeCanvasState {}
+impl Clone for NodeCanvasState {
+    fn clone(&self) -> Self { *self }
+}
+impl PartialEq for NodeCanvasState {
+    fn eq(&self, other: &Self) -> bool {
+        self.nodes     == other.nodes
+            && self.edges    == other.edges
+            && self.positions == other.positions
+            && self.drag     == other.drag
+            && self.pan      == other.pan
+            && self.zoom     == other.zoom
+            && self.selected == other.selected
+            && self.history  == other.history
+    }
 }
 
 impl NodeCanvasState {
+    // ── selection ────────────────────────────────────────────────────────────
+
+    pub fn selected_idx(&self) -> Option<usize> {
+        *self.selected.read()
+    }
+
+    pub fn select_node(&mut self, idx: usize) {
+        self.selected.set(Some(idx));
+    }
+
+    pub fn deselect(&mut self) {
+        self.selected.set(None);
+    }
+
+    // ── delete ───────────────────────────────────────────────────────────────
+
+    pub fn delete_selected(&mut self) {
+        let Some(idx) = *self.selected.read() else { return };
+        let id = self.nodes.read()[idx].id.clone();
+        self.nodes.write().remove(idx);
+        self.positions.write().remove(idx);
+        self.edges.write().retain(|e| e.from != id && e.to != id);
+        self.selected.set(None);
+        let snap = self.positions.read().clone();
+        self.history.push(snap);
+    }
+
+    // ── add node ─────────────────────────────────────────────────────────────
+
+    pub fn add_node(&mut self, x: f64, y: f64) {
+        let n = *self.next_id.read();
+        *self.next_id.write() = n + 1;
+        let snap_x = (x / 20.0).round() * 20.0;
+        let snap_y = (y / 20.0).round() * 20.0;
+        self.nodes.write().push(CanvasNode {
+            id: format!("node-{n}"),
+            initial_x: snap_x,
+            initial_y: snap_y,
+            width: 192.0,
+            has_target: true,
+            has_source: true,
+            label: format!("Node {n}"),
+            description: "New node".to_string(),
+            kind: NodeKind::Agent,
+        });
+        self.positions.write().push((snap_x, snap_y));
+    }
+
     // ── node drag ────────────────────────────────────────────────────────────
 
     pub fn pos(&self, idx: usize) -> (f64, f64) {
@@ -105,13 +222,8 @@ impl NodeCanvasState {
         }
     }
 
-    pub fn can_undo(&self) -> bool {
-        self.history.can_undo()
-    }
-
-    pub fn can_redo(&self) -> bool {
-        self.history.can_redo()
-    }
+    pub fn can_undo(&self) -> bool { self.history.can_undo() }
+    pub fn can_redo(&self) -> bool { self.history.can_redo() }
 
     // ── canvas pan ───────────────────────────────────────────────────────────
 
@@ -144,11 +256,8 @@ impl NodeCanvasState {
 
     // ── zoom ─────────────────────────────────────────────────────────────────
 
-    pub fn zoom_value(&self) -> f64 {
-        *self.zoom.read()
-    }
+    pub fn zoom_value(&self) -> f64 { *self.zoom.read() }
 
-    /// Zoom anchored at cursor position (element-relative coords).
     pub fn zoom_at(&mut self, ex: f64, ey: f64, delta_y: f64) {
         let old_z = *self.zoom.read();
         let factor = if delta_y < 0.0 { 1.1_f64 } else { 1.0 / 1.1 };
@@ -159,13 +268,12 @@ impl NodeCanvasState {
         self.zoom.set(new_z);
     }
 
-    /// Zoom toward viewport center (used by +/- buttons).
     pub fn zoom_step(&mut self, factor: f64) {
         let old_z = *self.zoom.read();
         let new_z = (old_z * factor).clamp(0.2, 4.0);
         let ratio = new_z / old_z;
-        let cx = 300.0_f64; // approximate half-width of canvas
-        let cy = 225.0_f64; // approximate half-height (450px / 2)
+        let cx = 400.0_f64;
+        let cy = 225.0_f64;
         let (px, py) = *self.pan.read();
         self.pan.set((cx - (cx - px) * ratio, cy - (cy - py) * ratio));
         self.zoom.set(new_z);
@@ -176,7 +284,16 @@ impl NodeCanvasState {
         self.zoom.set(1.0);
     }
 
-    pub fn fit_to_view(&mut self, nodes: &[CanvasNode], viewport_w: f64, viewport_h: f64, node_h: f64) {
+    pub fn world_transform(&self) -> String {
+        let (px, py) = *self.pan.read();
+        let z = *self.zoom.read();
+        format!("translate({px:.2}px, {py:.2}px) scale({z:.4})")
+    }
+
+    // ── fit to view ───────────────────────────────────────────────────────────
+
+    pub fn fit_to_view(&mut self, viewport_w: f64, viewport_h: f64, node_h: f64) {
+        let nodes = self.nodes.read();
         if nodes.is_empty() { return; }
         let padding = 48.0;
         let pos = self.positions.read();
@@ -185,6 +302,7 @@ impl NodeCanvasState {
         let max_x = nodes.iter().enumerate().map(|(i, n)| pos[i].0 + n.width).fold(f64::NEG_INFINITY, f64::max);
         let max_y = nodes.iter().enumerate().map(|(i, _)| pos[i].1 + node_h).fold(f64::NEG_INFINITY, f64::max);
         drop(pos);
+        drop(nodes);
         let content_w = (max_x - min_x).max(1.0);
         let content_h = (max_y - min_y).max(1.0);
         let z = ((viewport_w - padding * 2.0) / content_w)
@@ -197,21 +315,17 @@ impl NodeCanvasState {
         ));
     }
 
-    pub fn world_transform(&self) -> String {
-        let (px, py) = *self.pan.read();
-        let z = *self.zoom.read();
-        format!("translate({px:.2}px, {py:.2}px) scale({z:.4})")
-    }
-
     // ── edges ────────────────────────────────────────────────────────────────
 
-    pub fn edge_paths(&self, nodes: &[CanvasNode], edges: &[CanvasEdge], node_h: f64) -> Vec<String> {
-        let pos = self.positions.read();
+    pub fn edge_paths(&self, node_h: f64) -> Vec<String> {
+        let pos   = self.positions.read();
+        let nodes = self.nodes.read();
+        let edges = self.edges.read();
         edges
             .iter()
             .filter_map(|edge| {
                 let (fi, from) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.from)?;
-                let (ti, _) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
+                let (ti, _)    = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
                 let (fx, fy) = pos[fi];
                 let (tx, ty) = pos[ti];
                 Some(bezier_path(
@@ -225,18 +339,26 @@ impl NodeCanvasState {
     }
 }
 
-pub fn use_node_canvas(nodes: &[CanvasNode]) -> NodeCanvasState {
+// ── Constructor ───────────────────────────────────────────────────────────────
+
+pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCanvasState {
     let initial: Vec<(f64, f64)> = nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect();
-    let positions = use_signal(|| initial.clone());
+    let next_id = nodes.len();
     NodeCanvasState {
-        positions,
-        drag: use_signal(|| None),
-        pan: use_signal(|| (0.0, 0.0)),
-        zoom: use_signal(|| 1.0),
+        nodes:       use_signal(|| nodes),
+        edges:       use_signal(|| edges),
+        positions:   use_signal(|| initial.clone()),
+        drag:        use_signal(|| None),
+        pan:         use_signal(|| (0.0, 0.0)),
+        zoom:        use_signal(|| 1.0),
+        selected:    use_signal(|| None),
         canvas_drag: use_signal(|| None),
-        history: UseHistoryStack::new(initial),
+        history:     UseHistoryStack::new(initial),
+        next_id:     use_signal(|| next_id),
     }
 }
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
 
 fn bezier_path(sx: f64, sy: f64, tx: f64, ty: f64) -> String {
     let dx = (tx - sx).abs();

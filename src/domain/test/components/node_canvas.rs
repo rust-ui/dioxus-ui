@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
 use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 
-use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeCanvasState};
+use crate::domain::test::hooks::use_node_canvas::{CanvasNode, NodeCanvasState, NodeKind};
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
@@ -20,18 +20,16 @@ pub const NODE_H: f64 = 72.0;
 //     ├── dot background
 //     ├── SVG bezier edges
 //     └── children (NodeWrapper instances)
-// └── ZoomControls overlay (not transformed — stays in viewport space)
+// └── overlay (viewport space — CanvasControls, Minimap, etc.)
 
 #[component]
 pub fn NodeCanvas(
     state: NodeCanvasState,
-    nodes: Vec<CanvasNode>,
-    edges: Vec<CanvasEdge>,
     children: Element,
     #[props(optional)] overlay: Option<Element>,
 ) -> Element {
     let is_busy = state.is_dragging() || state.is_panning();
-    let edge_paths = state.edge_paths(&nodes, &edges, NODE_H);
+    let edge_paths = state.edge_paths(NODE_H);
     let transform = state.world_transform();
     let mut state = state;
 
@@ -55,13 +53,18 @@ pub fn NodeCanvas(
                         ev.prevent_default();
                         state.redo();
                     }
+                    Key::Delete | Key::Backspace => {
+                        ev.prevent_default();
+                        state.delete_selected();
+                    }
+                    Key::Escape => { state.deselect(); }
                     _ => {}
                 }
             },
 
-            // canvas pan on background click (nodes stop propagation so only fires on empty space)
             onmousedown: move |ev| {
                 let c = ev.data().client_coordinates();
+                state.deselect();
                 state.start_pan(c.x, c.y);
             },
             onmousemove: move |ev| {
@@ -76,8 +79,8 @@ pub fn NodeCanvas(
                 let pos = ev.data().element_coordinates();
                 let delta_y = match ev.data().delta() {
                     WheelDelta::Pixels(p) => p.y,
-                    WheelDelta::Lines(p) => p.y * 20.0,
-                    WheelDelta::Pages(p) => p.y * 400.0,
+                    WheelDelta::Lines(p)  => p.y * 20.0,
+                    WheelDelta::Pages(p)  => p.y * 400.0,
                 };
                 state.zoom_at(pos.x, pos.y, delta_y);
             },
@@ -88,13 +91,11 @@ pub fn NodeCanvas(
                     "position: absolute; top: 0; left: 0; width: 3000px; height: 2000px; transform: {transform}; transform-origin: 0 0;"
                 ),
 
-                // dot grid background
                 div {
                     class: "absolute inset-0 pointer-events-none text-foreground",
                     style: "background-image: radial-gradient(circle, currentColor 1px, transparent 1px); background-size: 20px 20px; opacity: 0.12;",
                 }
 
-                // bezier edges
                 svg {
                     class: "absolute inset-0 pointer-events-none overflow-visible",
                     width: "3000",
@@ -133,20 +134,23 @@ pub fn NodeWrapper(
     children: Element,
 ) -> Element {
     let (x, y) = state.pos(idx);
-    let is_active = state.active_idx() == Some(idx);
+    let is_active  = state.active_idx()  == Some(idx);
+    let is_selected = state.selected_idx() == Some(idx);
     let mut state = state;
 
     rsx! {
         div {
             class: format!(
-                "absolute transition-shadow{}",
-                if is_active { " shadow-lg" } else { "" }
+                "absolute transition-shadow{}{}",
+                if is_active   { " shadow-lg" } else { "" },
+                if is_selected { " ring-2 ring-primary ring-offset-1 ring-offset-background rounded-md" } else { "" },
             ),
             style: format!("left: {x:.1}px; top: {y:.1}px; width: {width:.0}px; cursor: grab;"),
 
             onmousedown: move |ev| {
                 ev.stop_propagation();
                 let c = ev.data().client_coordinates();
+                state.select_node(idx);
                 state.start_drag(idx, c.x, c.y);
             },
 
@@ -155,21 +159,43 @@ pub fn NodeWrapper(
     }
 }
 
+// ── DefaultNodeContent ────────────────────────────────────────────────────────
+
+#[component]
+pub fn DefaultNodeContent(node: CanvasNode) -> Element {
+    use crate::domain::test::components::node::{Node, NodeContent, NodeDescription, NodeHeader, NodeTitle};
+
+    rsx! {
+        Node {
+            target: node.has_target,
+            source: node.has_source,
+            NodeHeader {
+                span { class: format!("size-2 rounded-full shrink-0 {}", node.kind.dot_color()) }
+                NodeTitle { class: node.kind.text_color(), "{node.label}" }
+                span {
+                    class: "ml-auto text-[10px] text-muted-foreground uppercase tracking-wide shrink-0",
+                    "{node.kind.label()}"
+                }
+            }
+            NodeContent {
+                NodeDescription { class: "font-mono", "{node.description}" }
+            }
+        }
+    }
+}
+
 // ── Minimap ───────────────────────────────────────────────────────────────────
 
 #[component]
-pub fn Minimap(
-    state: NodeCanvasState,
-    nodes: Vec<CanvasNode>,
-    edges: Vec<CanvasEdge>,
-) -> Element {
+pub fn Minimap(state: NodeCanvasState) -> Element {
     let scale_x = MINI_W / WORLD_REF_W;
     let scale_y = MINI_H / WORLD_REF_H;
 
-    let pos_snap = state.positions.read().clone();
+    let pos_snap   = state.positions.read().clone();
+    let nodes_snap = state.nodes.read().clone();
+    let edges_snap = state.edges.read().clone();
 
-    // precompute node rects: (x, y, w, h) in minimap coords
-    let node_rects: Vec<(f64, f64, f64, f64)> = nodes
+    let node_rects: Vec<(f64, f64, f64, f64)> = nodes_snap
         .iter()
         .enumerate()
         .map(|(i, n)| {
@@ -178,19 +204,18 @@ pub fn Minimap(
         })
         .collect();
 
-    // precompute scaled bezier edge paths
-    let edge_paths: Vec<String> = edges
+    let edge_paths: Vec<String> = edges_snap
         .iter()
         .filter_map(|edge| {
-            let (fi, from) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.from)?;
-            let (ti, _) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
+            let (fi, from) = nodes_snap.iter().enumerate().find(|(_, n)| n.id == edge.from)?;
+            let (ti, _)    = nodes_snap.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
             let (fx, fy) = pos_snap[fi];
             let (tx, ty) = pos_snap[ti];
-            let sx = (fx + from.width) * scale_x;
-            let sy = (fy + NODE_H / 2.0) * scale_y;
+            let sx  = (fx + from.width) * scale_x;
+            let sy  = (fy + NODE_H / 2.0) * scale_y;
             let tx2 = tx * scale_x;
             let ty2 = (ty + NODE_H / 2.0) * scale_y;
-            let dx = (tx2 - sx).abs();
+            let dx  = (tx2 - sx).abs();
             let off = (dx / 2.0).clamp(4.0, 12.0);
             Some(format!(
                 "M {sx:.1} {sy:.1} C {:.1} {sy:.1}, {:.1} {ty2:.1}, {tx2:.1} {ty2:.1}",
@@ -200,7 +225,6 @@ pub fn Minimap(
         })
         .collect();
 
-    // viewport indicator rect in minimap coords
     let (pan_x, pan_y) = *state.pan.read();
     let zoom = state.zoom_value();
     let vp_x = (-pan_x / zoom) * scale_x;
@@ -219,7 +243,6 @@ pub fn Minimap(
                 width: "{MINI_W}",
                 height: "{MINI_H}",
 
-                // edges
                 for d in &edge_paths {
                     path {
                         d: d.as_str(),
@@ -229,7 +252,6 @@ pub fn Minimap(
                     }
                 }
 
-                // node rects
                 for (x, y, w, h) in &node_rects {
                     rect {
                         x: "{x:.1}",
@@ -243,7 +265,6 @@ pub fn Minimap(
                     }
                 }
 
-                // viewport indicator
                 rect {
                     x: "{vp_x:.1}",
                     y: "{vp_y:.1}",
@@ -263,7 +284,7 @@ pub fn Minimap(
 // ── CanvasControls ────────────────────────────────────────────────────────────
 
 #[component]
-pub fn CanvasControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element {
+pub fn CanvasControls(state: NodeCanvasState) -> Element {
     let pct = (state.zoom_value() * 100.0).round() as i32;
     let mut state = state;
 
@@ -272,11 +293,25 @@ pub fn CanvasControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element
             class: "flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
             style: "position: absolute; top: 12px; right: 12px;",
 
+            button {
+                class: "size-6 flex items-center justify-center rounded text-sm hover:bg-accent transition-colors",
+                title: "Add node",
+                onclick: move |_| {
+                    let (pan_x, pan_y) = *state.pan.read();
+                    let zoom = state.zoom_value();
+                    let cx = -pan_x / zoom + VIEWPORT_W / 2.0 / zoom;
+                    let cy = -pan_y / zoom + VIEWPORT_H / 2.0 / zoom;
+                    state.add_node(cx, cy);
+                },
+                "+"
+            }
+
+            div { class: "w-px h-4 bg-border mx-0.5" }
+
             span {
                 class: "text-[11px] text-muted-foreground tabular-nums w-9 text-center",
                 "{pct}%"
             }
-
             button {
                 class: "size-6 flex items-center justify-center rounded text-sm hover:bg-accent transition-colors",
                 onclick: move |_| { state.zoom_step(1.0 / 1.2); },
@@ -287,10 +322,12 @@ pub fn CanvasControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element
                 onclick: move |_| { state.zoom_step(1.2); },
                 "+"
             }
+
             div { class: "w-px h-4 bg-border mx-0.5" }
+
             button {
                 class: "text-[11px] px-1.5 py-0.5 rounded hover:bg-accent text-muted-foreground transition-colors",
-                onclick: move |_| { state.fit_to_view(&nodes, VIEWPORT_W, VIEWPORT_H, NODE_H); },
+                onclick: move |_| { state.fit_to_view(VIEWPORT_W, VIEWPORT_H, NODE_H); },
                 "fit"
             }
             button {
