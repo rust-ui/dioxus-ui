@@ -8,8 +8,8 @@ const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
 const MINI_W: f64 = 140.0;
 const MINI_H: f64 = 90.0;
-const WORLD_REF_W: f64 = 820.0;
-const WORLD_REF_H: f64 = 480.0;
+const WORLD_REF_W: f64 = 1600.0;
+const WORLD_REF_H: f64 = 900.0;
 
 pub const NODE_H: f64 = 72.0;
 
@@ -210,8 +210,10 @@ pub fn Minimap(
 
     rsx! {
         div {
-            class: "absolute bottom-3 right-3 rounded-md border bg-background/80 backdrop-blur-sm shadow-sm overflow-hidden pointer-events-none",
-            style: format!("width: {MINI_W}px; height: {MINI_H}px;"),
+            class: "rounded-md border bg-background/90 backdrop-blur-sm shadow-sm overflow-hidden pointer-events-none",
+            style: format!(
+                "position: absolute; bottom: 12px; right: 12px; width: {MINI_W}px; height: {MINI_H}px;"
+            ),
 
             svg {
                 width: "{MINI_W}",
@@ -222,8 +224,7 @@ pub fn Minimap(
                     path {
                         d: d.as_str(),
                         fill: "none",
-                        stroke: "currentColor",
-                        class: "text-border",
+                        stroke: "hsl(var(--border))",
                         "stroke-width": "0.8",
                     }
                 }
@@ -236,9 +237,8 @@ pub fn Minimap(
                         width: "{w:.1}",
                         height: "{h:.1}",
                         rx: "1.5",
-                        fill: "currentColor",
-                        class: "text-muted-foreground/40",
-                        stroke: "currentColor",
+                        fill: "hsl(var(--muted-foreground) / 0.3)",
+                        stroke: "hsl(var(--muted-foreground) / 0.6)",
                         "stroke-width": "0.5",
                     }
                 }
@@ -249,11 +249,10 @@ pub fn Minimap(
                     y: "{vp_y:.1}",
                     width: "{vp_w:.1}",
                     height: "{vp_h:.1}",
-                    rx: "1",
-                    fill: "currentColor",
-                    class: "text-primary/10",
-                    stroke: "currentColor",
-                    "stroke-width": "0.8",
+                    rx: "2",
+                    fill: "hsl(var(--primary) / 0.08)",
+                    stroke: "hsl(var(--primary) / 0.5)",
+                    "stroke-width": "1",
                     "stroke-dasharray": "2 1",
                 }
             }
@@ -270,7 +269,8 @@ pub fn CanvasControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element
 
     rsx! {
         div {
-            class: "absolute top-3 right-3 flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
+            class: "flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
+            style: "position: absolute; top: 12px; right: 12px;",
 
             span {
                 class: "text-[11px] text-muted-foreground tabular-nums w-9 text-center",
