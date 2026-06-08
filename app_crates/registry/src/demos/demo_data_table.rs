@@ -127,7 +127,7 @@ pub fn DemoDataTable() -> Element {
                         DataTableRow {
                             DataTableHead { class: "px-4",
                                 Checkbox {
-                                    "aria-label": "Select all",
+                                    aria_label: "Select all",
                                     checked: sorted_payments_signal.with(|payments| {
                                         !payments.is_empty() && selected_count_signal() == payments.len()
                                     }),
@@ -165,7 +165,7 @@ pub fn DemoDataTable() -> Element {
                             let is_selected = selected_emails_signal.with(|selected| selected.contains(&payment.email));
                             rsx! {
                                 DataTableRow {
-                                    "data-state": if is_selected { "selected" } else { "" },
+                                    data_state: if is_selected { "selected" } else { "" },
                                     DataTableCell {
                                         Checkbox {
                                             checked: is_selected,

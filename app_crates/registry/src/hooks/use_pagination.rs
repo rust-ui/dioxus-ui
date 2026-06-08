@@ -7,9 +7,9 @@ const FIRST_PAGE: u32 = 1;
 pub struct PaginationContext {
     pub current_page: Memo<u32>,
     pub page_href: Callback<u32, String>,
-    pub prev_href: ReadOnlySignal<String>,
-    pub next_href: ReadOnlySignal<String>,
-    pub is_first_page: ReadOnlySignal<bool>,
+    pub prev_href: ReadSignal<String>,
+    pub next_href: ReadSignal<String>,
+    pub is_first_page: ReadSignal<bool>,
     pub aria_current: Callback<u32, &'static str>,
 }
 
@@ -75,9 +75,7 @@ pub fn use_pagination() -> PaginationContext {
 
     let is_first_page = use_memo(move || current_page() <= FIRST_PAGE);
 
-    let aria_current = Callback::new(move |page: u32| {
-        if current_page() == page { PAGE_QUERY_KEY } else { "" }
-    });
+    let aria_current = Callback::new(move |page: u32| if current_page() == page { PAGE_QUERY_KEY } else { "" });
 
     PaginationContext {
         current_page,

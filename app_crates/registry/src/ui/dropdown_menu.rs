@@ -249,17 +249,33 @@ pub fn DropdownMenuLabel(#[props(into, optional)] class: Option<String>, childre
 }
 
 #[component]
-pub fn DropdownMenuGroup(children: Element) -> Element {
-    rsx! { ul { "data-name": "DropdownMenuGroup", class: "group", {children} } }
+pub fn DropdownMenuGroup(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("group", class.as_deref().unwrap_or(""));
+    rsx! { ul { "data-name": "DropdownMenuGroup", class: "{merged}", {children} } }
 }
 
 #[component]
-pub fn DropdownMenuItem(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn DropdownMenuItem(
+    #[props(into, optional)] class: Option<String>,
+    #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!(
         "inline-flex gap-2 items-center w-full rounded-sm px-2 py-1.5 text-sm no-underline transition-colors duration-200 text-popover-foreground hover:bg-accent hover:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
         class.as_deref().unwrap_or("")
     );
-    rsx! { li { "data-name": "DropdownMenuItem", class: "{merged}", {children} } }
+    rsx! {
+        li {
+            "data-name": "DropdownMenuItem",
+            class: "{merged}",
+            onclick: move |e| {
+                if let Some(handler) = &onclick {
+                    handler.call(e);
+                }
+            },
+            {children}
+        }
+    }
 }
 
 #[component]

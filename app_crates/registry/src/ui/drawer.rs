@@ -3,7 +3,25 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
+use crate::ui::button::{ButtonSize, ButtonVariant};
+
 static DRAWER_COUNTER: AtomicUsize = AtomicUsize::new(0);
+
+#[derive(Clone, Copy, PartialEq, Default)]
+pub enum DrawerPosition {
+    #[default]
+    Bottom,
+    Top,
+    Left,
+    Right,
+}
+
+#[derive(Clone, Copy, PartialEq, Default)]
+pub enum DrawerVariant {
+    #[default]
+    Default,
+    Floating,
+}
 
 #[derive(Clone, PartialEq)]
 struct DrawerContext {
@@ -40,16 +58,30 @@ pub fn DrawerTrigger(#[props(into, optional)] class: Option<String>, children: E
 #[component]
 pub fn DrawerContent(
     #[props(into, optional)] class: Option<String>,
-    #[props(default = true)] close_on_backdrop_click: bool,
+    #[props(into, optional)] style: Option<String>,
+    #[props(default = true)] dismissible: bool,
+    #[props(default = DrawerPosition::Bottom)] position: DrawerPosition,
+    #[props(default = DrawerVariant::Default)] variant: DrawerVariant,
     children: Element,
 ) -> Element {
     let ctx = use_context::<DrawerContext>();
     let target_id = ctx.target_id.clone();
     let backdrop_id = format!("{}_backdrop", target_id);
-    let backdrop_behavior = if close_on_backdrop_click { "auto" } else { "manual" };
+    let backdrop_behavior = if dismissible { "auto" } else { "manual" };
+
+    let is_floating = variant == DrawerVariant::Floating;
+    let position_class = match position {
+        DrawerPosition::Bottom => "inset-x-0 bottom-0 rounded-t-[10px] border-t data-[state=closed]:translate-y-full data-[state=open]:translate-y-0",
+        DrawerPosition::Top => "inset-x-0 top-0 rounded-b-[10px] border-b data-[state=closed]:-translate-y-full data-[state=open]:translate-y-0",
+        DrawerPosition::Left => "inset-y-0 left-0 h-full w-[80vw] max-w-sm rounded-r-[10px] border-r data-[state=closed]:-translate-x-full data-[state=open]:translate-x-0",
+        DrawerPosition::Right => "inset-y-0 right-0 h-full w-[80vw] max-w-sm rounded-l-[10px] border-l data-[state=closed]:translate-x-full data-[state=open]:translate-x-0",
+    };
+    let floating_class = if is_floating { "m-4 rounded-[10px] border" } else { "" };
 
     let c = tw_merge!(
-        "fixed inset-x-0 bottom-0 z-100 flex flex-col bg-background rounded-t-[10px] pt-3 pb-6 px-6 max-h-[90vh] overflow-auto shadow-lg border-t transition-transform duration-300 ease-in-out data-[state=closed]:translate-y-full data-[state=open]:translate-y-0",
+        "fixed z-100 flex flex-col bg-background pt-3 pb-6 px-6 max-h-[90vh] overflow-auto shadow-lg transition-transform duration-300 ease-in-out",
+        position_class,
+        floating_class,
         class.as_deref().unwrap_or("")
     );
 
@@ -100,7 +132,7 @@ pub fn DrawerContent(
             id: "{target_id}",
             class: "{c}",
             "data-state": "closed",
-            style: "pointer-events: none;",
+            style: style.as_deref().unwrap_or("pointer-events: none;"),
             {children}
         }
         script { dangerous_inner_html: "{script}" }
@@ -115,14 +147,21 @@ pub fn DrawerHandle() -> Element {
 }
 
 #[component]
-pub fn DrawerClose(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn DrawerClose(
+    #[props(into, optional)] class: Option<String>,
+    #[props(default = ButtonVariant::Outline)] variant: ButtonVariant,
+    #[props(default = ButtonSize::Default)] size: ButtonSize,
+    children: Element,
+) -> Element {
     let ctx = use_context::<DrawerContext>();
     rsx! {
         button {
             "data-name": "DrawerClose",
             "data-drawer-close": "{ctx.target_id}",
             class: tw_merge!(
-                "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 cursor-pointer",
+                "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] hover:cursor-pointer",
+                variant.as_str(),
+                size.as_str(),
                 class.as_deref().unwrap_or("")
             ),
             {children}

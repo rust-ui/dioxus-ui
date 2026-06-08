@@ -37,7 +37,7 @@ pub fn DemoCommandDialog() -> Element {
                                 let cat_label = category.to_string();
                                 rsx! {
                                     CommandGroup { role: "presentation", class: "p-0",
-                                        CommandGroupLabel { "aria-hidden": "true", class: "p-3",
+                                        CommandGroupLabel { aria_hidden: "true", class: "p-3",
                                             {cat_label}
                                         }
                                         {items.iter().map(|item| {
@@ -45,18 +45,17 @@ pub fn DemoCommandDialog() -> Element {
                                             rsx! {
                                                 CommandItemLink {
                                                     class: "px-3",
-                                                    href: "{item.href}",
+                                                    href: item.href,
                                                     target: "_blank",
                                                     rel: "noopener noreferrer",
                                                     {icon}
                                                     span { {item.label} }
                                                 }
                                             }
-                                        }).collect::<Vec<_>>()}
+                                        })}
                                     }
                                 }
-                            })
-                            .collect::<Vec<_>>()}
+                            })}
                     }
                 }
                 CommandFooter {

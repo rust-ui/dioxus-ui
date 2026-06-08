@@ -4,7 +4,7 @@ use crate::ui::drawer::{
     Drawer, DrawerBody, DrawerClose, DrawerContent, DrawerDescription, DrawerHandle, DrawerHeader, DrawerTitle,
     DrawerTrigger,
 };
-use crate::ui::input::Input;
+use crate::ui::input::{Input, InputType};
 use crate::ui::label::Label;
 use crate::ui::textarea::Textarea;
 
@@ -27,18 +27,18 @@ pub fn DemoDrawerFocus() -> Element {
 
                     form { class: "flex flex-col gap-4",
                         div { class: "flex flex-col gap-2",
-                            Label { r#for: "test-input", "Text Input" }
+                            Label { html_for:"test-input", "Text Input" }
                             Input { id: "test-input", placeholder: "Type something..." }
                         }
 
                         div { class: "flex flex-col gap-2",
-                            Label { r#for: "test-email", "Email" }
-                            Input { id: "test-email", r#type: "email", placeholder: "email@example.com" }
+                            Label { html_for:"test-email", "Email" }
+                            Input { id: "test-email", r#type: InputType::Email, placeholder: "email@example.com" }
                         }
 
                         div { class: "flex flex-col gap-2",
-                            Label { r#for: "test-textarea", "Message" }
-                            Textarea { id: "test-textarea", rows: "4", placeholder: "Write a message..." }
+                            Label { html_for:"test-textarea", "Message" }
+                            Textarea { id: "test-textarea", rows: 4, placeholder: "Write a message..." }
                         }
                     }
 

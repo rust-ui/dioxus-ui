@@ -9,7 +9,7 @@ use crate::ui::drawer::{
     Drawer, DrawerBody, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHandle, DrawerHeader,
     DrawerTitle, DrawerTrigger,
 };
-use crate::ui::input::Input;
+use crate::ui::input::{Input, InputType};
 
 #[component]
 pub fn DemoDrawerDialog() -> Element {
@@ -25,7 +25,7 @@ pub fn DemoDrawerDialog() -> Element {
                             DrawerTitle { "Subscribe" }
                             DrawerDescription { "Get the latest updates delivered to your inbox." }
                         }
-                        Input { r#type: "email", placeholder: "you@example.com" }
+                        Input { r#type: InputType::Email, placeholder: "you@example.com" }
                         DrawerFooter {
                             DrawerClose { class: "w-full sm:w-fit", "Cancel" }
                             Button { class: "w-full sm:w-fit", "Subscribe" }
@@ -45,7 +45,7 @@ pub fn DemoDrawerDialog() -> Element {
                             DialogTitle { "Subscribe" }
                             DialogDescription { "Get the latest updates delivered to your inbox." }
                         }
-                        Input { r#type: "email", placeholder: "you@example.com" }
+                        Input { r#type: InputType::Email, placeholder: "you@example.com" }
                         DialogFooter {
                             DialogClose { class: "w-full sm:w-fit", "Cancel" }
                             Button { class: "w-full sm:w-fit", "Subscribe" }

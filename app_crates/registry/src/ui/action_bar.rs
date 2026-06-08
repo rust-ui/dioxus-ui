@@ -65,8 +65,8 @@ fn SvgFilter() -> Element {
                 "color-interpolation-filters": "linearRGB",
                 "filterUnits": "objectBoundingBox",
                 "primitiveUnits": "userSpaceOnUse",
-                "feDisplacementMap" {
-                    "in": "SourceGraphic",
+                feDisplacementMap {
+                    _in: "SourceGraphic",
                     in2: "SourceGraphic",
                     scale: "5",
                     "xChannelSelector": "A",

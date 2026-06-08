@@ -34,7 +34,7 @@ pub fn DemoButtonWithClx() -> Element {
     rsx! {
         MyButton { class: "bg-sky-500", onclick: on_click,
             "Click Me: "
-            {count_signal()}
+            {count_signal().to_string()}
         }
     }
 }

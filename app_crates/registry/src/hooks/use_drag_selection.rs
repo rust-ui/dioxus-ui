@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use crate::ui::data_grid::DataGridColumn;
 
 /// Return type for the drag selection hook
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct UseDragSelection<C: DataGridColumn> {
     /// Whether a drag is currently in progress (mouse held down)
     is_dragging_signal: Signal<bool>,

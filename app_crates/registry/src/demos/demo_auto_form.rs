@@ -9,7 +9,7 @@ pub fn DemoAutoForm() -> Element {
         div { class: "flex flex-col gap-8 my-8 w-full max-w-4xl md:flex-row",
             div { class: "flex-1",
                 AutoForm {
-                    Button { r#type: "submit", "Submit" }
+                    Button { button_type: "submit", "Submit" }
                 }
             }
 

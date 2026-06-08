@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::ui::button::Button;
 use crate::ui::sheet::{
-    Sheet, SheetBody, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetSide, SheetTitle,
+    Sheet, SheetBody, SheetClose, SheetContent, SheetDescription, SheetDirection, SheetFooter, SheetHeader, SheetTitle,
     SheetTrigger,
 };
 
@@ -11,7 +11,7 @@ pub fn DemoSheet() -> Element {
     rsx! {
         Sheet {
             SheetTrigger { "Open Sheet" }
-            SheetContent { side: SheetSide::Right,
+            SheetContent { direction: SheetDirection::Right,
                 SheetHeader {
                     SheetTitle { "Edit Profile" }
                     SheetDescription { "Make changes to your profile here. Click save when done." }

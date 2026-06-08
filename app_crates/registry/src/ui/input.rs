@@ -12,6 +12,17 @@ pub enum InputType {
     Tel,
     Url,
     Search,
+    Time,
+    DatetimeLocal,
+    Date,
+    Month,
+    Week,
+    Hidden,
+    File,
+    Checkbox,
+    Radio,
+    Color,
+    Range,
 }
 
 impl InputType {
@@ -24,6 +35,17 @@ impl InputType {
             InputType::Tel => "tel",
             InputType::Url => "url",
             InputType::Search => "search",
+            InputType::Time => "time",
+            InputType::DatetimeLocal => "datetime-local",
+            InputType::Date => "date",
+            InputType::Month => "month",
+            InputType::Week => "week",
+            InputType::Hidden => "hidden",
+            InputType::File => "file",
+            InputType::Checkbox => "checkbox",
+            InputType::Radio => "radio",
+            InputType::Color => "color",
+            InputType::Range => "range",
         }
     }
 }

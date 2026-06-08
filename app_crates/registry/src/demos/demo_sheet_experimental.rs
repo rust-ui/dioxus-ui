@@ -30,7 +30,7 @@ pub fn DemoSheetExperimental() -> Element {
 
             nav {
                 id: "sheet__target",
-                anchor: "menu__anchor",
+                "anchor": "menu__anchor",
                 class: "flex fixed inset-y-0 left-0 z-50 flex-col justify-between p-4 border-r transition-transform duration-300 ease-in-out my__sheet w-[320px] h-[100dvh] bg-neutral-200 border-r-gray-200",
                 popover: "",
 

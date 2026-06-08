@@ -1,5 +1,3 @@
-use std::time::Duration;
-
 use dioxus::prelude::*;
 
 use crate::ui::toast_custom::_data::{ToastData, ToastLevel, ToastPosition};
@@ -23,7 +21,7 @@ pub fn Toast(toast: ToastData) -> Element {
     use_effect(move || {
         if let Some(expiry) = toast.expiry {
             spawn(async move {
-                tokio::time::sleep(Duration::from_millis(expiry as u64)).await;
+                gloo_timers::future::TimeoutFuture::new(expiry as u32).await;
                 if !*toast.clear_signal.peek() {
                     toast.clear_signal.clone().set(true);
                 }
@@ -37,7 +35,7 @@ pub fn Toast(toast: ToastData) -> Element {
             animation_name_signal.set(slide_out_animation_name);
             let toast_id = toast.id;
             spawn(async move {
-                tokio::time::sleep(Duration::from_millis(ANIMATION_DURATION)).await;
+                gloo_timers::future::TimeoutFuture::new(ANIMATION_DURATION as u32).await;
                 toaster.remove(toast_id);
             });
         }

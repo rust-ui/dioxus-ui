@@ -10,7 +10,7 @@ use time::Date;
 pub fn use_handle_day_click(
     initial_start: Date,
     initial_end: Date,
-) -> (Signal<Date>, Signal<Date>, impl Fn(u8) + Clone) {
+) -> (Signal<Date>, Signal<Date>, impl FnMut(u8) + Clone) {
     let mut start_date_signal = use_signal(|| initial_start);
     let mut end_date_signal = use_signal(|| initial_end);
 

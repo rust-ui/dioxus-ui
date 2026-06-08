@@ -377,9 +377,9 @@ pub fn GridCell(
     #[props(into)] column: String,
     #[props(into, optional)] class: Option<String>,
     #[props(optional)] visible: Option<bool>,
-    #[props(default: false)] active: bool,
-    #[props(default: false)] current: bool,
-    #[props(default: false)] in_range: bool,
+    #[props(default = false)] active: bool,
+    #[props(default = false)] current: bool,
+    #[props(default = false)] in_range: bool,
     #[props(optional)] on_click: Option<EventHandler<()>>,
     #[props(optional)] on_contextmenu: Option<EventHandler<()>>,
     #[props(optional)] on_mousedown: Option<EventHandler<()>>,
@@ -532,8 +532,8 @@ pub fn GridPinnedCell<C: DataGridColumn + 'static>(
 
 #[component]
 pub fn TableSeparator(
-    #[props(default: 60)] valuemin: i32,
-    #[props(default: 800)] valuemax: i32,
+    #[props(default = 60)] valuemin: i32,
+    #[props(default = 800)] valuemax: i32,
     valuenow: i32,
     #[props(into, optional)] class: Option<String>,
 ) -> Element {
@@ -570,7 +570,7 @@ pub fn PinnableSortableHeaderCell<C>(
     sort_signal: Signal<SortDirection>,
     pinned_columns_signal: Signal<HashSet<C>>,
     #[props(optional)] visible_columns_signal: Option<Signal<HashSet<String>>>,
-    #[props(default: false)] is_pinned: bool,
+    #[props(default = false)] is_pinned: bool,
 ) -> Element
 where
     C: PinnableColumn + AsRef<str> + Send + Sync + 'static,

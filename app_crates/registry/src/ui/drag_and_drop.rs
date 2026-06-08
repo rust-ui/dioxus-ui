@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 use wasm_bindgen::JsCast;
-use web_sys::Element as WebElement;
+use web_sys::{Element as WebElement, HtmlElement};
 
 #[component]
 pub fn DraggableZone(#[props(into, optional)] class: Option<String>, children: Element) -> Element {

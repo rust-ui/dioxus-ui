@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
+#[allow(dead_code)]
 #[derive(Default, Clone, PartialEq)]
 pub enum InputType {
     #[default]
@@ -8,16 +9,20 @@ pub enum InputType {
     Email,
     Password,
     Number,
+    Tel,
+    Url,
     Search,
 }
 
 impl InputType {
-    fn as_str(&self) -> &'static str {
+    pub fn as_str(&self) -> &'static str {
         match self {
             InputType::Text => "text",
             InputType::Email => "email",
             InputType::Password => "password",
             InputType::Number => "number",
+            InputType::Tel => "tel",
+            InputType::Url => "url",
             InputType::Search => "search",
         }
     }

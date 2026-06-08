@@ -63,3 +63,41 @@ pub fn ScrollAreaCorner(#[props(into, optional)] class: Option<String>) -> Eleme
     let merged = tw_merge!("bg-border", class.as_deref().unwrap_or(""));
     rsx! { div { class: "{merged}" } }
 }
+
+#[derive(Clone, Copy, PartialEq, Default)]
+pub enum SnapAreaVariant {
+    #[default]
+    Center,
+}
+
+#[component]
+pub fn SnapScrollArea(
+    #[props(default = SnapAreaVariant::Center)] variant: SnapAreaVariant,
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let variant_class = match variant {
+        SnapAreaVariant::Center => "overflow-x-auto snap-x",
+    };
+    let merged = tw_merge!(variant_class, class.as_deref().unwrap_or(""));
+    rsx! { div { "data-name": "SnapScrollArea", class: "{merged}", {children} } }
+}
+
+#[derive(Clone, Copy, PartialEq, Default)]
+pub enum SnapVariant {
+    #[default]
+    Center,
+}
+
+#[component]
+pub fn SnapItem(
+    #[props(default = SnapVariant::Center)] variant: SnapVariant,
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let variant_class = match variant {
+        SnapVariant::Center => "snap-center",
+    };
+    let merged = tw_merge!("shrink-0", variant_class, class.as_deref().unwrap_or(""));
+    rsx! { div { "data-name": "SnapItem", class: "{merged}", {children} } }
+}

@@ -15,14 +15,14 @@ pub fn DemoCheckboxRtl() -> Element {
                 div { class: "flex gap-2 items-center",
                     Checkbox {
                         checked: item1(),
-                        on_change: move |v| item1.set(v),
+                        on_checked_change: move |v| item1.set(v),
                     }
                     Label { "قبول الشروط والأحكام" }
                 }
                 div { class: "flex gap-2 items-center",
                     Checkbox {
                         checked: item2(),
-                        on_change: move |v| item2.set(v),
+                        on_checked_change: move |v| item2.set(v),
                     }
                     Label { "الاشتراك في النشرة البريدية" }
                 }

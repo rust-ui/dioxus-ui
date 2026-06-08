@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use icons::ChevronRight;
+use icons::{ChevronRight, Ellipsis};
 use tw_merge::tw_merge;
 
 #[component]
@@ -49,6 +49,28 @@ pub fn BreadcrumbPage(#[props(into, optional)] class: Option<String>, children: 
             "aria-disabled": "true",
             "aria-current": "page",
             {children}
+        }
+    }
+}
+
+#[component]
+pub fn BreadcrumbEllipsis(#[props(into, optional)] class: Option<String>) -> Element {
+    rsx! {
+        button {
+            "data-name": "RootEllipsisBtn",
+            class: "flex items-center gap-1",
+            "aria-haspopup": "menu",
+            "aria-expanded": "false",
+            "data-state": "closed",
+            span {
+                "data-name": "RootEllipsis",
+                class: "flex items-center justify-center size-4",
+                role: "presentation",
+                "aria-hidden": "true",
+                Ellipsis { class: class.as_deref().unwrap_or("") }
+                span { class: "hidden", "More" }
+            }
+            span { class: "hidden", "Toggle menu" }
         }
     }
 }

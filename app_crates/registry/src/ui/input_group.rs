@@ -147,6 +147,7 @@ pub fn InputGroupInput(
     #[props(optional)] disabled: bool,
     #[props(optional)] readonly: bool,
     #[props(optional)] required: bool,
+    #[props(into, optional)] step: Option<String>,
     #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
 ) -> Element {
     let merged = tw_merge!(
@@ -165,6 +166,7 @@ pub fn InputGroupInput(
             id: id,
             value: value,
             autocomplete: autocomplete,
+            step: step,
             disabled: disabled,
             readonly: readonly,
             required: required,

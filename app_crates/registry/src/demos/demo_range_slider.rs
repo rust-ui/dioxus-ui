@@ -16,7 +16,7 @@ pub fn DemoRangeSlider() -> Element {
                     min: "0",
                     max: "1000",
                     value: "500",
-                    oninput: "updatePrice(this.value)",
+                    "oninput": "updatePrice(this.value)",
                 }
             }
             div { class: "flex justify-between text-gray-500",

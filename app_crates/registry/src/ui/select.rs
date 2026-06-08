@@ -2,6 +2,12 @@ use dioxus::prelude::*;
 use icons::{Check, ChevronDown, ChevronUp};
 use tw_merge::tw_merge;
 
+#[component]
+pub fn SelectLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("px-2 py-1.5 text-sm font-medium mb-1", class.as_deref().unwrap_or(""));
+    rsx! { span { "data-name": "SelectLabel", class: "{merged}", {children} } }
+}
+
 use crate::hooks::use_can_scroll_vertical::use_can_scroll_vertical;
 use crate::hooks::use_random::use_random_id_for;
 

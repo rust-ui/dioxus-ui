@@ -2,6 +2,12 @@ use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
 #[component]
+pub fn TableWrapper(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("overflow-auto rounded-md border max-h-96", class.as_deref().unwrap_or(""));
+    rsx! { div { "data-name": "TableWrapper", class: "{merged}", {children} } }
+}
+
+#[component]
 pub fn Table(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!("w-full text-sm caption-bottom", class.as_deref().unwrap_or(""));
     rsx! {
@@ -24,12 +30,22 @@ pub fn TableBody(#[props(into, optional)] class: Option<String>, children: Eleme
 }
 
 #[component]
-pub fn TableRow(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn TableRow(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] data_state: Option<String>,
+    children: Element,
+) -> Element {
     let merged = tw_merge!(
         "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
         class.as_deref().unwrap_or("")
     );
-    rsx! { tr { class: "{merged}", {children} } }
+    rsx! {
+        tr {
+            class: "{merged}",
+            "data-state": data_state.as_deref(),
+            {children}
+        }
+    }
 }
 
 #[component]
