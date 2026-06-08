@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
+use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 
 use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeCanvasState};
 
@@ -28,8 +29,27 @@ pub fn NodeCanvas(
 
     rsx! {
         div {
-            class: "relative rounded-lg border bg-background overflow-hidden select-none",
+            class: "relative rounded-lg border bg-background overflow-hidden select-none outline-none",
             style: format!("height: 450px; cursor: {};", if is_busy { "grabbing" } else { "grab" }),
+            tabindex: "0",
+
+            onkeydown: move |ev| {
+                let data = ev.data();
+                let mods = data.modifiers();
+                let ctrl = mods.contains(Modifiers::CONTROL) || mods.contains(Modifiers::META);
+                let shift = mods.contains(Modifiers::SHIFT);
+                match data.key() {
+                    Key::Character(ref k) if ctrl && k == "z" && !shift => {
+                        ev.prevent_default();
+                        state.undo();
+                    }
+                    Key::Character(ref k) if ctrl && (k == "y" || (k == "z" && shift)) => {
+                        ev.prevent_default();
+                        state.redo();
+                    }
+                    _ => {}
+                }
+            },
 
             // canvas pan on background click (nodes stop propagation so only fires on empty space)
             onmousedown: move |ev| {

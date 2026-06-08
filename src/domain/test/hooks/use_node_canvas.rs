@@ -1,5 +1,7 @@
 use dioxus::prelude::*;
 
+use super::use_history_stack::UseHistoryStack;
+
 #[derive(Clone, PartialEq)]
 pub struct CanvasNode {
     pub id: &'static str,
@@ -40,6 +42,7 @@ pub struct NodeCanvasState {
     pub pan: Signal<(f64, f64)>,
     pub zoom: Signal<f64>,
     canvas_drag: Signal<Option<PanState>>,
+    pub history: UseHistoryStack<Vec<(f64, f64)>>,
 }
 
 impl NodeCanvasState {
@@ -81,7 +84,31 @@ impl NodeCanvasState {
     }
 
     pub fn stop_drag(&mut self) {
+        if self.drag.read().is_some() {
+            let snap = self.positions.read().clone();
+            self.history.push(snap);
+        }
         self.drag.set(None);
+    }
+
+    pub fn undo(&mut self) {
+        if let Some(snap) = self.history.undo() {
+            *self.positions.write() = snap;
+        }
+    }
+
+    pub fn redo(&mut self) {
+        if let Some(snap) = self.history.redo() {
+            *self.positions.write() = snap;
+        }
+    }
+
+    pub fn can_undo(&self) -> bool {
+        self.history.can_undo()
+    }
+
+    pub fn can_redo(&self) -> bool {
+        self.history.can_redo()
     }
 
     // ── canvas pan ───────────────────────────────────────────────────────────
@@ -176,13 +203,15 @@ impl NodeCanvasState {
 }
 
 pub fn use_node_canvas(nodes: &[CanvasNode]) -> NodeCanvasState {
-    let positions = use_signal(|| nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect());
+    let initial: Vec<(f64, f64)> = nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect();
+    let positions = use_signal(|| initial.clone());
     NodeCanvasState {
         positions,
         drag: use_signal(|| None),
         pan: use_signal(|| (0.0, 0.0)),
         zoom: use_signal(|| 1.0),
         canvas_drag: use_signal(|| None),
+        history: UseHistoryStack::new(initial),
     }
 }
 
