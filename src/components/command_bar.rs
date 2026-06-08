@@ -26,7 +26,7 @@ pub fn CommandBarTrigger() -> Element {
 
     rsx! {
         button {
-            class: "inline-flex items-center gap-2 whitespace-nowrap rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground flex-1 justify-start pl-3 h-8 text-sm font-normal shadow-none md:flex-none md:w-[220px] w-full",
+            class: "inline-flex items-center gap-2 whitespace-nowrap rounded-md border border-input bg-background text-muted-foreground hover:bg-accent hover:text-accent-foreground flex-1 justify-start pl-3 h-8 text-sm font-normal shadow-none md:flex-none",
             onclick: move |_| state.open.set(true),
             Search { class: "size-4 shrink-0" }
             span { class: "hidden md:inline-flex", "Search..." }
