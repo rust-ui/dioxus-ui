@@ -119,19 +119,19 @@ pub fn NodeCanvas(
                 let touches = ev.data().touches();
                 match touches.len() {
                     1 => {
+                        let c0 = touches[0].client_coordinates();
                         state.stop_pinch();
                         state.deselect();
-                        state.start_pan(touches[0].client_x(), touches[0].client_y());
+                        state.start_pan(c0.x, c0.y);
                     }
                     2 => {
+                        let c0 = touches[0].client_coordinates();
+                        let c1 = touches[1].client_coordinates();
                         state.stop_pan();
-                        let dist = touch_dist(
-                            touches[0].client_x(), touches[0].client_y(),
-                            touches[1].client_x(), touches[1].client_y(),
-                        );
+                        let dist = touch_dist(c0.x, c0.y, c1.x, c1.y);
                         let (ox, oy) = *canvas_origin.read();
-                        let cx = (touches[0].client_x() + touches[1].client_x()) / 2.0 - ox;
-                        let cy = (touches[0].client_y() + touches[1].client_y()) / 2.0 - oy;
+                        let cx = (c0.x + c1.x) / 2.0 - ox;
+                        let cy = (c0.y + c1.y) / 2.0 - oy;
                         state.start_pinch(dist, cx, cy);
                     }
                     _ => {}
@@ -143,16 +143,16 @@ pub fn NodeCanvas(
                 let touches = ev.data().touches();
                 match touches.len() {
                     1 if !state.is_pinching() => {
-                        state.update_pan(touches[0].client_x(), touches[0].client_y());
+                        let c0 = touches[0].client_coordinates();
+                        state.update_pan(c0.x, c0.y);
                     }
                     2 => {
-                        let dist = touch_dist(
-                            touches[0].client_x(), touches[0].client_y(),
-                            touches[1].client_x(), touches[1].client_y(),
-                        );
+                        let c0 = touches[0].client_coordinates();
+                        let c1 = touches[1].client_coordinates();
+                        let dist = touch_dist(c0.x, c0.y, c1.x, c1.y);
                         let (ox, oy) = *canvas_origin.read();
-                        let cx = (touches[0].client_x() + touches[1].client_x()) / 2.0 - ox;
-                        let cy = (touches[0].client_y() + touches[1].client_y()) / 2.0 - oy;
+                        let cx = (c0.x + c1.x) / 2.0 - ox;
+                        let cy = (c0.y + c1.y) / 2.0 - oy;
                         state.update_pinch(dist, cx, cy);
                     }
                     _ => {}
@@ -170,7 +170,10 @@ pub fn NodeCanvas(
                     1 => {
                         // One finger lifted from a two-finger gesture — transition to pan.
                         state.stop_pinch();
-                        if !locked { state.start_pan(touches[0].client_x(), touches[0].client_y()); }
+                        if !locked {
+                            let c0 = touches[0].client_coordinates();
+                            state.start_pan(c0.x, c0.y);
+                        }
                     }
                     _ => {}
                 }
