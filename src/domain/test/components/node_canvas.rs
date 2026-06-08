@@ -6,6 +6,10 @@ use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeCa
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
+const MINI_W: f64 = 140.0;
+const MINI_H: f64 = 90.0;
+const WORLD_REF_W: f64 = 820.0;
+const WORLD_REF_H: f64 = 480.0;
 
 pub const NODE_H: f64 = 72.0;
 
@@ -112,8 +116,9 @@ pub fn NodeCanvas(
                 {children}
             }
 
-            // ── zoom controls (viewport space, not transformed) ───────────────
-            ZoomControls { state, nodes }
+            // ── overlays (viewport space, not transformed) ───────────────────
+            ZoomControls { state, nodes: nodes.clone() }
+            Minimap { state, nodes, edges }
         }
     }
 }
@@ -150,6 +155,112 @@ pub fn NodeWrapper(
     }
 }
 
+// ── Minimap ───────────────────────────────────────────────────────────────────
+
+#[component]
+pub fn Minimap(
+    state: NodeCanvasState,
+    nodes: Vec<CanvasNode>,
+    edges: Vec<CanvasEdge>,
+) -> Element {
+    let scale_x = MINI_W / WORLD_REF_W;
+    let scale_y = MINI_H / WORLD_REF_H;
+
+    let pos_snap = state.positions.read().clone();
+
+    // precompute node rects: (x, y, w, h) in minimap coords
+    let node_rects: Vec<(f64, f64, f64, f64)> = nodes
+        .iter()
+        .enumerate()
+        .map(|(i, n)| {
+            let (x, y) = pos_snap[i];
+            (x * scale_x, y * scale_y, n.width * scale_x, NODE_H * scale_y)
+        })
+        .collect();
+
+    // precompute scaled bezier edge paths
+    let edge_paths: Vec<String> = edges
+        .iter()
+        .filter_map(|edge| {
+            let (fi, from) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.from)?;
+            let (ti, _) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
+            let (fx, fy) = pos_snap[fi];
+            let (tx, ty) = pos_snap[ti];
+            let sx = (fx + from.width) * scale_x;
+            let sy = (fy + NODE_H / 2.0) * scale_y;
+            let tx2 = tx * scale_x;
+            let ty2 = (ty + NODE_H / 2.0) * scale_y;
+            let dx = (tx2 - sx).abs();
+            let off = (dx / 2.0).clamp(4.0, 12.0);
+            Some(format!(
+                "M {sx:.1} {sy:.1} C {:.1} {sy:.1}, {:.1} {ty2:.1}, {tx2:.1} {ty2:.1}",
+                sx + off,
+                tx2 - off,
+            ))
+        })
+        .collect();
+
+    // viewport indicator rect in minimap coords
+    let (pan_x, pan_y) = *state.pan.read();
+    let zoom = state.zoom_value();
+    let vp_x = (-pan_x / zoom) * scale_x;
+    let vp_y = (-pan_y / zoom) * scale_y;
+    let vp_w = (VIEWPORT_W / zoom) * scale_x;
+    let vp_h = (VIEWPORT_H / zoom) * scale_y;
+
+    rsx! {
+        div {
+            class: "absolute bottom-3 right-3 rounded-md border bg-background/80 backdrop-blur-sm shadow-sm overflow-hidden pointer-events-none",
+            style: format!("width: {MINI_W}px; height: {MINI_H}px;"),
+
+            svg {
+                width: "{MINI_W}",
+                height: "{MINI_H}",
+
+                // edges
+                for d in &edge_paths {
+                    path {
+                        d: d.as_str(),
+                        fill: "none",
+                        stroke: "currentColor",
+                        class: "text-border",
+                        "stroke-width": "0.8",
+                    }
+                }
+
+                // node rects
+                for (x, y, w, h) in &node_rects {
+                    rect {
+                        x: "{x:.1}",
+                        y: "{y:.1}",
+                        width: "{w:.1}",
+                        height: "{h:.1}",
+                        rx: "1.5",
+                        fill: "currentColor",
+                        class: "text-muted-foreground/40",
+                        stroke: "currentColor",
+                        "stroke-width": "0.5",
+                    }
+                }
+
+                // viewport indicator
+                rect {
+                    x: "{vp_x:.1}",
+                    y: "{vp_y:.1}",
+                    width: "{vp_w:.1}",
+                    height: "{vp_h:.1}",
+                    rx: "1",
+                    fill: "currentColor",
+                    class: "text-primary/10",
+                    stroke: "currentColor",
+                    "stroke-width": "0.8",
+                    "stroke-dasharray": "2 1",
+                }
+            }
+        }
+    }
+}
+
 // ── ZoomControls ──────────────────────────────────────────────────────────────
 
 #[component]
@@ -159,7 +270,7 @@ pub fn ZoomControls(state: NodeCanvasState, nodes: Vec<CanvasNode>) -> Element {
 
     rsx! {
         div {
-            class: "absolute bottom-3 right-3 flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
+            class: "absolute bottom-3 left-3 flex items-center gap-0.5 rounded-md border bg-background/90 backdrop-blur-sm shadow-sm px-1.5 py-1",
 
             span {
                 class: "text-[11px] text-muted-foreground tabular-nums w-9 text-center",
