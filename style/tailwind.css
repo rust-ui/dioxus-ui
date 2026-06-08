@@ -4,6 +4,9 @@
 @import "./Animate.css";
 @import "./highlight_code.css";
 
+@source "../src/**/*.rs";
+@source "../app_crates/**/*.rs";
+
 
 /* https://www.linkedin.com/posts/theosoti_page-loads-dont-have-to-be-harsh-css-lets-activity-7313869085379878913-ttyY/ */
 /* @view-transition {

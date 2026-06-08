@@ -1,6 +1,6 @@
-use std::collections::HashMap;
-
 use dioxus::prelude::*;
+use icons::{Circle, CircleCheck, CircleX, Clock, LoaderCircle};
+use tw_merge::tw_merge;
 
 use super::node::{Node, NodeContent, NodeDescription, NodeFooter, NodeHeader, NodeTitle};
 use super::node_canvas::{CanvasControls, Minimap, NodeCanvas, NodeWrapper};
@@ -31,7 +31,6 @@ impl NodeStatus {
         }
     }
 
-    // Left border color — the main GH Actions visual cue
     fn border_class(&self) -> &'static str {
         match self {
             NodeStatus::Idle    => "border-l-zinc-200 dark:border-l-zinc-700",
@@ -42,7 +41,6 @@ impl NodeStatus {
         }
     }
 
-    // Subtle background tint
     fn bg_class(&self) -> &'static str {
         match self {
             NodeStatus::Idle    => "",
@@ -53,82 +51,38 @@ impl NodeStatus {
         }
     }
 
-    // Icon color
-    fn icon_color(&self) -> &'static str {
+    fn icon_class(&self) -> &'static str {
         match self {
-            NodeStatus::Idle    => "text-zinc-400",
-            NodeStatus::Queued  => "text-amber-500",
-            NodeStatus::Running => "text-orange-500",
-            NodeStatus::Success => "text-emerald-500",
-            NodeStatus::Failed  => "text-red-500",
+            NodeStatus::Idle    => "size-3.5 text-zinc-400",
+            NodeStatus::Queued  => "size-3.5 text-amber-500",
+            NodeStatus::Running => "size-3.5 text-orange-500 animate-spin",
+            NodeStatus::Success => "size-3.5 text-emerald-500",
+            NodeStatus::Failed  => "size-3.5 text-red-500",
         }
     }
 
-    // Label color
-    fn label_color(&self) -> &'static str {
+    fn label_class(&self) -> &'static str {
         match self {
-            NodeStatus::Idle    => "text-zinc-400",
-            NodeStatus::Queued  => "text-amber-600 dark:text-amber-400",
-            NodeStatus::Running => "text-orange-600 dark:text-orange-400",
-            NodeStatus::Success => "text-emerald-600 dark:text-emerald-400",
-            NodeStatus::Failed  => "text-red-600 dark:text-red-400",
+            NodeStatus::Idle    => "text-[11px] font-medium text-zinc-400",
+            NodeStatus::Queued  => "text-[11px] font-medium text-amber-600 dark:text-amber-400",
+            NodeStatus::Running => "text-[11px] font-medium text-orange-600 dark:text-orange-400",
+            NodeStatus::Success => "text-[11px] font-medium text-emerald-600 dark:text-emerald-400",
+            NodeStatus::Failed  => "text-[11px] font-medium text-red-600 dark:text-red-400",
         }
     }
 }
 
-// ── Status icons (inline SVG) ─────────────────────────────────────────────────
+// ── Status icon ───────────────────────────────────────────────────────────────
 
 #[component]
 fn StatusIcon(status: NodeStatus) -> Element {
-    let color = status.icon_color();
+    let cls = status.icon_class();
     match status {
-        NodeStatus::Idle => rsx! {
-            svg {
-                class: "size-3.5 {color}",
-                view_box: "0 0 16 16", fill: "none",
-                circle { cx: "8", cy: "8", r: "6", stroke: "currentColor", "stroke-width": "1.5" }
-            }
-        },
-        NodeStatus::Queued => rsx! {
-            svg {
-                class: "size-3.5 {color}",
-                view_box: "0 0 16 16", fill: "none",
-                circle { cx: "8", cy: "8", r: "6.5", stroke: "currentColor", "stroke-width": "1.5" }
-                // clock hands
-                path { d: "M8 5v3.5l2 1.5", stroke: "currentColor", "stroke-width": "1.5", "stroke-linecap": "round" }
-            }
-        },
-        NodeStatus::Running => rsx! {
-            svg {
-                class: "size-3.5 {color}",
-                style: "animation: spin 1s linear infinite;",
-                view_box: "0 0 16 16", fill: "none",
-                circle {
-                    cx: "8", cy: "8", r: "6",
-                    stroke: "currentColor", "stroke-width": "1.5",
-                    "stroke-dasharray": "20 18",
-                    "stroke-linecap": "round",
-                }
-            }
-        },
-        NodeStatus::Success => rsx! {
-            svg {
-                class: "size-3.5 {color}",
-                view_box: "0 0 16 16", fill: "none",
-                circle { cx: "8", cy: "8", r: "6.5", fill: "currentColor", opacity: "0.15" }
-                circle { cx: "8", cy: "8", r: "6.5", stroke: "currentColor", "stroke-width": "1.5" }
-                path { d: "M5.5 8.5l2 2 3-3.5", stroke: "currentColor", "stroke-width": "1.5", "stroke-linecap": "round", "stroke-linejoin": "round" }
-            }
-        },
-        NodeStatus::Failed => rsx! {
-            svg {
-                class: "size-3.5 {color}",
-                view_box: "0 0 16 16", fill: "none",
-                circle { cx: "8", cy: "8", r: "6.5", fill: "currentColor", opacity: "0.15" }
-                circle { cx: "8", cy: "8", r: "6.5", stroke: "currentColor", "stroke-width": "1.5" }
-                path { d: "M5.5 5.5l5 5M10.5 5.5l-5 5", stroke: "currentColor", "stroke-width": "1.5", "stroke-linecap": "round" }
-            }
-        },
+        NodeStatus::Idle    => rsx! { Circle { class: cls } },
+        NodeStatus::Queued  => rsx! { Clock { class: cls } },
+        NodeStatus::Running => rsx! { LoaderCircle { class: cls } },
+        NodeStatus::Success => rsx! { CircleCheck { class: cls } },
+        NodeStatus::Failed  => rsx! { CircleX { class: cls } },
     }
 }
 
@@ -136,21 +90,18 @@ fn StatusIcon(status: NodeStatus) -> Element {
 
 #[component]
 fn StatusNodeContent(node: CanvasNode, status: NodeStatus) -> Element {
-    let border = status.border_class();
-    let bg     = status.bg_class();
-    let lcolor = status.label_color();
-    let slabel = status.label();
-
+    let node_class = tw_merge!(
+        "border-l-[3px]",
+        status.border_class(),
+        status.bg_class(),
+    );
     rsx! {
-        // inject spin keyframe once
-        style { "@keyframes spin {{ to {{ transform: rotate(360deg); }} }}" }
-
         Node {
             target: false,
             source: false,
-            class: format!("border-l-[3px] {border} {bg}"),
+            class: node_class,
             NodeHeader {
-                span { class: format!("size-2 rounded-full shrink-0 {}", node.kind.dot_color()) }
+                span { class: tw_merge!("size-2 rounded-full shrink-0", node.kind.dot_color()) }
                 NodeTitle { class: node.kind.text_color(), "{node.label}" }
                 span {
                     class: "ml-auto text-[10px] text-muted-foreground uppercase tracking-wide shrink-0",
@@ -163,79 +114,17 @@ fn StatusNodeContent(node: CanvasNode, status: NodeStatus) -> Element {
             NodeFooter {
                 class: "py-1.5",
                 StatusIcon { status: status.clone() }
-                span { class: format!("text-[11px] font-medium {lcolor}"), "{slabel}" }
+                span { class: status.label_class(), "{status.label()}" }
             }
         }
     }
 }
 
-// ── StatusOverlay ─────────────────────────────────────────────────────────────
+// ── Overlay ───────────────────────────────────────────────────────────────────
 
 #[component]
-fn StatusOverlay(
-    statuses: Signal<HashMap<String, NodeStatus>>,
-    state: NodeCanvasState,
-) -> Element {
-    let run_sequence = move |_| {
-        let mut s = statuses.clone();
-        s.write().clear();
-        s.write().insert("trigger".to_string(), NodeStatus::Success);
-        s.write().insert("data".to_string(),    NodeStatus::Success);
-        s.write().insert("agent".to_string(),   NodeStatus::Running);
-        s.write().insert("output".to_string(),  NodeStatus::Queued);
-    };
-
-    let set_error = move |_| {
-        let mut s = statuses.clone();
-        s.write().insert("trigger".to_string(), NodeStatus::Success);
-        s.write().insert("data".to_string(),    NodeStatus::Success);
-        s.write().insert("agent".to_string(),   NodeStatus::Failed);
-        s.write().insert("output".to_string(),  NodeStatus::Idle);
-    };
-
-    let set_done = move |_| {
-        let mut s = statuses.clone();
-        s.write().insert("trigger".to_string(), NodeStatus::Success);
-        s.write().insert("data".to_string(),    NodeStatus::Success);
-        s.write().insert("agent".to_string(),   NodeStatus::Success);
-        s.write().insert("output".to_string(),  NodeStatus::Success);
-    };
-
-    let reset = move |_| { statuses.clone().write().clear(); };
-
+fn StatusOverlay(state: NodeCanvasState) -> Element {
     rsx! {
-        div {
-            class: "absolute bottom-3 left-3 flex items-center gap-1 rounded-lg border bg-background/95 backdrop-blur px-1.5 py-1.5 shadow-sm",
-
-            // Run button — orange like GH Actions
-            button {
-                class: "flex items-center gap-1.5 rounded px-2.5 py-1 text-[11px] font-semibold bg-orange-500 hover:bg-orange-400 text-white transition-colors",
-                onclick: run_sequence,
-                svg {
-                    class: "size-3",
-                    view_box: "0 0 16 16", fill: "currentColor",
-                    path { d: "M4 2l10 6-10 6V2z" }
-                }
-                "Run"
-            }
-            button {
-                class: "flex items-center gap-1.5 rounded px-2 py-1 text-[11px] font-medium bg-emerald-600 hover:bg-emerald-500 text-white transition-colors",
-                onclick: set_done,
-                "Done"
-            }
-            button {
-                class: "flex items-center gap-1.5 rounded px-2 py-1 text-[11px] font-medium bg-red-600 hover:bg-red-500 text-white transition-colors",
-                onclick: set_error,
-                "Fail"
-            }
-            div { class: "w-px h-4 bg-border mx-0.5" }
-            button {
-                class: "rounded px-2 py-1 text-[11px] text-muted-foreground hover:bg-accent transition-colors",
-                onclick: reset,
-                "Reset"
-            }
-        }
-
         CanvasControls { state }
         Minimap { state }
     }
@@ -282,18 +171,23 @@ fn initial_edges() -> Vec<CanvasEdge> {
 
 #[component]
 pub fn DemoNodeCanvasStatus() -> Element {
-    let state    = use_node_canvas(initial_nodes(), initial_edges());
-    let statuses = use_signal(HashMap::<String, NodeStatus>::new);
+    let state = use_node_canvas(initial_nodes(), initial_edges());
 
     rsx! {
         NodeCanvas {
             state,
-            overlay: rsx! { StatusOverlay { statuses, state } },
+            overlay: rsx! { StatusOverlay { state } },
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
                 NodeWrapper { key: "{node.id}", state, idx: i,
                     StatusNodeContent {
                         node: node.clone(),
-                        status: statuses.read().get(&node.id).cloned().unwrap_or_default(),
+                        status: match node.id.as_str() {
+                            "trigger" => NodeStatus::Success,
+                            "data"    => NodeStatus::Failed,
+                            "agent"   => NodeStatus::Running,
+                            "output"  => NodeStatus::Queued,
+                            _         => NodeStatus::Idle,
+                        },
                     }
                 }
             }
