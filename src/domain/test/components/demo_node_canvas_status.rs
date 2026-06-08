@@ -3,7 +3,7 @@ use icons::{Circle, CircleCheck, CircleX, Clock, LoaderCircle};
 use tw_merge::tw_merge;
 
 use super::node::{Node, NodeContent, NodeDescription, NodeFooter, NodeHeader, NodeTitle};
-use super::node_canvas::{CanvasControls, Minimap, NodeCanvas, NodeWrapper};
+use super::node_canvas::{CanvasControls, NodeCanvas, NodeWrapper};
 use crate::domain::test::hooks::use_node_canvas::{
     use_node_canvas, CanvasEdge, CanvasNode, NodeKind, NodeCanvasState,
 };
@@ -126,7 +126,6 @@ fn StatusNodeContent(node: CanvasNode, status: NodeStatus) -> Element {
 fn StatusOverlay(state: NodeCanvasState) -> Element {
     rsx! {
         CanvasControls { state }
-        Minimap { state }
     }
 }
 

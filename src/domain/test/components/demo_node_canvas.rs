@@ -1,6 +1,6 @@
 use dioxus::prelude::*;
 
-use super::node_canvas::{CanvasControls, DefaultNodeContent, Minimap, NodeCanvas, NodeWrapper};
+use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
 use crate::domain::test::hooks::use_node_canvas::{
     use_node_canvas, CanvasEdge, CanvasNode, NodeKind,
 };
@@ -51,7 +51,6 @@ pub fn DemoNodeCanvas() -> Element {
             state,
             overlay: rsx! {
                 CanvasControls { state }
-                Minimap { state }
             },
 
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
