@@ -122,3 +122,54 @@ pub fn DatePickerCell(
         }
     }
 }
+
+#[component]
+pub fn DatePickerMonth(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged_class =
+        tw_merge!("flex flex-col items-center justify-start gap-2 size-full", class.as_deref().unwrap_or(""));
+    rsx! { div { "data-name": "DatePickerMonth", class: "{merged_class}", {children} } }
+}
+
+#[component]
+pub fn DatePickerTable(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] role: Option<String>,
+    children: Element,
+) -> Element {
+    let merged_class = tw_merge!("w-full space-y-1 border-collapse", class.as_deref().unwrap_or(""));
+    rsx! {
+        table {
+            "data-name": "DatePickerTable",
+            class: "{merged_class}",
+            role: role.as_deref().unwrap_or(""),
+            {children}
+        }
+    }
+}
+
+#[component]
+pub fn DatePickerWeekNumberHeader(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] aria_label: Option<String>,
+    children: Element,
+) -> Element {
+    let merged_class = tw_merge!(
+        "text-muted-foreground rounded-md w-6 font-normal text-[0.8rem] select-none",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        th {
+            "data-name": "DatePickerWeekNumberHeader",
+            class: "{merged_class}",
+            "aria-label": aria_label.as_deref().unwrap_or(""),
+            {children}
+        }
+    }
+}
+
+#[component]
+pub fn DatePickerWeekNumberCell(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged_class =
+        tw_merge!("w-6 text-center text-[0.8rem] text-muted-foreground select-none", class.as_deref().unwrap_or(""));
+    rsx! { td { "data-name": "DatePickerWeekNumberCell", class: "{merged_class}", {children} } }
+}
