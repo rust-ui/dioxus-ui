@@ -1,5 +1,5 @@
 use dioxus::prelude::*;
-use icons::{Lock, Unlock};
+use icons::{Lock, LockOpen};
 use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
 
 use super::node_canvas::{CanvasControls, DefaultNodeContent, Minimap, NodeCanvas, NodeWrapper};
@@ -79,7 +79,7 @@ pub fn DemoNodeCanvasLockedMode() -> Element {
                     Toolbar { aria_label: "Lock controls",
                         ToolbarButton {
                             onclick: move |_| state.toggle_locked(),
-                            if locked { Lock {} } else { Unlock {} }
+                            if locked { Lock {} } else { LockOpen {} }
                             if locked { "Unlock Canvas" } else { "Lock Canvas" }
                         }
                         ToolbarSeparator {}
