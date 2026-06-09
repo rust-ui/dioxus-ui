@@ -32,7 +32,7 @@ const FAVICON_16: Asset = asset!("/public/icons/favicon-16x16.png");
 const FAVICON_32: Asset = asset!("/public/icons/favicon-32x32.png");
 const APPLE_TOUCH_ICON: Asset = asset!("/public/icons/apple-touch-icon.png");
 const MANIFEST: Asset = asset!("/public/manifest.json");
-const TAILWIND_CSS: Asset = asset!("/public/tailwind.css");
+const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 const LOCK_SCROLL_JS: Asset = asset!("/public/hooks/lock_scroll.js");
 const CHART_INIT_JS: Asset = asset!("/public/app_components/chart_init.js");
 
@@ -125,7 +125,7 @@ fn App() -> Element {
         document::Link { rel: "icon", r#type: "image/png", sizes: "32x32", href: FAVICON_32 }
         document::Link { rel: "apple-touch-icon", href: APPLE_TOUCH_ICON }
         document::Link { rel: "manifest", href: MANIFEST }
-        document::Link { rel: "stylesheet", href: TAILWIND_CSS }
+        document::Stylesheet { href: TAILWIND_CSS }
         document::Script { src: LOCK_SCROLL_JS }
         document::Script { src: CHART_INIT_JS }
         Router::<Route> {}

@@ -1,18 +1,18 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "./index.css";
-@import "./Animate.css";
-@import "./highlight_code.css";
+@import "./style/index.css";
+@import "./style/Animate.css";
+@import "./style/highlight_code.css";
 
-@source "../src/**/*.rs";
-@source "../app_crates/**/*.rs";
+@source "./src/**/*.rs";
+@source "./app_crates/**/*.rs";
 
 
 /* https://www.linkedin.com/posts/theosoti_page-loads-dont-have-to-be-harsh-css-lets-activity-7313869085379878913-ttyY/ */
 /* @view-transition {
   navigation: auto;
  } */
- 
+
 
 @custom-variant dark (&:is(.dark *));
 @custom-variant in-data-scrolled (&:is([data-scrolled="true"] *));
@@ -152,8 +152,6 @@
   --surface-foreground: oklch(0.708 0 0);
 }
 
-
-
 @theme inline {
   --spacing-bottom__nav__height: var(--bottom__nav__height);
   --breakpoint-3xl: 1600px;
@@ -228,7 +226,7 @@
   html {
     @apply bg-background;
     height: 100vh;
-    height: 100dvh; /* Overrides 100vh for browsers that support dvh */
+    height: 100dvh;
     overflow: hidden;
   }
   body {
@@ -239,24 +237,20 @@
     text-rendering: optimizeLegibility;
   }
 
-  /* TODO. Understand this. */
   a:active,
   button:active {
     @apply opacity-60 md:opacity-100;
   }
 
-  /* https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor */
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
   }
-  
-  /* https://tailwindcss.com/docs/upgrade-guide#dialog-margins-removed */
+
   dialog {
     margin: auto;
   }
 
-  /* Custom scrollbar styling. Thanks @pranathiperii. */
   ::-webkit-scrollbar {
     width: 5px;
   }
@@ -275,10 +269,10 @@
   ::-webkit-scrollbar-thumb {
     background: var(--scrollbar-thumb);
   }
-   ::-webkit-scrollbar-track {
+  ::-webkit-scrollbar-track {
     background: transparent;
   }
-   * {
+  * {
     scrollbar-color: var(--scrollbar-thumb) transparent;
   }
 
@@ -297,7 +291,6 @@
   @apply 3xl:max-w-screen-2xl mx-auto max-w-[1400px] px-4 lg:px-8;
 }
 
-/* Bottom nav safe padding on mobile */
 @utility bottom__safe {
   padding-bottom: var(--bottom__nav__height);
 
@@ -306,7 +299,6 @@
   }
 }
 
-/* Cross-browser dvh fallback for Arc/Safari + bottom nav padding on mobile */
 @utility safe__dvh__content {
   height: 100vh;
   height: 100dvh;
@@ -317,8 +309,6 @@
   }
 }
 
-
-/* TODO. Understand this. */
 @utility border-grid {
   @apply border-border/50 dark:border-border;
 }
@@ -365,4 +355,3 @@
     }
   }
 }
-
