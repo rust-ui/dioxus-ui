@@ -32,10 +32,7 @@ pub fn Node(
 }
 
 #[component]
-pub fn NodeHeader(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn NodeHeader(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!(
         "flex items-center gap-2 px-3 py-2.5 border-b bg-secondary/50 rounded-t-md",
         class.as_deref().unwrap_or("")
@@ -44,40 +41,25 @@ pub fn NodeHeader(
 }
 
 #[component]
-pub fn NodeTitle(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn NodeTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!("text-xs font-medium", class.as_deref().unwrap_or(""));
     rsx! { span { class: "{merged}", {children} } }
 }
 
 #[component]
-pub fn NodeDescription(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
-    let merged = tw_merge!(
-        "text-[10px] text-muted-foreground",
-        class.as_deref().unwrap_or("")
-    );
+pub fn NodeDescription(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("text-[10px] text-muted-foreground", class.as_deref().unwrap_or(""));
     rsx! { p { class: "{merged}", {children} } }
 }
 
 #[component]
-pub fn NodeContent(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn NodeContent(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!("px-3 py-2", class.as_deref().unwrap_or(""));
     rsx! { div { class: "{merged}", {children} } }
 }
 
 #[component]
-pub fn NodeFooter(
-    #[props(into, optional)] class: Option<String>,
-    children: Element,
-) -> Element {
+pub fn NodeFooter(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!(
         "flex items-center gap-2 px-3 py-2.5 border-t bg-secondary/50 rounded-b-md",
         class.as_deref().unwrap_or("")

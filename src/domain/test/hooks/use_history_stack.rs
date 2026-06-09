@@ -8,7 +8,9 @@ pub struct UseHistoryStack<T: Clone + 'static> {
 // Signal<T> is Copy regardless of T — derived impls would add T: Copy/PartialEq bounds unnecessarily.
 impl<T: Clone + 'static> Copy for UseHistoryStack<T> {}
 impl<T: Clone + 'static> Clone for UseHistoryStack<T> {
-    fn clone(&self) -> Self { *self }
+    fn clone(&self) -> Self {
+        *self
+    }
 }
 impl<T: Clone + 'static> PartialEq for UseHistoryStack<T> {
     fn eq(&self, other: &Self) -> bool {
@@ -18,10 +20,7 @@ impl<T: Clone + 'static> PartialEq for UseHistoryStack<T> {
 
 impl<T: Clone + 'static> UseHistoryStack<T> {
     pub fn new(initial: T) -> Self {
-        Self {
-            history: use_signal(|| vec![initial]),
-            index: use_signal(|| 0),
-        }
+        Self { history: use_signal(|| vec![initial]), index: use_signal(|| 0) }
     }
 
     pub fn push(&mut self, state: T) {

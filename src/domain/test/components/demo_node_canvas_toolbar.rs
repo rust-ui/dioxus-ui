@@ -1,13 +1,9 @@
 use dioxus::prelude::*;
 use icons::{Plus, Redo2, RotateCcw, Trash2, Undo2};
-use registry::ui::toolbar::{
-    Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem,
-};
+use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem};
 
 use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{
-    use_node_canvas, CanvasEdge, CanvasNode, NodeKind,
-};
+use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
 
 fn initial_nodes() -> Vec<CanvasNode> {
     vec![

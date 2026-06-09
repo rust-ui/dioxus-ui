@@ -18,27 +18,27 @@ impl NodeKind {
     pub fn dot_color(&self) -> &'static str {
         match self {
             NodeKind::Trigger => "bg-yellow-500",
-            NodeKind::Data    => "bg-blue-500",
-            NodeKind::Agent   => "bg-purple-500",
-            NodeKind::Output  => "bg-green-500",
+            NodeKind::Data => "bg-blue-500",
+            NodeKind::Agent => "bg-purple-500",
+            NodeKind::Output => "bg-green-500",
         }
     }
 
     pub fn text_color(&self) -> &'static str {
         match self {
             NodeKind::Trigger => "text-yellow-600 dark:text-yellow-400",
-            NodeKind::Data    => "text-blue-600 dark:text-blue-400",
-            NodeKind::Agent   => "text-purple-600 dark:text-purple-400",
-            NodeKind::Output  => "text-green-600 dark:text-green-400",
+            NodeKind::Data => "text-blue-600 dark:text-blue-400",
+            NodeKind::Agent => "text-purple-600 dark:text-purple-400",
+            NodeKind::Output => "text-green-600 dark:text-green-400",
         }
     }
 
     pub fn label(&self) -> &'static str {
         match self {
             NodeKind::Trigger => "Trigger",
-            NodeKind::Data    => "Data",
-            NodeKind::Agent   => "Agent",
-            NodeKind::Output  => "Output",
+            NodeKind::Data => "Data",
+            NodeKind::Agent => "Agent",
+            NodeKind::Output => "Output",
         }
     }
 }
@@ -105,19 +105,19 @@ struct PinchState {
 // ── NodeCanvasState ───────────────────────────────────────────────────────────
 
 pub struct NodeCanvasState {
-    pub nodes:      Signal<Vec<CanvasNode>>,
-    pub edges:      Signal<Vec<CanvasEdge>>,
-    pub positions:  Signal<Vec<(f64, f64)>>,
-    pub drag:       Signal<Option<DragState>>,
-    pub pan:        Signal<(f64, f64)>,
-    pub zoom:       Signal<f64>,
-    pub selected:   Signal<HashSet<usize>>,
+    pub nodes: Signal<Vec<CanvasNode>>,
+    pub edges: Signal<Vec<CanvasEdge>>,
+    pub positions: Signal<Vec<(f64, f64)>>,
+    pub drag: Signal<Option<DragState>>,
+    pub pan: Signal<(f64, f64)>,
+    pub zoom: Signal<f64>,
+    pub selected: Signal<HashSet<usize>>,
     pub connecting: Signal<Option<ConnectingState>>,
-    canvas_drag:    Signal<Option<PanState>>,
-    touch_pinch:    Signal<Option<PinchState>>,
-    pub history:    UseHistoryStack<Vec<(f64, f64)>>,
-    next_id:        Signal<usize>,
-    pub locked:       Signal<bool>,
+    canvas_drag: Signal<Option<PanState>>,
+    touch_pinch: Signal<Option<PinchState>>,
+    pub history: UseHistoryStack<Vec<(f64, f64)>>,
+    next_id: Signal<usize>,
+    pub locked: Signal<bool>,
     pub snap_to_grid: Signal<bool>,
     /// Clipboard stores (node, x, y) at time of copy. Each paste offsets by +20.
     clipboard: Signal<Vec<(CanvasNode, f64, f64)>>,
@@ -126,22 +126,24 @@ pub struct NodeCanvasState {
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
 impl Copy for NodeCanvasState {}
 impl Clone for NodeCanvasState {
-    fn clone(&self) -> Self { *self }
+    fn clone(&self) -> Self {
+        *self
+    }
 }
 impl PartialEq for NodeCanvasState {
     fn eq(&self, other: &Self) -> bool {
-        self.nodes      == other.nodes
-            && self.edges     == other.edges
+        self.nodes == other.nodes
+            && self.edges == other.edges
             && self.positions == other.positions
-            && self.drag      == other.drag
-            && self.pan       == other.pan
-            && self.zoom      == other.zoom
-            && self.selected  == other.selected
-            && self.connecting  == other.connecting
+            && self.drag == other.drag
+            && self.pan == other.pan
+            && self.zoom == other.zoom
+            && self.selected == other.selected
+            && self.connecting == other.connecting
             && self.touch_pinch == other.touch_pinch
-            && self.history     == other.history
-            && self.locked        == other.locked
-            && self.snap_to_grid  == other.snap_to_grid
+            && self.history == other.history
+            && self.locked == other.locked
+            && self.snap_to_grid == other.snap_to_grid
     }
 }
 
@@ -180,7 +182,9 @@ impl NodeCanvasState {
 
     // ── locked mode ───────────────────────────────────────────────────────────
 
-    pub fn is_locked(&self) -> bool { *self.locked.read() }
+    pub fn is_locked(&self) -> bool {
+        *self.locked.read()
+    }
 
     pub fn set_locked(&mut self, v: bool) {
         self.locked.set(v);
@@ -191,9 +195,13 @@ impl NodeCanvasState {
         self.locked.set(!v);
     }
 
-    pub fn is_snap_to_grid(&self) -> bool { *self.snap_to_grid.read() }
+    pub fn is_snap_to_grid(&self) -> bool {
+        *self.snap_to_grid.read()
+    }
 
-    pub fn set_snap_to_grid(&mut self, v: bool) { self.snap_to_grid.set(v); }
+    pub fn set_snap_to_grid(&mut self, v: bool) {
+        self.snap_to_grid.set(v);
+    }
 
     pub fn toggle_snap_to_grid(&mut self) {
         let v = *self.snap_to_grid.read();
@@ -207,15 +215,13 @@ impl NodeCanvasState {
     }
 
     pub fn start_connect(&mut self, from_node_id: String, from_x: f64, from_y: f64) {
-        self.connecting.set(Some(ConnectingState {
-            from_node_id,
-            from_x, from_y,
-            mouse_x: from_x, mouse_y: from_y,
-        }));
+        self.connecting.set(Some(ConnectingState { from_node_id, from_x, from_y, mouse_x: from_x, mouse_y: from_y }));
     }
 
     pub fn update_connect_mouse(&mut self, ex: f64, ey: f64) {
-        if self.connecting.read().is_none() { return; }
+        if self.connecting.read().is_none() {
+            return;
+        }
         let (pan_x, pan_y) = *self.pan.read();
         let zoom = *self.zoom.read();
         let wx = (ex - pan_x) / zoom;
@@ -230,9 +236,10 @@ impl NodeCanvasState {
         let cs = self.connecting.read().clone();
         self.connecting.set(None);
         let Some(cs) = cs else { return };
-        if cs.from_node_id == to_node_id { return; }
-        let already = self.edges.read().iter()
-            .any(|e| e.from == cs.from_node_id && e.to == to_node_id);
+        if cs.from_node_id == to_node_id {
+            return;
+        }
+        let already = self.edges.read().iter().any(|e| e.from == cs.from_node_id && e.to == to_node_id);
         if !already {
             self.edges.write().push(CanvasEdge { from: cs.from_node_id, to: to_node_id });
         }
@@ -252,7 +259,9 @@ impl NodeCanvasState {
     pub fn delete_selected(&mut self) {
         // Collect indices sorted descending so removals don't shift remaining indices.
         let mut indices: Vec<usize> = self.selected.read().iter().cloned().collect();
-        if indices.is_empty() { return; }
+        if indices.is_empty() {
+            return;
+        }
         indices.sort_unstable_by(|a, b| b.cmp(a));
 
         let ids: Vec<String> = {
@@ -277,18 +286,21 @@ impl NodeCanvasState {
 
     pub fn copy_selected(&mut self) {
         let sel: Vec<usize> = self.selected.read().iter().cloned().collect();
-        if sel.is_empty() { return; }
+        if sel.is_empty() {
+            return;
+        }
         let nodes = self.nodes.read();
-        let pos   = self.positions.read();
-        let cb: Vec<(CanvasNode, f64, f64)> = sel.iter()
-            .filter_map(|&i| nodes.get(i).map(|n| (n.clone(), pos[i].0, pos[i].1)))
-            .collect();
+        let pos = self.positions.read();
+        let cb: Vec<(CanvasNode, f64, f64)> =
+            sel.iter().filter_map(|&i| nodes.get(i).map(|n| (n.clone(), pos[i].0, pos[i].1))).collect();
         self.clipboard.set(cb);
     }
 
     pub fn paste_nodes(&mut self) {
         let clipboard = self.clipboard.read().clone();
-        if clipboard.is_empty() { return; }
+        if clipboard.is_empty() {
+            return;
+        }
 
         let mut new_indices = Vec::new();
         let mut new_clipboard = Vec::new();
@@ -300,12 +312,7 @@ impl NodeCanvasState {
 
             let n = *self.next_id.read();
             *self.next_id.write() = n + 1;
-            let new_node = CanvasNode {
-                id:        format!("node-{n}"),
-                initial_x: nx,
-                initial_y: ny,
-                ..node.clone()
-            };
+            let new_node = CanvasNode { id: format!("node-{n}"), initial_x: nx, initial_y: ny, ..node.clone() };
             let new_idx = self.positions.read().len();
             // positions before nodes (render order invariant)
             self.positions.write().push((nx, ny));
@@ -339,7 +346,7 @@ impl NodeCanvasState {
     // ── add node ─────────────────────────────────────────────────────────────
 
     pub fn add_node(&mut self, x: f64, y: f64) {
-        let n    = *self.next_id.read();
+        let n = *self.next_id.read();
         *self.next_id.write() = n + 1;
         let snap = *self.snap_to_grid.read();
         let snap_x = if snap { (x / 20.0).round() * 20.0 } else { x };
@@ -385,31 +392,23 @@ impl NodeCanvasState {
             let sel = self.selected.read();
             sel.iter().map(|&i| (i, pos[i].0, pos[i].1)).collect()
         };
-        self.drag.set(Some(DragState {
-            node_idx: idx,
-            mouse_start_x: mx,
-            mouse_start_y: my,
-            starts,
-        }));
+        self.drag.set(Some(DragState { node_idx: idx, mouse_start_x: mx, mouse_start_y: my, starts }));
     }
 
     pub fn update_drag(&mut self, mx: f64, my: f64) {
         let d = match self.drag.read().clone() {
             Some(d) => d,
-            None    => return,
+            None => return,
         };
-        let z    = *self.zoom.read();
+        let z = *self.zoom.read();
         let snap = *self.snap_to_grid.read();
-        let dx   = (mx - d.mouse_start_x) / z;
-        let dy   = (my - d.mouse_start_y) / z;
+        let dx = (mx - d.mouse_start_x) / z;
+        let dy = (my - d.mouse_start_y) / z;
         for (idx, sx, sy) in &d.starts {
             let raw_x = (sx + dx).max(0.0);
             let raw_y = (sy + dy).max(0.0);
-            self.positions.write()[*idx] = if snap {
-                ((raw_x / 20.0).round() * 20.0, (raw_y / 20.0).round() * 20.0)
-            } else {
-                (raw_x, raw_y)
-            };
+            self.positions.write()[*idx] =
+                if snap { ((raw_x / 20.0).round() * 20.0, (raw_y / 20.0).round() * 20.0) } else { (raw_x, raw_y) };
         }
     }
 
@@ -433,8 +432,12 @@ impl NodeCanvasState {
         }
     }
 
-    pub fn can_undo(&self) -> bool { self.history.can_undo() }
-    pub fn can_redo(&self) -> bool { self.history.can_redo() }
+    pub fn can_undo(&self) -> bool {
+        self.history.can_undo()
+    }
+    pub fn can_redo(&self) -> bool {
+        self.history.can_redo()
+    }
 
     // ── canvas pan ───────────────────────────────────────────────────────────
 
@@ -444,20 +447,12 @@ impl NodeCanvasState {
 
     pub fn start_pan(&mut self, mx: f64, my: f64) {
         let (px, py) = *self.pan.read();
-        self.canvas_drag.set(Some(PanState {
-            mouse_start_x: mx,
-            mouse_start_y: my,
-            pan_start_x: px,
-            pan_start_y: py,
-        }));
+        self.canvas_drag.set(Some(PanState { mouse_start_x: mx, mouse_start_y: my, pan_start_x: px, pan_start_y: py }));
     }
 
     pub fn update_pan(&mut self, mx: f64, my: f64) {
         if let Some(d) = *self.canvas_drag.read() {
-            self.pan.set((
-                d.pan_start_x + mx - d.mouse_start_x,
-                d.pan_start_y + my - d.mouse_start_y,
-            ));
+            self.pan.set((d.pan_start_x + mx - d.mouse_start_x, d.pan_start_y + my - d.mouse_start_y));
         }
     }
 
@@ -480,7 +475,7 @@ impl NodeCanvasState {
     pub fn update_pinch(&mut self, dist: f64, cx: f64, cy: f64) {
         let prev = match *self.touch_pinch.read() {
             Some(p) => p,
-            None    => return,
+            None => return,
         };
         if prev.prev_dist > 1.0 {
             let scale = dist / prev.prev_dist;
@@ -505,7 +500,9 @@ impl NodeCanvasState {
 
     // ── zoom ─────────────────────────────────────────────────────────────────
 
-    pub fn zoom_value(&self) -> f64 { *self.zoom.read() }
+    pub fn zoom_value(&self) -> f64 {
+        *self.zoom.read()
+    }
 
     pub fn zoom_at(&mut self, ex: f64, ey: f64, delta_y: f64) {
         let old_z = *self.zoom.read();
@@ -543,7 +540,9 @@ impl NodeCanvasState {
 
     pub fn fit_to_view(&mut self, viewport_w: f64, viewport_h: f64, node_h: f64) {
         let nodes = self.nodes.read();
-        if nodes.is_empty() { return; }
+        if nodes.is_empty() {
+            return;
+        }
         let padding = 48.0;
         let pos = self.positions.read();
         let min_x = nodes.iter().enumerate().map(|(i, _)| pos[i].0).fold(f64::INFINITY, f64::min);
@@ -554,35 +553,26 @@ impl NodeCanvasState {
         drop(nodes);
         let content_w = (max_x - min_x).max(1.0);
         let content_h = (max_y - min_y).max(1.0);
-        let z = ((viewport_w - padding * 2.0) / content_w)
-            .min((viewport_h - padding * 2.0) / content_h)
-            .clamp(0.2, 4.0);
+        let z =
+            ((viewport_w - padding * 2.0) / content_w).min((viewport_h - padding * 2.0) / content_h).clamp(0.2, 4.0);
         self.zoom.set(z);
-        self.pan.set((
-            (viewport_w - content_w * z) / 2.0 - min_x * z,
-            (viewport_h - content_h * z) / 2.0 - min_y * z,
-        ));
+        self.pan.set(((viewport_w - content_w * z) / 2.0 - min_x * z, (viewport_h - content_h * z) / 2.0 - min_y * z));
     }
 
     // ── edges ────────────────────────────────────────────────────────────────
 
     pub fn edge_paths(&self, node_h: f64) -> Vec<String> {
-        let pos   = self.positions.read();
+        let pos = self.positions.read();
         let nodes = self.nodes.read();
         let edges = self.edges.read();
         edges
             .iter()
             .filter_map(|edge| {
                 let (fi, from) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.from)?;
-                let (ti, _)    = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
+                let (ti, _) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
                 let (fx, fy) = pos[fi];
                 let (tx, ty) = pos[ti];
-                Some(bezier_path(
-                    fx + from.width,
-                    fy + node_h / 2.0,
-                    tx,
-                    ty + node_h / 2.0,
-                ))
+                Some(bezier_path(fx + from.width, fy + node_h / 2.0, tx, ty + node_h / 2.0))
             })
             .collect()
     }
@@ -594,21 +584,21 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
     let initial: Vec<(f64, f64)> = nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect();
     let next_id = nodes.len();
     NodeCanvasState {
-        nodes:      use_signal(|| nodes),
-        edges:      use_signal(|| edges),
-        positions:  use_signal(|| initial.clone()),
-        drag:       use_signal(|| None),
-        pan:        use_signal(|| (0.0, 0.0)),
-        zoom:       use_signal(|| 1.0),
-        selected:   use_signal(HashSet::new),
+        nodes: use_signal(|| nodes),
+        edges: use_signal(|| edges),
+        positions: use_signal(|| initial.clone()),
+        drag: use_signal(|| None),
+        pan: use_signal(|| (0.0, 0.0)),
+        zoom: use_signal(|| 1.0),
+        selected: use_signal(HashSet::new),
         connecting: use_signal(|| None),
-        canvas_drag:  use_signal(|| None),
-        touch_pinch:  use_signal(|| None),
-        history:      UseHistoryStack::new(initial),
-        next_id:      use_signal(|| next_id),
-        locked:       use_signal(|| false),
+        canvas_drag: use_signal(|| None),
+        touch_pinch: use_signal(|| None),
+        history: UseHistoryStack::new(initial),
+        next_id: use_signal(|| next_id),
+        locked: use_signal(|| false),
         snap_to_grid: use_signal(|| false),
-        clipboard:    use_signal(|| Vec::new()),
+        clipboard: use_signal(|| Vec::new()),
     }
 }
 
@@ -617,9 +607,5 @@ pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCa
 fn bezier_path(sx: f64, sy: f64, tx: f64, ty: f64) -> String {
     let dx = (tx - sx).abs();
     let offset = (dx / 2.0).clamp(40.0, 80.0);
-    format!(
-        "M {sx:.1} {sy:.1} C {:.1} {sy:.1}, {:.1} {ty:.1}, {tx:.1} {ty:.1}",
-        sx + offset,
-        tx - offset,
-    )
+    format!("M {sx:.1} {sy:.1} C {:.1} {sy:.1}, {:.1} {ty:.1}, {tx:.1} {ty:.1}", sx + offset, tx - offset,)
 }

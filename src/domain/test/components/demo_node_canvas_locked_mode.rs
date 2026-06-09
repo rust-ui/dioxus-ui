@@ -3,9 +3,7 @@ use icons::{Lock, LockOpen};
 use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
 
 use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{
-    use_node_canvas, CanvasEdge, CanvasNode, NodeKind,
-};
+use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
 
 fn initial_nodes() -> Vec<CanvasNode> {
     vec![
@@ -59,8 +57,8 @@ fn initial_nodes() -> Vec<CanvasNode> {
 fn initial_edges() -> Vec<CanvasEdge> {
     vec![
         CanvasEdge { from: "trigger".to_string(), to: "agent".to_string() },
-        CanvasEdge { from: "data".to_string(),    to: "agent".to_string() },
-        CanvasEdge { from: "agent".to_string(),   to: "output".to_string() },
+        CanvasEdge { from: "data".to_string(), to: "agent".to_string() },
+        CanvasEdge { from: "agent".to_string(), to: "output".to_string() },
     ]
 }
 

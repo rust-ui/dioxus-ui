@@ -23,13 +23,9 @@ pub const NODE_H: f64 = 72.0;
 // └── overlay (viewport space — CanvasControls, Minimap, etc.)
 
 #[component]
-pub fn NodeCanvas(
-    state: NodeCanvasState,
-    children: Element,
-    #[props(optional)] overlay: Option<Element>,
-) -> Element {
-    let is_busy   = state.is_dragging() || state.is_panning();
-    let locked    = state.is_locked();
+pub fn NodeCanvas(state: NodeCanvasState, children: Element, #[props(optional)] overlay: Option<Element>) -> Element {
+    let is_busy = state.is_dragging() || state.is_panning();
+    let locked = state.is_locked();
     let edge_paths = state.edge_paths(NODE_H);
     let transform = state.world_transform();
     let mut state = state;
@@ -245,26 +241,22 @@ pub fn NodeCanvas(
 // ── NodeWrapper ───────────────────────────────────────────────────────────────
 
 #[component]
-pub fn NodeWrapper(
-    state: NodeCanvasState,
-    idx: usize,
-    children: Element,
-) -> Element {
+pub fn NodeWrapper(state: NodeCanvasState, idx: usize, children: Element) -> Element {
     // Guard against stale renders during deletion
     let node = { state.nodes.read().get(idx).cloned() };
     let Some(node) = node else { return rsx! {} };
 
-    let (x, y)      = state.pos(idx);
-    let is_active     = state.active_idx() == Some(idx);
-    let is_selected   = state.is_selected(idx);
+    let (x, y) = state.pos(idx);
+    let is_active = state.active_idx() == Some(idx);
+    let is_selected = state.is_selected(idx);
     let is_connecting = state.is_connecting();
-    let locked        = state.is_locked();
+    let locked = state.is_locked();
 
-    let width    = node.width;
-    let node_id  = node.id.clone();
-    let from_x   = x + width;
-    let from_y   = y + NODE_H / 2.0;
-    let to_id    = node.id.clone();
+    let width = node.width;
+    let node_id = node.id.clone();
+    let from_x = x + width;
+    let from_y = y + NODE_H / 2.0;
+    let to_id = node.id.clone();
     let mut state = state;
 
     rsx! {
@@ -368,7 +360,7 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
     let scale_y = MINI_H / WORLD_REF_H;
     let mut state = state;
 
-    let pos_snap   = state.positions.read().clone();
+    let pos_snap = state.positions.read().clone();
     let nodes_snap = state.nodes.read().clone();
     let edges_snap = state.edges.read().clone();
 
@@ -385,20 +377,16 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
         .iter()
         .filter_map(|edge| {
             let (fi, from) = nodes_snap.iter().enumerate().find(|(_, n)| n.id == edge.from)?;
-            let (ti, _)    = nodes_snap.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
+            let (ti, _) = nodes_snap.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
             let (fx, fy) = pos_snap[fi];
             let (tx, ty) = pos_snap[ti];
-            let sx  = (fx + from.width) * scale_x;
-            let sy  = (fy + NODE_H / 2.0) * scale_y;
+            let sx = (fx + from.width) * scale_x;
+            let sy = (fy + NODE_H / 2.0) * scale_y;
             let tx2 = tx * scale_x;
             let ty2 = (ty + NODE_H / 2.0) * scale_y;
-            let dx  = (tx2 - sx).abs();
+            let dx = (tx2 - sx).abs();
             let off = (dx / 2.0).clamp(4.0, 12.0);
-            Some(format!(
-                "M {sx:.1} {sy:.1} C {:.1} {sy:.1}, {:.1} {ty2:.1}, {tx2:.1} {ty2:.1}",
-                sx + off,
-                tx2 - off,
-            ))
+            Some(format!("M {sx:.1} {sy:.1} C {:.1} {sy:.1}, {:.1} {ty2:.1}, {tx2:.1} {ty2:.1}", sx + off, tx2 - off,))
         })
         .collect();
 

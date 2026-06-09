@@ -1,8 +1,8 @@
 use dioxus::prelude::*;
 use icons::{Bold, Image, Italic, Plus, Strikethrough, TextCursorInput, Type, Underline};
 use registry::ui::toolbar::{
-    Toolbar, ToolbarButton, ToolbarItem, ToolbarLink, ToolbarList, ToolbarSeparator,
-    ToolbarToggleGroup, ToolbarToggleItem,
+    Toolbar, ToolbarButton, ToolbarItem, ToolbarLink, ToolbarList, ToolbarSeparator, ToolbarToggleGroup,
+    ToolbarToggleItem,
 };
 
 #[component]

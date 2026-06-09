@@ -17,14 +17,14 @@ use domain::charts::routing::charts_pages::{
     AreaChartPage, BarChartPage, LineChartPage, PieChartPage, RadarChartPage, RadialChartPage,
 };
 use domain::create::page_create::PageCreate;
+use domain::test::routing::test_layout::TestLayout;
+use domain::test::routing::test_pages::TestPage;
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
 use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
-use domain::test::routing::test_layout::TestLayout;
-use domain::test::routing::test_pages::TestPage;
 use routes::page_icons::PageIcons;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");

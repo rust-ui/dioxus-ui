@@ -3,9 +3,7 @@ use icons::{MousePointerClick, Trash2};
 use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
 
 use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{
-    use_node_canvas, CanvasEdge, CanvasNode, NodeKind,
-};
+use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
 
 fn initial_nodes() -> Vec<CanvasNode> {
     vec![

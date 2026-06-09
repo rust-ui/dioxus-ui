@@ -1,9 +1,7 @@
 use dioxus::prelude::*;
 
 use super::node_canvas::{CanvasControls, DefaultNodeContent, Minimap, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{
-    use_node_canvas, CanvasEdge, CanvasNode, NodeKind,
-};
+use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
 
 fn initial_nodes() -> Vec<CanvasNode> {
     vec![
@@ -122,17 +120,17 @@ fn initial_nodes() -> Vec<CanvasNode> {
 
 fn initial_edges() -> Vec<CanvasEdge> {
     vec![
-        CanvasEdge { from: "input".to_string(),     to: "auth".to_string()      },
-        CanvasEdge { from: "input".to_string(),     to: "cache".to_string()     },
-        CanvasEdge { from: "input".to_string(),     to: "retrieval".to_string() },
-        CanvasEdge { from: "retrieval".to_string(), to: "rerank".to_string()    },
-        CanvasEdge { from: "cache".to_string(),     to: "agent".to_string()     },
-        CanvasEdge { from: "auth".to_string(),      to: "agent".to_string()     },
-        CanvasEdge { from: "rerank".to_string(),    to: "agent".to_string()     },
-        CanvasEdge { from: "agent".to_string(),     to: "guard".to_string()     },
-        CanvasEdge { from: "agent".to_string(),     to: "formatter".to_string() },
-        CanvasEdge { from: "guard".to_string(),     to: "logger".to_string()    },
-        CanvasEdge { from: "formatter".to_string(), to: "output".to_string()    },
+        CanvasEdge { from: "input".to_string(), to: "auth".to_string() },
+        CanvasEdge { from: "input".to_string(), to: "cache".to_string() },
+        CanvasEdge { from: "input".to_string(), to: "retrieval".to_string() },
+        CanvasEdge { from: "retrieval".to_string(), to: "rerank".to_string() },
+        CanvasEdge { from: "cache".to_string(), to: "agent".to_string() },
+        CanvasEdge { from: "auth".to_string(), to: "agent".to_string() },
+        CanvasEdge { from: "rerank".to_string(), to: "agent".to_string() },
+        CanvasEdge { from: "agent".to_string(), to: "guard".to_string() },
+        CanvasEdge { from: "agent".to_string(), to: "formatter".to_string() },
+        CanvasEdge { from: "guard".to_string(), to: "logger".to_string() },
+        CanvasEdge { from: "formatter".to_string(), to: "output".to_string() },
     ]
 }
 
