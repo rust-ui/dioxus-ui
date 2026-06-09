@@ -33,6 +33,7 @@ pub static SIDENAV_ITEMS: &[SidenavItem] = &[
     SidenavItem { label: "Combobox", slug: "combobox" },
     SidenavItem { label: "Command", slug: "command" },
     SidenavItem { label: "Context Menu", slug: "context-menu" },
+    SidenavItem { label: "Data Grid", slug: "data-grid" },
     SidenavItem { label: "Data Table", slug: "data-table" },
     SidenavItem { label: "Date Picker", slug: "date-picker" },
     SidenavItem { label: "Dialog", slug: "dialog" },

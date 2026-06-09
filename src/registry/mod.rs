@@ -27,6 +27,7 @@ pub mod collapsible;
 pub mod combobox;
 pub mod command;
 pub mod context_menu;
+pub mod data_grid;
 pub mod data_table;
 pub mod date_picker;
 pub mod dialog;
@@ -112,6 +113,7 @@ use collapsible::COLLAPSIBLE;
 use combobox::COMBOBOX;
 use command::COMMAND;
 use context_menu::CONTEXT_MENU;
+use data_grid::DATA_GRID;
 use data_table::DATA_TABLE;
 use date_picker::DATE_PICKER;
 use dialog::DIALOG;
@@ -197,6 +199,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &COMBOBOX,
     &COMMAND,
     &CONTEXT_MENU,
+    &DATA_GRID,
     &DATA_TABLE,
     &DATE_PICKER,
     &DIALOG,

@@ -70,6 +70,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Combobox", href: "/components/combobox", category: CommandCategory::Components, add_cmd: Some("combobox") },
     CommandItemData { label: "Command", href: "/components/command", category: CommandCategory::Components, add_cmd: Some("command") },
     CommandItemData { label: "Context Menu", href: "/components/context-menu", category: CommandCategory::Components, add_cmd: Some("context_menu") },
+    CommandItemData { label: "Data Grid", href: "/components/data-grid", category: CommandCategory::Components, add_cmd: Some("data_grid") },
     CommandItemData { label: "Data Table", href: "/components/data-table", category: CommandCategory::Components, add_cmd: Some("data_table") },
     CommandItemData { label: "Date Picker", href: "/components/date-picker", category: CommandCategory::Components, add_cmd: Some("date_picker") },
     CommandItemData { label: "Dialog", href: "/components/dialog", category: CommandCategory::Components, add_cmd: Some("dialog") },
