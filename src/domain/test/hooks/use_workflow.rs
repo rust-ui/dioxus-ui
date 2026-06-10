@@ -1,6 +1,7 @@
 use std::collections::HashSet;
 
 use dioxus::prelude::*;
+use strum::{Display, EnumIter, IntoEnumIterator as _};
 
 use super::use_history_stack::UseHistoryStack;
 
@@ -45,6 +46,28 @@ impl WorkflowNodeKind {
 
 // ── Data types ────────────────────────────────────────────────────────────────
 
+#[derive(Clone, PartialEq, Default, Display, EnumIter)]
+pub enum EdgeStyle {
+    #[default]
+    Dashed,
+    Solid,
+    Dotted,
+}
+
+impl EdgeStyle {
+    pub fn dasharray(&self) -> &'static str {
+        match self {
+            EdgeStyle::Solid  => "none",
+            EdgeStyle::Dashed => "6 3",
+            EdgeStyle::Dotted => "2 3",
+        }
+    }
+
+    pub fn all() -> impl Iterator<Item = EdgeStyle> {
+        EdgeStyle::iter()
+    }
+}
+
 #[derive(Clone, PartialEq)]
 pub struct WorkflowNode {
     pub id: String,
@@ -58,10 +81,11 @@ pub struct WorkflowNode {
     pub kind: WorkflowNodeKind,
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Default)]
 pub struct WorkflowEdge {
     pub from: String,
     pub to: String,
+    pub style: EdgeStyle,
 }
 
 // ── ConnectingState ───────────────────────────────────────────────────────────
@@ -249,7 +273,7 @@ impl WorkflowState {
         }
         let already = self.edges.read().iter().any(|e| e.from == cs.from_node_id && e.to == to_node_id);
         if !already {
-            self.edges.write().push(WorkflowEdge { from: cs.from_node_id, to: to_node_id });
+            self.edges.write().push(WorkflowEdge { from: cs.from_node_id, to: to_node_id, ..Default::default() });
             self.push_history();
         }
     }
@@ -652,7 +676,7 @@ impl WorkflowState {
 
     // ── edges ────────────────────────────────────────────────────────────────
 
-    pub fn edge_paths(&self, node_h: f64) -> Vec<String> {
+    pub fn edge_paths(&self, node_h: f64) -> Vec<(String, EdgeStyle)> {
         let pos = self.positions.read();
         let nodes = self.nodes.read();
         let edges = self.edges.read();
@@ -663,9 +687,16 @@ impl WorkflowState {
                 let (ti, _) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
                 let (fx, fy) = pos[fi];
                 let (tx, ty) = pos[ti];
-                Some(bezier_path(fx + from.width, fy + node_h / 2.0, tx, ty + node_h / 2.0))
+                Some((bezier_path(fx + from.width, fy + node_h / 2.0, tx, ty + node_h / 2.0), edge.style.clone()))
             })
             .collect()
+    }
+
+    pub fn set_edge_style(&mut self, idx: usize, style: EdgeStyle) {
+        if let Some(edge) = self.edges.write().get_mut(idx) {
+            edge.style = style;
+        }
+        self.push_history();
     }
 }
 

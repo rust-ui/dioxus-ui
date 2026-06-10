@@ -226,7 +226,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                             }
                         }
                     }
-                    for (ei, d) in edge_paths.iter().enumerate() {
+                    for (ei, (d, style)) in edge_paths.iter().enumerate() {
                         path {
                             d: d.as_str(),
                             fill: "none",
@@ -234,9 +234,9 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                             class: if selected_ei == Some(ei) { "text-primary" } else { "text-border" },
                             "stroke-width": if selected_ei == Some(ei) { "2.5" } else { "1.5" },
                             "stroke-linecap": "round",
-                            "stroke-dasharray": "6 3",
+                            "stroke-dasharray": style.dasharray(),
                             "marker-end": "url(#wf-arrow)",
-                            style: "animation: edge-flow 1.2s linear infinite; cursor: pointer; pointer-events: visibleStroke;",
+                            style: if style.dasharray() != "none" { "animation: edge-flow 1.2s linear infinite; cursor: pointer; pointer-events: visibleStroke;" } else { "cursor: pointer; pointer-events: visibleStroke;" },
                             onmousedown: move |ev| { ev.stop_propagation(); },
                             onclick: move |ev| {
                                 ev.stop_propagation();

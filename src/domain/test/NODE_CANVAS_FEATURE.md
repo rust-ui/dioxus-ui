@@ -42,7 +42,7 @@
 | **Rubber-band multi-select** — drag empty canvas to draw selection rect       | Hard       | 🟠 Mid   |
 | **Edge label** — text label rendered at bezier midpoint                       | Medium     | 🟡 Low   |
 | **Alignment guides** — snap lines when dragging near other nodes              | Medium     | 🟡 Low   |
-| **Edge style picker** — solid / dashed / dotted per edge                      | Medium     | 🟡 Low   |
+| ~~**Edge style picker** — solid / dashed / dotted per edge~~                  | ~~Medium~~ | ✅ Done  |
 | **Search / filter nodes** — highlight matching nodes, dim others              | Medium     | 🟡 Low   |
 | **Node resize handle** — drag right edge to change `width`                    | Hard       | 🟡 Low   |
 | **Orthogonal / step edge routing** — right-angle paths avoiding nodes         | Hard       | 🟡 Low   |
