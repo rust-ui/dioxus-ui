@@ -126,6 +126,14 @@ struct PinchState {
     cy: f64,
 }
 
+#[derive(Clone, Copy, PartialEq)]
+pub struct RubberBandState {
+    pub start_x: f64,
+    pub start_y: f64,
+    pub cur_x: f64,
+    pub cur_y: f64,
+}
+
 // ── WorkflowState ─────────────────────────────────────────────────────────────
 
 pub struct WorkflowState {
@@ -148,6 +156,7 @@ pub struct WorkflowState {
     pub selected_edge: Signal<Option<usize>>,
     pub editing_node: Signal<Option<usize>>,
     edit_buffer: Signal<String>,
+    pub rubber_band: Signal<Option<RubberBandState>>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
@@ -173,6 +182,7 @@ impl PartialEq for WorkflowState {
             && self.snap_to_grid == other.snap_to_grid
             && self.selected_edge == other.selected_edge
             && self.editing_node == other.editing_node
+            && self.rubber_band == other.rubber_band
     }
 }
 
@@ -339,6 +349,50 @@ impl WorkflowState {
         self.connecting.set(None);
     }
 
+    // ── rubber-band select ────────────────────────────────────────────────────
+
+    pub fn start_rubber_band(&mut self, x: f64, y: f64) {
+        self.rubber_band.set(Some(RubberBandState { start_x: x, start_y: y, cur_x: x, cur_y: y }));
+    }
+
+    pub fn update_rubber_band(&mut self, x: f64, y: f64) {
+        if let Some(rb) = self.rubber_band.write().as_mut() {
+            rb.cur_x = x;
+            rb.cur_y = y;
+        }
+    }
+
+    /// Commit: select all nodes whose AABB intersects the rubber-band rect.
+    /// `canvas_origin` is the element's top-left in client coords (from `onmounted`).
+    pub fn finish_rubber_band(&mut self, node_h: f64, canvas_origin: (f64, f64)) {
+        let Some(rb) = self.rubber_band.read().clone() else { return };
+        self.rubber_band.set(None);
+        let (ox, oy) = canvas_origin;
+        let rx0 = rb.start_x.min(rb.cur_x) - ox;
+        let ry0 = rb.start_y.min(rb.cur_y) - oy;
+        let rx1 = rb.start_x.max(rb.cur_x) - ox;
+        let ry1 = rb.start_y.max(rb.cur_y) - oy;
+        let (px, py) = *self.pan.read();
+        let zoom = *self.zoom.read();
+        let wx0 = (rx0 - px) / zoom;
+        let wy0 = (ry0 - py) / zoom;
+        let wx1 = (rx1 - px) / zoom;
+        let wy1 = (ry1 - py) / zoom;
+        let nodes = self.nodes.read();
+        let positions = self.positions.read();
+        let mut sel = self.selected.write();
+        for (i, node) in nodes.iter().enumerate() {
+            let (nx, ny) = positions[i];
+            if nx < wx1 && nx + node.width > wx0 && ny < wy1 && ny + node_h > wy0 {
+                sel.insert(i);
+            }
+        }
+    }
+
+    pub fn cancel_rubber_band(&mut self) {
+        self.rubber_band.set(None);
+    }
+
     pub fn connecting_preview(&self) -> Option<String> {
         let cs = self.connecting.read().clone()?;
         Some(bezier_path(cs.from_x, cs.from_y, cs.mouse_x, cs.mouse_y))
@@ -457,6 +511,48 @@ impl WorkflowState {
 
     pub fn clipboard_count(&self) -> usize {
         self.clipboard.read().len()
+    }
+
+    // ── context menu helpers ─────────────────────────────────────────────────
+
+    pub fn duplicate_node(&mut self, idx: usize) {
+        let (node, x, y) = {
+            let nodes = self.nodes.read();
+            let pos = self.positions.read();
+            let Some(node) = nodes.get(idx) else { return };
+            (node.clone(), pos[idx].0, pos[idx].1)
+        };
+        let nx = x + 20.0;
+        let ny = y + 20.0;
+        let n = *self.next_id.read();
+        *self.next_id.write() = n + 1;
+        let new_node = WorkflowNode { id: format!("node-{n}"), initial_x: nx, initial_y: ny, ..node };
+        let new_idx = self.positions.read().len();
+        self.positions.write().push((nx, ny));
+        self.nodes.write().push(new_node);
+        let mut sel = self.selected.write();
+        sel.clear();
+        sel.insert(new_idx);
+        self.push_history();
+    }
+
+    pub fn delete_edge(&mut self, idx: usize) {
+        if idx < self.edges.read().len() {
+            self.edges.write().remove(idx);
+            if self.selected_edge_idx() == Some(idx) {
+                self.selected_edge.set(None);
+            }
+            self.push_history();
+        }
+    }
+
+    pub fn select_all(&mut self) {
+        let n = self.nodes.read().len();
+        let mut sel = self.selected.write();
+        sel.clear();
+        for i in 0..n {
+            sel.insert(i);
+        }
     }
 
     // ── add node ─────────────────────────────────────────────────────────────
@@ -725,6 +821,7 @@ pub fn use_workflow(nodes: Vec<WorkflowNode>, edges: Vec<WorkflowEdge>) -> Workf
         selected_edge: use_signal(|| None),
         editing_node: use_signal(|| None),
         edit_buffer: use_signal(String::new),
+        rubber_band: use_signal(|| None),
     }
 }
 

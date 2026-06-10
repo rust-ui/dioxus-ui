@@ -39,7 +39,7 @@
 | ~~**Copy / paste nodes** — Ctrl+C/V clones selection with offset~~            | ~~Medium~~ | ✅ Done  |
 | **Duplicate node** — Ctrl+D shortcut                                          | Medium     | 🟠 Mid   |
 | **Auto-layout (dagre)** — compute acyclic layout from edges                   | Hard       | 🟠 Mid   |
-| **Rubber-band multi-select** — drag empty canvas to draw selection rect       | Hard       | 🟠 Mid   |
+| ~~**Rubber-band multi-select** — drag empty canvas to draw selection rect~~   | ~~Hard~~   | ✅ Done  |
 | **Edge label** — text label rendered at bezier midpoint                       | Medium     | 🟡 Low   |
 | **Alignment guides** — snap lines when dragging near other nodes              | Medium     | 🟡 Low   |
 | ~~**Edge style picker** — solid / dashed / dotted per edge~~                  | ~~Medium~~ | ✅ Done  |

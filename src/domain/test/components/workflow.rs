@@ -25,6 +25,7 @@ pub const NODE_H: f64 = 72.0;
 #[component]
 pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)] overlay: Option<Element>) -> Element {
     let is_busy = state.is_dragging() || state.is_panning();
+    let is_rubber_banding = state.rubber_band.read().is_some();
     let locked = state.is_locked();
     let edge_paths = state.edge_paths(NODE_H);
     let selected_ei = state.selected_edge_idx();
@@ -37,7 +38,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
             class: "relative rounded-lg border bg-background overflow-hidden select-none outline-none",
             style: format!(
                 "height: 450px; cursor: {}; touch-action: none;",
-                if locked { "default" } else if is_busy { "grabbing" } else { "grab" }
+                if locked { "default" } else if is_rubber_banding { "crosshair" } else if is_busy { "grabbing" } else { "grab" }
             ),
             tabindex: "0",
 
@@ -91,12 +92,16 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
 
             onmousedown: move |ev| {
                 if locked { return; }
-                let c = ev.data().client_coordinates();
+                let data = ev.data();
+                let c = data.client_coordinates();
+                let shift = data.modifiers().contains(Modifiers::SHIFT);
                 state.finish_edit();
-                state.deselect();
                 if state.is_connecting() {
                     state.cancel_connect();
+                } else if shift {
+                    state.start_rubber_band(c.x, c.y);
                 } else {
+                    state.deselect();
                     state.start_pan(c.x, c.y);
                 }
             },
@@ -105,11 +110,22 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                 let c = ev.data().client_coordinates();
                 state.update_drag(c.x, c.y);
                 state.update_pan(c.x, c.y);
+                state.update_rubber_band(c.x, c.y);
                 let ec = ev.data().element_coordinates();
                 state.update_connect_mouse(ec.x, ec.y);
             },
-            onmouseup: move |_| { state.stop_drag(); state.stop_pan(); state.cancel_connect(); },
-            onmouseleave: move |_| { state.stop_drag(); state.stop_pan(); state.cancel_connect(); },
+            onmouseup: move |_| {
+                state.stop_drag();
+                state.stop_pan();
+                state.cancel_connect();
+                state.finish_rubber_band(NODE_H, *canvas_origin.read());
+            },
+            onmouseleave: move |_| {
+                state.stop_drag();
+                state.stop_pan();
+                state.cancel_connect();
+                state.cancel_rubber_band();
+            },
             onwheel: move |ev| {
                 if locked { return; }
                 ev.prevent_default();
@@ -266,6 +282,18 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
 
             // ── overlays (viewport space, not transformed) ───────────────────
             {overlay}
+
+            if let Some(rb) = state.rubber_band.read().clone() {
+                let (ox, oy) = *canvas_origin.read();
+                let x = rb.start_x.min(rb.cur_x) - ox;
+                let y = rb.start_y.min(rb.cur_y) - oy;
+                let w = (rb.cur_x - rb.start_x).abs();
+                let h = (rb.cur_y - rb.start_y).abs();
+                div {
+                    class: "absolute pointer-events-none border border-primary/60 bg-primary/10 rounded-sm",
+                    style: "left:{x:.1}px; top:{y:.1}px; width:{w:.1}px; height:{h:.1}px;",
+                }
+            }
         }
     }
 }

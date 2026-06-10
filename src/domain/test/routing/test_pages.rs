@@ -53,7 +53,7 @@ pub fn TestPage() -> Element {
             div { class: "flex flex-col gap-1",
                 h2 { class: "text-xl font-semibold tracking-tight", "Workflow — Multi-select" }
                 p { class: "text-sm text-muted-foreground",
-                    "Shift+click to add nodes to selection. Drag moves all selected. Del removes all."
+                    "Shift+click to add nodes to selection. Shift+drag canvas to rubber-band select. Drag moves all selected. Del removes all."
                 }
             }
             DemoWorkflowMultiselect {}
