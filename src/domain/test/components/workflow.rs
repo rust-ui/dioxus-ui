@@ -451,7 +451,7 @@ pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) 
     let from_y = y + NODE_H / 2.0;
     let to_id = node.id.clone();
     let mut state = state;
-    let cm_ctx = use_context::<NodeCmCtx>();
+    let mut cm_ctx = use_context::<NodeCmCtx>();
 
     rsx! {
         div {

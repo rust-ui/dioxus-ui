@@ -123,10 +123,13 @@ pub fn DemoWorkflowExportImport() -> Element {
                 class: "hidden",
                 onchange: move |ev| {
                     import_error.set(None);
+                    let files = ev.files();
+                    let Some(file) = files.into_iter().next() else { return };
                     spawn(async move {
-                        let Some(engine) = ev.files() else { return };
-                        let Some(filename) = engine.files().first().cloned() else { return };
-                        let Some(content) = engine.read_file_to_string(&filename).await else { return };
+                        let content = match file.read_string().await {
+                            Ok(s) => s,
+                            Err(e) => { import_error.set(Some(format!("Read error: {e}"))); return; }
+                        };
                         match serde_json::from_str::<WorkflowSnapshot>(&content) {
                             Ok(snap) => state.load_snapshot(snap),
                             Err(e) => import_error.set(Some(format!("Invalid JSON: {e}"))),
