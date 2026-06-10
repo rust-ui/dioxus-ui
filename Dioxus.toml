@@ -2,8 +2,6 @@
 ios_info_plist = "ios/Info.plist"
 
 [web]
-tailwind_input = "tailwind.css"
-tailwind_output = "assets/tailwind.css"
 
 [serve]
 port = 8080
