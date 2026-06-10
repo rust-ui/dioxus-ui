@@ -19,6 +19,8 @@ use domain::charts::routing::charts_pages::{
 use domain::create::page_create::PageCreate;
 use domain::test::routing::test_layout::TestLayout;
 use domain::test::routing::test_pages::TestPage;
+use domain::workflows::routing::workflows_layout::WorkflowsLayout;
+use domain::workflows::routing::workflows_pages::WorkflowsPage;
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
@@ -79,6 +81,10 @@ enum Route {
             RadarChartPage {},
             #[route("/charts/radial-chart")]
             RadialChartPage {},
+        #[end_layout]
+        #[layout(WorkflowsLayout)]
+            #[route("/workflows")]
+            WorkflowsPage {},
         #[end_layout]
         #[layout(TestLayout)]
             #[route("/test-page")]
