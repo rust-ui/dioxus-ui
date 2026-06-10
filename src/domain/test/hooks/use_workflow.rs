@@ -1,13 +1,14 @@
 use std::collections::HashSet;
 
 use dioxus::prelude::*;
+use serde::{Deserialize, Serialize};
 use strum::{Display, EnumIter, IntoEnumIterator as _};
 
 use super::use_history_stack::UseHistoryStack;
 
 // ── WorkflowNodeKind ──────────────────────────────────────────────────────────
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Serialize, Deserialize)]
 pub enum WorkflowNodeKind {
     Trigger,
     Data,
@@ -46,7 +47,7 @@ impl WorkflowNodeKind {
 
 // ── Data types ────────────────────────────────────────────────────────────────
 
-#[derive(Clone, PartialEq, Default, Display, EnumIter)]
+#[derive(Clone, PartialEq, Default, Display, EnumIter, Serialize, Deserialize)]
 pub enum EdgeStyle {
     #[default]
     Dashed,
@@ -68,7 +69,7 @@ impl EdgeStyle {
     }
 }
 
-#[derive(Clone, PartialEq)]
+#[derive(Clone, PartialEq, Serialize, Deserialize)]
 pub struct WorkflowNode {
     pub id: String,
     pub initial_x: f64,
@@ -81,11 +82,20 @@ pub struct WorkflowNode {
     pub kind: WorkflowNodeKind,
 }
 
-#[derive(Clone, PartialEq, Default)]
+#[derive(Clone, PartialEq, Default, Serialize, Deserialize)]
 pub struct WorkflowEdge {
     pub from: String,
     pub to: String,
     pub style: EdgeStyle,
+}
+
+#[derive(Serialize, Deserialize)]
+pub struct WorkflowSnapshot {
+    pub nodes: Vec<WorkflowNode>,
+    pub edges: Vec<WorkflowEdge>,
+    pub positions: Vec<(f64, f64)>,
+    pub pan: (f64, f64),
+    pub zoom: f64,
 }
 
 // ── ConnectingState ───────────────────────────────────────────────────────────
@@ -393,6 +403,33 @@ impl WorkflowState {
         self.rubber_band.set(None);
     }
 
+    // ── export / import ───────────────────────────────────────────────────────
+
+    pub fn export_snapshot(&self) -> WorkflowSnapshot {
+        WorkflowSnapshot {
+            nodes: self.nodes.read().clone(),
+            edges: self.edges.read().clone(),
+            positions: self.positions.read().clone(),
+            pan: *self.pan.read(),
+            zoom: *self.zoom.read(),
+        }
+    }
+
+    pub fn load_snapshot(&mut self, snap: WorkflowSnapshot) {
+        let next_id = snap.nodes.len();
+        // positions BEFORE nodes: render loop indexes positions[idx] immediately
+        // after nodes write triggers re-render — wrong order = index-out-of-bounds
+        self.positions.set(snap.positions);
+        self.nodes.set(snap.nodes);
+        self.edges.set(snap.edges);
+        self.pan.set(snap.pan);
+        self.zoom.set(snap.zoom);
+        self.next_id.set(next_id);
+        self.selected.write().clear();
+        self.drag.set(None);
+        self.connecting.set(None);
+    }
+
     pub fn connecting_preview(&self) -> Option<String> {
         let cs = self.connecting.read().clone()?;
         Some(bezier_path(cs.from_x, cs.from_y, cs.mouse_x, cs.mouse_y))
@@ -530,9 +567,11 @@ impl WorkflowState {
         let new_idx = self.positions.read().len();
         self.positions.write().push((nx, ny));
         self.nodes.write().push(new_node);
-        let mut sel = self.selected.write();
-        sel.clear();
-        sel.insert(new_idx);
+        {
+            let mut sel = self.selected.write();
+            sel.clear();
+            sel.insert(new_idx);
+        }
         self.push_history();
     }
 

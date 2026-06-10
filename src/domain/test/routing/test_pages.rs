@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::domain::test::demos::demo_toolbar::DemoToolbar;
+use crate::domain::test::demos::demo_workflow_export_import::DemoWorkflowExportImport;
 use crate::domain::test::demos::demo_workflow::DemoWorkflow;
 use crate::domain::test::demos::demo_workflow_copy_paste::DemoWorkflowCopyPaste;
 use crate::domain::test::demos::demo_workflow_locked_mode::DemoWorkflowLockedMode;
@@ -73,6 +74,14 @@ pub fn TestPage() -> Element {
                 }
             }
             DemoWorkflowCopyPaste {}
+
+            div { class: "flex flex-col gap-1",
+                h2 { class: "text-xl font-semibold tracking-tight", "Workflow — Export / Import" }
+                p { class: "text-sm text-muted-foreground",
+                    "↓ Export downloads workflow.json. ↑ Import restores nodes, edges, positions, and viewport."
+                }
+            }
+            DemoWorkflowExportImport {}
 
             div { class: "flex flex-col gap-1",
                 h2 { class: "text-xl font-semibold tracking-tight", "Toolbar" }

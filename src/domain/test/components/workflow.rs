@@ -1,8 +1,22 @@
 use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
 use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
+use dioxus_html::input_data::MouseButton;
+use registry::ui::context_menu::{
+    ContextMenu, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuTrigger,
+};
 
 use crate::domain::test::hooks::use_workflow::{WorkflowNode, WorkflowState};
+
+/// Passed through component context so WorkflowNodeWrapper can open the node
+/// context menu without needing an extra prop (would break every existing demo).
+#[derive(Clone, Copy)]
+struct NodeCmCtx(Signal<Option<(usize, f64, f64)>>);
+
+const MENU_BTN: &str =
+    "inline-flex items-center w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent cursor-pointer";
+const MENU_BTN_DANGER: &str =
+    "inline-flex items-center w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-destructive/10 text-destructive cursor-pointer";
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
@@ -32,8 +46,22 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
     let transform = state.world_transform();
     let mut state = state;
     let mut canvas_origin = use_signal(|| (0.0_f64, 0.0_f64));
+    let mut node_cm: Signal<Option<(usize, f64, f64)>> = use_signal(|| None);
+    let mut edge_cm: Signal<Option<(usize, f64, f64)>> = use_signal(|| None);
+    let mut canvas_ctx_pos: Signal<Option<(f64, f64)>> = use_signal(|| None);
+    provide_context(NodeCmCtx(node_cm));
+    let rubber_band_rect = state.rubber_band.read().clone().map(|rb| {
+        let (ox, oy) = *canvas_origin.read();
+        let x = rb.start_x.min(rb.cur_x) - ox;
+        let y = rb.start_y.min(rb.cur_y) - oy;
+        let w = (rb.cur_x - rb.start_x).abs();
+        let h = (rb.cur_y - rb.start_y).abs();
+        (x, y, w, h)
+    });
 
     rsx! {
+        ContextMenu {
+        ContextMenuTrigger {
         div {
             class: "relative rounded-lg border bg-background overflow-hidden select-none outline-none",
             style: format!(
@@ -93,6 +121,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
             onmousedown: move |ev| {
                 if locked { return; }
                 let data = ev.data();
+                if data.trigger_button() == Some(MouseButton::Secondary) { return; }
                 let c = data.client_coordinates();
                 let shift = data.modifiers().contains(Modifiers::SHIFT);
                 state.finish_edit();
@@ -215,6 +244,10 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                 style: format!(
                     "position: absolute; top: 0; left: 0; width: 3000px; height: 2000px; transform: {transform}; transform-origin: 0 0;"
                 ),
+                oncontextmenu: move |ev| {
+                    let c = ev.data().client_coordinates();
+                    canvas_ctx_pos.set(Some((c.x, c.y)));
+                },
 
                 div {
                     class: "absolute inset-0 pointer-events-none text-foreground",
@@ -253,6 +286,12 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                             "stroke-dasharray": style.dasharray(),
                             "marker-end": "url(#wf-arrow)",
                             style: if style.dasharray() != "none" { "animation: edge-flow 1.2s linear infinite; cursor: pointer; pointer-events: visibleStroke;" } else { "cursor: pointer; pointer-events: visibleStroke;" },
+                            oncontextmenu: move |ev| {
+                                ev.prevent_default();
+                                ev.stop_propagation();
+                                let c = ev.data().client_coordinates();
+                                edge_cm.set(Some((ei, c.x, c.y)));
+                            },
                             onmousedown: move |ev| { ev.stop_propagation(); },
                             onclick: move |ev| {
                                 ev.stop_propagation();
@@ -283,18 +322,111 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
             // ── overlays (viewport space, not transformed) ───────────────────
             {overlay}
 
-            if let Some(rb) = state.rubber_band.read().clone() {
-                let (ox, oy) = *canvas_origin.read();
-                let x = rb.start_x.min(rb.cur_x) - ox;
-                let y = rb.start_y.min(rb.cur_y) - oy;
-                let w = (rb.cur_x - rb.start_x).abs();
-                let h = (rb.cur_y - rb.start_y).abs();
+            if let Some((x, y, w, h)) = rubber_band_rect {
                 div {
                     class: "absolute pointer-events-none border border-primary/60 bg-primary/10 rounded-sm",
                     style: "left:{x:.1}px; top:{y:.1}px; width:{w:.1}px; height:{h:.1}px;",
                 }
             }
+
+            // ── node context menu overlay ────────────────────────────────────
+            if let Some((ni, mx, my)) = *node_cm.read() {
+                div {
+                    class: "fixed inset-0 z-[49]",
+                    onclick: move |_| { node_cm.set(None); },
+                    oncontextmenu: move |ev| { ev.prevent_default(); node_cm.set(None); },
+                }
+                div {
+                    class: "fixed z-50 p-1 rounded-md border bg-card shadow-md w-[200px]",
+                    style: "left:{mx}px; top:{my}px;",
+                    onclick: move |ev| { ev.stop_propagation(); },
+                    ContextMenuLabel { "Node" }
+                    ContextMenuGroup {
+                        button {
+                            class: MENU_BTN,
+                            onclick: move |_| { state.start_edit(ni); node_cm.set(None); },
+                            "Rename"
+                        }
+                        button {
+                            class: MENU_BTN,
+                            onclick: move |_| { state.duplicate_node(ni); node_cm.set(None); },
+                            "Duplicate"
+                        }
+                    }
+                    div { class: "my-1 border-t border-border" }
+                    ContextMenuGroup {
+                        button {
+                            class: MENU_BTN_DANGER,
+                            onclick: move |_| {
+                                state.select_node(ni);
+                                state.delete_selected();
+                                node_cm.set(None);
+                            },
+                            "Delete"
+                        }
+                    }
+                }
+            }
+
+            // ── edge context menu overlay ────────────────────────────────────
+            if let Some((ei, mx, my)) = *edge_cm.read() {
+                div {
+                    class: "fixed inset-0 z-[49]",
+                    onclick: move |_| { edge_cm.set(None); },
+                    oncontextmenu: move |ev| { ev.prevent_default(); edge_cm.set(None); },
+                }
+                div {
+                    class: "fixed z-50 p-1 rounded-md border bg-card shadow-md w-[200px]",
+                    style: "left:{mx}px; top:{my}px;",
+                    onclick: move |ev| { ev.stop_propagation(); },
+                    ContextMenuLabel { "Edge" }
+                    ContextMenuGroup {
+                        button {
+                            class: MENU_BTN_DANGER,
+                            onclick: move |_| {
+                                state.delete_edge(ei);
+                                edge_cm.set(None);
+                            },
+                            "Delete Edge"
+                        }
+                    }
+                }
+            }
         }
+        }  // ContextMenuTrigger
+        ContextMenuContent {
+            ContextMenuLabel { "Canvas" }
+            ContextMenuGroup {
+                button {
+                    class: MENU_BTN,
+                    "data-context-close": "true",
+                    onclick: move |_| {
+                        if let Some((vx, vy)) = *canvas_ctx_pos.read() {
+                            let (ox, oy) = *canvas_origin.read();
+                            let (px, py) = *state.pan.read();
+                            let zoom = *state.zoom.read();
+                            state.add_node((vx - ox - px) / zoom, (vy - oy - py) / zoom);
+                        }
+                    },
+                    "Add Node Here"
+                }
+                button {
+                    class: MENU_BTN,
+                    "data-context-close": "true",
+                    onclick: move |_| { state.select_all(); },
+                    "Select All"
+                }
+                if state.clipboard_count() > 0 {
+                    button {
+                        class: MENU_BTN,
+                        "data-context-close": "true",
+                        onclick: move |_| { state.paste_nodes(); },
+                        "Paste"
+                    }
+                }
+            }
+        }
+        }  // ContextMenu
     }
 }
 
@@ -319,6 +451,7 @@ pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) 
     let from_y = y + NODE_H / 2.0;
     let to_id = node.id.clone();
     let mut state = state;
+    let cm_ctx = use_context::<NodeCmCtx>();
 
     rsx! {
         div {
@@ -329,6 +462,12 @@ pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) 
             ),
             style: format!("left: {x:.1}px; top: {y:.1}px; width: {width:.0}px; cursor: {};", if locked { "default" } else { "grab" }),
 
+            oncontextmenu: move |ev| {
+                ev.prevent_default();
+                ev.stop_propagation();
+                let c = ev.data().client_coordinates();
+                cm_ctx.0.set(Some((idx, c.x, c.y)));
+            },
             onmousedown: move |ev| {
                 ev.stop_propagation();
                 if locked { return; }
