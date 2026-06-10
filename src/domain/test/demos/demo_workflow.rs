@@ -1,11 +1,11 @@
 use dioxus::prelude::*;
 
-use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
+use crate::domain::test::components::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
+use crate::domain::test::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
 
-fn initial_nodes() -> Vec<CanvasNode> {
+fn initial_nodes() -> Vec<WorkflowNode> {
     vec![
-        CanvasNode {
+        WorkflowNode {
             id: "trigger".to_string(),
             initial_x: 32.0,
             initial_y: 130.0,
@@ -14,9 +14,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "User Input".to_string(),
             description: "Starts the workflow".to_string(),
-            kind: NodeKind::Trigger,
+            kind: WorkflowNodeKind::Trigger,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "data".to_string(),
             initial_x: 272.0,
             initial_y: 40.0,
@@ -25,9 +25,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "Context".to_string(),
             description: "vectordb".to_string(),
-            kind: NodeKind::Data,
+            kind: WorkflowNodeKind::Data,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "agent".to_string(),
             initial_x: 272.0,
             initial_y: 160.0,
@@ -36,9 +36,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "AI Agent".to_string(),
             description: "claude-3.5-sonnet".to_string(),
-            kind: NodeKind::Agent,
+            kind: WorkflowNodeKind::Agent,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "output".to_string(),
             initial_x: 552.0,
             initial_y: 130.0,
@@ -47,33 +47,32 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: false,
             label: "Response".to_string(),
             description: "Ready to send".to_string(),
-            kind: NodeKind::Output,
+            kind: WorkflowNodeKind::Output,
         },
     ]
 }
 
-fn initial_edges() -> Vec<CanvasEdge> {
+fn initial_edges() -> Vec<WorkflowEdge> {
     vec![
-        CanvasEdge { from: "trigger".to_string(), to: "agent".to_string() },
-        CanvasEdge { from: "data".to_string(), to: "agent".to_string() },
-        CanvasEdge { from: "agent".to_string(), to: "output".to_string() },
+        WorkflowEdge { from: "trigger".to_string(), to: "agent".to_string() },
+        WorkflowEdge { from: "data".to_string(), to: "agent".to_string() },
+        WorkflowEdge { from: "agent".to_string(), to: "output".to_string() },
     ]
 }
 
 #[component]
-pub fn DemoNodeCanvas() -> Element {
-    let state = use_node_canvas(initial_nodes(), initial_edges());
+pub fn DemoWorkflow() -> Element {
+    let state = use_workflow(initial_nodes(), initial_edges());
 
     rsx! {
-        NodeCanvas {
+        WorkflowCanvas {
             state,
             overlay: rsx! {
-                CanvasControls { state }
+                WorkflowControls { state }
             },
-
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
-                NodeWrapper { key: "{node.id}", state, idx: i,
-                    DefaultNodeContent { node }
+                WorkflowNodeWrapper { key: "{node.id}", state, idx: i,
+                    WorkflowDefaultNode { node }
                 }
             }
         }

@@ -19,7 +19,6 @@ pub fn DemoToolbar() -> Element {
     rsx! {
         div { class: "flex flex-col gap-8",
 
-            // ── Formatting toolbar ───────────────────────────────────────────
             div { class: "flex flex-col gap-2",
                 p { class: "text-xs text-muted-foreground font-medium uppercase tracking-wider",
                     "Text Formatting"
@@ -64,7 +63,6 @@ pub fn DemoToolbar() -> Element {
                 }
             }
 
-            // ── Insert toolbar (list pattern) ────────────────────────────────
             div { class: "flex flex-col gap-2",
                 p { class: "text-xs text-muted-foreground font-medium uppercase tracking-wider",
                     "Insert (ToolbarList)"
@@ -108,7 +106,6 @@ pub fn DemoToolbar() -> Element {
                 }
             }
 
-            // ── Link variant ─────────────────────────────────────────────────
             div { class: "flex flex-col gap-2",
                 p { class: "text-xs text-muted-foreground font-medium uppercase tracking-wider",
                     "With Link"

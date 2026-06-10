@@ -4,41 +4,41 @@ use dioxus::prelude::*;
 
 use super::use_history_stack::UseHistoryStack;
 
-// ── NodeKind ──────────────────────────────────────────────────────────────────
+// ── WorkflowNodeKind ──────────────────────────────────────────────────────────
 
 #[derive(Clone, PartialEq)]
-pub enum NodeKind {
+pub enum WorkflowNodeKind {
     Trigger,
     Data,
     Agent,
     Output,
 }
 
-impl NodeKind {
+impl WorkflowNodeKind {
     pub fn dot_color(&self) -> &'static str {
         match self {
-            NodeKind::Trigger => "bg-yellow-500",
-            NodeKind::Data => "bg-blue-500",
-            NodeKind::Agent => "bg-purple-500",
-            NodeKind::Output => "bg-green-500",
+            WorkflowNodeKind::Trigger => "bg-yellow-500",
+            WorkflowNodeKind::Data => "bg-blue-500",
+            WorkflowNodeKind::Agent => "bg-purple-500",
+            WorkflowNodeKind::Output => "bg-green-500",
         }
     }
 
     pub fn text_color(&self) -> &'static str {
         match self {
-            NodeKind::Trigger => "text-yellow-600 dark:text-yellow-400",
-            NodeKind::Data => "text-blue-600 dark:text-blue-400",
-            NodeKind::Agent => "text-purple-600 dark:text-purple-400",
-            NodeKind::Output => "text-green-600 dark:text-green-400",
+            WorkflowNodeKind::Trigger => "text-yellow-600 dark:text-yellow-400",
+            WorkflowNodeKind::Data => "text-blue-600 dark:text-blue-400",
+            WorkflowNodeKind::Agent => "text-purple-600 dark:text-purple-400",
+            WorkflowNodeKind::Output => "text-green-600 dark:text-green-400",
         }
     }
 
     pub fn label(&self) -> &'static str {
         match self {
-            NodeKind::Trigger => "Trigger",
-            NodeKind::Data => "Data",
-            NodeKind::Agent => "Agent",
-            NodeKind::Output => "Output",
+            WorkflowNodeKind::Trigger => "Trigger",
+            WorkflowNodeKind::Data => "Data",
+            WorkflowNodeKind::Agent => "Agent",
+            WorkflowNodeKind::Output => "Output",
         }
     }
 }
@@ -46,7 +46,7 @@ impl NodeKind {
 // ── Data types ────────────────────────────────────────────────────────────────
 
 #[derive(Clone, PartialEq)]
-pub struct CanvasNode {
+pub struct WorkflowNode {
     pub id: String,
     pub initial_x: f64,
     pub initial_y: f64,
@@ -55,11 +55,11 @@ pub struct CanvasNode {
     pub has_source: bool,
     pub label: String,
     pub description: String,
-    pub kind: NodeKind,
+    pub kind: WorkflowNodeKind,
 }
 
 #[derive(Clone, PartialEq)]
-pub struct CanvasEdge {
+pub struct WorkflowEdge {
     pub from: String,
     pub to: String,
 }
@@ -102,11 +102,11 @@ struct PinchState {
     cy: f64,
 }
 
-// ── NodeCanvasState ───────────────────────────────────────────────────────────
+// ── WorkflowState ─────────────────────────────────────────────────────────────
 
-pub struct NodeCanvasState {
-    pub nodes: Signal<Vec<CanvasNode>>,
-    pub edges: Signal<Vec<CanvasEdge>>,
+pub struct WorkflowState {
+    pub nodes: Signal<Vec<WorkflowNode>>,
+    pub edges: Signal<Vec<WorkflowEdge>>,
     pub positions: Signal<Vec<(f64, f64)>>,
     pub drag: Signal<Option<DragState>>,
     pub pan: Signal<(f64, f64)>,
@@ -120,17 +120,17 @@ pub struct NodeCanvasState {
     pub locked: Signal<bool>,
     pub snap_to_grid: Signal<bool>,
     /// Clipboard stores (node, x, y) at time of copy. Each paste offsets by +20.
-    clipboard: Signal<Vec<(CanvasNode, f64, f64)>>,
+    clipboard: Signal<Vec<(WorkflowNode, f64, f64)>>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
-impl Copy for NodeCanvasState {}
-impl Clone for NodeCanvasState {
+impl Copy for WorkflowState {}
+impl Clone for WorkflowState {
     fn clone(&self) -> Self {
         *self
     }
 }
-impl PartialEq for NodeCanvasState {
+impl PartialEq for WorkflowState {
     fn eq(&self, other: &Self) -> bool {
         self.nodes == other.nodes
             && self.edges == other.edges
@@ -147,7 +147,7 @@ impl PartialEq for NodeCanvasState {
     }
 }
 
-impl NodeCanvasState {
+impl WorkflowState {
     // ── selection ────────────────────────────────────────────────────────────
 
     /// Returns the single selected index (first in set), for backward compat.
@@ -241,7 +241,7 @@ impl NodeCanvasState {
         }
         let already = self.edges.read().iter().any(|e| e.from == cs.from_node_id && e.to == to_node_id);
         if !already {
-            self.edges.write().push(CanvasEdge { from: cs.from_node_id, to: to_node_id });
+            self.edges.write().push(WorkflowEdge { from: cs.from_node_id, to: to_node_id });
         }
     }
 
@@ -257,7 +257,6 @@ impl NodeCanvasState {
     // ── delete ───────────────────────────────────────────────────────────────
 
     pub fn delete_selected(&mut self) {
-        // Collect indices sorted descending so removals don't shift remaining indices.
         let mut indices: Vec<usize> = self.selected.read().iter().cloned().collect();
         if indices.is_empty() {
             return;
@@ -291,7 +290,7 @@ impl NodeCanvasState {
         }
         let nodes = self.nodes.read();
         let pos = self.positions.read();
-        let cb: Vec<(CanvasNode, f64, f64)> =
+        let cb: Vec<(WorkflowNode, f64, f64)> =
             sel.iter().filter_map(|&i| nodes.get(i).map(|n| (n.clone(), pos[i].0, pos[i].1))).collect();
         self.clipboard.set(cb);
     }
@@ -312,15 +311,13 @@ impl NodeCanvasState {
 
             let n = *self.next_id.read();
             *self.next_id.write() = n + 1;
-            let new_node = CanvasNode { id: format!("node-{n}"), initial_x: nx, initial_y: ny, ..node.clone() };
+            let new_node = WorkflowNode { id: format!("node-{n}"), initial_x: nx, initial_y: ny, ..node.clone() };
             let new_idx = self.positions.read().len();
-            // positions before nodes (render order invariant)
             self.positions.write().push((nx, ny));
             self.nodes.write().push(new_node);
             new_indices.push(new_idx);
         }
 
-        // Update clipboard offset so repeated Ctrl+V keeps shifting.
         self.clipboard.set(new_clipboard);
 
         {
@@ -355,7 +352,7 @@ impl NodeCanvasState {
         // and the render loop indexes into positions by node idx — if positions is
         // shorter than nodes at that moment, pos() panics with index out of bounds.
         self.positions.write().push((snap_x, snap_y));
-        self.nodes.write().push(CanvasNode {
+        self.nodes.write().push(WorkflowNode {
             id: format!("node-{n}"),
             initial_x: snap_x,
             initial_y: snap_y,
@@ -364,7 +361,7 @@ impl NodeCanvasState {
             has_source: true,
             label: format!("Node {n}"),
             description: "New node".to_string(),
-            kind: NodeKind::Agent,
+            kind: WorkflowNodeKind::Agent,
         });
     }
 
@@ -383,7 +380,6 @@ impl NodeCanvasState {
     }
 
     pub fn start_drag(&mut self, idx: usize, mx: f64, my: f64) {
-        // If clicked node isn't in the current selection, select it alone.
         if !self.selected.read().contains(&idx) {
             self.select_node(idx);
         }
@@ -467,7 +463,6 @@ impl NodeCanvasState {
     }
 
     pub fn start_pinch(&mut self, dist: f64, cx: f64, cy: f64) {
-        // Stop any single-touch pan before entering pinch mode.
         self.stop_pan();
         self.touch_pinch.set(Some(PinchState { prev_dist: dist, cx, cy }));
     }
@@ -580,10 +575,10 @@ impl NodeCanvasState {
 
 // ── Constructor ───────────────────────────────────────────────────────────────
 
-pub fn use_node_canvas(nodes: Vec<CanvasNode>, edges: Vec<CanvasEdge>) -> NodeCanvasState {
+pub fn use_workflow(nodes: Vec<WorkflowNode>, edges: Vec<WorkflowEdge>) -> WorkflowState {
     let initial: Vec<(f64, f64)> = nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect();
     let next_id = nodes.len();
-    NodeCanvasState {
+    WorkflowState {
         nodes: use_signal(|| nodes),
         edges: use_signal(|| edges),
         positions: use_signal(|| initial.clone()),

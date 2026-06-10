@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
 use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 
-use crate::domain::test::hooks::use_node_canvas::{CanvasNode, NodeCanvasState};
+use crate::domain::test::hooks::use_workflow::{WorkflowNode, WorkflowState};
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
@@ -13,31 +13,27 @@ const WORLD_REF_H: f64 = 900.0;
 
 pub const NODE_H: f64 = 72.0;
 
-// ── NodeCanvas ────────────────────────────────────────────────────────────────
+// ── WorkflowCanvas ────────────────────────────────────────────────────────────
 //
 // Viewport div (overflow:hidden, fixed height)
 // └── world div (3000×2000, CSS transform: translate+scale)
 //     ├── dot background
 //     ├── SVG bezier edges
-//     └── children (NodeWrapper instances)
-// └── overlay (viewport space — CanvasControls, Minimap, etc.)
+//     └── children (WorkflowNode instances)
+// └── overlay (viewport space — WorkflowControls, WorkflowMinimap, etc.)
 
 #[component]
-pub fn NodeCanvas(state: NodeCanvasState, children: Element, #[props(optional)] overlay: Option<Element>) -> Element {
+pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)] overlay: Option<Element>) -> Element {
     let is_busy = state.is_dragging() || state.is_panning();
     let locked = state.is_locked();
     let edge_paths = state.edge_paths(NODE_H);
     let transform = state.world_transform();
     let mut state = state;
-    // Top-left of the canvas element in the viewport — used to convert touch
-    // client coordinates to canvas-space coordinates for pinch-zoom pivot.
     let mut canvas_origin = use_signal(|| (0.0_f64, 0.0_f64));
 
     rsx! {
         div {
             class: "relative rounded-lg border bg-background overflow-hidden select-none outline-none",
-            // touch-action: none — tells the browser we handle all touch gestures
-            // ourselves, preventing native scroll/zoom from fighting our handlers.
             style: format!(
                 "height: 450px; cursor: {}; touch-action: none;",
                 if locked { "default" } else if is_busy { "grabbing" } else { "grab" }
@@ -238,11 +234,10 @@ pub fn NodeCanvas(state: NodeCanvasState, children: Element, #[props(optional)] 
     }
 }
 
-// ── NodeWrapper ───────────────────────────────────────────────────────────────
+// ── WorkflowNode ──────────────────────────────────────────────────────────────
 
 #[component]
-pub fn NodeWrapper(state: NodeCanvasState, idx: usize, children: Element) -> Element {
-    // Guard against stale renders during deletion
+pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) -> Element {
     let node = { state.nodes.read().get(idx).cloned() };
     let Some(node) = node else { return rsx! {} };
 
@@ -277,12 +272,8 @@ pub fn NodeWrapper(state: NodeCanvasState, idx: usize, children: Element) -> Ele
                 if shift {
                     state.toggle_select(idx);
                 } else if !state.is_selected(idx) {
-                    // Clicking an unselected node without Shift: select only this one.
-                    // Clicking an already-selected node without Shift: keep the full
-                    // selection so dragging moves all selected nodes together.
                     state.select_node(idx);
                 }
-                // handle's onmousedown fires first (inner→outer); if connecting already started, skip drag
                 if !state.is_connecting() && state.is_selected(idx) {
                     state.start_drag(idx, c.x, c.y);
                 }
@@ -327,10 +318,10 @@ pub fn NodeWrapper(state: NodeCanvasState, idx: usize, children: Element) -> Ele
     }
 }
 
-// ── DefaultNodeContent ────────────────────────────────────────────────────────
+// ── WorkflowDefaultNode ───────────────────────────────────────────────────────
 
 #[component]
-pub fn DefaultNodeContent(node: CanvasNode) -> Element {
+pub fn WorkflowDefaultNode(node: WorkflowNode) -> Element {
     use crate::domain::test::components::node::{Node, NodeContent, NodeDescription, NodeHeader, NodeTitle};
 
     rsx! {
@@ -352,10 +343,10 @@ pub fn DefaultNodeContent(node: CanvasNode) -> Element {
     }
 }
 
-// ── Minimap ───────────────────────────────────────────────────────────────────
+// ── WorkflowMinimap ───────────────────────────────────────────────────────────
 
 #[component]
-pub fn Minimap(state: NodeCanvasState) -> Element {
+pub fn WorkflowMinimap(state: WorkflowState) -> Element {
     let scale_x = MINI_W / WORLD_REF_W;
     let scale_y = MINI_H / WORLD_REF_H;
     let mut state = state;
@@ -403,7 +394,6 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
             style: format!(
                 "position: absolute; bottom: 12px; right: 12px; width: {MINI_W}px; height: {MINI_H}px;"
             ),
-            // Click-to-pan: convert minimap element coords → world coords → center viewport there.
             onclick: move |ev| {
                 let ec = ev.data().element_coordinates();
                 let world_x = ec.x / scale_x;
@@ -419,7 +409,6 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
                 width: "{MINI_W}",
                 height: "{MINI_H}",
 
-                // Viewport rect drawn first so nodes render on top of it.
                 rect {
                     x: "{vp_x:.1}",
                     y: "{vp_y:.1}",
@@ -453,24 +442,15 @@ pub fn Minimap(state: NodeCanvasState) -> Element {
                         "stroke-width": "0.5",
                     }
                 }
-
             }
         }
     }
 }
 
-// ── Helpers ───────────────────────────────────────────────────────────────────
-
-fn touch_dist(ax: f64, ay: f64, bx: f64, by: f64) -> f64 {
-    let dx = ax - bx;
-    let dy = ay - by;
-    (dx * dx + dy * dy).sqrt()
-}
-
-// ── CanvasControls ────────────────────────────────────────────────────────────
+// ── WorkflowControls ──────────────────────────────────────────────────────────
 
 #[component]
-pub fn CanvasControls(state: NodeCanvasState) -> Element {
+pub fn WorkflowControls(state: WorkflowState) -> Element {
     let pct = (state.zoom_value() * 100.0).round() as i32;
     let mut state = state;
 
@@ -523,4 +503,12 @@ pub fn CanvasControls(state: NodeCanvasState) -> Element {
             }
         }
     }
+}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+fn touch_dist(ax: f64, ay: f64, bx: f64, by: f64) -> f64 {
+    let dx = ax - bx;
+    let dy = ay - by;
+    (dx * dx + dy * dy).sqrt()
 }

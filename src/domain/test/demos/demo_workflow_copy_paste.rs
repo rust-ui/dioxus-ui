@@ -2,12 +2,12 @@ use dioxus::prelude::*;
 use icons::{Clipboard, ClipboardCopy, Trash2};
 use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
 
-use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
+use crate::domain::test::components::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
+use crate::domain::test::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
 
-fn initial_nodes() -> Vec<CanvasNode> {
+fn initial_nodes() -> Vec<WorkflowNode> {
     vec![
-        CanvasNode {
+        WorkflowNode {
             id: "a".to_string(),
             initial_x: 60.0,
             initial_y: 100.0,
@@ -16,9 +16,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "Input".to_string(),
             description: "Entry point".to_string(),
-            kind: NodeKind::Trigger,
+            kind: WorkflowNodeKind::Trigger,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "b".to_string(),
             initial_x: 300.0,
             initial_y: 60.0,
@@ -27,9 +27,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "Processor".to_string(),
             description: "Transform data".to_string(),
-            kind: NodeKind::Agent,
+            kind: WorkflowNodeKind::Agent,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "c".to_string(),
             initial_x: 300.0,
             initial_y: 200.0,
@@ -38,9 +38,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "Validator".to_string(),
             description: "Check output".to_string(),
-            kind: NodeKind::Data,
+            kind: WorkflowNodeKind::Data,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "d".to_string(),
             initial_x: 540.0,
             initial_y: 100.0,
@@ -49,28 +49,28 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: false,
             label: "Output".to_string(),
             description: "Final result".to_string(),
-            kind: NodeKind::Output,
+            kind: WorkflowNodeKind::Output,
         },
     ]
 }
 
-fn initial_edges() -> Vec<CanvasEdge> {
+fn initial_edges() -> Vec<WorkflowEdge> {
     vec![
-        CanvasEdge { from: "a".to_string(), to: "b".to_string() },
-        CanvasEdge { from: "a".to_string(), to: "c".to_string() },
-        CanvasEdge { from: "b".to_string(), to: "d".to_string() },
-        CanvasEdge { from: "c".to_string(), to: "d".to_string() },
+        WorkflowEdge { from: "a".to_string(), to: "b".to_string() },
+        WorkflowEdge { from: "a".to_string(), to: "c".to_string() },
+        WorkflowEdge { from: "b".to_string(), to: "d".to_string() },
+        WorkflowEdge { from: "c".to_string(), to: "d".to_string() },
     ]
 }
 
 #[component]
-pub fn DemoNodeCanvasCopyPaste() -> Element {
-    let mut state = use_node_canvas(initial_nodes(), initial_edges());
+pub fn DemoWorkflowCopyPaste() -> Element {
+    let mut state = use_workflow(initial_nodes(), initial_edges());
     let selected_count = state.selected.read().len();
     let clipboard_count = state.clipboard_count();
 
     rsx! {
-        NodeCanvas {
+        WorkflowCanvas {
             state,
             overlay: rsx! {
                 div {
@@ -102,12 +102,11 @@ pub fn DemoNodeCanvasCopyPaste() -> Element {
                         }
                     }
                 }
-                CanvasControls { state }
+                WorkflowControls { state }
             },
-
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
-                NodeWrapper { key: "{node.id}", state, idx: i,
-                    DefaultNodeContent { node }
+                WorkflowNodeWrapper { key: "{node.id}", state, idx: i,
+                    WorkflowDefaultNode { node }
                 }
             }
         }

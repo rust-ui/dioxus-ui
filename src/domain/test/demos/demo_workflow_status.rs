@@ -2,9 +2,9 @@ use dioxus::prelude::*;
 use icons::{Circle, CircleCheck, CircleX, Clock, LoaderCircle};
 use tw_merge::tw_merge;
 
-use super::node::{Node, NodeContent, NodeDescription, NodeFooter, NodeHeader, NodeTitle};
-use super::node_canvas::{CanvasControls, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeCanvasState, NodeKind, use_node_canvas};
+use crate::domain::test::components::node::{Node, NodeContent, NodeDescription, NodeFooter, NodeHeader, NodeTitle};
+use crate::domain::test::components::workflow::{WorkflowCanvas, WorkflowControls, WorkflowNodeWrapper};
+use crate::domain::test::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
 
 // ── NodeStatus ────────────────────────────────────────────────────────────────
 
@@ -87,7 +87,7 @@ fn StatusIcon(status: NodeStatus) -> Element {
 // ── StatusNodeContent ─────────────────────────────────────────────────────────
 
 #[component]
-fn StatusNodeContent(node: CanvasNode, status: NodeStatus) -> Element {
+fn StatusNodeContent(node: WorkflowNode, status: NodeStatus) -> Element {
     let node_class = tw_merge!("border-l-[3px]", status.border_class(), status.bg_class(),);
     rsx! {
         Node {
@@ -114,20 +114,11 @@ fn StatusNodeContent(node: CanvasNode, status: NodeStatus) -> Element {
     }
 }
 
-// ── Overlay ───────────────────────────────────────────────────────────────────
-
-#[component]
-fn StatusOverlay(state: NodeCanvasState) -> Element {
-    rsx! {
-        CanvasControls { state }
-    }
-}
-
 // ── Demo ──────────────────────────────────────────────────────────────────────
 
-fn initial_nodes() -> Vec<CanvasNode> {
+fn initial_nodes() -> Vec<WorkflowNode> {
     vec![
-        CanvasNode {
+        WorkflowNode {
             id: "trigger".to_string(),
             initial_x: 32.0,
             initial_y: 150.0,
@@ -136,9 +127,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "Webhook".to_string(),
             description: "POST /api/run".to_string(),
-            kind: NodeKind::Trigger,
+            kind: WorkflowNodeKind::Trigger,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "data".to_string(),
             initial_x: 288.0,
             initial_y: 50.0,
@@ -147,9 +138,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "Vector DB".to_string(),
             description: "pgvector lookup".to_string(),
-            kind: NodeKind::Data,
+            kind: WorkflowNodeKind::Data,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "agent".to_string(),
             initial_x: 288.0,
             initial_y: 188.0,
@@ -158,9 +149,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "AI Agent".to_string(),
             description: "claude-sonnet-4-6".to_string(),
-            kind: NodeKind::Agent,
+            kind: WorkflowNodeKind::Agent,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "output".to_string(),
             initial_x: 572.0,
             initial_y: 150.0,
@@ -169,29 +160,29 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: false,
             label: "Response".to_string(),
             description: "stream to client".to_string(),
-            kind: NodeKind::Output,
+            kind: WorkflowNodeKind::Output,
         },
     ]
 }
 
-fn initial_edges() -> Vec<CanvasEdge> {
+fn initial_edges() -> Vec<WorkflowEdge> {
     vec![
-        CanvasEdge { from: "trigger".to_string(), to: "agent".to_string() },
-        CanvasEdge { from: "data".to_string(), to: "agent".to_string() },
-        CanvasEdge { from: "agent".to_string(), to: "output".to_string() },
+        WorkflowEdge { from: "trigger".to_string(), to: "agent".to_string() },
+        WorkflowEdge { from: "data".to_string(), to: "agent".to_string() },
+        WorkflowEdge { from: "agent".to_string(), to: "output".to_string() },
     ]
 }
 
 #[component]
-pub fn DemoNodeCanvasStatus() -> Element {
-    let state = use_node_canvas(initial_nodes(), initial_edges());
+pub fn DemoWorkflowStatus() -> Element {
+    let state = use_workflow(initial_nodes(), initial_edges());
 
     rsx! {
-        NodeCanvas {
+        WorkflowCanvas {
             state,
-            overlay: rsx! { StatusOverlay { state } },
+            overlay: rsx! { WorkflowControls { state } },
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
-                NodeWrapper { key: "{node.id}", state, idx: i,
+                WorkflowNodeWrapper { key: "{node.id}", state, idx: i,
                     StatusNodeContent {
                         node: node.clone(),
                         status: match node.id.as_str() {

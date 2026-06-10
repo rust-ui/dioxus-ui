@@ -2,12 +2,12 @@ use dioxus::prelude::*;
 use icons::{Plus, Redo2, RotateCcw, Trash2, Undo2};
 use registry::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem};
 
-use super::node_canvas::{CanvasControls, DefaultNodeContent, NodeCanvas, NodeWrapper};
-use crate::domain::test::hooks::use_node_canvas::{CanvasEdge, CanvasNode, NodeKind, use_node_canvas};
+use crate::domain::test::components::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
+use crate::domain::test::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
 
-fn initial_nodes() -> Vec<CanvasNode> {
+fn initial_nodes() -> Vec<WorkflowNode> {
     vec![
-        CanvasNode {
+        WorkflowNode {
             id: "trigger".to_string(),
             initial_x: 32.0,
             initial_y: 130.0,
@@ -16,9 +16,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "User Input".to_string(),
             description: "Starts the workflow".to_string(),
-            kind: NodeKind::Trigger,
+            kind: WorkflowNodeKind::Trigger,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "agent".to_string(),
             initial_x: 280.0,
             initial_y: 130.0,
@@ -27,9 +27,9 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: true,
             label: "AI Agent".to_string(),
             description: "claude-sonnet".to_string(),
-            kind: NodeKind::Agent,
+            kind: WorkflowNodeKind::Agent,
         },
-        CanvasNode {
+        WorkflowNode {
             id: "output".to_string(),
             initial_x: 560.0,
             initial_y: 130.0,
@@ -38,27 +38,26 @@ fn initial_nodes() -> Vec<CanvasNode> {
             has_source: false,
             label: "Response".to_string(),
             description: "Ready to send".to_string(),
-            kind: NodeKind::Output,
+            kind: WorkflowNodeKind::Output,
         },
     ]
 }
 
-fn initial_edges() -> Vec<CanvasEdge> {
+fn initial_edges() -> Vec<WorkflowEdge> {
     vec![
-        CanvasEdge { from: "trigger".to_string(), to: "agent".to_string() },
-        CanvasEdge { from: "agent".to_string(), to: "output".to_string() },
+        WorkflowEdge { from: "trigger".to_string(), to: "agent".to_string() },
+        WorkflowEdge { from: "agent".to_string(), to: "output".to_string() },
     ]
 }
 
 #[component]
-pub fn DemoNodeCanvasToolbar() -> Element {
-    let mut state = use_node_canvas(initial_nodes(), initial_edges());
+pub fn DemoWorkflowToolbar() -> Element {
+    let mut state = use_workflow(initial_nodes(), initial_edges());
 
     rsx! {
-        NodeCanvas {
+        WorkflowCanvas {
             state,
             overlay: rsx! {
-                // ── canvas toolbar (top-center) ──────────────────────────────
                 div {
                     class: "absolute top-3 left-1/2 -translate-x-1/2 z-20",
                     Toolbar { aria_label: "Canvas controls",
@@ -92,13 +91,11 @@ pub fn DemoNodeCanvasToolbar() -> Element {
                         }
                     }
                 }
-
-                CanvasControls { state }
+                WorkflowControls { state }
             },
-
             for (i, node) in state.nodes.read().iter().cloned().enumerate() {
-                NodeWrapper { key: "{node.id}", state, idx: i,
-                    DefaultNodeContent { node }
+                WorkflowNodeWrapper { key: "{node.id}", state, idx: i,
+                    WorkflowDefaultNode { node }
                 }
             }
         }
