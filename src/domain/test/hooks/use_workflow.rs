@@ -550,6 +550,37 @@ impl WorkflowState {
         self.clipboard.read().len()
     }
 
+    pub fn duplicate_selected(&mut self) {
+        let sel: Vec<usize> = self.selected.read().iter().cloned().collect();
+        if sel.is_empty() { return; }
+        let mut new_indices = Vec::new();
+        for idx in &sel {
+            let (node, x, y) = {
+                let nodes = self.nodes.read();
+                let pos = self.positions.read();
+                let Some(node) = nodes.get(*idx) else { continue };
+                (node.clone(), pos[*idx].0, pos[*idx].1)
+            };
+            let nx = x + 20.0;
+            let ny = y + 20.0;
+            let n = *self.next_id.read();
+            *self.next_id.write() = n + 1;
+            let new_node = WorkflowNode { id: format!("node-{n}"), initial_x: nx, initial_y: ny, ..node };
+            let new_idx = self.positions.read().len();
+            self.positions.write().push((nx, ny));
+            self.nodes.write().push(new_node);
+            new_indices.push(new_idx);
+        }
+        {
+            let mut sel = self.selected.write();
+            sel.clear();
+            for idx in new_indices {
+                sel.insert(idx);
+            }
+        }
+        self.push_history();
+    }
+
     // ── context menu helpers ─────────────────────────────────────────────────
 
     pub fn duplicate_node(&mut self, idx: usize) {

@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 
 use crate::domain::test::demos::demo_toolbar::DemoToolbar;
+use crate::domain::test::demos::demo_workflow_context_menu::DemoWorkflowContextMenu;
 use crate::domain::test::demos::demo_workflow_export_import::DemoWorkflowExportImport;
 use crate::domain::test::demos::demo_workflow::DemoWorkflow;
 use crate::domain::test::demos::demo_workflow_copy_paste::DemoWorkflowCopyPaste;
@@ -74,6 +75,14 @@ pub fn TestPage() -> Element {
                 }
             }
             DemoWorkflowCopyPaste {}
+
+            div { class: "flex flex-col gap-1",
+                h2 { class: "text-xl font-semibold tracking-tight", "Workflow — Context Menu" }
+                p { class: "text-sm text-muted-foreground",
+                    "Right-click a node to rename, duplicate, or delete. Right-click an edge to remove it. Right-click canvas to add a node at cursor, select all, or paste."
+                }
+            }
+            DemoWorkflowContextMenu {}
 
             div { class: "flex flex-col gap-1",
                 h2 { class: "text-xl font-semibold tracking-tight", "Workflow — Export / Import" }

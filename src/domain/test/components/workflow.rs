@@ -2,9 +2,7 @@ use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
 use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 use dioxus_html::input_data::MouseButton;
-use registry::ui::context_menu::{
-    ContextMenu, ContextMenuContent, ContextMenuGroup, ContextMenuLabel, ContextMenuTrigger,
-};
+use registry::ui::context_menu::{ContextMenuGroup, ContextMenuLabel};
 
 use crate::domain::test::hooks::use_workflow::{WorkflowNode, WorkflowState};
 
@@ -48,7 +46,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
     let mut canvas_origin = use_signal(|| (0.0_f64, 0.0_f64));
     let mut node_cm: Signal<Option<(usize, f64, f64)>> = use_signal(|| None);
     let mut edge_cm: Signal<Option<(usize, f64, f64)>> = use_signal(|| None);
-    let mut canvas_ctx_pos: Signal<Option<(f64, f64)>> = use_signal(|| None);
+    let mut canvas_cm: Signal<Option<(f64, f64)>> = use_signal(|| None);
     provide_context(NodeCmCtx(node_cm));
     let rubber_band_rect = state.rubber_band.read().clone().map(|rb| {
         let (ox, oy) = *canvas_origin.read();
@@ -60,8 +58,6 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
     });
 
     rsx! {
-        ContextMenu {
-        ContextMenuTrigger {
         div {
             class: "relative rounded-lg border bg-background overflow-hidden select-none outline-none",
             style: format!(
@@ -69,6 +65,11 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                 if locked { "default" } else if is_rubber_banding { "crosshair" } else if is_busy { "grabbing" } else { "grab" }
             ),
             tabindex: "0",
+            oncontextmenu: move |ev| {
+                ev.prevent_default();
+                let c = ev.data().client_coordinates();
+                canvas_cm.set(Some((c.x, c.y)));
+            },
 
             onmounted: move |data| {
                 spawn(async move {
@@ -100,6 +101,10 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     Key::Character(ref k) if ctrl && k == "v" => {
                         ev.prevent_default();
                         state.paste_nodes();
+                    }
+                    Key::Character(ref k) if ctrl && k == "d" => {
+                        ev.prevent_default();
+                        state.duplicate_selected();
                     }
                     Key::Delete | Key::Backspace => {
                         ev.prevent_default();
@@ -244,10 +249,6 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                 style: format!(
                     "position: absolute; top: 0; left: 0; width: 3000px; height: 2000px; transform: {transform}; transform-origin: 0 0;"
                 ),
-                oncontextmenu: move |ev| {
-                    let c = ev.data().client_coordinates();
-                    canvas_ctx_pos.set(Some((c.x, c.y)));
-                },
 
                 div {
                     class: "absolute inset-0 pointer-events-none text-foreground",
@@ -392,41 +393,46 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     }
                 }
             }
-        }
-        }  // ContextMenuTrigger
-        ContextMenuContent {
-            ContextMenuLabel { "Canvas" }
-            ContextMenuGroup {
-                button {
-                    class: MENU_BTN,
-                    "data-context-close": "true",
-                    onclick: move |_| {
-                        if let Some((vx, vy)) = *canvas_ctx_pos.read() {
-                            let (ox, oy) = *canvas_origin.read();
-                            let (px, py) = *state.pan.read();
-                            let zoom = *state.zoom.read();
-                            state.add_node((vx - ox - px) / zoom, (vy - oy - py) / zoom);
+            // ── canvas context menu overlay ──────────────────────────────────
+            if let Some((mx, my)) = *canvas_cm.read() {
+                div {
+                    class: "fixed inset-0 z-[49]",
+                    onclick: move |_| { canvas_cm.set(None); },
+                    oncontextmenu: move |ev| { ev.prevent_default(); canvas_cm.set(None); },
+                }
+                div {
+                    class: "fixed z-50 p-1 rounded-md border bg-card shadow-md w-[200px]",
+                    style: "left:{mx}px; top:{my}px;",
+                    onclick: move |ev| { ev.stop_propagation(); },
+                    ContextMenuLabel { "Canvas" }
+                    ContextMenuGroup {
+                        button {
+                            class: MENU_BTN,
+                            onclick: move |_| {
+                                let (ox, oy) = *canvas_origin.read();
+                                let (px, py) = *state.pan.read();
+                                let zoom = *state.zoom.read();
+                                state.add_node((mx - ox - px) / zoom, (my - oy - py) / zoom);
+                                canvas_cm.set(None);
+                            },
+                            "Add Node Here"
                         }
-                    },
-                    "Add Node Here"
-                }
-                button {
-                    class: MENU_BTN,
-                    "data-context-close": "true",
-                    onclick: move |_| { state.select_all(); },
-                    "Select All"
-                }
-                if state.clipboard_count() > 0 {
-                    button {
-                        class: MENU_BTN,
-                        "data-context-close": "true",
-                        onclick: move |_| { state.paste_nodes(); },
-                        "Paste"
+                        button {
+                            class: MENU_BTN,
+                            onclick: move |_| { state.select_all(); canvas_cm.set(None); },
+                            "Select All"
+                        }
+                        if state.clipboard_count() > 0 {
+                            button {
+                                class: MENU_BTN,
+                                onclick: move |_| { state.paste_nodes(); canvas_cm.set(None); },
+                                "Paste"
+                            }
+                        }
                     }
                 }
             }
         }
-        }  // ContextMenu
     }
 }
 
