@@ -27,9 +27,9 @@
 
 | Feature                                                                       | Difficulty | Priority |
 |-------------------------------------------------------------------------------|------------|----------|
-| **Edge select + delete** — click edge to highlight, Del to remove             | Easy       | 🔴 High  |
-| **Undo covers edge add/delete too** — history only tracks positions now       | Medium     | 🔴 High  |
-| **Node inline edit** — double-click label to rename in place                  | Medium     | 🔴 High  |
+| ~~**Edge select + delete** — click edge to highlight, Del to remove~~         | ~~Easy~~   | ✅ Done  |
+| ~~**Undo covers edge add/delete too** — history tracks positions + edges~~    | ~~Medium~~ | ✅ Done  |
+| ~~**Node inline edit** — double-click label to rename in place~~              | ~~Medium~~ | ✅ Done  |
 | **Export / import JSON** — serialize `nodes + edges + positions`              | Medium     | 🔴 High  |
 | ~~**Animated edge direction arrow** — arrowhead at target end~~               | ~~Easy~~   | ✅ Done  |
 | ~~**Keyboard move selected node** — arrow keys nudge by grid step~~           | ~~Easy~~   | ✅ Done  |

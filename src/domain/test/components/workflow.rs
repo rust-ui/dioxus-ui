@@ -27,6 +27,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
     let is_busy = state.is_dragging() || state.is_panning();
     let locked = state.is_locked();
     let edge_paths = state.edge_paths(NODE_H);
+    let selected_ei = state.selected_edge_idx();
     let transform = state.world_transform();
     let mut state = state;
     let mut canvas_origin = use_signal(|| (0.0_f64, 0.0_f64));
@@ -74,8 +75,12 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     Key::Delete | Key::Backspace => {
                         ev.prevent_default();
                         state.delete_selected();
+                        state.delete_selected_edge();
                     }
-                    Key::Escape => { state.deselect(); }
+                    Key::Escape => {
+                        state.deselect();
+                        state.cancel_edit();
+                    }
                     Key::ArrowUp    => { ev.prevent_default(); state.nudge_selected(0.0, -20.0); }
                     Key::ArrowDown  => { ev.prevent_default(); state.nudge_selected(0.0,  20.0); }
                     Key::ArrowLeft  => { ev.prevent_default(); state.nudge_selected(-20.0, 0.0); }
@@ -87,6 +92,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
             onmousedown: move |ev| {
                 if locked { return; }
                 let c = ev.data().client_coordinates();
+                state.finish_edit();
                 state.deselect();
                 if state.is_connecting() {
                     state.cancel_connect();
@@ -220,17 +226,26 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                             }
                         }
                     }
-                    for d in &edge_paths {
+                    for (ei, d) in edge_paths.iter().enumerate() {
                         path {
                             d: d.as_str(),
                             fill: "none",
                             stroke: "currentColor",
-                            class: "text-border",
-                            "stroke-width": "1.5",
+                            class: if selected_ei == Some(ei) { "text-primary" } else { "text-border" },
+                            "stroke-width": if selected_ei == Some(ei) { "2.5" } else { "1.5" },
                             "stroke-linecap": "round",
                             "stroke-dasharray": "6 3",
                             "marker-end": "url(#wf-arrow)",
-                            style: "animation: edge-flow 1.2s linear infinite;",
+                            style: "animation: edge-flow 1.2s linear infinite; cursor: pointer; pointer-events: visibleStroke;",
+                            onmousedown: move |ev| { ev.stop_propagation(); },
+                            onclick: move |ev| {
+                                ev.stop_propagation();
+                                if state.selected_edge_idx() == Some(ei) {
+                                    state.deselect_edge();
+                                } else {
+                                    state.select_edge(ei);
+                                }
+                            },
                         }
                     }
                     if let Some(preview) = state.connecting_preview() {
@@ -267,6 +282,8 @@ pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) 
     let is_selected = state.is_selected(idx);
     let is_connecting = state.is_connecting();
     let locked = state.is_locked();
+    let is_editing = state.is_editing(idx);
+    let edit_value = state.edit_buffer_value();
 
     let width = node.width;
     let node_id = node.id.clone();
@@ -287,6 +304,7 @@ pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) 
             onmousedown: move |ev| {
                 ev.stop_propagation();
                 if locked { return; }
+                if state.is_editing(idx) { return; }
                 let data = ev.data();
                 let c    = data.client_coordinates();
                 let shift = data.modifiers().contains(Modifiers::SHIFT);
@@ -299,8 +317,36 @@ pub fn WorkflowNodeWrapper(state: WorkflowState, idx: usize, children: Element) 
                     state.start_drag(idx, c.x, c.y);
                 }
             },
+            ondoubleclick: move |ev| {
+                ev.stop_propagation();
+                if !locked { state.start_edit(idx); }
+            },
 
             {children}
+
+            if is_editing {
+                div {
+                    class: "absolute inset-0 z-20 flex items-center px-3 bg-background rounded-md ring-2 ring-primary",
+                    onclick: move |ev| { ev.stop_propagation(); },
+                    onmousedown: move |ev| { ev.stop_propagation(); },
+                    input {
+                        class: "w-full bg-transparent outline-none text-sm font-medium",
+                        value: "{edit_value}",
+                        onmounted: move |ev| {
+                            spawn(async move { let _ = ev.set_focus(true).await; });
+                        },
+                        oninput: move |ev| { state.update_edit_buffer(ev.value()); },
+                        onkeydown: move |ev| {
+                            match ev.data().key() {
+                                Key::Enter => { state.finish_edit(); }
+                                Key::Escape => { state.cancel_edit(); }
+                                _ => {}
+                            }
+                        },
+                        onblur: move |_| { state.finish_edit(); },
+                    }
+                }
+            }
 
             // ── source handle (right) ─────────────────────────────────────
             if node.has_source {

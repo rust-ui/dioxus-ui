@@ -16,7 +16,7 @@ pub fn TestPage() -> Element {
         div { class: "flex flex-col gap-6",
             div { class: "flex flex-col gap-1",
                 h1 { class: "text-2xl font-semibold tracking-tight", "Workflow Canvas" }
-                p { class: "text-sm text-muted-foreground", "Drag nodes. Bezier edges update live." }
+                p { class: "text-sm text-muted-foreground", "Drag nodes · Click edge to select, Del to remove · Double-click node to rename · Undo/redo tracks nodes and edges." }
             }
             DemoWorkflow {}
 

@@ -115,12 +115,15 @@ pub struct WorkflowState {
     pub connecting: Signal<Option<ConnectingState>>,
     canvas_drag: Signal<Option<PanState>>,
     touch_pinch: Signal<Option<PinchState>>,
-    pub history: UseHistoryStack<Vec<(f64, f64)>>,
+    pub history: UseHistoryStack<(Vec<(f64, f64)>, Vec<WorkflowEdge>)>,
     next_id: Signal<usize>,
     pub locked: Signal<bool>,
     pub snap_to_grid: Signal<bool>,
     /// Clipboard stores (node, x, y) at time of copy. Each paste offsets by +20.
     clipboard: Signal<Vec<(WorkflowNode, f64, f64)>>,
+    pub selected_edge: Signal<Option<usize>>,
+    pub editing_node: Signal<Option<usize>>,
+    edit_buffer: Signal<String>,
 }
 
 // Manual Copy/Clone/PartialEq — Signal<Vec<T>> is Copy regardless of T.
@@ -144,6 +147,8 @@ impl PartialEq for WorkflowState {
             && self.history == other.history
             && self.locked == other.locked
             && self.snap_to_grid == other.snap_to_grid
+            && self.selected_edge == other.selected_edge
+            && self.editing_node == other.editing_node
     }
 }
 
@@ -161,6 +166,7 @@ impl WorkflowState {
 
     /// Select only this node (clears multi-selection).
     pub fn select_node(&mut self, idx: usize) {
+        self.selected_edge.set(None);
         let mut s = self.selected.write();
         s.clear();
         s.insert(idx);
@@ -168,6 +174,7 @@ impl WorkflowState {
 
     /// Add to or remove from current selection (Shift+click).
     pub fn toggle_select(&mut self, idx: usize) {
+        self.selected_edge.set(None);
         let mut s = self.selected.write();
         if s.contains(&idx) {
             s.remove(&idx);
@@ -178,6 +185,7 @@ impl WorkflowState {
 
     pub fn deselect(&mut self) {
         self.selected.write().clear();
+        self.selected_edge.set(None);
     }
 
     // ── locked mode ───────────────────────────────────────────────────────────
@@ -242,7 +250,65 @@ impl WorkflowState {
         let already = self.edges.read().iter().any(|e| e.from == cs.from_node_id && e.to == to_node_id);
         if !already {
             self.edges.write().push(WorkflowEdge { from: cs.from_node_id, to: to_node_id });
+            self.push_history();
         }
+    }
+
+    // ── edge selection ────────────────────────────────────────────────────────
+
+    pub fn select_edge(&mut self, idx: usize) {
+        self.selected.write().clear();
+        self.selected_edge.set(Some(idx));
+    }
+
+    pub fn deselect_edge(&mut self) {
+        self.selected_edge.set(None);
+    }
+
+    pub fn selected_edge_idx(&self) -> Option<usize> {
+        *self.selected_edge.read()
+    }
+
+    pub fn delete_selected_edge(&mut self) {
+        let Some(idx) = *self.selected_edge.read() else { return };
+        if idx < self.edges.read().len() {
+            self.edges.write().remove(idx);
+        }
+        self.selected_edge.set(None);
+        self.push_history();
+    }
+
+    // ── inline edit ───────────────────────────────────────────────────────────
+
+    pub fn is_editing(&self, idx: usize) -> bool {
+        *self.editing_node.read() == Some(idx)
+    }
+
+    pub fn start_edit(&mut self, idx: usize) {
+        let label = self.nodes.read()[idx].label.clone();
+        self.edit_buffer.set(label);
+        self.editing_node.set(Some(idx));
+    }
+
+    pub fn update_edit_buffer(&mut self, val: String) {
+        self.edit_buffer.set(val);
+    }
+
+    pub fn finish_edit(&mut self) {
+        let Some(idx) = *self.editing_node.read() else { return };
+        let val = self.edit_buffer.read().clone();
+        if let Some(node) = self.nodes.write().get_mut(idx) {
+            node.label = val;
+        }
+        self.editing_node.set(None);
+    }
+
+    pub fn cancel_edit(&mut self) {
+        self.editing_node.set(None);
+    }
+
+    pub fn edit_buffer_value(&self) -> String {
+        self.edit_buffer.read().clone()
     }
 
     pub fn cancel_connect(&mut self) {
@@ -252,6 +318,13 @@ impl WorkflowState {
     pub fn connecting_preview(&self) -> Option<String> {
         let cs = self.connecting.read().clone()?;
         Some(bezier_path(cs.from_x, cs.from_y, cs.mouse_x, cs.mouse_y))
+    }
+
+    // ── history ───────────────────────────────────────────────────────────────
+
+    fn push_history(&mut self) {
+        let snap = (self.positions.read().clone(), self.edges.read().clone());
+        self.history.push(snap);
     }
 
     // ── delete ───────────────────────────────────────────────────────────────
@@ -277,8 +350,7 @@ impl WorkflowState {
         }
 
         self.selected.write().clear();
-        let snap = self.positions.read().clone();
-        self.history.push(snap);
+        self.push_history();
     }
 
     // ── keyboard nudge ───────────────────────────────────────────────────────
@@ -302,8 +374,7 @@ impl WorkflowState {
                 };
             }
         }
-        let snap = self.positions.read().clone();
-        self.history.push(snap);
+        self.push_history();
     }
 
     // ── copy / paste ─────────────────────────────────────────────────────────
@@ -353,8 +424,7 @@ impl WorkflowState {
             }
         }
 
-        let snap = self.positions.read().clone();
-        self.history.push(snap);
+        self.push_history();
     }
 
     pub fn has_clipboard(&self) -> bool {
@@ -435,21 +505,22 @@ impl WorkflowState {
 
     pub fn stop_drag(&mut self) {
         if self.drag.read().is_some() {
-            let snap = self.positions.read().clone();
-            self.history.push(snap);
+            self.push_history();
         }
         self.drag.set(None);
     }
 
     pub fn undo(&mut self) {
-        if let Some(snap) = self.history.undo() {
-            *self.positions.write() = snap;
+        if let Some((pos, edges)) = self.history.undo() {
+            *self.positions.write() = pos;
+            *self.edges.write() = edges;
         }
     }
 
     pub fn redo(&mut self) {
-        if let Some(snap) = self.history.redo() {
-            *self.positions.write() = snap;
+        if let Some((pos, edges)) = self.history.redo() {
+            *self.positions.write() = pos;
+            *self.edges.write() = edges;
         }
     }
 
@@ -603,6 +674,7 @@ impl WorkflowState {
 pub fn use_workflow(nodes: Vec<WorkflowNode>, edges: Vec<WorkflowEdge>) -> WorkflowState {
     let initial: Vec<(f64, f64)> = nodes.iter().map(|n| (n.initial_x, n.initial_y)).collect();
     let next_id = nodes.len();
+    let initial_edges = edges.clone();
     WorkflowState {
         nodes: use_signal(|| nodes),
         edges: use_signal(|| edges),
@@ -614,11 +686,14 @@ pub fn use_workflow(nodes: Vec<WorkflowNode>, edges: Vec<WorkflowEdge>) -> Workf
         connecting: use_signal(|| None),
         canvas_drag: use_signal(|| None),
         touch_pinch: use_signal(|| None),
-        history: UseHistoryStack::new(initial),
+        history: UseHistoryStack::new((initial, initial_edges)),
         next_id: use_signal(|| next_id),
         locked: use_signal(|| false),
         snap_to_grid: use_signal(|| false),
-        clipboard: use_signal(|| Vec::new()),
+        clipboard: use_signal(Vec::new),
+        selected_edge: use_signal(|| None),
+        editing_node: use_signal(|| None),
+        edit_buffer: use_signal(String::new),
     }
 }
 
