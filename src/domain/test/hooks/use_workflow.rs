@@ -281,6 +281,31 @@ impl WorkflowState {
         self.history.push(snap);
     }
 
+    // ── keyboard nudge ───────────────────────────────────────────────────────
+
+    pub fn nudge_selected(&mut self, dx: f64, dy: f64) {
+        let indices: Vec<usize> = self.selected.read().iter().cloned().collect();
+        if indices.is_empty() {
+            return;
+        }
+        let snap = *self.snap_to_grid.read();
+        {
+            let mut pos = self.positions.write();
+            for i in indices {
+                let (x, y) = pos[i];
+                let raw_x = (x + dx).max(0.0);
+                let raw_y = (y + dy).max(0.0);
+                pos[i] = if snap {
+                    ((raw_x / 20.0).round() * 20.0, (raw_y / 20.0).round() * 20.0)
+                } else {
+                    (raw_x, raw_y)
+                };
+            }
+        }
+        let snap = self.positions.read().clone();
+        self.history.push(snap);
+    }
+
     // ── copy / paste ─────────────────────────────────────────────────────────
 
     pub fn copy_selected(&mut self) {

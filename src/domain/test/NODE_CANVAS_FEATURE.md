@@ -31,12 +31,12 @@
 | **Undo covers edge add/delete too** — history only tracks positions now       | Medium     | 🔴 High  |
 | **Node inline edit** — double-click label to rename in place                  | Medium     | 🔴 High  |
 | **Export / import JSON** — serialize `nodes + edges + positions`              | Medium     | 🔴 High  |
-| **Animated edge direction arrow** — arrowhead at target end                   | Easy       | 🟠 Mid   |
-| **Keyboard move selected node** — arrow keys nudge by grid step               | Easy       | 🟠 Mid   |
-| **Node status badge** — running / error / done indicator on node              | Easy       | 🟠 Mid   |
+| ~~**Animated edge direction arrow** — arrowhead at target end~~               | ~~Easy~~   | ✅ Done  |
+| ~~**Keyboard move selected node** — arrow keys nudge by grid step~~           | ~~Easy~~   | ✅ Done  |
+| ~~**Node status badge** — running / error / done indicator on node~~          | ~~Easy~~   | ✅ Done  |
 | **Right-click context menu** — add/delete/duplicate at cursor                 | Medium     | 🟠 Mid   |
 | ~~**Multi-select** — Shift+click to select many~~                             | ~~Medium~~ | ✅ Done  |
-| **Copy / paste nodes** — Ctrl+C/V clones selection with offset                | Medium     | 🟠 Mid   |
+| ~~**Copy / paste nodes** — Ctrl+C/V clones selection with offset~~            | ~~Medium~~ | ✅ Done  |
 | **Duplicate node** — Ctrl+D shortcut                                          | Medium     | 🟠 Mid   |
 | **Auto-layout (dagre)** — compute acyclic layout from edges                   | Hard       | 🟠 Mid   |
 | **Rubber-band multi-select** — drag empty canvas to draw selection rect       | Hard       | 🟠 Mid   |

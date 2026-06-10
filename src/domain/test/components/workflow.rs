@@ -76,6 +76,10 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                         state.delete_selected();
                     }
                     Key::Escape => { state.deselect(); }
+                    Key::ArrowUp    => { ev.prevent_default(); state.nudge_selected(0.0, -20.0); }
+                    Key::ArrowDown  => { ev.prevent_default(); state.nudge_selected(0.0,  20.0); }
+                    Key::ArrowLeft  => { ev.prevent_default(); state.nudge_selected(-20.0, 0.0); }
+                    Key::ArrowRight => { ev.prevent_default(); state.nudge_selected( 20.0, 0.0); }
                     _ => {}
                 }
             },
@@ -200,6 +204,22 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     width: "3000",
                     height: "2000",
                     style { "@keyframes edge-flow {{ to {{ stroke-dashoffset: -18; }} }}" }
+                    defs {
+                        marker {
+                            id: "wf-arrow",
+                            "markerWidth": "8",
+                            "markerHeight": "8",
+                            "refX": "6",
+                            "refY": "3",
+                            orient: "auto",
+                            "markerUnits": "strokeWidth",
+                            path {
+                                d: "M0,0 L0,6 L8,3 z",
+                                fill: "currentColor",
+                                class: "text-border",
+                            }
+                        }
+                    }
                     for d in &edge_paths {
                         path {
                             d: d.as_str(),
@@ -209,6 +229,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                             "stroke-width": "1.5",
                             "stroke-linecap": "round",
                             "stroke-dasharray": "6 3",
+                            "marker-end": "url(#wf-arrow)",
                             style: "animation: edge-flow 1.2s linear infinite;",
                         }
                     }

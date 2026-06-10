@@ -7,6 +7,7 @@ use crate::domain::test::demos::demo_workflow_locked_mode::DemoWorkflowLockedMod
 use crate::domain::test::demos::demo_workflow_minimap::DemoWorkflowMinimap;
 use crate::domain::test::demos::demo_workflow_multiselect::DemoWorkflowMultiselect;
 use crate::domain::test::demos::demo_workflow_status::DemoWorkflowStatus;
+use crate::domain::test::demos::demo_workflow_keyboard::DemoWorkflowKeyboard;
 use crate::domain::test::demos::demo_workflow_toolbar::DemoWorkflowToolbar;
 
 #[component]
@@ -56,6 +57,14 @@ pub fn TestPage() -> Element {
                 }
             }
             DemoWorkflowMultiselect {}
+
+            div { class: "flex flex-col gap-1",
+                h2 { class: "text-xl font-semibold tracking-tight", "Workflow — Keyboard" }
+                p { class: "text-sm text-muted-foreground",
+                    "Select a node, use ↑↓←→ to nudge by grid step (20px). Shift+click for multi-select, then move all at once."
+                }
+            }
+            DemoWorkflowKeyboard {}
 
             div { class: "flex flex-col gap-1",
                 h2 { class: "text-xl font-semibold tracking-tight", "Workflow — Copy / Paste" }
