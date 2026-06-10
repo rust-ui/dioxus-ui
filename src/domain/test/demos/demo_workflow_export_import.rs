@@ -76,10 +76,10 @@ pub fn DemoWorkflowExportImport() -> Element {
                 class: "text-[11px] px-2 py-0.5 rounded hover:bg-accent text-muted-foreground transition-colors flex items-center gap-1",
                 title: "Export canvas as JSON",
                 onclick: move |_| {
-                    let snap = state.export_snapshot();
-                    let Ok(json) = serde_json::to_string_pretty(&snap) else { return };
                     #[cfg(target_arch = "wasm32")]
                     {
+                        let snap = state.export_snapshot();
+                        let Ok(json) = serde_json::to_string_pretty(&snap) else { return };
                         use wasm_bindgen::JsCast;
                         let arr = js_sys::Array::new();
                         arr.push(&wasm_bindgen::JsValue::from_str(&json));

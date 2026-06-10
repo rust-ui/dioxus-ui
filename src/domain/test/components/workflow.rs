@@ -2,6 +2,7 @@ use dioxus::prelude::*;
 use dioxus_html::geometry::WheelDelta;
 use dioxus_html::input_data::keyboard_types::{Key, Modifiers};
 use dioxus_html::input_data::MouseButton;
+use icons::{Clipboard, Copy, SquareDashedMousePointer, Plus, Pencil, Trash2};
 use registry::ui::context_menu::{ContextMenuGroup, ContextMenuLabel};
 
 use crate::domain::test::hooks::use_workflow::{WorkflowNode, WorkflowState};
@@ -12,9 +13,9 @@ use crate::domain::test::hooks::use_workflow::{WorkflowNode, WorkflowState};
 struct NodeCmCtx(Signal<Option<(usize, f64, f64)>>);
 
 const MENU_BTN: &str =
-    "inline-flex items-center w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent cursor-pointer";
+    "inline-flex items-center gap-2 w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent cursor-pointer";
 const MENU_BTN_DANGER: &str =
-    "inline-flex items-center w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-destructive/10 text-destructive cursor-pointer";
+    "inline-flex items-center gap-2 w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-destructive/10 text-destructive cursor-pointer";
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;
@@ -346,11 +347,13 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                         button {
                             class: MENU_BTN,
                             onclick: move |_| { state.start_edit(ni); node_cm.set(None); },
+                            Pencil { class: "size-3.5 text-muted-foreground" }
                             "Rename"
                         }
                         button {
                             class: MENU_BTN,
                             onclick: move |_| { state.duplicate_node(ni); node_cm.set(None); },
+                            Copy { class: "size-3.5 text-muted-foreground" }
                             "Duplicate"
                         }
                     }
@@ -363,6 +366,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                                 state.delete_selected();
                                 node_cm.set(None);
                             },
+                            Trash2 { class: "size-3.5" }
                             "Delete"
                         }
                     }
@@ -388,6 +392,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                                 state.delete_edge(ei);
                                 edge_cm.set(None);
                             },
+                            Trash2 { class: "size-3.5" }
                             "Delete Edge"
                         }
                     }
@@ -415,17 +420,20 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                                 state.add_node((mx - ox - px) / zoom, (my - oy - py) / zoom);
                                 canvas_cm.set(None);
                             },
+                            Plus { class: "size-3.5 text-muted-foreground" }
                             "Add Node Here"
                         }
                         button {
                             class: MENU_BTN,
                             onclick: move |_| { state.select_all(); canvas_cm.set(None); },
+                            SquareDashedMousePointer { class: "size-3.5 text-muted-foreground" }
                             "Select All"
                         }
                         if state.clipboard_count() > 0 {
                             button {
                                 class: MENU_BTN,
                                 onclick: move |_| { state.paste_nodes(); canvas_cm.set(None); },
+                                Clipboard { class: "size-3.5 text-muted-foreground" }
                                 "Paste"
                             }
                         }
