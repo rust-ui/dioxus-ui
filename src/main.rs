@@ -19,6 +19,7 @@ use domain::charts::routing::charts_pages::{
 use domain::create::page_create::PageCreate;
 use domain::test::routing::test_layout::TestLayout;
 use domain::test::routing::test_pages::TestPage;
+use domain::workflows::routing::workflow_view_page::WorkflowViewPage;
 use domain::workflows::routing::workflows_layout::WorkflowsLayout;
 use domain::workflows::routing::workflows_pages::WorkflowsPage;
 use routes::app_layout::AppLayout;
@@ -94,6 +95,9 @@ enum Route {
         PageIcons {},
         #[route("/create")]
         PageCreate {},
+    #[end_layout]
+    #[route("/view/:id")]
+    WorkflowViewPage { id: String },
 }
 
 fn main() {
