@@ -120,9 +120,9 @@ fn App() -> Element {
         // Ideal fix: find a way to pass h-full to the Dioxus mount div without a style tag.
         // For now we inject it inline so it wins over any stylesheet ordering issues.
         document::Style { "#main {{ height: 100%; }}" }
-        document::Link { rel: "icon", href: FAVICON }
-        document::Link { rel: "icon", r#type: "image/png", sizes: "16x16", href: FAVICON_16 }
         document::Link { rel: "icon", r#type: "image/png", sizes: "32x32", href: FAVICON_32 }
+        document::Link { rel: "icon", r#type: "image/png", sizes: "16x16", href: FAVICON_16 }
+        document::Link { rel: "icon", href: FAVICON }
         document::Link { rel: "apple-touch-icon", href: APPLE_TOUCH_ICON }
         document::Link { rel: "manifest", href: MANIFEST }
         document::Stylesheet { href: TAILWIND_CSS }
