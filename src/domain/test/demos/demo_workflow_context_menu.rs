@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 
-use crate::domain::test::components::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
-use crate::domain::test::hooks::use_workflow::{EdgeStyle, WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
+use registry::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
+use registry::hooks::use_workflow::{EdgeStyle, WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
 
 fn initial_nodes() -> Vec<WorkflowNode> {
     vec![
@@ -65,11 +65,11 @@ fn initial_nodes() -> Vec<WorkflowNode> {
 
 fn initial_edges() -> Vec<WorkflowEdge> {
     vec![
-        WorkflowEdge { from: "a".to_string(), to: "b".to_string(), style: EdgeStyle::Dashed },
-        WorkflowEdge { from: "a".to_string(), to: "c".to_string(), style: EdgeStyle::Dotted },
-        WorkflowEdge { from: "b".to_string(), to: "d".to_string(), style: EdgeStyle::Solid },
-        WorkflowEdge { from: "c".to_string(), to: "d".to_string(), style: EdgeStyle::Solid },
-        WorkflowEdge { from: "d".to_string(), to: "e".to_string(), style: EdgeStyle::Solid },
+        WorkflowEdge { from: "a".to_string(), to: "b".to_string(), style: EdgeStyle::Dashed, label: None },
+        WorkflowEdge { from: "a".to_string(), to: "c".to_string(), style: EdgeStyle::Dotted, label: None },
+        WorkflowEdge { from: "b".to_string(), to: "d".to_string(), style: EdgeStyle::Solid, label: None },
+        WorkflowEdge { from: "c".to_string(), to: "d".to_string(), style: EdgeStyle::Solid, label: None },
+        WorkflowEdge { from: "d".to_string(), to: "e".to_string(), style: EdgeStyle::Solid, label: None },
     ]
 }
 

@@ -87,6 +87,8 @@ pub struct WorkflowEdge {
     pub from: String,
     pub to: String,
     pub style: EdgeStyle,
+    #[serde(default)]
+    pub label: Option<String>,
 }
 
 #[derive(Serialize, Deserialize)]
@@ -165,6 +167,7 @@ pub struct WorkflowState {
     clipboard: Signal<Vec<(WorkflowNode, f64, f64)>>,
     pub selected_edge: Signal<Option<usize>>,
     pub editing_node: Signal<Option<usize>>,
+    pub editing_edge: Signal<Option<usize>>,
     edit_buffer: Signal<String>,
     pub rubber_band: Signal<Option<RubberBandState>>,
 }
@@ -192,6 +195,7 @@ impl PartialEq for WorkflowState {
             && self.snap_to_grid == other.snap_to_grid
             && self.selected_edge == other.selected_edge
             && self.editing_node == other.editing_node
+            && self.editing_edge == other.editing_edge
             && self.rubber_band == other.rubber_band
     }
 }
@@ -351,6 +355,33 @@ impl WorkflowState {
         self.editing_node.set(None);
     }
 
+    // ── edge label edit ───────────────────────────────────────────────────────
+
+    pub fn editing_edge_idx(&self) -> Option<usize> {
+        *self.editing_edge.read()
+    }
+
+    pub fn start_edit_edge(&mut self, idx: usize) {
+        let label = self.edges.read().get(idx).and_then(|e| e.label.clone()).unwrap_or_default();
+        self.edit_buffer.set(label);
+        self.editing_node.set(None);
+        self.editing_edge.set(Some(idx));
+    }
+
+    pub fn commit_edit_edge(&mut self) {
+        let Some(idx) = *self.editing_edge.read() else { return };
+        let val = self.edit_buffer.read().clone();
+        if let Some(edge) = self.edges.write().get_mut(idx) {
+            edge.label = if val.trim().is_empty() { None } else { Some(val) };
+        }
+        self.editing_edge.set(None);
+        self.push_history();
+    }
+
+    pub fn cancel_edit_edge(&mut self) {
+        self.editing_edge.set(None);
+    }
+
     pub fn edit_buffer_value(&self) -> String {
         self.edit_buffer.read().clone()
     }
@@ -417,6 +448,8 @@ impl WorkflowState {
 
     pub fn load_snapshot(&mut self, snap: WorkflowSnapshot) {
         let next_id = snap.nodes.len();
+        // positions BEFORE nodes: render loop indexes positions[idx] immediately
+        // after nodes write triggers re-render — wrong order = index-out-of-bounds
         self.positions.set(snap.positions);
         self.nodes.set(snap.nodes);
         self.edges.set(snap.edges);
@@ -631,6 +664,9 @@ impl WorkflowState {
         let snap = *self.snap_to_grid.read();
         let snap_x = if snap { (x / 20.0).round() * 20.0 } else { x };
         let snap_y = if snap { (y / 20.0).round() * 20.0 } else { y };
+        // positions must be pushed before nodes: writing nodes triggers a re-render,
+        // and the render loop indexes into positions by node idx — if positions is
+        // shorter than nodes at that moment, pos() panics with index out of bounds.
         self.positions.write().push((snap_x, snap_y));
         self.nodes.write().push(WorkflowNode {
             id: format!("node-{n}"),
@@ -837,7 +873,7 @@ impl WorkflowState {
 
     // ── edges ────────────────────────────────────────────────────────────────
 
-    pub fn edge_paths(&self, node_h: f64) -> Vec<(String, EdgeStyle)> {
+    pub fn edge_paths(&self, node_h: f64) -> Vec<(String, EdgeStyle, f64, f64, Option<String>)> {
         let pos = self.positions.read();
         let nodes = self.nodes.read();
         let edges = self.edges.read();
@@ -848,7 +884,11 @@ impl WorkflowState {
                 let (ti, _) = nodes.iter().enumerate().find(|(_, n)| n.id == edge.to)?;
                 let (fx, fy) = pos[fi];
                 let (tx, ty) = pos[ti];
-                Some((bezier_path(fx + from.width, fy + node_h / 2.0, tx, ty + node_h / 2.0), edge.style.clone()))
+                let sx = fx + from.width;
+                let sy = fy + node_h / 2.0;
+                let tx2 = tx;
+                let ty2 = ty + node_h / 2.0;
+                Some((bezier_path(sx, sy, tx2, ty2), edge.style.clone(), (sx + tx2) / 2.0, (sy + ty2) / 2.0, edge.label.clone()))
             })
             .collect()
     }
@@ -885,6 +925,7 @@ pub fn use_workflow(nodes: Vec<WorkflowNode>, edges: Vec<WorkflowEdge>) -> Workf
         clipboard: use_signal(Vec::new),
         selected_edge: use_signal(|| None),
         editing_node: use_signal(|| None),
+        editing_edge: use_signal(|| None),
         edit_buffer: use_signal(String::new),
         rubber_band: use_signal(|| None),
     }

@@ -117,6 +117,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
     let mut node_cm: Signal<Option<(usize, f64, f64)>> = use_signal(|| None);
     let mut edge_cm: Signal<Option<(usize, f64, f64)>> = use_signal(|| None);
     let mut canvas_cm: Signal<Option<(f64, f64)>> = use_signal(|| None);
+    let mut edge_edit_vp_pos: Signal<Option<(f64, f64)>> = use_signal(|| None);
     provide_context(NodeCmCtx(node_cm));
     let rubber_band_rect = state.rubber_band.read().clone().map(|rb| {
         let (ox, oy) = *canvas_origin.read();
@@ -184,6 +185,8 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     Key::Escape => {
                         state.deselect();
                         state.cancel_edit();
+                        state.cancel_edit_edge();
+                        edge_edit_vp_pos.set(None);
                     }
                     Key::ArrowUp    => { ev.prevent_default(); state.nudge_selected(0.0, -20.0); }
                     Key::ArrowDown  => { ev.prevent_default(); state.nudge_selected(0.0,  20.0); }
@@ -344,7 +347,8 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                             }
                         }
                     }
-                    for (ei, (d, style)) in edge_paths.iter().enumerate() {
+                    for (ei, (d, style, lx, ly, label_opt)) in edge_paths.iter().enumerate() {
+                        g {
                         path {
                             d: d.as_str(),
                             fill: "none",
@@ -370,6 +374,22 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                                     state.select_edge(ei);
                                 }
                             },
+                        }
+                        if let Some(label) = label_opt {
+                            text {
+                                x: "{lx:.1}",
+                                y: "{ly:.1}",
+                                "text-anchor": "middle",
+                                "dominant-baseline": "central",
+                                "font-size": "11",
+                                "paint-order": "stroke",
+                                stroke: "hsl(var(--background))",
+                                "stroke-width": "3",
+                                fill: "currentColor",
+                                class: "text-foreground/80 pointer-events-none select-none",
+                                "{label}"
+                            }
+                        }
                         }
                     }
                     if let Some(preview) = state.connecting_preview() {
@@ -454,6 +474,19 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     ContextMenuLabel { "Edge" }
                     ContextMenuGroup {
                         button {
+                            class: MENU_BTN,
+                            onclick: move |_| {
+                                state.start_edit_edge(ei);
+                                edge_edit_vp_pos.set(Some((mx, my)));
+                                edge_cm.set(None);
+                            },
+                            Pencil { class: "size-3.5 text-muted-foreground" }
+                            "Edit Label"
+                        }
+                    }
+                    div { class: "my-1 border-t border-border" }
+                    ContextMenuGroup {
+                        button {
                             class: MENU_BTN_DANGER,
                             onclick: move |_| {
                                 state.delete_edge(ei);
@@ -465,6 +498,35 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
                     }
                 }
             }
+            // ── edge label edit overlay ──────────────────────────────────────
+            if state.editing_edge_idx().is_some() {
+                if let Some((vp_x, vp_y)) = *edge_edit_vp_pos.read() {
+                    div {
+                        class: "absolute z-30 flex items-center bg-background border border-primary rounded-md shadow-md px-2 py-1",
+                        style: "left:{vp_x:.1}px; top:{vp_y:.1}px; transform: translate(-50%, -50%); min-width: 120px;",
+                        onclick: move |ev| { ev.stop_propagation(); },
+                        onmousedown: move |ev| { ev.stop_propagation(); },
+                        input {
+                            class: "w-full bg-transparent outline-none text-xs text-center",
+                            placeholder: "Edge label…",
+                            value: state.edit_buffer_value(),
+                            onmounted: move |ev| {
+                                spawn(async move { let _ = ev.set_focus(true).await; });
+                            },
+                            oninput: move |ev| { state.update_edit_buffer(ev.value()); },
+                            onkeydown: move |ev| {
+                                match ev.data().key() {
+                                    Key::Enter  => { state.commit_edit_edge(); edge_edit_vp_pos.set(None); }
+                                    Key::Escape => { state.cancel_edit_edge(); edge_edit_vp_pos.set(None); }
+                                    _ => {}
+                                }
+                            },
+                            onblur: move |_| { state.commit_edit_edge(); edge_edit_vp_pos.set(None); },
+                        }
+                    }
+                }
+            }
+
             // ── canvas context menu overlay ──────────────────────────────────
             if let Some((mx, my)) = *canvas_cm.read() {
                 div {
