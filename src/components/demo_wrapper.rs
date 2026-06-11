@@ -127,7 +127,7 @@ pub fn DemoWrapper(#[props(into, optional)] demo_name: Option<String>, children:
                     let source = demo_name.as_deref().and_then(get_demo_source);
                     if let Some(code) = source {
                         let code = code.to_string();
-                        let highlighted = crate::markdown::highlight_code::highlight_code(&code, Some("rust"));
+                        let highlighted = crate::markdown::highlight_code::highlight_code(&code, Some("rust"), None);
                         let copy_id = format!("copy-btn-{id}");
                         let cid = copy_id.clone();
                         rsx! {

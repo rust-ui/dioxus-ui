@@ -18,7 +18,7 @@ pub fn BlockCodePanel(files: &'static [BlockFile], tree: Vec<BlockFileTreeItem>)
         let Some(f) = files.get(active_idx()) else {
             return String::new();
         };
-        highlight_code(f.content, Some(f.language))
+        highlight_code(f.content, Some(f.language), Some(f.target))
     });
 
     rsx! {

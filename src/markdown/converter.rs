@@ -169,7 +169,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
         }
         "pre" => {
             if let Some((lang, code_text)) = extract_code_block(el) {
-                let highlighted = crate::markdown::highlight_code::highlight_code(&code_text, lang.as_deref());
+                let highlighted = crate::markdown::highlight_code::highlight_code(&code_text, lang.as_deref(), None);
                 rsx! {
                     pre {
                         class: "bg-muted rounded-xl overflow-x-auto py-3.5 px-4 mt-6 min-w-0 text-xs",

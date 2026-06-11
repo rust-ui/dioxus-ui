@@ -1,13 +1,13 @@
 /// Returns highlighted HTML spans (inline styles, no `<pre>` wrapper).
 /// Server: syntect. WASM/client: HTML-escaped plain text.
-pub fn highlight_code(code: &str, language: Option<&str>) -> String {
+pub fn highlight_code(code: &str, language: Option<&str>, filename: Option<&str>) -> String {
     #[cfg(feature = "server")]
     {
-        server::highlight(code, language)
+        server::highlight(code, language, filename)
     }
     #[cfg(not(feature = "server"))]
     {
-        let _ = language;
+        let _ = (language, filename);
         plain_escape(code)
     }
 }
@@ -27,7 +27,10 @@ mod server {
     use syntect::parsing::SyntaxSet;
     use syntect::util::LinesWithEndings;
 
-    const HIGHLIGHT_THEME: &str = "base16-ocean.dark";
+    use crate::markdown::highlight_language::HighlightLanguage;
+    use crate::markdown::toml_highlighter::highlight_toml_manually;
+
+    const HIGHLIGHT_THEME: &str = "base16-ocean.light";
 
     static SYNTAX_SET: OnceLock<SyntaxSet> = OnceLock::new();
     static THEME_SET: OnceLock<ThemeSet> = OnceLock::new();
@@ -40,24 +43,35 @@ mod server {
         THEME_SET.get_or_init(ThemeSet::load_defaults)
     }
 
-    pub fn highlight(code: &str, language: Option<&str>) -> String {
+    pub fn highlight(code: &str, language: Option<&str>, filename: Option<&str>) -> String {
         let ss = syntax_set();
         let ts = theme_set();
 
-        let theme =
-            ts.themes.get(HIGHLIGHT_THEME).or_else(|| ts.themes.values().next()).expect("no syntect theme available");
+        let theme = ts
+            .themes
+            .get(HIGHLIGHT_THEME)
+            .or_else(|| ts.themes.get("InspiredGitHub"))
+            .or_else(|| ts.themes.values().next())
+            .expect("no syntect theme available");
 
-        let lang = language.unwrap_or("plain");
+        let lang = language
+            .or_else(|| filename.and_then(HighlightLanguage::detect_from_filename))
+            .unwrap_or("plain");
 
         let syntax = match lang {
             "rust" => ss.find_syntax_by_name("Rust"),
-            "bash" | "sh" => {
-                ss.find_syntax_by_name("Bourne Again Shell (bash)").or_else(|| ss.find_syntax_by_extension("sh"))
-            }
+            "bash" => ss
+                .find_syntax_by_name("Bourne Again Shell (bash)")
+                .or_else(|| ss.find_syntax_by_name("Shell-Unix-Generic"))
+                .or_else(|| ss.find_syntax_by_extension("sh")),
             "toml" => ss.find_syntax_by_name("TOML"),
             _ => ss.find_syntax_by_extension(lang),
         }
         .unwrap_or_else(|| ss.find_syntax_plain_text());
+
+        if lang == "toml" && syntax.name == "Plain Text" {
+            return highlight_toml_manually(code);
+        }
 
         let mut hl = HighlightLines::new(syntax, theme);
         let mut out = String::new();
