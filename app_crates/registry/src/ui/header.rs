@@ -225,7 +225,7 @@ pub fn NavMenuTrigger(
             "aria-controls": "radix-_R_16inpfiv3b_-content-radix-_R_1d6inpfiv3b_",
             href: "{href}",
             span { {children} }
-            ChevronDown { class: "relative ml-1.5 opacity-75 transition duration-300 lucide lucide-chevron-down top-[1px] size-3 group-hover/dropdown:rotate-180 group-hover/dropdown:translate-y-px group-focus-within/dropdown:rotate-180 group-focus-within/dropdown:translate-y-px" }
+            ChevronDown { class: "relative ml-1.5 opacity-75 transition duration-300 top-[1px] size-3 group-hover/dropdown:rotate-180 group-hover/dropdown:translate-y-px group-focus-within/dropdown:rotate-180 group-focus-within/dropdown:translate-y-px" }
         }
     }
 }

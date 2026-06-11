@@ -214,8 +214,8 @@ fn MobileMenuTrigger(is_open: Signal<bool>) -> Element {
             "aria-label": "Open Menu",
             class: "block relative z-20 p-2.5 -m-2.5 -mr-3 cursor-pointer md:hidden",
             onclick: move |_| is_open.set(!is_open()),
-            Menu { class: "m-auto duration-200 lucide lucide-menu in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 size-5" }
-            X { class: "absolute inset-0 m-auto opacity-0 duration-200 scale-0 -rotate-180 lucide lucide-x in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 size-5" }
+            Menu { class: "m-auto duration-200 in-data-[state=active]:rotate-180 in-data-[state=active]:scale-0 in-data-[state=active]:opacity-0 size-5" }
+            X { class: "absolute inset-0 m-auto opacity-0 duration-200 scale-0 -rotate-180 in-data-[state=active]:rotate-0 in-data-[state=active]:scale-100 in-data-[state=active]:opacity-100 size-5" }
         }
     }
 }

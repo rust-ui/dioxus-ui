@@ -322,9 +322,6 @@
   }
 }
 
-@utility lucide { }
-@utility lucide-* { }
-
 @utility scrollbar__on_hover {
   scrollbar-width: none;
   -ms-overflow-style: none;
