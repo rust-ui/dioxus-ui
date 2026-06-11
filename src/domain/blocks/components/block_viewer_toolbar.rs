@@ -7,6 +7,7 @@ use registry::ui::dialog::{
     DialogTitle, DialogTrigger,
 };
 use registry::ui::input::Input;
+use registry::ui::toggle_group::{ToggleGroup, ToggleGroupAction, ToggleGroupItem};
 
 use crate::domain::blocks::block_entry::BlockEntry;
 
@@ -95,51 +96,50 @@ pub fn BlockViewerToolbar(
             div { class: "flex gap-2 items-center ml-auto",
                 // Viewport switcher + fullscreen + share
                 div { class: "flex gap-1.5 items-center p-1 h-8 rounded-md border shadow-none",
-                    // Desktop
-                    {
-                        let iid = instance_id.clone();
-                        rsx! {
-                            button {
-                                class: "flex-none px-0 w-6 h-6 inline-flex items-center justify-center rounded-sm transition-colors hover:bg-accent",
-                                class: if screen_size() == ScreenSize::Desktop { "bg-accent text-accent-foreground" },
-                                title: "Desktop size",
-                                onclick: move |_| {
-                                    screen_size.set(ScreenSize::Desktop);
-                                    dispatch_resize_event(&iid, ScreenSize::Desktop);
-                                },
-                                Monitor {}
+                    ToggleGroup {
+                        {
+                            let iid = instance_id.clone();
+                            rsx! {
+                                ToggleGroupItem {
+                                    class: "flex-none px-0 w-6 h-6",
+                                    title: "Desktop size",
+                                    pressed: screen_size() == ScreenSize::Desktop,
+                                    onclick: move |_| {
+                                        screen_size.set(ScreenSize::Desktop);
+                                        dispatch_resize_event(&iid, ScreenSize::Desktop);
+                                    },
+                                    Monitor {}
+                                }
                             }
                         }
-                    }
-                    // Tablet
-                    {
-                        let iid = instance_id.clone();
-                        rsx! {
-                            button {
-                                class: "flex-none px-0 w-6 h-6 inline-flex items-center justify-center rounded-sm transition-colors hover:bg-accent",
-                                class: if screen_size() == ScreenSize::Tablet { "bg-accent text-accent-foreground" },
-                                title: "Tablet size",
-                                onclick: move |_| {
-                                    screen_size.set(ScreenSize::Tablet);
-                                    dispatch_resize_event(&iid, ScreenSize::Tablet);
-                                },
-                                Tablet {}
+                        {
+                            let iid = instance_id.clone();
+                            rsx! {
+                                ToggleGroupItem {
+                                    class: "flex-none px-0 w-6 h-6",
+                                    title: "Tablet size",
+                                    pressed: screen_size() == ScreenSize::Tablet,
+                                    onclick: move |_| {
+                                        screen_size.set(ScreenSize::Tablet);
+                                        dispatch_resize_event(&iid, ScreenSize::Tablet);
+                                    },
+                                    Tablet {}
+                                }
                             }
                         }
-                    }
-                    // Phone
-                    {
-                        let iid = instance_id.clone();
-                        rsx! {
-                            button {
-                                class: "flex-none px-0 w-6 h-6 inline-flex items-center justify-center rounded-sm transition-colors hover:bg-accent",
-                                class: if screen_size() == ScreenSize::Phone { "bg-accent text-accent-foreground" },
-                                title: "Phone size",
-                                onclick: move |_| {
-                                    screen_size.set(ScreenSize::Phone);
-                                    dispatch_resize_event(&iid, ScreenSize::Phone);
-                                },
-                                Smartphone {}
+                        {
+                            let iid = instance_id.clone();
+                            rsx! {
+                                ToggleGroupItem {
+                                    class: "flex-none px-0 w-6 h-6",
+                                    title: "Phone size",
+                                    pressed: screen_size() == ScreenSize::Phone,
+                                    onclick: move |_| {
+                                        screen_size.set(ScreenSize::Phone);
+                                        dispatch_resize_event(&iid, ScreenSize::Phone);
+                                    },
+                                    Smartphone {}
+                                }
                             }
                         }
                     }
@@ -147,11 +147,11 @@ pub fn BlockViewerToolbar(
                     div { class: "w-px h-4 bg-border mx-0.5" }
 
                     // Fullscreen
-                    a {
+                    ToggleGroupAction {
                         href: block_id.to_full_view_url(),
                         target: "_blank",
-                        class: "flex-none px-0 w-6 h-6 inline-flex items-center justify-center rounded-sm transition-colors hover:bg-accent",
                         title: "Open in New Tab",
+                        span { class: "hidden", "Open in New Tab" }
                         Fullscreen {}
                     }
 
@@ -160,7 +160,7 @@ pub fn BlockViewerToolbar(
                     // Share dialog
                     Dialog {
                         DialogTrigger {
-                            class: "p-0 border-none bg-transparent shadow-none flex-none w-6 h-6 inline-flex items-center justify-center rounded-sm hover:bg-accent",
+                            class: "p-0 text-sm font-medium whitespace-nowrap rounded-sm border-none transition-all outline-none disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 size-6 dark:aria-invalid:ring-destructive/40 dark:hover:bg-accent/50 hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-[3px]",
                             Share2 {}
                         }
                         DialogContent {

@@ -55,6 +55,30 @@ pub fn ToggleGroup(
 }
 
 #[component]
+pub fn ToggleGroupAction(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into)] href: String,
+    #[props(into, optional)] target: Option<String>,
+    #[props(into, optional)] title: Option<String>,
+    children: Element,
+) -> Element {
+    let merged = tw_merge!(
+        "inline-flex gap-2 justify-center items-center p-0 text-sm font-medium whitespace-nowrap rounded-sm transition-all outline-none disabled:opacity-50 disabled:pointer-events-none [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 aria-invalid:ring-destructive/20 aria-invalid:border-destructive size-6 dark:aria-invalid:ring-destructive/40 dark:hover:bg-accent/50 hover:bg-accent hover:text-accent-foreground focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
+        class.as_deref().unwrap_or("")
+    );
+
+    rsx! {
+        a {
+            class: "{merged}",
+            href: "{href}",
+            target: target.as_deref(),
+            title: title.as_deref(),
+            {children}
+        }
+    }
+}
+
+#[component]
 pub fn ToggleGroupItem(
     #[props(into, optional)] class: Option<String>,
     #[props(into)] title: String,
