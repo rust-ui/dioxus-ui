@@ -28,12 +28,6 @@ pub fn NavMobile() -> Element {
                 div { class: "absolute top-14 left-0 right-0 z-50 bg-background border-b border-border p-4 flex flex-col gap-1",
                     Link {
                         class: "py-2 px-3 text-sm rounded-md hover:bg-accent",
-                        to: Route::ComponentPage { name: "introduction".to_string() },
-                        onclick: move |_| open.set(false),
-                        "Docs"
-                    }
-                    Link {
-                        class: "py-2 px-3 text-sm rounded-md hover:bg-accent",
                         to: Route::ComponentPage { name: "button".to_string() },
                         onclick: move |_| open.set(false),
                         "Components"
@@ -50,11 +44,23 @@ pub fn NavMobile() -> Element {
                         onclick: move |_| open.set(false),
                         "Icons"
                     }
+                    a {
+                        class: "py-2 px-3 text-sm rounded-md hover:bg-accent",
+                        href: "/blocks",
+                        onclick: move |_| open.set(false),
+                        "Blocks"
+                    }
                     Link {
                         class: "py-2 px-3 text-sm rounded-md hover:bg-accent",
                         to: Route::AreaChartPage {},
                         onclick: move |_| open.set(false),
                         "Charts"
+                    }
+                    Link {
+                        class: "py-2 px-3 text-sm rounded-md hover:bg-accent",
+                        to: Route::WorkflowsPage {},
+                        onclick: move |_| open.set(false),
+                        "Workflows"
                     }
                 }
             }

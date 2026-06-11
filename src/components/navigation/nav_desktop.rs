@@ -14,19 +14,17 @@ pub fn NavDesktop() -> Element {
             Link {
                 class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
                 active_class: "bg-accent",
-                to: Route::ComponentPage { name: "introduction".to_string() },
-                "Docs"
-            }
-            Link {
-                class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
-                active_class: "bg-accent",
-                to: Route::ComponentPage { name: "button".to_string() },
+                to: Route::ComponentPage {
+                    name: "button".to_string(),
+                },
                 "Components"
             }
             Link {
                 class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
                 active_class: "bg-accent",
-                to: Route::HookPage { name: "use-copy-clipboard".to_string() },
+                to: Route::HookPage {
+                    name: "use-copy-clipboard".to_string(),
+                },
                 "Hooks"
             }
             Link {
@@ -46,10 +44,11 @@ pub fn NavDesktop() -> Element {
                 to: Route::AreaChartPage {},
                 "Charts"
             }
-            a {
+            Link {
                 class: "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent",
-                href: "/create",
-                "Create"
+                active_class: "bg-accent",
+                to: Route::WorkflowsPage {},
+                "Workflows"
             }
         }
     }

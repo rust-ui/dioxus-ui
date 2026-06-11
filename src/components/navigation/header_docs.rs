@@ -1,4 +1,6 @@
 use dioxus::prelude::*;
+use icons::Plus;
+use registry::ui::button::{Button, ButtonSize};
 use registry::ui::separator::{Separator, SeparatorOrientation};
 use registry::ui::theme_toggle::ThemeToggle;
 
@@ -23,6 +25,14 @@ pub fn HeaderDocs() -> Element {
                         GithubStars {}
                         Separator { orientation: SeparatorOrientation::Vertical, class: "hidden h-4 lg:block" }
                         ThemeToggle {}
+                        Separator { orientation: SeparatorOrientation::Vertical, class: "hidden h-4 lg:block" }
+                        Button {
+                            href: "/create",
+                            size: ButtonSize::Sm,
+                            class: "rounded-xl",
+                            Plus {}
+                            "New"
+                        }
                     }
                 }
             }
