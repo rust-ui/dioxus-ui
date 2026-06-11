@@ -3,8 +3,8 @@ use icons::{Check, Copy, Fullscreen, Monitor, Share2, Smartphone, Tablet, Termin
 use registry::hooks::use_copy_clipboard::use_copy_clipboard;
 use registry::ui::button::{Button, ButtonSize, ButtonVariant};
 use registry::ui::dialog::{
-    Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader,
-    DialogTitle, DialogTrigger,
+    Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle,
+    DialogTrigger,
 };
 use registry::ui::input::Input;
 use registry::ui::toggle_group::{ToggleGroup, ToggleGroupAction, ToggleGroupItem};

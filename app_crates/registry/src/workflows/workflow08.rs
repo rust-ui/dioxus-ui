@@ -1,9 +1,9 @@
 use dioxus::prelude::*;
 use icons::{Plus, Redo2, RotateCcw, Trash2, Undo2};
-use crate::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem};
 
-use crate::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
 use crate::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
+use crate::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator, ToolbarToggleGroup, ToolbarToggleItem};
+use crate::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
 
 fn initial_nodes() -> Vec<WorkflowNode> {
     vec![

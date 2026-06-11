@@ -1,7 +1,9 @@
 use dioxus::prelude::*;
 
-use crate::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowMinimap, WorkflowNodeWrapper};
 use crate::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
+use crate::ui::workflow::{
+    WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowMinimap, WorkflowNodeWrapper,
+};
 
 fn initial_nodes() -> Vec<WorkflowNode> {
     vec![

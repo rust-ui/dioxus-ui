@@ -83,14 +83,54 @@ impl WorkflowIdKebab {
 
     pub fn files(&self) -> &'static [BlockFile] {
         match self {
-            Self::Workflow01 => &[BlockFile { name: "workflow01.rs", target: "workflows/workflow01.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow01.rs"), language: "rust" }],
-            Self::Workflow02 => &[BlockFile { name: "workflow02.rs", target: "workflows/workflow02.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow02.rs"), language: "rust" }],
-            Self::Workflow03 => &[BlockFile { name: "workflow03.rs", target: "workflows/workflow03.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow03.rs"), language: "rust" }],
-            Self::Workflow04 => &[BlockFile { name: "workflow04.rs", target: "workflows/workflow04.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow04.rs"), language: "rust" }],
-            Self::Workflow05 => &[BlockFile { name: "workflow05.rs", target: "workflows/workflow05.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow05.rs"), language: "rust" }],
-            Self::Workflow06 => &[BlockFile { name: "workflow06.rs", target: "workflows/workflow06.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow06.rs"), language: "rust" }],
-            Self::Workflow07 => &[BlockFile { name: "workflow07.rs", target: "workflows/workflow07.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow07.rs"), language: "rust" }],
-            Self::Workflow08 => &[BlockFile { name: "workflow08.rs", target: "workflows/workflow08.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow08.rs"), language: "rust" }],
+            Self::Workflow01 => &[BlockFile {
+                name: "workflow01.rs",
+                target: "workflows/workflow01.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow01.rs"),
+                language: "rust",
+            }],
+            Self::Workflow02 => &[BlockFile {
+                name: "workflow02.rs",
+                target: "workflows/workflow02.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow02.rs"),
+                language: "rust",
+            }],
+            Self::Workflow03 => &[BlockFile {
+                name: "workflow03.rs",
+                target: "workflows/workflow03.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow03.rs"),
+                language: "rust",
+            }],
+            Self::Workflow04 => &[BlockFile {
+                name: "workflow04.rs",
+                target: "workflows/workflow04.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow04.rs"),
+                language: "rust",
+            }],
+            Self::Workflow05 => &[BlockFile {
+                name: "workflow05.rs",
+                target: "workflows/workflow05.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow05.rs"),
+                language: "rust",
+            }],
+            Self::Workflow06 => &[BlockFile {
+                name: "workflow06.rs",
+                target: "workflows/workflow06.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow06.rs"),
+                language: "rust",
+            }],
+            Self::Workflow07 => &[BlockFile {
+                name: "workflow07.rs",
+                target: "workflows/workflow07.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow07.rs"),
+                language: "rust",
+            }],
+            Self::Workflow08 => &[BlockFile {
+                name: "workflow08.rs",
+                target: "workflows/workflow08.rs",
+                content: include_str!("../../app_crates/registry/src/workflows/workflow08.rs"),
+                language: "rust",
+            }],
         }
     }
 

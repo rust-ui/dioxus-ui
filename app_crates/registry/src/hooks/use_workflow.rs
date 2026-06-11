@@ -58,7 +58,7 @@ pub enum EdgeStyle {
 impl EdgeStyle {
     pub fn dasharray(&self) -> &'static str {
         match self {
-            EdgeStyle::Solid  => "none",
+            EdgeStyle::Solid => "none",
             EdgeStyle::Dashed => "6 3",
             EdgeStyle::Dotted => "2 3",
         }
@@ -513,11 +513,8 @@ impl WorkflowState {
                 let (x, y) = pos[i];
                 let raw_x = (x + dx).max(0.0);
                 let raw_y = (y + dy).max(0.0);
-                pos[i] = if snap {
-                    ((raw_x / 20.0).round() * 20.0, (raw_y / 20.0).round() * 20.0)
-                } else {
-                    (raw_x, raw_y)
-                };
+                pos[i] =
+                    if snap { ((raw_x / 20.0).round() * 20.0, (raw_y / 20.0).round() * 20.0) } else { (raw_x, raw_y) };
             }
         }
         self.push_history();
@@ -583,7 +580,9 @@ impl WorkflowState {
 
     pub fn duplicate_selected(&mut self) {
         let sel: Vec<usize> = self.selected.read().iter().cloned().collect();
-        if sel.is_empty() { return; }
+        if sel.is_empty() {
+            return;
+        }
         let mut new_indices = Vec::new();
         for idx in &sel {
             let (node, x, y) = {
@@ -888,7 +887,13 @@ impl WorkflowState {
                 let sy = fy + node_h / 2.0;
                 let tx2 = tx;
                 let ty2 = ty + node_h / 2.0;
-                Some((bezier_path(sx, sy, tx2, ty2), edge.style.clone(), (sx + tx2) / 2.0, (sy + ty2) / 2.0, edge.label.clone()))
+                Some((
+                    bezier_path(sx, sy, tx2, ty2),
+                    edge.style.clone(),
+                    (sx + tx2) / 2.0,
+                    (sy + ty2) / 2.0,
+                    edge.label.clone(),
+                ))
             })
             .collect()
     }

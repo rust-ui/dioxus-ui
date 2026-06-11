@@ -1,9 +1,9 @@
 use dioxus::prelude::*;
 use icons::{MousePointerClick, Trash2};
-use crate::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
 
-use crate::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
 use crate::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
+use crate::ui::toolbar::{Toolbar, ToolbarButton, ToolbarSeparator};
+use crate::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowDefaultNode, WorkflowNodeWrapper};
 
 fn initial_nodes() -> Vec<WorkflowNode> {
     vec![

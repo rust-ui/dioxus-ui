@@ -1,22 +1,20 @@
-use dioxus::prelude::*;
 use dioxus::html::geometry::WheelDelta;
-use dioxus::html::input_data::keyboard_types::{Key, Modifiers};
 use dioxus::html::input_data::MouseButton;
-use icons::{Clipboard, Copy, SquareDashedMousePointer, Plus, Pencil, Trash2};
+use dioxus::html::input_data::keyboard_types::{Key, Modifiers};
+use dioxus::prelude::*;
+use icons::{Clipboard, Copy, Pencil, Plus, SquareDashedMousePointer, Trash2};
 use tw_merge::tw_merge;
 
-use crate::ui::context_menu::{ContextMenuGroup, ContextMenuLabel};
 use crate::hooks::use_workflow::{WorkflowNode, WorkflowState};
+use crate::ui::context_menu::{ContextMenuGroup, ContextMenuLabel};
 
 /// Passed through component context so WorkflowNodeWrapper can open the node
 /// context menu without needing an extra prop (would break every existing demo).
 #[derive(Clone, Copy)]
 struct NodeCmCtx(Signal<Option<(usize, f64, f64)>>);
 
-const MENU_BTN: &str =
-    "inline-flex items-center gap-2 w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent cursor-pointer";
-const MENU_BTN_DANGER: &str =
-    "inline-flex items-center gap-2 w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-destructive/10 text-destructive cursor-pointer";
+const MENU_BTN: &str = "inline-flex items-center gap-2 w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-accent cursor-pointer";
+const MENU_BTN_DANGER: &str = "inline-flex items-center gap-2 w-full rounded-sm px-2 py-1.5 text-sm transition-colors hover:bg-destructive/10 text-destructive cursor-pointer";
 
 const VIEWPORT_W: f64 = 800.0;
 const VIEWPORT_H: f64 = 450.0;

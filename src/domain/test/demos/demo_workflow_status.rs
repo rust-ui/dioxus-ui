@@ -1,10 +1,11 @@
 use dioxus::prelude::*;
 use icons::{Circle, CircleCheck, CircleX, Clock, LoaderCircle};
-use tw_merge::tw_merge;
-
-use registry::ui::workflow::{WfNode as Node, WfNodeContent as NodeContent, WfNodeDescription as NodeDescription, WfNodeFooter as NodeFooter, WfNodeHeader as NodeHeader, WfNodeTitle as NodeTitle};
-use registry::ui::workflow::{WorkflowCanvas, WorkflowControls, WorkflowNodeWrapper};
 use registry::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
+use registry::ui::workflow::{
+    WfNode as Node, WfNodeContent as NodeContent, WfNodeDescription as NodeDescription, WfNodeFooter as NodeFooter,
+    WfNodeHeader as NodeHeader, WfNodeTitle as NodeTitle, WorkflowCanvas, WorkflowControls, WorkflowNodeWrapper,
+};
+use tw_merge::tw_merge;
 
 // ── NodeStatus ────────────────────────────────────────────────────────────────
 

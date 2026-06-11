@@ -1,9 +1,9 @@
 pub mod demo_toolbar;
+pub mod demo_workflow;
 pub mod demo_workflow_context_menu;
+pub mod demo_workflow_copy_paste;
 pub mod demo_workflow_export_import;
 pub mod demo_workflow_keyboard;
-pub mod demo_workflow;
-pub mod demo_workflow_copy_paste;
 pub mod demo_workflow_locked_mode;
 pub mod demo_workflow_minimap;
 pub mod demo_workflow_multiselect;

@@ -1234,14 +1234,12 @@ pub const ALL_FOOTER_BLOCKS: &[BlockEntry] = &[
     },
 ];
 
-pub const ALL_HEADER_BLOCKS: &[BlockEntry] = &[
-    BlockEntry {
-        block_id_str: "header-01",
-        block_title: "Header with animation on scroll",
-        block_id_kebab: BlockIdKebab::Header01,
-        category: "headers",
-    },
-];
+pub const ALL_HEADER_BLOCKS: &[BlockEntry] = &[BlockEntry {
+    block_id_str: "header-01",
+    block_title: "Header with animation on scroll",
+    block_id_kebab: BlockIdKebab::Header01,
+    category: "headers",
+}];
 
 pub const ALL_INTEGRATION_BLOCKS: &[BlockEntry] = &[
     BlockEntry {
@@ -1383,4 +1381,3 @@ pub const ALL_SIDENAV_BLOCKS: &[BlockEntry] = &[
         category: "sidenav",
     },
 ];
-

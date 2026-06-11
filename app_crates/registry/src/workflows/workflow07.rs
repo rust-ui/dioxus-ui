@@ -2,8 +2,11 @@ use dioxus::prelude::*;
 use icons::{Circle, CircleCheck, CircleX, Clock, LoaderCircle};
 use tw_merge::tw_merge;
 
-use crate::ui::workflow::{WfNode, WfNodeContent, WfNodeDescription, WfNodeFooter, WfNodeHeader, WfNodeTitle, WorkflowCanvas, WorkflowControls, WorkflowNodeWrapper};
 use crate::hooks::use_workflow::{WorkflowEdge, WorkflowNode, WorkflowNodeKind, use_workflow};
+use crate::ui::workflow::{
+    WfNode, WfNodeContent, WfNodeDescription, WfNodeFooter, WfNodeHeader, WfNodeTitle, WorkflowCanvas,
+    WorkflowControls, WorkflowNodeWrapper,
+};
 
 #[derive(Clone, PartialEq, Default)]
 pub enum NodeStatus {
