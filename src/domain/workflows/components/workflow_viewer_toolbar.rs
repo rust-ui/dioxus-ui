@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
-use icons::{Check, Copy, Fullscreen, Monitor, Share2, Smartphone, Tablet};
+use icons::{Check, Copy, Fullscreen, Monitor, Share2, Smartphone, Tablet, Terminal};
 use registry::hooks::use_copy_clipboard::use_copy_clipboard;
-use registry::ui::button::{Button, ButtonVariant};
+use registry::ui::button::{Button, ButtonSize, ButtonVariant};
 use registry::ui::dialog::{
     Dialog, DialogBody, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader,
     DialogTitle, DialogTrigger,
@@ -176,6 +176,16 @@ pub fn WorkflowViewerToolbar(
                             }
                         }
                     }
+                }
+
+                div { class: "w-px h-4 bg-border" }
+
+                Button {
+                    variant: ButtonVariant::Outline,
+                    size: ButtonSize::Sm,
+                    disabled: true,
+                    Terminal {}
+                    span { "(Soon) ui add {workflow_id_str}" }
                 }
             }
         }
