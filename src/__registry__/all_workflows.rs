@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
 
+use crate::domain::blocks::block_entry::{BlockFile, BlockFileTreeItem};
 use crate::domain::workflows::workflow_entry::{WorkflowEntry, WorkflowMeta};
 
 // ─── Enum ─────────────────────────────────────────────────────────────────────
@@ -76,6 +77,40 @@ impl WorkflowIdKebab {
 
     pub fn to_full_view_url(&self) -> String {
         format!("/view/{}", self)
+    }
+
+    // ─── files ────────────────────────────────────────────────────────────────
+
+    pub fn files(&self) -> &'static [BlockFile] {
+        match self {
+            Self::Workflow01 => &[BlockFile { name: "workflow01.rs", target: "workflows/workflow01.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow01.rs"), language: "rust" }],
+            Self::Workflow02 => &[BlockFile { name: "workflow02.rs", target: "workflows/workflow02.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow02.rs"), language: "rust" }],
+            Self::Workflow03 => &[BlockFile { name: "workflow03.rs", target: "workflows/workflow03.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow03.rs"), language: "rust" }],
+            Self::Workflow04 => &[BlockFile { name: "workflow04.rs", target: "workflows/workflow04.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow04.rs"), language: "rust" }],
+            Self::Workflow05 => &[BlockFile { name: "workflow05.rs", target: "workflows/workflow05.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow05.rs"), language: "rust" }],
+            Self::Workflow06 => &[BlockFile { name: "workflow06.rs", target: "workflows/workflow06.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow06.rs"), language: "rust" }],
+            Self::Workflow07 => &[BlockFile { name: "workflow07.rs", target: "workflows/workflow07.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow07.rs"), language: "rust" }],
+            Self::Workflow08 => &[BlockFile { name: "workflow08.rs", target: "workflows/workflow08.rs", content: include_str!("../../app_crates/registry/src/workflows/workflow08.rs"), language: "rust" }],
+        }
+    }
+
+    // ─── file_tree ────────────────────────────────────────────────────────────
+
+    pub fn file_tree(&self) -> Vec<BlockFileTreeItem> {
+        let file_name = match self {
+            Self::Workflow01 => "workflow01.rs",
+            Self::Workflow02 => "workflow02.rs",
+            Self::Workflow03 => "workflow03.rs",
+            Self::Workflow04 => "workflow04.rs",
+            Self::Workflow05 => "workflow05.rs",
+            Self::Workflow06 => "workflow06.rs",
+            Self::Workflow07 => "workflow07.rs",
+            Self::Workflow08 => "workflow08.rs",
+        };
+        vec![BlockFileTreeItem::Folder {
+            name: "workflows",
+            items: vec![BlockFileTreeItem::File { name: file_name, index: 0 }],
+        }]
     }
 
     // ─── to_component ─────────────────────────────────────────────────────────

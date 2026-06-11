@@ -16,5 +16,16 @@ pub fn WorkflowViewPage(id: String) -> Element {
         div { class: "h-screen w-screen overflow-hidden p-4 bg-background",
             {wf.to_component()}
         }
+
+        script {
+            r#"
+            window.addEventListener('message', function(e) {{
+                if (e.data && e.data.theme) {{
+                    document.documentElement.classList.toggle('dark', e.data.theme === 'dark');
+                    document.documentElement.classList.toggle('light', e.data.theme === 'light');
+                }}
+            }});
+            "#
+        }
     }
 }
