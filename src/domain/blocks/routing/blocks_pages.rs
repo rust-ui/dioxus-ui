@@ -3,7 +3,7 @@ use dioxus::prelude::*;
 use crate::__registry__::all_blocks::{
     ALL_FAQ_BLOCKS, ALL_FOOTER_BLOCKS, ALL_HEADER_BLOCKS, ALL_INTEGRATION_BLOCKS, ALL_LOGIN_BLOCKS, ALL_SIDENAV_BLOCKS,
 };
-use crate::domain::blocks::block_viewer::BlockViewer;
+use crate::domain::blocks::components::block_viewer::BlockViewer;
 
 #[component]
 pub fn LoginBlocks() -> Element {

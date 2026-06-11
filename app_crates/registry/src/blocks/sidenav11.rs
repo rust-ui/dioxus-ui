@@ -3,6 +3,10 @@ use icons::Search;
 
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Right-Side Sidenav
+*/
+
 #[component]
 pub fn Sidenav11() -> Element {
     rsx! {

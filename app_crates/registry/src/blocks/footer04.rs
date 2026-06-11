@@ -11,6 +11,12 @@ use crate::ui::footer::{
 };
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Footer with Newsletter and Language Selector
+ * iframe_height: 606px
+ * container_class: w-full bg-background
+*/
+
 #[component]
 pub fn Footer04() -> Element {
     rsx! {

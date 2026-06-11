@@ -9,6 +9,12 @@ use crate::ui::footer::{
 };
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Footer with Newsletter and Status Indicator
+ * iframe_height: 536px
+ * container_class: bg-muted
+*/
+
 #[component]
 pub fn Footer05() -> Element {
     rsx! {

@@ -7,8 +7,12 @@ use registry::demos::demo_kbd::DemoKbd;
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
 
-pub static KBD: RegistryEntry =
-    RegistryEntry { slug: "kbd", raw: include_str!("../../public/docs/kbd.md"), tags: &[], components: kbd_components };
+pub static KBD: RegistryEntry = RegistryEntry {
+    slug: "kbd",
+    raw: include_str!("../../public/docs/kbd.md"),
+    tags: &[],
+    components: kbd_components,
+};
 
 fn kbd_components() -> MdComponents {
     let mut c = MdComponents::new();

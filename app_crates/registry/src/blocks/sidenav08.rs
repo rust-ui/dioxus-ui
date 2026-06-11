@@ -3,6 +3,10 @@ use icons::Search;
 
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Inset Sidenav with Secondary Navigation
+*/
+
 #[component]
 pub fn Sidenav08() -> Element {
     rsx! {

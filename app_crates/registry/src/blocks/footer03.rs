@@ -8,6 +8,12 @@ use crate::ui::footer::{
     FooterLinksSection, FooterSection, FooterSectionsGrid, FooterSocialContainer, FooterTitle,
 };
 
+/*
+ * title: Footer Grid with Social Links
+ * iframe_height: 474px
+ * container_class: w-full bg-background
+*/
+
 #[component]
 pub fn Footer03() -> Element {
     rsx! {

@@ -12,6 +12,10 @@ const LINKS: &[(&str, &str)] = &[
     ("/docs/components/input", "Input"),
 ];
 
+/*
+ * title: Sidenav with Submenus
+*/
+
 #[component]
 pub fn Sidenav03() -> Element {
     rsx! {

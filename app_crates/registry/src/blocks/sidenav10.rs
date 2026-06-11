@@ -3,6 +3,10 @@ use icons::Search;
 
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Sidenav with Search
+*/
+
 #[component]
 pub fn Sidenav10() -> Element {
     rsx! {

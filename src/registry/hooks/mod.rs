@@ -11,7 +11,11 @@ use use_random::USE_RANDOM;
 
 use crate::registry::types::RegistryEntry;
 
-pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[&USE_COPY_CLIPBOARD, &USE_LOCK_BODY_SCROLL, &USE_RANDOM];
+pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[
+    &USE_COPY_CLIPBOARD,
+    &USE_LOCK_BODY_SCROLL,
+    &USE_RANDOM,
+];
 
 pub fn find(slug: &str) -> Option<&'static RegistryEntry> {
     HOOKS_REGISTRY.iter().copied().find(|e| e.slug == slug)

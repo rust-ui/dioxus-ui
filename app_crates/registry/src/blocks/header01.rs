@@ -10,6 +10,12 @@ use crate::ui::header::{
 };
 use crate::ui::theme_toggle::ThemeToggle;
 
+/*
+ * title: Header with animation on scroll
+ * iframe_height: 930px
+ * container_class: min-h-[1200px] bg-muted
+*/
+
 #[component]
 pub fn Header01() -> Element {
     let is_mobile_menu_open = use_signal(|| false);

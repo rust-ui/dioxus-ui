@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 use crate::Route;
 use crate::components::navigation::header_docs::HeaderDocs;
-use crate::domain::blocks::blocks_hero::BlocksHero;
+use crate::domain::blocks::components::blocks_hero::BlocksHero;
 
 #[component]
 pub fn BlocksLayout() -> Element {

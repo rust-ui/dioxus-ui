@@ -3,6 +3,10 @@ use icons::Search;
 
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Sidenav with Dropdown Submenus
+*/
+
 #[component]
 pub fn Sidenav06() -> Element {
     rsx! {

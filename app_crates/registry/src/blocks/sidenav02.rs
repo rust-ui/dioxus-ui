@@ -25,6 +25,10 @@ const BLOCK_LINKS: &[(&str, &str)] = &[
     ("/blocks/faq", "FAQ"),
 ];
 
+/*
+ * title: Sidenav with Collapsible Menus
+*/
+
 #[component]
 pub fn Sidenav02() -> Element {
     rsx! {

@@ -3,6 +3,10 @@ use icons::Search;
 
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Sidenav with Collapsible Submenus
+*/
+
 #[component]
 pub fn Sidenav05() -> Element {
     rsx! {

@@ -19,6 +19,7 @@ use domain::charts::routing::charts_pages::{
 use domain::create::page_create::PageCreate;
 use domain::test::routing::test_layout::TestLayout;
 use domain::test::routing::test_pages::TestPage;
+use domain::views::view_router::ViewRouter;
 use domain::workflows::routing::workflow_view_page::WorkflowViewPage;
 use domain::workflows::routing::workflows_layout::WorkflowsLayout;
 use domain::workflows::routing::workflows_pages::WorkflowsPage;
@@ -38,6 +39,7 @@ const MANIFEST: Asset = asset!("/public/manifest.json");
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
 const LOCK_SCROLL_JS: Asset = asset!("/public/hooks/lock_scroll.js");
 const CHART_INIT_JS: Asset = asset!("/public/app_components/chart_init.js");
+const RESIZABLE_JS: Asset = asset!("/public/app_components/resizable.js");
 
 #[derive(Debug, Clone, Routable, PartialEq)]
 #[rustfmt::skip]
@@ -98,6 +100,8 @@ enum Route {
     #[end_layout]
     #[route("/view/:id")]
     WorkflowViewPage { id: String },
+    #[route("/view/block/:id")]
+    ViewRouter { id: String },
 }
 
 fn main() {
@@ -138,6 +142,7 @@ fn App() -> Element {
         document::Stylesheet { href: TAILWIND_CSS }
         document::Script { src: LOCK_SCROLL_JS }
         document::Script { src: CHART_INIT_JS }
+        document::Script { src: RESIZABLE_JS }
         Router::<Route> {}
     }
 }

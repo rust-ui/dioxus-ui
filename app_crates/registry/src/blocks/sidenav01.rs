@@ -25,6 +25,10 @@ const BLOCK_LINKS: &[(&str, &str)] = &[
     ("/blocks/faq", "FAQ"),
 ];
 
+/*
+ * title: Sidenav with Grouped Sections
+*/
+
 #[component]
 pub fn Sidenav01() -> Element {
     rsx! {

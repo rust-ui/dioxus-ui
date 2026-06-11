@@ -3,6 +3,10 @@ use icons::Search;
 
 use crate::ui::input::{Input, InputType};
 
+/*
+ * title: Floating Sidenav with Submenus
+*/
+
 #[component]
 pub fn Sidenav04() -> Element {
     rsx! {
