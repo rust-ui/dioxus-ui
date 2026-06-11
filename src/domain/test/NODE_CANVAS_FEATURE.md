@@ -30,14 +30,14 @@
 | ~~**Edge select + delete** — click edge to highlight, Del to remove~~         | ~~Easy~~   | ✅ Done  |
 | ~~**Undo covers edge add/delete too** — history tracks positions + edges~~    | ~~Medium~~ | ✅ Done  |
 | ~~**Node inline edit** — double-click label to rename in place~~              | ~~Medium~~ | ✅ Done  |
-| **Export / import JSON** — serialize `nodes + edges + positions`              | Medium     | 🔴 High  |
+| ~~**Export / import JSON** — serialize `nodes + edges + positions`~~          | ~~Medium~~ | ✅ Done  |
 | ~~**Animated edge direction arrow** — arrowhead at target end~~               | ~~Easy~~   | ✅ Done  |
 | ~~**Keyboard move selected node** — arrow keys nudge by grid step~~           | ~~Easy~~   | ✅ Done  |
 | ~~**Node status badge** — running / error / done indicator on node~~          | ~~Easy~~   | ✅ Done  |
-| **Right-click context menu** — add/delete/duplicate at cursor                 | Medium     | 🟠 Mid   |
+| ~~**Right-click context menu** — add/delete/duplicate at cursor~~             | ~~Medium~~ | ✅ Done  |
 | ~~**Multi-select** — Shift+click to select many~~                             | ~~Medium~~ | ✅ Done  |
 | ~~**Copy / paste nodes** — Ctrl+C/V clones selection with offset~~            | ~~Medium~~ | ✅ Done  |
-| **Duplicate node** — Ctrl+D shortcut                                          | Medium     | 🟠 Mid   |
+| ~~**Duplicate node** — Ctrl+D shortcut~~                                      | ~~Medium~~ | ✅ Done  |
 | **Auto-layout (dagre)** — compute acyclic layout from edges                   | Hard       | 🟠 Mid   |
 | ~~**Rubber-band multi-select** — drag empty canvas to draw selection rect~~   | ~~Hard~~   | ✅ Done  |
 | **Edge label** — text label rendered at bezier midpoint                       | Medium     | 🟡 Low   |
