@@ -12,7 +12,7 @@ pub fn BlockCodePanel(files: &'static [BlockFile], tree: Vec<BlockFileTreeItem>)
         return rsx! { div {} };
     }
 
-    let mut active_idx = use_signal(|| 0_usize);
+    let active_idx = use_signal(|| 0_usize);
 
     let highlighted = use_memo(move || {
         let Some(f) = files.get(active_idx()) else {
