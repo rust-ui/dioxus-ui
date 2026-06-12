@@ -2,7 +2,7 @@ use std::collections::{HashMap, HashSet};
 use std::sync::LazyLock;
 
 use dioxus::prelude::*;
-use icons::{Copy, Eraser, Plus, Scissors, Settings2, Trash2};
+use icons::{Plus, Settings2, Trash2};
 use serde::{Deserialize, Serialize};
 use strum::{AsRefStr, Display, EnumIter, IntoEnumIterator};
 
@@ -17,7 +17,7 @@ use crate::ui::data_grid::{
     PinnableSortableHeaderCell, SortDirection, SortableColumn, generate_grid_style, get_column_width,
     get_pinned_left_position, get_pinned_visible_columns,
 };
-use crate::ui::separator::Separator;
+
 
 /* ========================================================== */
 /*                     ✨ TYPES ✨                            */
@@ -220,8 +220,8 @@ pub fn DataGridFull() -> Element {
     let sort_signals: Signal<HashMap<Column, Signal<SortDirection>>> =
         use_signal(|| PINNABLE_COLUMNS.iter().map(|(col, _)| (*col, Signal::new(SortDirection::None))).collect());
 
-    let mut pinned_columns_signal: Signal<HashSet<Column>> = use_signal(HashSet::new);
-    let mut visible_columns_signal: Signal<HashSet<String>> =
+    let pinned_columns_signal: Signal<HashSet<Column>> = use_signal(HashSet::new);
+    let visible_columns_signal: Signal<HashSet<String>> =
         use_signal(|| Column::iter().map(|c| c.to_string()).collect());
 
     // Cell selection state
@@ -232,7 +232,7 @@ pub fn DataGridFull() -> Element {
     let mut drag_selection = use_drag_selection::<Column>();
 
     // Copy to clipboard
-    let (copy_to_clipboard, _) = use_copy_clipboard(None);
+    let (_copy_to_clipboard, _) = use_copy_clipboard(None);
     let mut copy_value_signal = use_signal(String::new);
 
     // Create sorted rows memo
@@ -274,7 +274,7 @@ pub fn DataGridFull() -> Element {
     };
 
     // Delete rows handler
-    let handle_delete_rows = move |names: Vec<String>| {
+    let _handle_delete_rows = move |names: Vec<String>| {
         rows_signal.with_mut(|rows| {
             rows.retain(|r| !names.contains(&r.name));
         });
@@ -563,7 +563,7 @@ fn PressHoldDeleteRow(
     mut active_cell_signal: Signal<Option<(usize, Column)>>,
     mut context_menu_cell_signal: Signal<Option<(usize, Column)>>,
 ) -> Element {
-    let disabled = use_signal(|| false);
+    let _disabled = use_signal(|| false);
 
     let on_delete = Callback::new(move |_: ()| {
         let idx = index();

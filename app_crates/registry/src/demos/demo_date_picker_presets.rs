@@ -14,7 +14,7 @@ use crate::ui::date_picker_state::{DatePickerDay, DatePickerState};
 pub fn DemoDatePickerPresets() -> Element {
     let today = OffsetDateTime::now_utc().date();
 
-    let mut selected_date = use_signal(|| today);
+    let selected_date = use_signal(|| today);
     let mut display_date = use_signal(|| today);
 
     let go_to_previous_month = move |_| {

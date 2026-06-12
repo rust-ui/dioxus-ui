@@ -131,6 +131,7 @@ struct PanState {
 }
 
 #[derive(Clone, Copy)]
+#[allow(dead_code)]
 struct PinchState {
     prev_dist: f64,
     /// Element-relative midpoint between the two fingers.

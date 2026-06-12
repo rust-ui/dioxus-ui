@@ -13,8 +13,8 @@ pub fn BlockViewer(block_entry: BlockEntry) -> Element {
     let iframe_height = meta.iframe_height;
     let instance_id = block_id_str.to_string();
 
-    let block_view = use_signal(|| BlockView::default());
-    let screen_size = use_signal(|| ScreenSize::default());
+    let block_view = use_signal(BlockView::default);
+    let screen_size = use_signal(ScreenSize::default);
 
     let files = block_id.files();
     let tree = use_hook(|| block_id.file_tree());

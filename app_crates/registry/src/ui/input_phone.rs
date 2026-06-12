@@ -451,7 +451,7 @@ pub fn InputPhone(
     let internal_country_signal = use_signal(|| Country::UnitedStatesOfAmerica);
 
     let mut value = value_signal.unwrap_or(internal_value_signal);
-    let mut selected_country = country_signal.unwrap_or(internal_country_signal);
+    let selected_country = country_signal.unwrap_or(internal_country_signal);
 
     let wrapper_class = tw_merge!("flex w-full", class.as_deref().unwrap_or(""));
     let country = selected_country();
