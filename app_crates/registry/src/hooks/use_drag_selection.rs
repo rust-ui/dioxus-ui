@@ -17,10 +17,10 @@ impl<C: DataGridColumn> UseDragSelection<C> {
     /// Check if a cell is within the drag selection range (bounding box of start and end).
     /// Returns false if start == end (single cell click, not a real drag).
     pub fn is_cell_in_range(&self, row_idx: usize, col: C) -> bool {
-        let Some((start_row, start_col)) = self.drag_start_signal.peek().clone() else {
+        let Some((start_row, start_col)) = *self.drag_start_signal.peek() else {
             return false;
         };
-        let Some((end_row, end_col)) = self.drag_end_signal.peek().clone() else {
+        let Some((end_row, end_col)) = *self.drag_end_signal.peek() else {
             return false;
         };
 
@@ -42,10 +42,10 @@ impl<C: DataGridColumn> UseDragSelection<C> {
 
     /// Returns true if there's an active multi-cell selection (start != end).
     pub fn has_selection(&self) -> bool {
-        let Some((start_row, start_col)) = self.drag_start_signal.peek().clone() else {
+        let Some((start_row, start_col)) = *self.drag_start_signal.peek() else {
             return false;
         };
-        let Some((end_row, end_col)) = self.drag_end_signal.peek().clone() else {
+        let Some((end_row, end_col)) = *self.drag_end_signal.peek() else {
             return false;
         };
         start_row != end_row || start_col != end_col
@@ -55,8 +55,8 @@ impl<C: DataGridColumn> UseDragSelection<C> {
     /// Returns None if no selection or single cell selection.
     /// Uses `peek` since this is called from event handlers, not reactive contexts.
     pub fn get_selection_bounds(&self) -> Option<(usize, usize, i32, i32)> {
-        let (start_row, start_col) = self.drag_start_signal.peek().clone()?;
-        let (end_row, end_col) = self.drag_end_signal.peek().clone()?;
+        let (start_row, start_col) = (*self.drag_start_signal.peek())?;
+        let (end_row, end_col) = (*self.drag_end_signal.peek())?;
 
         // No bounds for single cell
         if start_row == end_row && start_col == end_col {

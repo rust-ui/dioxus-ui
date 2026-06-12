@@ -21,7 +21,7 @@ pub fn Toast(toast: ToastData) -> Element {
     use_effect(move || {
         if let Some(expiry) = toast.expiry {
             spawn(async move {
-                gloo_timers::future::TimeoutFuture::new(expiry as u32).await;
+                gloo_timers::future::TimeoutFuture::new(expiry).await;
                 if !*toast.clear_signal.peek() {
                     toast.clear_signal.clone().set(true);
                 }

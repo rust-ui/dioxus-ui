@@ -14,7 +14,7 @@ pub struct CellEditContext<C: DataGridColumn + 'static> {
 impl<C: DataGridColumn> CellEditContext<C> {
     /// Check if a specific cell is currently being edited.
     pub fn is_editing(&self, row_idx: usize, col: C) -> bool {
-        self.editing_cell.peek().clone() == Some((row_idx, col))
+        *self.editing_cell.peek() == Some((row_idx, col))
     }
 
     /// Start editing a cell with an initial value.
@@ -31,7 +31,7 @@ impl<C: DataGridColumn> CellEditContext<C> {
 
     /// Finish editing and return the final value.
     pub fn finish_edit(&mut self) -> Option<(usize, C, String)> {
-        let cell = self.editing_cell.peek().clone()?;
+        let cell = (*self.editing_cell.peek())?;
         let value = self.edit_value.peek().clone();
         self.editing_cell.set(None);
         self.edit_value.set(String::new());
@@ -41,7 +41,7 @@ impl<C: DataGridColumn> CellEditContext<C> {
 
 /// Create and provide cell edit context. Call once at the grid level.
 pub fn use_cell_edit<C: DataGridColumn + 'static>() -> CellEditContext<C> {
-    let ctx = CellEditContext { editing_cell: use_signal(|| None), edit_value: use_signal(|| String::new()) };
+    let ctx = CellEditContext { editing_cell: use_signal(|| None), edit_value: use_signal(String::new) };
     provide_context(ctx);
     ctx
 }

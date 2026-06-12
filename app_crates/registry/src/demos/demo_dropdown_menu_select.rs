@@ -26,7 +26,7 @@ impl Registry {
 
 #[component]
 pub fn DemoDropdownMenuSelect() -> Element {
-    let registry_signal = use_signal(|| Registry::default());
+    let registry_signal = use_signal(Registry::default);
 
     rsx! {
         DropdownMenu { align: DropdownMenuAlign::Center,

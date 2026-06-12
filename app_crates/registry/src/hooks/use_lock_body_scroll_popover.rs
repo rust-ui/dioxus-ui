@@ -49,7 +49,7 @@ pub fn use_lock_body_scroll_popover(initial_locked: bool) -> Signal<bool> {
             let body_clone = body.clone();
             use wasm_bindgen::JsCast;
             let _ = window.set_timeout_with_callback_and_timeout_and_arguments_0(
-                &wasm_bindgen::closure::Closure::once_into_js(move || {
+                wasm_bindgen::closure::Closure::once_into_js(move || {
                     let style = body_clone.style();
                     for prop in ["position", "top", "width", "overflow", "padding-right"] {
                         let _ = style.remove_property(prop);

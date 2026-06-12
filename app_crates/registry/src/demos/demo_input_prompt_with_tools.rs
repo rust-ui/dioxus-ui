@@ -22,7 +22,7 @@ pub fn DemoInputPromptWithTools() -> Element {
         if let Some(window) = web_sys::window() {
             use wasm_bindgen::JsCast;
             let _ = window.set_timeout_with_callback_and_timeout_and_arguments_0(
-                &wasm_bindgen::closure::Closure::once_into_js(move || {
+                wasm_bindgen::closure::Closure::once_into_js(move || {
                     is_loading.set(false);
                 })
                 .unchecked_ref(),

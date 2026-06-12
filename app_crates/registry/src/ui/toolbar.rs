@@ -7,6 +7,7 @@ use crate::ui::separator::{Separator, SeparatorOrientation};
 
 #[derive(Clone, Copy, Default)]
 struct ToolbarToggleGroupCtx {
+    #[allow(dead_code)]
     multiple: bool,
 }
 

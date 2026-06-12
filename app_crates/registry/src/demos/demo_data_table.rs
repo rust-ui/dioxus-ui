@@ -36,9 +36,9 @@ pub fn DemoDataTable() -> Element {
     let mut selected_emails_signal = use_signal(HashSet::<&'static str>::new);
     let mut fake_payment_count_signal = use_signal(|| 0_usize);
     let columns_signal = use_signal(|| HashSet::from(COLUMNS.map(|c| c.to_string())));
-    let mut sort_order_signal = use_signal(|| SortOrder::default());
-    let mut email_filter_signal = use_signal(|| String::new());
-    let mut deleted_ids_signal = use_signal(|| HashSet::<usize>::new());
+    let mut sort_order_signal = use_signal(SortOrder::default);
+    let mut email_filter_signal = use_signal(String::new);
+    let mut deleted_ids_signal = use_signal(HashSet::<usize>::new);
 
     let sorted_payments_signal = use_memo(move || {
         let filter = email_filter_signal().to_lowercase();

@@ -40,6 +40,15 @@ impl<T> PartialEq for Form<T> {
     }
 }
 
+impl<T> Default for Form<T>
+where
+    T: FormData,
+ {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl<T> Form<T>
 where
     T: FormData,

@@ -51,14 +51,13 @@ impl UseHistory {
                 let shift = e.shift_key();
 
                 // Skip if focus is in an input / textarea / select
-                if let Some(target) = e.target() {
-                    if let Some(el) = target.dyn_ref::<web_sys::HtmlElement>() {
+                if let Some(target) = e.target()
+                    && let Some(el) = target.dyn_ref::<web_sys::HtmlElement>() {
                         let tag = el.tag_name().to_lowercase();
                         if matches!(tag.as_str(), "input" | "textarea" | "select") {
                             return;
                         }
                     }
-                }
 
                 if meta && key == "z" && !shift {
                     e.prevent_default();
@@ -81,11 +80,11 @@ impl UseHistory {
 
     /// Push a new URL onto the stack (truncates any forward history).
     pub fn push(&self, url: String) {
-        if self.is_navigating.peek().clone() {
+        if *self.is_navigating.peek() {
             return;
         }
 
-        let idx = self.index.peek().clone();
+        let idx = *self.index.peek();
 
         // Truncate forward history
         let mut history = self.history;
@@ -101,7 +100,7 @@ impl UseHistory {
 
     /// Navigate backwards (undo).
     pub fn go_back(&self) {
-        let idx = self.index.peek().clone();
+        let idx = *self.index.peek();
         if idx == 0 {
             return;
         }
@@ -120,7 +119,7 @@ impl UseHistory {
 
     /// Navigate forwards (redo).
     pub fn go_forward(&self) {
-        let idx = self.index.peek().clone();
+        let idx = *self.index.peek();
         let len = self.history.peek().len();
         if idx + 1 >= len {
             return;

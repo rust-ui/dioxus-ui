@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 use wasm_bindgen::JsCast;
-use web_sys::{Element as WebElement, HtmlElement};
+use web_sys::Element as WebElement;
 
 #[component]
 pub fn DraggableZone(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
@@ -101,6 +101,7 @@ pub fn DraggableItem(#[props(into)] text: String) -> Element {
 
 /// Returns the element after which the dragged item should be inserted,
 /// based on the cursor's Y position. Returns `None` to append at the end.
+#[cfg_attr(not(target_arch = "wasm32"), allow(dead_code))]
 fn get_drag_after_element(container: &WebElement, y: f64) -> Option<WebElement> {
     let items = container.query_selector_all(".draggable:not(.dragging)").ok()?;
 

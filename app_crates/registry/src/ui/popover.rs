@@ -44,27 +44,19 @@ pub fn Popover(#[props(default = PopoverAlign::Center)] align: PopoverAlign, chi
 
     let (position_styles, transform_origin) = match align {
         PopoverAlign::Start => (
-            format!(
-                "left: anchor(left); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"
-            ),
+            "left: anchor(left); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) { top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }".to_string(),
             "left top".to_string(),
         ),
         PopoverAlign::StartOuter => (
-            format!(
-                "right: anchor(left); top: anchor(top); margin-right: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"
-            ),
+            "right: anchor(left); top: anchor(top); margin-right: 8px; @position-try(flip-block) { top: anchor(bottom); margin-top: 8px; }".to_string(),
             "right top".to_string(),
         ),
         PopoverAlign::End => (
-            format!(
-                "right: anchor(right); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) {{ top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }}"
-            ),
+            "right: anchor(right); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) { top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }".to_string(),
             "right top".to_string(),
         ),
         PopoverAlign::EndOuter => (
-            format!(
-                "left: anchor(right); top: anchor(top); margin-left: 8px; @position-try(flip-block) {{ top: anchor(bottom); margin-top: 8px; }}"
-            ),
+            "left: anchor(right); top: anchor(top); margin-left: 8px; @position-try(flip-block) { top: anchor(bottom); margin-top: 8px; }".to_string(),
             "left top".to_string(),
         ),
         PopoverAlign::Center => ("position-area: block-start;".to_string(), "center top".to_string()),

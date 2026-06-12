@@ -18,8 +18,8 @@ pub fn DemoDatePickerDual() -> Element {
         return rsx! { p { "Invalid default end date" } };
     };
 
-    let mut start_date_signal = use_signal(|| default_start);
-    let mut end_date_signal = use_signal(|| default_end);
+    let start_date_signal = use_signal(|| default_start);
+    let end_date_signal = use_signal(|| default_end);
 
     // Track the left calendar month (right will be left + 1)
     let mut left_display_date_signal = use_signal(|| default_start);

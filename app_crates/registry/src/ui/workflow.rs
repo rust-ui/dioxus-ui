@@ -117,7 +117,7 @@ pub fn WorkflowCanvas(state: WorkflowState, children: Element, #[props(optional)
     let mut canvas_cm: Signal<Option<(f64, f64)>> = use_signal(|| None);
     let mut edge_edit_vp_pos: Signal<Option<(f64, f64)>> = use_signal(|| None);
     provide_context(NodeCmCtx(node_cm));
-    let rubber_band_rect = state.rubber_band.read().clone().map(|rb| {
+    let rubber_band_rect = (*state.rubber_band.read()).map(|rb| {
         let (ox, oy) = *canvas_origin.read();
         let x = rb.start_x.min(rb.cur_x) - ox;
         let y = rb.start_y.min(rb.cur_y) - oy;

@@ -40,7 +40,7 @@ pub fn use_data_grid_state<C: DataGridColumn + 'static>() -> DataGridState<C> {
     let cell_selection = use_cell_selection::<C>();
     let drag_selection = use_drag_selection::<C>();
 
-    let copy_value_signal: Signal<String> = use_signal(|| String::new());
+    let copy_value_signal: Signal<String> = use_signal(String::new);
 
     let grid_wrapper_element: Signal<Option<web_sys::Element>> = use_signal(|| None);
 

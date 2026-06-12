@@ -63,6 +63,7 @@ fn get_toasts_for_position(toaster: &ToasterContext, position: &ToastPosition) -
     }
 }
 
+#[allow(dead_code)]
 fn get_container_id(position: &ToastPosition) -> &'static str {
     match position {
         ToastPosition::TopLeft => "top_left",

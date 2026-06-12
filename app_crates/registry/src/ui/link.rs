@@ -23,7 +23,7 @@ pub fn Link(
     // In Dioxus, we don't have a built-in use_location yet — active detection is simplified.
     // Pass `active: true` via class or extend later when dioxus-router location hook is available.
 
-    let href_clone = href.clone();
+    let _href_clone = href.clone();
     let class_str = class.as_deref().unwrap_or("").to_string();
 
     if force_reload {

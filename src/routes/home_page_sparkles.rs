@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
+#[allow(dead_code)]
 #[derive(Clone, PartialEq, Default)]
 pub enum SparklesColor {
     #[default]
@@ -10,6 +11,7 @@ pub enum SparklesColor {
     Orange,
 }
 
+#[allow(dead_code)]
 #[derive(Clone, PartialEq, Default)]
 pub enum SparklesDirection {
     #[default]
@@ -17,6 +19,7 @@ pub enum SparklesDirection {
     Bottom,
 }
 
+#[allow(dead_code)]
 #[derive(Clone, PartialEq, Default)]
 pub enum SparklesSize {
     #[default]

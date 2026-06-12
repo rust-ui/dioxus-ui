@@ -36,5 +36,5 @@ pub fn use_handle_day_click(
         }
     };
 
-    (start_date_signal.into(), end_date_signal.into(), handle_day_click)
+    (start_date_signal, end_date_signal, handle_day_click)
 }

@@ -149,6 +149,7 @@ pub struct RubberBandState {
 
 // ── WorkflowState ─────────────────────────────────────────────────────────────
 
+#[allow(clippy::type_complexity)]
 pub struct WorkflowState {
     pub nodes: Signal<Vec<WorkflowNode>>,
     pub edges: Signal<Vec<WorkflowEdge>>,
@@ -407,7 +408,7 @@ impl WorkflowState {
     /// Commit: select all nodes whose AABB intersects the rubber-band rect.
     /// `canvas_origin` is the element's top-left in client coords (from `onmounted`).
     pub fn finish_rubber_band(&mut self, node_h: f64, canvas_origin: (f64, f64)) {
-        let Some(rb) = self.rubber_band.read().clone() else { return };
+        let Some(rb) = *self.rubber_band.read() else { return };
         self.rubber_band.set(None);
         let (ox, oy) = canvas_origin;
         let rx0 = rb.start_x.min(rb.cur_x) - ox;

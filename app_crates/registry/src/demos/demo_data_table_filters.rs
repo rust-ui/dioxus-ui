@@ -39,12 +39,12 @@ const COLUMNS: [&str; 3] = ["Status", "Email", "Amount"];
 
 #[component]
 pub fn DemoDataTableFilters() -> Element {
-    let mut selected_ids_signal = use_signal(|| HashSet::<usize>::new());
+    let mut selected_ids_signal = use_signal(HashSet::<usize>::new);
     let columns_signal = use_signal(|| HashSet::from(COLUMNS.map(|c| c.to_string())));
-    let mut sort_order_signal = use_signal(|| SortOrder::default());
-    let mut email_filter_signal = use_signal(|| String::new());
-    let mut status_filter_signal = use_signal(|| HashSet::<PaymentStatus>::new());
-    let mut deleted_ids_signal = use_signal(|| HashSet::<usize>::new());
+    let mut sort_order_signal = use_signal(SortOrder::default);
+    let mut email_filter_signal = use_signal(String::new);
+    let mut status_filter_signal = use_signal(HashSet::<PaymentStatus>::new);
+    let mut deleted_ids_signal = use_signal(HashSet::<usize>::new);
     let mut fake_payment_count_signal = use_signal(|| 0_usize);
 
     // Base data: all non-deleted payments (incl. dynamically added)

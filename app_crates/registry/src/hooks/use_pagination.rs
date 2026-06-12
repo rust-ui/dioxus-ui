@@ -59,7 +59,7 @@ fn build_page_href(page: u32) -> String {
 }
 
 pub fn use_pagination() -> PaginationContext {
-    let current_page = use_memo(move || get_page_from_query());
+    let current_page = use_memo(get_page_from_query);
 
     let page_href = Callback::new(move |page: u32| build_page_href(page));
 

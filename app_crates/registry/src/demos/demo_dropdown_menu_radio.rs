@@ -26,7 +26,7 @@ impl SortDirection {
 
 #[component]
 pub fn DemoDropdownMenuRadio() -> Element {
-    let sort_signal = use_signal(|| SortDirection::default());
+    let sort_signal = use_signal(SortDirection::default);
 
     rsx! {
         DropdownMenu {

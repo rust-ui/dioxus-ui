@@ -60,7 +60,7 @@ pub fn use_lock_body_scroll_dialog(initial_locked: bool) -> Signal<bool> {
             let body_clone = body.clone();
             let document_clone = document.clone();
             let _ = window.set_timeout_with_callback_and_timeout_and_arguments_0(
-                &wasm_bindgen::closure::Closure::once_into_js(move || {
+                wasm_bindgen::closure::Closure::once_into_js(move || {
                     // Remove body lock styles
                     let style = body_clone.style();
                     for prop in ["position", "top", "width", "overflow", "padding-right"] {
@@ -88,26 +88,24 @@ pub fn use_lock_body_scroll_dialog(initial_locked: bool) -> Signal<bool> {
 
 /// Used twice to set/unset pointer-events when dialog open/closes.
 fn set_pointer_events(document: &web_sys::Document, selector: &str, value: &str) {
-    if let Ok(Some(element)) = document.query_selector(selector) {
-        if let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>() {
+    if let Ok(Some(element)) = document.query_selector(selector)
+        && let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>() {
             if value.is_empty() {
                 let _ = html_element.style().remove_property("pointer-events");
             } else {
                 let _ = html_element.style().set_property("pointer-events", value);
             }
         }
-    }
 }
 
 /// When dialog is open, set the pointer-events only to the dialog.
 fn set_dialog_pointer_events(document: &web_sys::Document, value: &str) {
     if let Ok(elements) = document.query_selector_all("[data-target='target__dialog']") {
         for i in 0..elements.length() {
-            if let Some(element) = elements.item(i) {
-                if let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>() {
+            if let Some(element) = elements.item(i)
+                && let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>() {
                     let _ = html_element.style().set_property("pointer-events", value);
                 }
-            }
         }
     }
 }

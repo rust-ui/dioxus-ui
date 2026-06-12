@@ -13,7 +13,7 @@ pub fn DemoDatePickerDualFull() -> Element {
     let fallback_start = Date::from_calendar_date(2025, Month::May, 5).unwrap_or(Date::MIN);
     let fallback_end = Date::from_calendar_date(2025, Month::May, 14).unwrap_or(Date::MIN);
 
-    let mut state_signal = use_signal(|| DatePickerDualState::new(fallback_start, fallback_end));
+    let state_signal = use_signal(|| DatePickerDualState::new(fallback_start, fallback_end));
 
     // Extract start and end dates as signals
     let mut start_date_signal = use_signal(|| fallback_start);

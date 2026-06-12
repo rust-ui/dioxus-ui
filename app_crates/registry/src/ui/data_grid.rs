@@ -413,11 +413,10 @@ pub fn GridCell(
                 }
             },
             onmousedown: move |ev| {
-                if ev.data().trigger_button() == Some(dioxus::html::input_data::MouseButton::Primary) {
-                    if let Some(cb) = &on_mousedown {
+                if ev.data().trigger_button() == Some(dioxus::html::input_data::MouseButton::Primary)
+                    && let Some(cb) = &on_mousedown {
                         cb.call(());
                     }
-                }
             },
             onmouseenter: move |_| {
                 if let Some(cb) = &on_mouseenter {
