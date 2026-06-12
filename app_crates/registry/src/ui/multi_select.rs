@@ -6,8 +6,6 @@ use tw_merge::tw_merge;
 
 use crate::hooks::use_can_scroll_vertical::use_can_scroll_vertical;
 use crate::hooks::use_random::use_random_id_for;
-// * Reuse select components
-pub use crate::ui::select::{SelectGroup as MultiSelectGroup, SelectOption as MultiSelectItem};
 
 /* ========================================================== */
 /*                     ✨ TYPES ✨                            */
@@ -38,8 +36,49 @@ struct MultiSelectContext {
 
 #[component]
 pub fn MultiSelectLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("text-muted-foreground px-2 py-1.5 text-xs font-medium", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("text-muted-foreground px-2 py-1.5 text-sm font-medium mb-1", class.as_deref().unwrap_or(""));
     rsx! { li { "data-name": "MultiSelectLabel", class: "{merged}", {children} } }
+}
+
+/* ========================================================== */
+/*                     ✨ GROUP ✨                            */
+/* ========================================================== */
+
+#[component]
+pub fn MultiSelectGroup(
+    children: Element,
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] aria_label: Option<String>,
+) -> Element {
+    let merged = tw_merge!("group", class.as_deref().unwrap_or(""));
+    rsx! {
+        ul {
+            "data-name": "MultiSelectGroup",
+            role: "listbox",
+            "aria-label": aria_label.as_deref().unwrap_or("Multi select options"),
+            class: "{merged}",
+            {children}
+        }
+    }
+}
+
+/* ========================================================== */
+/*                     ✨ ITEM ✨                             */
+/* ========================================================== */
+
+#[component]
+pub fn MultiSelectItem(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!(
+        "inline-flex gap-2 items-center w-full rounded-sm px-2 py-1.5 text-sm no-underline transition-colors duration-200 text-popover-foreground hover:bg-accent hover:text-accent-foreground [&_svg:not([class*='size-'])]:size-4",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        li {
+            "data-name": "MultiSelectItem",
+            class: "{merged}",
+            {children}
+        }
+    }
 }
 
 /* ========================================================== */
@@ -220,7 +259,9 @@ pub fn MultiSelectContent(children: Element, #[props(into, optional)] class: Opt
                 const openMultiSelect = () => {{
                     isOpen = true;
 
-                    window.ScrollLock.lock();
+                    if (window.ScrollLock) {{
+                        window.ScrollLock.lock();
+                    }}
 
                     multiSelect.setAttribute('data-state', 'open');
                     multiSelect.style.pointerEvents = 'auto';
@@ -241,7 +282,9 @@ pub fn MultiSelectContent(children: Element, #[props(into, optional)] class: Opt
                     multiSelect.style.pointerEvents = 'none';
                     document.removeEventListener('click', handleClickOutside);
 
-                    window.ScrollLock.unlock(200);
+                    if (window.ScrollLock) {{
+                        window.ScrollLock.unlock(200);
+                    }}
                 }};
 
                 const handleClickOutside = (e) => {{

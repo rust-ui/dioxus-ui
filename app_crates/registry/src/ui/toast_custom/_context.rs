@@ -19,6 +19,10 @@ struct ToasterStats {
 }
 
 impl ToasterContext {
+    pub fn new(queue_signal: Signal<Vec<ToastData>>) -> Self {
+        Self { stats: Arc::new(Mutex::new(ToasterStats::default())), queue_signal }
+    }
+
     pub fn toast(&self, builder: ToastBuilder) {
         let Ok(mut stats) = self.stats.lock() else { return };
         let stats = &mut *stats;
@@ -79,11 +83,5 @@ impl ToasterContext {
                 stats.visible -= 1;
             }
         }
-    }
-}
-
-impl Default for ToasterContext {
-    fn default() -> Self {
-        ToasterContext { stats: Arc::new(Mutex::new(ToasterStats::default())), queue_signal: use_signal(Vec::new) }
     }
 }

@@ -34,7 +34,8 @@ pub fn Toaster(#[props(default = false)] stacked: bool) -> Element {
 /* ========================================================== */
 
 pub fn provide_toaster() {
-    use_context_provider(ToasterContext::default);
+    let queue_signal = use_signal(Vec::<ToastData>::new);
+    use_context_provider(|| ToasterContext::new(queue_signal));
 }
 
 #[must_use]

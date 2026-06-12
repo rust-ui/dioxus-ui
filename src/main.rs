@@ -1,4 +1,5 @@
 use ::registry::hooks::use_theme_mode::ThemeMode;
+use ::registry::ui::toast_custom::toaster::{Toaster, provide_toaster};
 use dioxus::prelude::*;
 
 pub mod __registry__;
@@ -111,6 +112,7 @@ fn main() {
 #[component]
 fn App() -> Element {
     let theme_mode = ThemeMode::init();
+    provide_toaster();
 
     // TODO: replace with <Html class=...> once Dioxus supports reactive html-element attributes (like leptos_meta `<Html {..} class=...>`)
     use_effect(move || {
@@ -143,6 +145,7 @@ fn App() -> Element {
         document::Script { src: LOCK_SCROLL_JS }
         document::Script { src: CHART_INIT_JS }
         document::Script { src: RESIZABLE_JS }
+        Toaster {}
         Router::<Route> {}
     }
 }
