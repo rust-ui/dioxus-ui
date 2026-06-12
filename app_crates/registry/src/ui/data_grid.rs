@@ -5,6 +5,8 @@ use dioxus::prelude::*;
 use icons::{ArrowDownWideNarrow, ArrowUpNarrowWide, ChevronDown, CircleX, EyeOff, PanelLeft, PanelLeftClose};
 use tw_merge::tw_merge;
 
+use crate::hooks::use_cell_edit::CellEditContext;
+use crate::hooks::use_virtual_scroll::{VirtualScrollState, use_virtual_scroll};
 use crate::ui::checkbox::Checkbox;
 use crate::ui::dropdown_menu::{
     DropdownMenu, DropdownMenuAction, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuRadioGroup,
@@ -267,6 +269,60 @@ pub fn GridBody(children: Element, style: Signal<String>, #[props(into, optional
 }
 
 /* ========================================================== */
+/*                     ✨ VIRTUALIZED GRID ✨                 */
+/* ========================================================== */
+
+#[component]
+pub fn VirtualizedGrid(
+    children: Element,
+    total_rows: ReadSignal<usize>,
+    rowcount: Signal<i32>,
+    colcount: i32,
+    style: &'static str,
+    #[props(into, optional)] class: Option<String>,
+) -> Element {
+    let mut grid_element: Signal<Option<web_sys::Element>> = use_signal(|| None);
+    let virtual_scroll = use_virtual_scroll(grid_element.into(), total_rows);
+
+    provide_context(virtual_scroll);
+
+    rsx! {
+        div {
+            onmounted: move |event| {
+                if let Some(element) = event.data().downcast::<web_sys::Element>().cloned() {
+                    grid_element.set(Some(element));
+                }
+            },
+            Grid {
+                rowcount,
+                colcount,
+                style,
+                class,
+                {children}
+            }
+        }
+    }
+}
+
+#[component]
+pub fn VirtualizedGridBody(children: Element, #[props(into, optional)] class: Option<String>) -> Element {
+    let virtual_scroll = consume_context::<VirtualScrollState>();
+    let merged_class = tw_merge!("grid relative", class.as_deref().unwrap_or(""));
+
+    rsx! {
+        div {
+            role: "rowgroup",
+            "data-name": "GridBody",
+            class: "{merged_class}",
+            "aria-label": "Grid Body",
+            tabindex: "0",
+            style: format!("height: {}px;", (virtual_scroll.total_height)()),
+            {children}
+        }
+    }
+}
+
+/* ========================================================== */
 /*                     ✨ FUNCTIONS ✨                        */
 /* ========================================================== */
 
@@ -503,7 +559,6 @@ pub fn GridPinnedCell<C: DataGridColumn + 'static>(
     col: C,
     pinned_columns_signal: Signal<HashSet<C>>,
 ) -> Element {
-    let left = get_pinned_left_position(col, &pinned_columns_signal.read());
     let width = get_column_width(col);
 
     rsx! {
@@ -513,9 +568,12 @@ pub fn GridPinnedCell<C: DataGridColumn + 'static>(
             "data-name": "GridCell",
             tabindex: "-1",
             class: "relative border-r opacity-100 bg-background",
-            style: format!(
-                "left: {left}px; position: sticky; background: var(--background); width: {width}px; z-index: {PINNED_Z_INDEX};",
-            ),
+            style: {
+                let left = get_pinned_left_position(col, &pinned_columns_signal.read());
+                format!(
+                    "left: {left}px; position: sticky; background: var(--background); width: {width}px; z-index: {PINNED_Z_INDEX};",
+                )
+            },
             {children}
         }
     }
@@ -644,6 +702,71 @@ where
             }
         }
         TableSeparator { valuenow: width }
+    }
+}
+
+/* ========================================================== */
+/*                     ✨ FUNCTIONS ✨                        */
+/* ========================================================== */
+
+#[component]
+pub fn EditableCellContent<C: DataGridColumn + 'static>(
+    row_idx: usize,
+    col: C,
+    value: String,
+    #[props(optional)] on_save: Option<EventHandler<(usize, C, String)>>,
+) -> Element {
+    let mut ctx = consume_context::<CellEditContext<C>>();
+    let is_editing = ctx.is_editing(row_idx, col);
+    let initial_value = value.clone();
+
+    if is_editing {
+        rsx! {
+            input {
+                r#type: "text",
+                class: "py-0 px-0 w-full h-full text-sm bg-transparent border-none outline-none focus:ring-0",
+                value: "{(ctx.edit_value)()}",
+                onmounted: move |ev| {
+                    spawn(async move {
+                        let _ = ev.set_focus(true).await;
+                    });
+                },
+                oninput: move |ev| ctx.edit_value.set(ev.value()),
+                onblur: move |_| {
+                    if let Some((row, column, new_value)) = ctx.finish_edit()
+                        && let Some(cb) = &on_save {
+                            cb.call((row, column, new_value));
+                        }
+                },
+                onkeydown: move |ev| {
+                    match ev.data().key() {
+                        Key::Enter => {
+                            ev.prevent_default();
+                            if let Some((row, column, new_value)) = ctx.finish_edit()
+                                && let Some(cb) = &on_save {
+                                    cb.call((row, column, new_value));
+                                }
+                        }
+                        Key::Escape => {
+                            ev.prevent_default();
+                            ctx.cancel_edit();
+                        }
+                        _ => {}
+                    }
+                }
+            }
+        }
+    } else {
+        rsx! {
+            span {
+                "data-name": "GridCellContent",
+                class: "cursor-text",
+                ondoubleclick: move |_| {
+                    ctx.start_edit(row_idx, col, initial_value.clone());
+                },
+                "{value}"
+            }
+        }
     }
 }
 

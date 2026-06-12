@@ -4,7 +4,7 @@ use crate::ui::data_grid::DataGridColumn;
 
 /// Return type for the cell selection hook.
 /// Manages active cell (click) and context menu cell (right-click) state.
-#[derive(Clone, Copy)]
+#[derive(Clone, Copy, PartialEq)]
 pub struct UseCellSelection<C: DataGridColumn> {
     /// The currently active/focused cell (left-clicked)
     active_cell_signal: Signal<Option<(usize, C)>>,

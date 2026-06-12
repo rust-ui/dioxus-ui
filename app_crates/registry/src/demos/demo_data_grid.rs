@@ -1,25 +1,36 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::sync::LazyLock;
 
 use dioxus::prelude::*;
-use icons::{Plus, Settings2, Trash2};
+use icons::{Copy, Eraser, Plus, Scissors, Settings2, Trash2};
 use serde::{Deserialize, Serialize};
 use strum::{AsRefStr, Display, EnumIter, IntoEnumIterator};
 
+use crate::hooks::use_cell_edit::use_cell_edit;
+use crate::hooks::use_column_state::{ColumnState, use_column_state};
 use crate::hooks::use_copy_clipboard::use_copy_clipboard;
-use crate::hooks::use_drag_selection::{UseDragSelection, use_drag_selection};
+use crate::hooks::use_data_grid_state::{DataGridState, use_data_grid_state};
 use crate::hooks::use_press_hold::use_press_hold;
 use crate::ui::badge::{Badge, BadgeVariant};
 use crate::ui::checkbox::Checkbox;
+use crate::ui::context_menu::{
+    ContextMenu, ContextMenuAction, ContextMenuContent, ContextMenuGroup, ContextMenuItem, ContextMenuTrigger,
+};
 use crate::ui::data_grid::{
-    DataGridColumn, DataGridToolbar, Grid, GridBody, GridCell, GridCellContent, GridCellWrapper, GridHeaderCell,
+    DataGridColumn, DataGridToolbar, EditableCellContent, Grid, GridBody, GridCell, GridCellWrapper, GridHeaderCell,
     GridPinnedCell, GridPinnedHeaderCell, GridRow, GridSelectCell, GridSelectHeaderCell, GridWrapper, PinnableColumn,
     PinnableSortableHeaderCell, SortDirection, SortableColumn, generate_grid_style, get_column_width,
     get_pinned_left_position, get_pinned_visible_columns,
 };
+use crate::ui::multi_select::{
+    MultiSelect, MultiSelectAlign, MultiSelectContent, MultiSelectGroup, MultiSelectItem, MultiSelectOption,
+    MultiSelectTrigger,
+};
+use crate::ui::separator::Separator;
+use crate::ui::toast_custom::toaster::expect_toaster;
 
 /* ========================================================== */
-/*                     ✨ TYPES ✨                            */
+/*                     TYPES                                  */
 /* ========================================================== */
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Display, AsRefStr, EnumIter)]
@@ -84,7 +95,6 @@ pub struct RowData {
     pub start_date: String,
 }
 
-/// Pinnable columns with their widths in order they should appear when pinned
 const PINNABLE_COLUMNS: &[(Column, i32)] = &[
     (Column::Name, 180),
     (Column::Age, 150),
@@ -132,11 +142,10 @@ impl Column {
     }
 }
 
-/// CSS custom properties for column sizes, generated from PINNABLE_COLUMNS.
 static GRID_STYLE: LazyLock<String> = LazyLock::new(generate_grid_style::<Column>);
 
 /* ========================================================== */
-/*                     ✨ DATA ✨                             */
+/*                     DATA                                   */
 /* ========================================================== */
 
 fn initial_rows() -> Vec<RowData> {
@@ -197,7 +206,7 @@ fn initial_rows() -> Vec<RowData> {
 }
 
 /* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
+/*                     FUNCTIONS                              */
 /* ========================================================== */
 
 #[component]
@@ -205,58 +214,33 @@ pub fn DemoDataGrid() -> Element {
     rsx! { DataGridFull {} }
 }
 
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
 #[component]
 pub fn DataGridFull() -> Element {
     let mut rows_signal = use_signal(initial_rows);
-
     let mut selected_indices_signal = use_signal(HashSet::<usize>::new);
 
-    // Sort signals per column
-    let sort_signals: Signal<HashMap<Column, Signal<SortDirection>>> =
-        use_signal(|| PINNABLE_COLUMNS.iter().map(|(col, _)| (*col, Signal::new(SortDirection::None))).collect());
+    let ColumnState { sort_signals, pinned_columns_signal, visible_columns_signal } =
+        use_column_state::<Column>(PINNABLE_COLUMNS);
 
-    let pinned_columns_signal: Signal<HashSet<Column>> = use_signal(HashSet::new);
-    let visible_columns_signal: Signal<HashSet<String>> =
-        use_signal(|| Column::iter().map(|c| c.to_string()).collect());
+    let DataGridState { cell_selection, mut drag_selection, mut copy_value_signal, mut grid_wrapper_element } =
+        use_data_grid_state::<Column>();
 
-    // Cell selection state
-    let mut active_cell_signal: Signal<Option<(usize, Column)>> = use_signal(|| None);
-    let mut context_menu_cell_signal: Signal<Option<(usize, Column)>> = use_signal(|| None);
+    let copy_to_clipboard = use_copy_clipboard(None).0;
+    let _cell_edit = use_cell_edit::<Column>();
 
-    // Drag selection
-    let mut drag_selection = use_drag_selection::<Column>();
-
-    // Copy to clipboard
-    let (_copy_to_clipboard, _) = use_copy_clipboard(None);
-    let mut copy_value_signal = use_signal(String::new);
-
-    // Create sorted rows memo
+    let sort_signals_for_rows = sort_signals.clone();
     let sorted_rows_signal = use_memo(move || {
         let mut rows: Vec<RowData> = rows_signal();
-
-        // Apply sorting in order (last one with a value takes precedence)
-        let signals = sort_signals.read();
         for (col, _) in PINNABLE_COLUMNS {
-            if let Some(signal) = signals.get(col) {
+            if let Some(signal) = sort_signals_for_rows.get(col) {
                 col.sort_rows(&mut rows, signal());
             }
         }
-
         rows
     });
 
     let row_count_signal = use_memo(move || rows_signal.read().len());
-
-    // Dynamic height: (row_count + 1) * 36px to include add row button
-    let grid_body_height = use_memo(move || {
-        let row_count = row_count_signal();
-        format!("height: {}px", (row_count + 1) * 36)
-    });
-
+    let grid_body_height = use_memo(move || format!("height: {}px", (row_count_signal() + 1) * 36));
     let selected_count_signal = use_memo(move || selected_indices_signal.read().len());
 
     let handle_select_all = move |checked: bool| {
@@ -272,8 +256,7 @@ pub fn DataGridFull() -> Element {
         });
     };
 
-    // Delete rows handler
-    let _handle_delete_rows = move |names: Vec<String>| {
+    let handle_delete_rows = move |names: Vec<String>| {
         rows_signal.with_mut(|rows| {
             rows.retain(|r| !names.contains(&r.name));
         });
@@ -284,6 +267,11 @@ pub fn DataGridFull() -> Element {
             ToolbarDataGrid { visible_columns_signal }
 
             div {
+                onmounted: move |event| {
+                    if let Some(element) = event.data().downcast::<web_sys::Element>().cloned() {
+                        grid_wrapper_element.set(Some(element));
+                    }
+                },
                 onmouseup: move |_| drag_selection.stop_dragging(),
                 onmouseleave: move |_| drag_selection.stop_dragging(),
                 GridWrapper {
@@ -297,38 +285,28 @@ pub fn DataGridFull() -> Element {
                         style: "position:fixed;left:0px;top:0px;width:1px;height:1px;padding:0;margin:0;border:none;background:transparent;pointer-events:none;opacity:0",
                     }
                     Grid {
-                        rowcount: Signal::new(
-                            i32::try_from(row_count_signal()).unwrap_or(0) + 1,
-                        ),
+                        rowcount: Signal::new(i32::try_from(row_count_signal()).unwrap_or(0) + 1),
                         colcount: i32::try_from(Column::iter().count()).unwrap_or(0),
                         style: GRID_STYLE.as_str(),
 
-                        // ------------- GRID HEADER ----------- //
                         GridHeaderDataGrid {
                             row_count_signal: Signal::new(row_count_signal()),
                             selected_count_signal: Signal::new(selected_count_signal()),
                             handle_select_all,
-                            sort_signals,
+                            sort_signals: sort_signals.clone(),
                             pinned_columns_signal,
                             visible_columns_signal,
                         }
 
-                        // ------------- GRID BODY ----------- //
                         GridBody { style: Signal::new(grid_body_height()),
-                            for row in sorted_rows_signal() {
+                            for (index, row) in sorted_rows_signal().into_iter().enumerate() {
                                 {
-                                    let row_name = row.name.clone();
-                                    let index = Signal::new(
-                                        sorted_rows_signal()
-                                            .iter()
-                                            .position(|r| r.name == row_name)
-                                            .unwrap_or(0),
-                                    );
-                                    let rowindex = index() + 2;
-                                    let mut is_active_signal = use_signal(|| row.is_active);
-                                    let is_selected = selected_indices_signal.read().contains(&index());
-                                    let row_clone = row.clone();
-                                    let row_for_render = row_clone.clone();
+                                    let index_signal = Signal::new(index);
+                                    let rowindex = index + 2;
+                                    let is_selected = selected_indices_signal.read().contains(&index);
+                                    let row_for_render = row.clone();
+                                    let row_for_cells = row.clone();
+                                    let copy_to_clipboard = copy_to_clipboard.clone();
 
                                     let render_cell_content = move |col: Column| -> Element {
                                         match col {
@@ -360,83 +338,143 @@ pub fn DataGridFull() -> Element {
                                                 }
                                             }
                                             Column::IsActive => {
+                                                let row_name = row_for_render.name.clone();
                                                 rsx! {
                                                     Checkbox {
-                                                        checked: is_active_signal(),
-                                                        on_checked_change: move |checked| is_active_signal.set(checked),
+                                                        checked: row_for_render.is_active,
+                                                        on_checked_change: move |checked| {
+                                                            rows_signal.with_mut(|rows| {
+                                                                if let Some(target) = rows.iter_mut().find(|r| r.name == row_name) {
+                                                                    target.is_active = checked;
+                                                                }
+                                                            });
+                                                        },
+                                                        aria_label: "Active",
                                                     }
                                                 }
                                             }
                                             Column::Select | Column::Attachments => rsx! { div {} },
                                             _ => {
                                                 let value = col.get_value(&row_for_render);
-                                                rsx! { GridCellContent { "{value}" } }
+                                                rsx! {
+                                                    EditableCellContent {
+                                                        row_idx: index,
+                                                        col,
+                                                        value,
+                                                    }
+                                                }
                                             }
                                         }
                                     };
 
                                     rsx! {
-                                        GridRow { rowindex, index,
-                                            GridSelectCell {
-                                                div { class: "py-1.5 px-3 size-full",
-                                                    Checkbox {
-                                                        checked: is_selected,
-                                                        on_checked_change: move |checked| {
-                                                            let idx = index();
-                                                            selected_indices_signal.with_mut(|selected| {
-                                                                if checked { selected.insert(idx); } else { selected.remove(&idx); }
-                                                            });
-                                                        },
+                                        ContextMenu {
+                                            ContextMenuTrigger {
+                                                on_open: move |_| {
+                                                    cell_selection.clone().start_contextmenu();
+                                                },
+                                                GridRow { rowindex, index: index_signal,
+                                                    GridSelectCell {
+                                                        div { class: "py-1.5 px-3 size-full",
+                                                            Checkbox {
+                                                                checked: is_selected,
+                                                                on_checked_change: move |checked| {
+                                                                    selected_indices_signal.with_mut(|selected| {
+                                                                        if checked { selected.insert(index); } else { selected.remove(&index); }
+                                                                    });
+                                                                },
+                                                                aria_label: "Select row",
+                                                            }
+                                                        }
                                                     }
-                                                }
-                                            }
-                                            // Pinned cells - only show if both pinned AND visible
-                                            for (col, _width) in get_pinned_visible_columns(pinned_columns_signal, visible_columns_signal) {
-                                                GridPinnedCell { col, pinned_columns_signal,
-                                                    GridCellWrapper { class: col.wrapper_class(),
-                                                        {render_cell_content(col)}
-                                                    }
-                                                }
-                                            }
-                                            // Non-pinned cells
-                                            for (col, _width) in PINNABLE_COLUMNS.iter().copied() {
-                                                {
-                                                    let is_active = active_cell_signal().map(|(r, c)| r == index() && c == col).unwrap_or(false);
-                                                    let is_context = context_menu_cell_signal().map(|(r, c)| r == index() && c == col).unwrap_or(false);
-                                                    let in_range = drag_selection.is_cell_in_range(index(), col);
-                                                    let is_visible = col.is_visible(pinned_columns_signal, visible_columns_signal);
-                                                    let value_for_copy = col.get_value(&row_clone);
-                                                    rsx! {
-                                                        GridCell {
-                                                            colindex: col.colindex(),
-                                                            column: col.css_safe_name(),
-                                                            visible: is_visible,
-                                                            active: is_active,
-                                                            current: is_context,
-                                                            in_range,
-                                                            on_click: move |_| {
-                                                                active_cell_signal.set(Some((index(), col)));
-                                                                context_menu_cell_signal.set(None);
-                                                                drag_selection.clear_selection();
-                                                            },
-                                                            on_contextmenu: move |_| {
-                                                                if drag_selection.handle_contextmenu(index(), col) {
-                                                                    active_cell_signal.set(Some((index(), col)));
-                                                                }
-                                                                context_menu_cell_signal.set(Some((index(), col)));
-                                                                copy_value_signal.set(value_for_copy.clone());
-                                                            },
-                                                            on_mousedown: move |_| {
-                                                                active_cell_signal.set(Some((index(), col)));
-                                                                drag_selection.start_drag(index(), col);
-                                                            },
-                                                            on_mouseenter: move |_| {
-                                                                drag_selection.update_drag(index(), col);
-                                                            },
+
+                                                    for (col, _width) in get_pinned_visible_columns(pinned_columns_signal, visible_columns_signal) {
+                                                        GridPinnedCell { col, pinned_columns_signal,
                                                             GridCellWrapper { class: col.wrapper_class(),
                                                                 {render_cell_content(col)}
                                                             }
                                                         }
+                                                    }
+
+                                                    for (col, _width) in PINNABLE_COLUMNS.iter().copied() {
+                                                        {
+                                                            let row_for_copy = row_for_cells.clone();
+                                                            rsx! {
+                                                                GridCell {
+                                                                    colindex: col.colindex(),
+                                                                    column: col.css_safe_name(),
+                                                                    visible: col.is_visible(pinned_columns_signal, visible_columns_signal),
+                                                                    active: cell_selection.clone().is_active(index, col),
+                                                                    current: cell_selection.clone().is_context_menu(index, col),
+                                                                    in_range: drag_selection.is_cell_in_range(index, col),
+                                                                    on_click: move |_| {
+                                                                        cell_selection.clone().handle_click(index, col);
+                                                                        drag_selection.clear_selection();
+                                                                    },
+                                                                    on_contextmenu: move |_| {
+                                                                        if drag_selection.handle_contextmenu(index, col) {
+                                                                            cell_selection.clone().set_active(index, col);
+                                                                        }
+                                                                        cell_selection.clone().set_context_menu(index, col);
+                                                                        copy_value_signal.set(col.get_value(&row_for_copy));
+                                                                    },
+                                                                    on_mousedown: move |_| {
+                                                                        cell_selection.clone().set_active(index, col);
+                                                                        drag_selection.start_drag(index, col);
+                                                                    },
+                                                                    on_mouseenter: move |_| {
+                                                                        drag_selection.update_drag(index, col);
+                                                                    },
+                                                                    GridCellWrapper { class: col.wrapper_class(),
+                                                                        {render_cell_content(col)}
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            ContextMenuContent {
+                                                on_close: move |_| {
+                                                    cell_selection.clone().handle_contextmenu_close();
+                                                },
+                                                ContextMenuGroup {
+                                                    ContextMenuItem {
+                                                        ContextMenuAction {
+                                                            onclick: move |_| {
+                                                                let value = drag_selection
+                                                                    .collect_selection_values(&sorted_rows_signal(), PINNABLE_COLUMNS, |row, col| col.get_value(row))
+                                                                    .unwrap_or_else(|| copy_value_signal());
+                                                                if !value.is_empty() {
+                                                                    copy_to_clipboard(&value);
+                                                                    expect_toaster().success("Copied to clipboard");
+                                                                }
+                                                            },
+                                                            Copy {}
+                                                            span { "Copy" }
+                                                        }
+                                                    }
+                                                    ContextMenuItem {
+                                                        ContextMenuAction {
+                                                            Scissors {}
+                                                            span { "Cut" }
+                                                        }
+                                                    }
+                                                    ContextMenuItem {
+                                                        ContextMenuAction {
+                                                            Eraser {}
+                                                            span { "Clear" }
+                                                        }
+                                                    }
+                                                }
+                                                Separator { class: "my-1" }
+                                                ContextMenuItem { class: "p-0",
+                                                    PressHoldDeleteRow {
+                                                        index: index_signal,
+                                                        drag_selection,
+                                                        cell_selection,
+                                                        sorted_rows_signal: Signal::new(sorted_rows_signal()),
+                                                        handle_delete_rows,
                                                     }
                                                 }
                                             }
@@ -444,7 +482,6 @@ pub fn DataGridFull() -> Element {
                                     }
                                 }
                             }
-                            // Add row button at the bottom
                             GridAddRow { rows_signal, row_count_signal: Signal::new(row_count_signal()) }
                         }
                     }
@@ -454,21 +491,32 @@ pub fn DataGridFull() -> Element {
     }
 }
 
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
 #[component]
 pub fn ToolbarDataGrid(visible_columns_signal: Signal<HashSet<String>>) -> Element {
     rsx! {
         DataGridToolbar { class: "justify-end",
-            // Column visibility — simplified toggle button (multi_select not yet ported)
-            button {
-                r#type: "button",
-                class: "px-3 py-2 h-9 inline-flex gap-2 items-center text-sm font-medium rounded-md border bg-background border-input hover:bg-accent hover:text-accent-foreground",
-                "data-name": "ToolbarColumnsToggle",
-                Settings2 { class: "text-muted-foreground" }
-                span { "View" }
+            MultiSelect { values: visible_columns_signal, align: MultiSelectAlign::End,
+                MultiSelectTrigger {
+                    Settings2 { class: "text-muted-foreground" }
+                    span { "View" }
+                }
+                MultiSelectContent {
+                    MultiSelectGroup {
+                        for column in Column::iter().filter(|c| *c != Column::Select) {
+                            {
+                                let column_str = column.to_string();
+                                let is_disabled = column.is_disabled();
+                                rsx! {
+                                    MultiSelectItem {
+                                        MultiSelectOption { value: column_str.clone(), disabled: is_disabled,
+                                            "{column_str}"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
     }
@@ -479,7 +527,7 @@ pub fn GridHeaderDataGrid(
     row_count_signal: Signal<usize>,
     selected_count_signal: Signal<usize>,
     handle_select_all: EventHandler<bool>,
-    sort_signals: Signal<HashMap<Column, Signal<SortDirection>>>,
+    sort_signals: std::collections::HashMap<Column, Signal<SortDirection>>,
     pinned_columns_signal: Signal<HashSet<Column>>,
     visible_columns_signal: Signal<HashSet<String>>,
 ) -> Element {
@@ -496,13 +544,14 @@ pub fn GridHeaderDataGrid(
                         Checkbox {
                             checked: all_checked,
                             on_checked_change: move |checked| handle_select_all.call(checked),
+                            aria_label: "Select all",
                         }
                     }
                 }
-                // Pinned headers - only show if both pinned AND visible
+
                 for (col, _width) in get_pinned_visible_columns(pinned_columns_signal, visible_columns_signal) {
                     {
-                        let sort_signal = sort_signals.read().get(&col).copied();
+                        let sort_signal = sort_signals.get(&col).copied();
                         let left = get_pinned_left_position(col, &pinned_columns_signal.read());
                         let width = get_column_width(col);
                         if let Some(sort_signal) = sort_signal {
@@ -523,10 +572,10 @@ pub fn GridHeaderDataGrid(
                         }
                     }
                 }
-                // Non-pinned headers
+
                 for (col, _width) in PINNABLE_COLUMNS.iter().copied() {
                     {
-                        let sort_signal = sort_signals.read().get(&col).copied();
+                        let sort_signal = sort_signals.get(&col).copied();
                         let is_visible = col.is_visible(pinned_columns_signal, visible_columns_signal);
                         if let Some(sort_signal) = sort_signal {
                             rsx! {
@@ -556,14 +605,11 @@ pub fn GridHeaderDataGrid(
 #[component]
 fn PressHoldDeleteRow(
     index: Signal<usize>,
-    mut drag_selection: UseDragSelection<Column>,
+    drag_selection: crate::hooks::use_drag_selection::UseDragSelection<Column>,
+    cell_selection: crate::hooks::use_cell_selection::UseCellSelection<Column>,
     sorted_rows_signal: Signal<Vec<RowData>>,
     handle_delete_rows: EventHandler<Vec<String>>,
-    mut active_cell_signal: Signal<Option<(usize, Column)>>,
-    mut context_menu_cell_signal: Signal<Option<(usize, Column)>>,
 ) -> Element {
-    let _disabled = use_signal(|| false);
-
     let on_delete = Callback::new(move |_: ()| {
         let idx = index();
         let (min_row, max_row) =
@@ -573,10 +619,13 @@ fn PressHoldDeleteRow(
         let names_to_delete: Vec<String> =
             (min_row..=max_row).filter_map(|i| sorted.get(i).map(|r| r.name.clone())).collect();
 
+        let count = names_to_delete.len();
         handle_delete_rows.call(names_to_delete);
         drag_selection.clear_selection();
-        active_cell_signal.set(None);
-        context_menu_cell_signal.set(None);
+        cell_selection.clone().clear_all();
+
+        let suffix = if count == 1 { "" } else { "s" };
+        expect_toaster().success(format!("Deleted {} row{}", count, suffix));
     });
 
     let press_hold = use_press_hold(1500, on_delete, false);
@@ -612,11 +661,6 @@ fn PressHoldDeleteRow(
     }
 }
 
-/* ========================================================== */
-/*                     ✨ FUNCTIONS ✨                        */
-/* ========================================================== */
-
-/// Add row button at the bottom of the grid using absolute positioning.
 #[component]
 fn GridAddRow(mut rows_signal: Signal<Vec<RowData>>, row_count_signal: Signal<usize>) -> Element {
     let rowindex = row_count_signal() + 2;

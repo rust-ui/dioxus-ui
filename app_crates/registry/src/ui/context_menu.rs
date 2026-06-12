@@ -78,6 +78,7 @@ pub fn ContextMenuAction(
     children: Element,
     #[props(into, optional)] class: Option<String>,
     #[props(into, optional)] href: Option<String>,
+    #[props(optional)] onclick: Option<EventHandler<()>>,
 ) -> Element {
     let _ctx = use_context::<ContextMenuContext>();
 
@@ -93,6 +94,11 @@ pub fn ContextMenuAction(
                 class: "{merged}",
                 href: "{href}",
                 "data-context-close": "true",
+                onclick: move |_| {
+                    if let Some(cb) = &onclick {
+                        cb.call(());
+                    }
+                },
                 {children}
             }
         }
@@ -103,6 +109,11 @@ pub fn ContextMenuAction(
                 "data-name": "ContextMenuAction",
                 class: "{merged}",
                 "data-context-close": "true",
+                onclick: move |_| {
+                    if let Some(cb) = &onclick {
+                        cb.call(());
+                    }
+                },
                 {children}
             }
         }
