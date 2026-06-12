@@ -17,10 +17,10 @@ impl<C: DataGridColumn> UseDragSelection<C> {
     /// Check if a cell is within the drag selection range (bounding box of start and end).
     /// Returns false if start == end (single cell click, not a real drag).
     pub fn is_cell_in_range(&self, row_idx: usize, col: C) -> bool {
-        let Some((start_row, start_col)) = *self.drag_start_signal.peek() else {
+        let Some((start_row, start_col)) = *self.drag_start_signal.read() else {
             return false;
         };
-        let Some((end_row, end_col)) = *self.drag_end_signal.peek() else {
+        let Some((end_row, end_col)) = *self.drag_end_signal.read() else {
             return false;
         };
 
@@ -42,10 +42,10 @@ impl<C: DataGridColumn> UseDragSelection<C> {
 
     /// Returns true if there's an active multi-cell selection (start != end).
     pub fn has_selection(&self) -> bool {
-        let Some((start_row, start_col)) = *self.drag_start_signal.peek() else {
+        let Some((start_row, start_col)) = *self.drag_start_signal.read() else {
             return false;
         };
-        let Some((end_row, end_col)) = *self.drag_end_signal.peek() else {
+        let Some((end_row, end_col)) = *self.drag_end_signal.read() else {
             return false;
         };
         start_row != end_row || start_col != end_col

@@ -18,12 +18,12 @@ pub struct UseCellSelection<C: DataGridColumn> {
 impl<C: DataGridColumn> UseCellSelection<C> {
     /// Check if a specific cell is the active cell.
     pub fn is_active(&self, row_idx: usize, col: C) -> bool {
-        *self.active_cell_signal.peek() == Some((row_idx, col))
+        *self.active_cell_signal.read() == Some((row_idx, col))
     }
 
     /// Check if a specific cell is the context menu cell.
     pub fn is_context_menu(&self, row_idx: usize, col: C) -> bool {
-        *self.context_menu_cell_signal.peek() == Some((row_idx, col))
+        *self.context_menu_cell_signal.read() == Some((row_idx, col))
     }
 
     /// Set the active cell (typically on left-click).
