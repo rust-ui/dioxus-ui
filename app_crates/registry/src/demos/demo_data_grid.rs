@@ -27,6 +27,7 @@ use crate::ui::multi_select::{
     MultiSelectTrigger,
 };
 use crate::ui::separator::Separator;
+use crate::ui::skeleton::Skeleton;
 use crate::ui::toast_custom::toaster::expect_toaster;
 
 /* ========================================================== */
@@ -322,7 +323,32 @@ pub fn DataGridFull() -> Element {
             ToolbarDataGrid { visible_columns_signal }
 
             match &*rows_resource.read() {
-                None => rsx! { p { class: "text-gray-500", "Loading data..." } },
+                None => rsx! {
+                    div { class: "rounded-md border overflow-hidden",
+                        // Header skeleton
+                        div { class: "flex items-center gap-3 border-b px-3 h-9 bg-muted/40",
+                            Skeleton { class: "size-4 rounded" }
+                            Skeleton { class: "h-4 w-24" }
+                            Skeleton { class: "h-4 w-8" }
+                            Skeleton { class: "h-4 w-36" }
+                            Skeleton { class: "h-4 w-28" }
+                            Skeleton { class: "h-4 w-20" }
+                            Skeleton { class: "h-4 w-16" }
+                        }
+                        // Row skeletons
+                        for _ in 0..14u32 {
+                            div { class: "flex items-center gap-3 border-b last:border-0 px-3 h-9",
+                                Skeleton { class: "size-4 rounded shrink-0" }
+                                Skeleton { class: "h-4 w-24 shrink-0" }
+                                Skeleton { class: "h-4 w-8 shrink-0" }
+                                Skeleton { class: "h-4 w-36 shrink-0" }
+                                Skeleton { class: "h-4 w-28 shrink-0" }
+                                Skeleton { class: "h-4 w-16 shrink-0" }
+                                Skeleton { class: "h-4 w-20 shrink-0" }
+                            }
+                        }
+                    }
+                },
                 Some(Err(_)) => rsx! { p { "Error loading data." } },
                 Some(Ok(_)) => rsx! {
             div {
