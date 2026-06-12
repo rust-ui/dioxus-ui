@@ -52,12 +52,13 @@ impl UseHistory {
 
                 // Skip if focus is in an input / textarea / select
                 if let Some(target) = e.target()
-                    && let Some(el) = target.dyn_ref::<web_sys::HtmlElement>() {
-                        let tag = el.tag_name().to_lowercase();
-                        if matches!(tag.as_str(), "input" | "textarea" | "select") {
-                            return;
-                        }
+                    && let Some(el) = target.dyn_ref::<web_sys::HtmlElement>()
+                {
+                    let tag = el.tag_name().to_lowercase();
+                    if matches!(tag.as_str(), "input" | "textarea" | "select") {
+                        return;
                     }
+                }
 
                 if meta && key == "z" && !shift {
                     e.prevent_default();

@@ -36,7 +36,8 @@ struct MultiSelectContext {
 
 #[component]
 pub fn MultiSelectLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("text-muted-foreground px-2 py-1.5 text-sm font-medium mb-1", class.as_deref().unwrap_or(""));
+    let merged =
+        tw_merge!("text-muted-foreground px-2 py-1.5 text-sm font-medium mb-1", class.as_deref().unwrap_or(""));
     rsx! { li { "data-name": "MultiSelectLabel", class: "{merged}", {children} } }
 }
 

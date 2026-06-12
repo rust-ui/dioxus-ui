@@ -89,13 +89,14 @@ pub fn use_lock_body_scroll_dialog(initial_locked: bool) -> Signal<bool> {
 /// Used twice to set/unset pointer-events when dialog open/closes.
 fn set_pointer_events(document: &web_sys::Document, selector: &str, value: &str) {
     if let Ok(Some(element)) = document.query_selector(selector)
-        && let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>() {
-            if value.is_empty() {
-                let _ = html_element.style().remove_property("pointer-events");
-            } else {
-                let _ = html_element.style().set_property("pointer-events", value);
-            }
+        && let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>()
+    {
+        if value.is_empty() {
+            let _ = html_element.style().remove_property("pointer-events");
+        } else {
+            let _ = html_element.style().set_property("pointer-events", value);
         }
+    }
 }
 
 /// When dialog is open, set the pointer-events only to the dialog.
@@ -103,9 +104,10 @@ fn set_dialog_pointer_events(document: &web_sys::Document, value: &str) {
     if let Ok(elements) = document.query_selector_all("[data-target='target__dialog']") {
         for i in 0..elements.length() {
             if let Some(element) = elements.item(i)
-                && let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>() {
-                    let _ = html_element.style().set_property("pointer-events", value);
-                }
+                && let Some(html_element) = element.dyn_ref::<web_sys::HtmlElement>()
+            {
+                let _ = html_element.style().set_property("pointer-events", value);
+            }
         }
     }
 }

@@ -153,12 +153,8 @@ impl Column {
             Self::Department => row.department = value,
             Self::Status => row.status = value,
             Self::Skills => {
-                row.skills = value
-                    .split(',')
-                    .map(str::trim)
-                    .filter(|item| !item.is_empty())
-                    .map(ToOwned::to_owned)
-                    .collect();
+                row.skills =
+                    value.split(',').map(str::trim).filter(|item| !item.is_empty()).map(ToOwned::to_owned).collect();
             }
             Self::IsActive => {
                 let normalized = value.trim().to_ascii_lowercase();
