@@ -9,8 +9,6 @@
 
 node_modules/
 
-# Tailwind generated output
-assets/tailwind.css
 
 __TMP/
 dioxus_ui_internals/
