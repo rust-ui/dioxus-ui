@@ -322,6 +322,29 @@ pub fn VirtualizedGridBody(children: Element, #[props(into, optional)] class: Op
     }
 }
 
+/// A virtualized For loop that only renders visible rows.
+/// Must be used within a component that provides `VirtualScrollState` context.
+///
+/// # Usage
+/// ```rust
+/// {VirtualFor(data_signal, move |idx, row| rsx! { GridRow { ... } })}
+/// ```
+#[allow(non_snake_case)]
+pub fn VirtualFor<T: Clone + 'static>(data: Signal<Vec<T>>, render: impl Fn(usize, T) -> Element) -> Element {
+    let virtual_scroll = consume_context::<VirtualScrollState>();
+    let start = (virtual_scroll.start_index)();
+    let end = (virtual_scroll.end_index)();
+    let visible: Vec<(usize, T)> = {
+        let rows = data.read();
+        (start..end).filter_map(|idx| rows.get(idx).map(|row| (idx, row.clone()))).collect()
+    };
+    rsx! {
+        for (idx, row) in visible {
+            {render(idx, row)}
+        }
+    }
+}
+
 /* ========================================================== */
 /*                     ✨ FUNCTIONS ✨                        */
 /* ========================================================== */

@@ -168,6 +168,7 @@ impl Column {
         }
     }
 
+    #[allow(dead_code)]
     fn clear_value(self, row: &mut RowData) {
         match self {
             Self::Name => row.name.clear(),
@@ -192,7 +193,6 @@ static GRID_STYLE: LazyLock<String> = LazyLock::new(generate_grid_style::<Column
 /*                     ✨ SERVER FUNCTION ✨                  */
 /* ========================================================== */
 
-#[server]
 pub async fn get_data_grid_rows() -> Result<Vec<RowData>, ServerFnError> {
     let rows = vec![
         RowData {
