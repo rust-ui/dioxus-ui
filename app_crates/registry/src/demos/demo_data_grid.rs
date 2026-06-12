@@ -140,6 +140,50 @@ impl Column {
             Self::Select | Self::Attachments => String::new(),
         }
     }
+
+    fn set_value(self, row: &mut RowData, value: String) {
+        match self {
+            Self::Name => row.name = value,
+            Self::Age => row.age = value.parse().unwrap_or_default(),
+            Self::Email => row.email = value,
+            Self::Website => row.website = value,
+            Self::Notes => row.notes = value,
+            Self::Salary => row.salary = value.parse().unwrap_or_default(),
+            Self::Department => row.department = value,
+            Self::Status => row.status = value,
+            Self::Skills => {
+                row.skills = value
+                    .split(',')
+                    .map(str::trim)
+                    .filter(|item| !item.is_empty())
+                    .map(ToOwned::to_owned)
+                    .collect();
+            }
+            Self::IsActive => {
+                let normalized = value.trim().to_ascii_lowercase();
+                row.is_active = matches!(normalized.as_str(), "true" | "1" | "yes" | "on");
+            }
+            Self::StartDate => row.start_date = value,
+            Self::Select | Self::Attachments => {}
+        }
+    }
+
+    fn clear_value(self, row: &mut RowData) {
+        match self {
+            Self::Name => row.name.clear(),
+            Self::Age => row.age = 0,
+            Self::Email => row.email.clear(),
+            Self::Website => row.website.clear(),
+            Self::Notes => row.notes.clear(),
+            Self::Salary => row.salary = 0,
+            Self::Department => row.department.clear(),
+            Self::Status => row.status.clear(),
+            Self::Skills => row.skills.clear(),
+            Self::IsActive => row.is_active = false,
+            Self::StartDate => row.start_date.clear(),
+            Self::Select | Self::Attachments => {}
+        }
+    }
 }
 
 static GRID_STYLE: LazyLock<String> = LazyLock::new(generate_grid_style::<Column>);
@@ -307,6 +351,7 @@ pub fn DataGridFull() -> Element {
                                     let row_for_render = row.clone();
                                     let row_for_cells = row.clone();
                                     let copy_to_clipboard = copy_to_clipboard.clone();
+                                    let row_name_for_save = row.name.clone();
 
                                     let render_cell_content = move |col: Column| -> Element {
                                         match col {
@@ -356,16 +401,28 @@ pub fn DataGridFull() -> Element {
                                             Column::Select | Column::Attachments => rsx! { div {} },
                                             _ => {
                                                 let value = col.get_value(&row_for_render);
+                                                let row_name_for_save = row_name_for_save.clone();
                                                 rsx! {
                                                     EditableCellContent {
                                                         row_idx: index,
                                                         col,
                                                         value,
+                                                        on_save: move |(row_idx, column, new_value): (usize, Column, String)| {
+                                                            let _ = row_idx;
+                                                            rows_signal.with_mut(|rows| {
+                                                                if let Some(target) = rows.iter_mut().find(|r| r.name == row_name_for_save) {
+                                                                    column.set_value(target, new_value);
+                                                                }
+                                                            });
+                                                        },
                                                     }
                                                 }
                                             }
                                         }
                                     };
+
+                                    let copy_to_clipboard_copy = copy_to_clipboard.clone();
+                                    let copy_to_clipboard_cut = copy_to_clipboard.clone();
 
                                     rsx! {
                                         ContextMenu {
@@ -446,7 +503,7 @@ pub fn DataGridFull() -> Element {
                                                                     .collect_selection_values(&sorted_rows_signal(), PINNABLE_COLUMNS, |row, col| col.get_value(row))
                                                                     .unwrap_or_else(|| copy_value_signal());
                                                                 if !value.is_empty() {
-                                                                    copy_to_clipboard(&value);
+                                                                    copy_to_clipboard_copy(&value);
                                                                     expect_toaster().success("Copied to clipboard");
                                                                 }
                                                             },
@@ -456,12 +513,85 @@ pub fn DataGridFull() -> Element {
                                                     }
                                                     ContextMenuItem {
                                                         ContextMenuAction {
+                                                            onclick: move |_| {
+                                                                let value = drag_selection
+                                                                    .collect_selection_values(&sorted_rows_signal(), PINNABLE_COLUMNS, |row, col| col.get_value(row))
+                                                                    .or_else(|| copy_value_signal().is_empty().then_some(String::new()).or_else(|| Some(copy_value_signal())))
+                                                                    .unwrap_or_default();
+
+                                                                let sorted = sorted_rows_signal();
+                                                                let mut targets: Vec<(String, Column)> = Vec::new();
+
+                                                                if let Some((min_row, max_row, min_col, max_col)) = drag_selection.get_selection_bounds() {
+                                                                    for row_idx in min_row..=max_row {
+                                                                        if let Some(row) = sorted.get(row_idx) {
+                                                                            for (col, _) in PINNABLE_COLUMNS.iter().copied() {
+                                                                                let col_idx = col.colindex();
+                                                                                if col_idx >= min_col && col_idx <= max_col {
+                                                                                    targets.push((row.name.clone(), col));
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                } else if let Some((row_idx, col)) = cell_selection.context_menu_cell()
+                                                                    && let Some(row) = sorted.get(row_idx) {
+                                                                        targets.push((row.name.clone(), col));
+                                                                    }
+
+                                                                if !value.is_empty() {
+                                                                    copy_to_clipboard_cut(&value);
+                                                                }
+
+                                                                rows_signal.with_mut(|rows| {
+                                                                    for (row_name, col) in &targets {
+                                                                        if let Some(target) = rows.iter_mut().find(|r| r.name == *row_name) {
+                                                                            col.clear_value(target);
+                                                                        }
+                                                                    }
+                                                                });
+
+                                                                if !targets.is_empty() {
+                                                                    expect_toaster().success("Cut selection");
+                                                                }
+                                                            },
                                                             Scissors {}
                                                             span { "Cut" }
                                                         }
                                                     }
                                                     ContextMenuItem {
                                                         ContextMenuAction {
+                                                            onclick: move |_| {
+                                                                let sorted = sorted_rows_signal();
+                                                                let mut targets: Vec<(String, Column)> = Vec::new();
+
+                                                                if let Some((min_row, max_row, min_col, max_col)) = drag_selection.get_selection_bounds() {
+                                                                    for row_idx in min_row..=max_row {
+                                                                        if let Some(row) = sorted.get(row_idx) {
+                                                                            for (col, _) in PINNABLE_COLUMNS.iter().copied() {
+                                                                                let col_idx = col.colindex();
+                                                                                if col_idx >= min_col && col_idx <= max_col {
+                                                                                    targets.push((row.name.clone(), col));
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                } else if let Some((row_idx, col)) = cell_selection.context_menu_cell()
+                                                                    && let Some(row) = sorted.get(row_idx) {
+                                                                        targets.push((row.name.clone(), col));
+                                                                    }
+
+                                                                rows_signal.with_mut(|rows| {
+                                                                    for (row_name, col) in &targets {
+                                                                        if let Some(target) = rows.iter_mut().find(|r| r.name == *row_name) {
+                                                                            col.clear_value(target);
+                                                                        }
+                                                                    }
+                                                                });
+
+                                                                if !targets.is_empty() {
+                                                                    expect_toaster().success("Cleared selection");
+                                                                }
+                                                            },
                                                             Eraser {}
                                                             span { "Clear" }
                                                         }

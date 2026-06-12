@@ -26,6 +26,11 @@ impl<C: DataGridColumn> UseCellSelection<C> {
         *self.context_menu_cell_signal.read() == Some((row_idx, col))
     }
 
+    /// Returns the current context menu cell without subscribing reactively.
+    pub fn context_menu_cell(&self) -> Option<(usize, C)> {
+        *self.context_menu_cell_signal.peek()
+    }
+
     /// Set the active cell (typically on left-click).
     pub fn set_active(&mut self, row_idx: usize, col: C) {
         self.active_cell_signal.set(Some((row_idx, col)));
