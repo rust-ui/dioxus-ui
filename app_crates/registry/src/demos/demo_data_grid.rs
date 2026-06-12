@@ -189,11 +189,12 @@ impl Column {
 static GRID_STYLE: LazyLock<String> = LazyLock::new(generate_grid_style::<Column>);
 
 /* ========================================================== */
-/*                     DATA                                   */
+/*                     ✨ SERVER FUNCTION ✨                  */
 /* ========================================================== */
 
-fn initial_rows() -> Vec<RowData> {
-    vec![
+#[server]
+pub async fn get_data_grid_rows() -> Result<Vec<RowData>, ServerFnError> {
+    let rows = vec![
         RowData {
             name: "Toby Deckow".to_string(),
             age: 50,
@@ -246,7 +247,9 @@ fn initial_rows() -> Vec<RowData> {
             is_active: false,
             start_date: "9/01/2022".to_string(),
         },
-    ]
+    ];
+
+    Ok(rows)
 }
 
 /* ========================================================== */
@@ -260,7 +263,8 @@ pub fn DemoDataGrid() -> Element {
 
 #[component]
 pub fn DataGridFull() -> Element {
-    let mut rows_signal = use_signal(initial_rows);
+    let rows_resource = use_resource(get_data_grid_rows);
+    let mut rows_signal = use_signal(Vec::<RowData>::new);
     let mut selected_indices_signal = use_signal(HashSet::<usize>::new);
 
     let ColumnState { sort_signals, pinned_columns_signal, visible_columns_signal } =
@@ -271,6 +275,13 @@ pub fn DataGridFull() -> Element {
 
     let copy_to_clipboard = use_copy_clipboard(None).0;
     let _cell_edit = use_cell_edit::<Column>();
+
+    // Sync loaded rows into mutable rows_signal (matches Leptos Resource → RwSignal pattern)
+    use_effect(move || {
+        if let Some(Ok(rows)) = &*rows_resource.read() {
+            rows_signal.set(rows.clone());
+        }
+    });
 
     let sort_signals_for_rows = sort_signals.clone();
     let sorted_rows_signal = use_memo(move || {
@@ -310,6 +321,10 @@ pub fn DataGridFull() -> Element {
         div { class: "container flex flex-col py-4",
             ToolbarDataGrid { visible_columns_signal }
 
+            match &*rows_resource.read() {
+                None => rsx! { p { class: "text-gray-500", "Loading data..." } },
+                Some(Err(_)) => rsx! { p { "Error loading data." } },
+                Some(Ok(_)) => rsx! {
             div {
                 onmounted: move |event| {
                     if let Some(element) = event.data().downcast::<web_sys::Element>().cloned() {
@@ -421,8 +436,7 @@ pub fn DataGridFull() -> Element {
                                         }
                                     };
 
-                                    let copy_to_clipboard_copy = copy_to_clipboard.clone();
-                                    let copy_to_clipboard_cut = copy_to_clipboard.clone();
+                                    let copy_to_clipboard = copy_to_clipboard.clone();
 
                                     rsx! {
                                         ContextMenu {
@@ -503,7 +517,7 @@ pub fn DataGridFull() -> Element {
                                                                     .collect_selection_values(&sorted_rows_signal(), PINNABLE_COLUMNS, |row, col| col.get_value(row))
                                                                     .unwrap_or_else(|| copy_value_signal());
                                                                 if !value.is_empty() {
-                                                                    copy_to_clipboard_copy(&value);
+                                                                    copy_to_clipboard(&value);
                                                                     expect_toaster().success("Copied to clipboard");
                                                                 }
                                                             },
@@ -513,85 +527,12 @@ pub fn DataGridFull() -> Element {
                                                     }
                                                     ContextMenuItem {
                                                         ContextMenuAction {
-                                                            onclick: move |_| {
-                                                                let value = drag_selection
-                                                                    .collect_selection_values(&sorted_rows_signal(), PINNABLE_COLUMNS, |row, col| col.get_value(row))
-                                                                    .or_else(|| copy_value_signal().is_empty().then_some(String::new()).or_else(|| Some(copy_value_signal())))
-                                                                    .unwrap_or_default();
-
-                                                                let sorted = sorted_rows_signal();
-                                                                let mut targets: Vec<(String, Column)> = Vec::new();
-
-                                                                if let Some((min_row, max_row, min_col, max_col)) = drag_selection.get_selection_bounds() {
-                                                                    for row_idx in min_row..=max_row {
-                                                                        if let Some(row) = sorted.get(row_idx) {
-                                                                            for (col, _) in PINNABLE_COLUMNS.iter().copied() {
-                                                                                let col_idx = col.colindex();
-                                                                                if col_idx >= min_col && col_idx <= max_col {
-                                                                                    targets.push((row.name.clone(), col));
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                } else if let Some((row_idx, col)) = cell_selection.context_menu_cell()
-                                                                    && let Some(row) = sorted.get(row_idx) {
-                                                                        targets.push((row.name.clone(), col));
-                                                                    }
-
-                                                                if !value.is_empty() {
-                                                                    copy_to_clipboard_cut(&value);
-                                                                }
-
-                                                                rows_signal.with_mut(|rows| {
-                                                                    for (row_name, col) in &targets {
-                                                                        if let Some(target) = rows.iter_mut().find(|r| r.name == *row_name) {
-                                                                            col.clear_value(target);
-                                                                        }
-                                                                    }
-                                                                });
-
-                                                                if !targets.is_empty() {
-                                                                    expect_toaster().success("Cut selection");
-                                                                }
-                                                            },
                                                             Scissors {}
                                                             span { "Cut" }
                                                         }
                                                     }
                                                     ContextMenuItem {
                                                         ContextMenuAction {
-                                                            onclick: move |_| {
-                                                                let sorted = sorted_rows_signal();
-                                                                let mut targets: Vec<(String, Column)> = Vec::new();
-
-                                                                if let Some((min_row, max_row, min_col, max_col)) = drag_selection.get_selection_bounds() {
-                                                                    for row_idx in min_row..=max_row {
-                                                                        if let Some(row) = sorted.get(row_idx) {
-                                                                            for (col, _) in PINNABLE_COLUMNS.iter().copied() {
-                                                                                let col_idx = col.colindex();
-                                                                                if col_idx >= min_col && col_idx <= max_col {
-                                                                                    targets.push((row.name.clone(), col));
-                                                                                }
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                } else if let Some((row_idx, col)) = cell_selection.context_menu_cell()
-                                                                    && let Some(row) = sorted.get(row_idx) {
-                                                                        targets.push((row.name.clone(), col));
-                                                                    }
-
-                                                                rows_signal.with_mut(|rows| {
-                                                                    for (row_name, col) in &targets {
-                                                                        if let Some(target) = rows.iter_mut().find(|r| r.name == *row_name) {
-                                                                            col.clear_value(target);
-                                                                        }
-                                                                    }
-                                                                });
-
-                                                                if !targets.is_empty() {
-                                                                    expect_toaster().success("Cleared selection");
-                                                                }
-                                                            },
                                                             Eraser {}
                                                             span { "Clear" }
                                                         }
@@ -617,6 +558,8 @@ pub fn DataGridFull() -> Element {
                     }
                 }
             }
+            } // closes Some(Ok(_)) => rsx!
+        } // closes match
         }
     }
 }
