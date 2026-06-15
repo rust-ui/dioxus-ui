@@ -20,7 +20,7 @@ pub fn HookPage(name: String) -> Element {
     use_effect(move || toc.set(toc_items.clone()));
 
     rsx! {
-        div { class: "flex flex-col pt-4 mx-auto w-full min-h-screen px-4 max-w-[730px]",
+        div { class: "flex flex-col pt-4 mx-auto w-full min-h-screen px-3 md:px-4 max-w-[730px]",
             match entry {
                 None => rsx! {
                     p { class: "text-muted-foreground", "Hook not found: {name}" }
