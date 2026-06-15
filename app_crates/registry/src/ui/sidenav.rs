@@ -244,7 +244,10 @@ pub fn SidenavLink(
         "peer/menu-button flex w-full items-center gap-2 overflow-hidden rounded-md p-2 text-left outline-hidden ring-sidenav-ring transition-[width,height,padding] focus-visible:ring-2 active:bg-sidenav-accent active:text-sidenav-accent-foreground disabled:pointer-events-none disabled:opacity-50 group-has-data-[sidenav=menu-action]/menu-item:pr-8 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-[current=page]:bg-sidenav-accent aria-[current=page]:font-semibold aria-[current=page]:text-sidenav-accent-foreground data-[state=open]:hover:bg-sidenav-accent data-[state=open]:hover:text-sidenav-accent-foreground group-data-[collapsible=Icon]:size-8! group-data-[collapsible=Icon]:p-2! [&>span:last-child]:truncate [&>svg]:size-4 [&>svg]:shrink-0 hover:bg-sidenav-accent hover:text-sidenav-accent-foreground h-8 text-sm",
         class.as_deref().unwrap_or("")
     );
+    #[cfg(target_arch = "wasm32")]
     let path = web_sys::window().and_then(|w| w.location().pathname().ok()).unwrap_or_default();
+    #[cfg(not(target_arch = "wasm32"))]
+    let path = String::new();
     let is_active = path == href || path.starts_with(&format!("{}/", href));
 
     rsx! {
@@ -434,7 +437,10 @@ pub fn SidenavMenuSubButton(
         "text-sidenav-foreground ring-sidenav-ring hover:bg-sidenav-accent hover:text-sidenav-accent-foreground active:bg-sidenav-accent active:text-sidenav-accent-foreground flex h-7 min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-2 text-sm outline-hidden focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 aria-[current=page]:bg-sidenav-accent aria-[current=page]:font-medium aria-[current=page]:text-sidenav-accent-foreground [&>svg]:size-4 [&>svg]:shrink-0",
         class.as_deref().unwrap_or("")
     );
+    #[cfg(target_arch = "wasm32")]
     let path = web_sys::window().and_then(|w| w.location().pathname().ok()).unwrap_or_default();
+    #[cfg(not(target_arch = "wasm32"))]
+    let path = String::new();
     let is_active = path == href || path.starts_with(&format!("{}/", href));
 
     rsx! {

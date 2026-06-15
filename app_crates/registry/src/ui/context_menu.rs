@@ -1,22 +1,26 @@
 use dioxus::prelude::*;
 use icons::ChevronRight;
 use tw_merge::tw_merge;
-use wasm_bindgen::JsCast;
-
 use crate::hooks::use_random::use_random_id_for;
 
 /// Programmatically close any open context menu.
 pub fn close_context_menu() {
-    let Some(document) = web_sys::window().and_then(|w| w.document()) else {
-        return;
-    };
-    let Some(menu) = document.query_selector("[data-target='target__context'][data-state='open']").ok().flatten()
-    else {
-        return;
-    };
-    let _ = menu.set_attribute("data-state", "closed");
-    if let Some(el) = menu.dyn_ref::<web_sys::HtmlElement>() {
-        let _ = el.style().set_property("pointer-events", "none");
+    #[cfg(target_arch = "wasm32")]
+    {
+        use wasm_bindgen::JsCast;
+
+        let Some(document) = web_sys::window().and_then(|w| w.document()) else {
+            return;
+        };
+        let Some(menu) =
+            document.query_selector("[data-target='target__context'][data-state='open']").ok().flatten()
+        else {
+            return;
+        };
+        let _ = menu.set_attribute("data-state", "closed");
+        if let Some(el) = menu.dyn_ref::<web_sys::HtmlElement>() {
+            let _ = el.style().set_property("pointer-events", "none");
+        }
     }
 }
 

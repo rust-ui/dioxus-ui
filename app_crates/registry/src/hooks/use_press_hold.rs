@@ -32,6 +32,7 @@ impl UsePressHold {
         self.clear_interval();
         let mut is_holding = self.is_holding_signal;
         is_holding.set(true);
+        #[cfg(target_arch = "wasm32")]
         self.last_update.set(js_sys::Date::now());
 
         #[cfg(target_arch = "wasm32")]
@@ -85,6 +86,7 @@ impl UsePressHold {
             return;
         }
 
+        #[cfg(target_arch = "wasm32")]
         self.last_update.set(js_sys::Date::now());
 
         #[cfg(target_arch = "wasm32")]

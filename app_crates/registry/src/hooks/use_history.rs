@@ -38,42 +38,48 @@ impl UseHistory {
 
         // Seed the stack with the current query string
         use_effect(move || {
-            let search = web_sys::window().and_then(|w| w.location().search().ok()).unwrap_or_default();
-            let mut history = hook.history;
-            history.with_mut(|h| h.push(search));
+            #[cfg(target_arch = "wasm32")]
+            {
+                let search = web_sys::window().and_then(|w| w.location().search().ok()).unwrap_or_default();
+                let mut history = hook.history;
+                history.with_mut(|h| h.push(search));
+            }
         });
 
         // Register ⌘Z / ⌘⇧Z / ⌃Y shortcuts
         use_effect(move || {
-            let closure = Closure::<dyn Fn(KeyboardEvent)>::new(move |e: KeyboardEvent| {
-                let key = e.key().to_lowercase();
-                let meta = e.meta_key() || e.ctrl_key();
-                let shift = e.shift_key();
+            #[cfg(target_arch = "wasm32")]
+            {
+                let closure = Closure::<dyn Fn(KeyboardEvent)>::new(move |e: KeyboardEvent| {
+                    let key = e.key().to_lowercase();
+                    let meta = e.meta_key() || e.ctrl_key();
+                    let shift = e.shift_key();
 
-                // Skip if focus is in an input / textarea / select
-                if let Some(target) = e.target()
-                    && let Some(el) = target.dyn_ref::<web_sys::HtmlElement>()
-                {
-                    let tag = el.tag_name().to_lowercase();
-                    if matches!(tag.as_str(), "input" | "textarea" | "select") {
-                        return;
+                    // Skip if focus is in an input / textarea / select
+                    if let Some(target) = e.target()
+                        && let Some(el) = target.dyn_ref::<web_sys::HtmlElement>()
+                    {
+                        let tag = el.tag_name().to_lowercase();
+                        if matches!(tag.as_str(), "input" | "textarea" | "select") {
+                            return;
+                        }
                     }
+
+                    if meta && key == "z" && !shift {
+                        e.prevent_default();
+                        hook.go_back();
+                    } else if meta && ((key == "z" && shift) || key == "y") {
+                        e.prevent_default();
+                        hook.go_forward();
+                    }
+                });
+
+                if let Some(document) = web_sys::window().and_then(|w| w.document()) {
+                    let _ = document.add_event_listener_with_callback("keydown", closure.as_ref().unchecked_ref());
                 }
 
-                if meta && key == "z" && !shift {
-                    e.prevent_default();
-                    hook.go_back();
-                } else if meta && ((key == "z" && shift) || key == "y") {
-                    e.prevent_default();
-                    hook.go_forward();
-                }
-            });
-
-            if let Some(document) = web_sys::window().and_then(|w| w.document()) {
-                let _ = document.add_event_listener_with_callback("keydown", closure.as_ref().unchecked_ref());
+                closure.forget();
             }
-
-            closure.forget();
         });
 
         hook
@@ -174,8 +180,13 @@ impl UseHistory {
     /* ========================================================== */
 
     fn replace_state(url: &str) {
-        let Ok(history) = web_sys::window().and_then(|w| w.history().ok()).ok_or(()) else { return };
-        let _ = history.replace_state_with_url(&wasm_bindgen::JsValue::NULL, "", Some(url));
+        #[cfg(target_arch = "wasm32")]
+        {
+            let Ok(history) = web_sys::window().and_then(|w| w.history().ok()).ok_or(()) else { return };
+            let _ = history.replace_state_with_url(&wasm_bindgen::JsValue::NULL, "", Some(url));
+        }
+        #[cfg(not(target_arch = "wasm32"))]
+        let _ = url;
     }
 }
 
