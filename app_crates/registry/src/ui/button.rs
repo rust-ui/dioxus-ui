@@ -76,20 +76,9 @@ pub fn Button(
         class.as_deref().unwrap_or("")
     );
 
-    let nav = use_navigator();
-
     if let Some(url) = href {
         rsx! {
-            a {
-                id: id.as_deref(),
-                class: "{merged_class}",
-                href: "{url}",
-                onclick: move |e| {
-                    e.prevent_default();
-                    nav.push(url.clone());
-                },
-                {children}
-            }
+            a { id: id.as_deref(), class: "{merged_class}", href: "{url}", {children} }
         }
     } else {
         rsx! {
