@@ -13,7 +13,7 @@ use crate::components::navigation::nav_mobile::NavMobile;
 pub fn HeaderDocs() -> Element {
     rsx! {
         header { class: "sticky top-0 z-50 w-full border-b border-border/40 backdrop-blur supports-[backdrop-filter]:bg-background/60",
-            div { class: "container flex justify-between items-center px-6 h-14",
+            div { class: "container flex justify-between items-center px-3 md:px-6 h-14",
                 nav { class: "flex flex-1 justify-between items-center",
                     div {
                         NavMobile {}
