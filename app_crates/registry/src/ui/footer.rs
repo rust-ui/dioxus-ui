@@ -1,6 +1,8 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
+use crate::ui::mobile_link::MobileLink;
+
 #[component]
 pub fn Footer(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged_class = tw_merge!("", class.as_deref().unwrap_or(""));
@@ -16,8 +18,8 @@ pub fn FooterBrandLink(
 ) -> Element {
     let merged_class = tw_merge!("block size-fit", class.as_deref().unwrap_or(""));
     rsx! {
-        a {
-            "data-name": "FooterBrandLink",
+        MobileLink {
+            data_name: "FooterBrandLink",
             class: "{merged_class}",
             href: href.as_deref().unwrap_or("/"),
             aria_label: aria_label.as_deref().unwrap_or("go home"),
@@ -47,8 +49,8 @@ pub fn FooterLink(
     let merged_class =
         tw_merge!("block duration-150 text-foreground/70 hover:text-primary", class.as_deref().unwrap_or(""));
     rsx! {
-        a {
-            "data-name": "FooterLink",
+        MobileLink {
+            data_name: "FooterLink",
             class: "{merged_class}",
             href: href.as_deref().unwrap_or("#"),
             {children}

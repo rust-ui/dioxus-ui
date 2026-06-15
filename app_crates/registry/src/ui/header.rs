@@ -3,6 +3,7 @@ use icons::ChevronDown;
 use tw_merge::tw_merge;
 
 use crate::hooks::use_data_scrolled::use_data_scrolled;
+use crate::ui::mobile_link::MobileLink;
 
 #[component]
 pub fn NavMenuFixed(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
@@ -35,7 +36,14 @@ pub fn NavMenuLink(
         class.as_deref().unwrap_or("")
     );
 
-    rsx! { a { "data-name": "NavMenuLink", class: "{merged_class}", href: "{href}", {children} } }
+    rsx! {
+        MobileLink {
+            data_name: "NavMenuLink",
+            class: "{merged_class}",
+            href: "{href}",
+            {children}
+        }
+    }
 }
 
 #[component]
@@ -49,7 +57,15 @@ pub fn NavMenuHomeLink(
         "transition-all duration-500 h-fit md:in-data-scrolled:px-2 flex gap-2",
         class.as_deref().unwrap_or("")
     );
-    rsx! { a { "data-name": "NavMenuHomeLink", class: "{merged_class}", href: "{href}", "aria-label": aria_label.as_deref().unwrap_or(""), {children} } }
+    rsx! {
+        MobileLink {
+            data_name: "NavMenuHomeLink",
+            class: "{merged_class}",
+            href: "{href}",
+            aria_label: aria_label.as_deref().unwrap_or(""),
+            {children}
+        }
+    }
 }
 
 #[component]
@@ -87,7 +103,14 @@ pub fn NavMenuLinkGrid(
         "grid gap-3.5 p-2 text-sm rounded-md transition-all outline-none grid-cols-[auto_1fr] hover:bg-accent hover:text-foreground focus:bg-muted focus:text-foreground focus-visible:ring-ring/50 focus-visible:outline-1 focus-visible:ring-[3px]",
         class.as_deref().unwrap_or("")
     );
-    rsx! { a { "data-name": "NavMenuLinkGrid", class: "{merged_class}", href: "{href}", {children} } }
+    rsx! {
+        MobileLink {
+            data_name: "NavMenuLinkGrid",
+            class: "{merged_class}",
+            href: "{href}",
+            {children}
+        }
+    }
 }
 
 #[component]
@@ -217,12 +240,12 @@ pub fn NavMenuTrigger(
     );
 
     rsx! {
-        a {
+        MobileLink {
             class: "{merged_class}",
-            "data-name": "NavMenuTrigger",
-            "data-state": "closed",
-            "aria-expanded": "false",
-            "aria-controls": "radix-_R_16inpfiv3b_-content-radix-_R_1d6inpfiv3b_",
+            data_name: "NavMenuTrigger",
+            data_state: "closed",
+            aria_expanded: "false",
+            aria_controls: "radix-_R_16inpfiv3b_-content-radix-_R_1d6inpfiv3b_",
             href: "{href}",
             span { {children} }
             ChevronDown { class: "relative ml-1.5 opacity-75 transition duration-300 top-[1px] size-3 group-hover/dropdown:rotate-180 group-hover/dropdown:translate-y-px group-focus-within/dropdown:rotate-180 group-focus-within/dropdown:translate-y-px" }
