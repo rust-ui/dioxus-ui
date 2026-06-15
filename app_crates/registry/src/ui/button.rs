@@ -1,8 +1,6 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
-use crate::ui::mobile_link::MobileLink;
-
 #[derive(Default, Clone, PartialEq)]
 pub enum ButtonVariant {
     #[default]
@@ -80,10 +78,10 @@ pub fn Button(
 
     if let Some(url) = href {
         rsx! {
-            MobileLink {
+            Link {
                 id: id,
                 class: "{merged_class}",
-                href: "{url}",
+                to: url,
                 {children}
             }
         }
