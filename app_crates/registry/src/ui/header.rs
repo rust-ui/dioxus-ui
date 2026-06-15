@@ -3,7 +3,6 @@ use icons::ChevronDown;
 use tw_merge::tw_merge;
 
 use crate::hooks::use_data_scrolled::use_data_scrolled;
-use crate::ui::mobile_link::MobileLink;
 
 #[component]
 pub fn NavMenuFixed(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
@@ -37,10 +36,10 @@ pub fn NavMenuLink(
     );
 
     rsx! {
-        MobileLink {
-            data_name: "NavMenuLink",
+        Link {
+            "data-name": "NavMenuLink",
             class: "{merged_class}",
-            href: "{href}",
+            to: href,
             {children}
         }
     }
@@ -58,11 +57,11 @@ pub fn NavMenuHomeLink(
         class.as_deref().unwrap_or("")
     );
     rsx! {
-        MobileLink {
-            data_name: "NavMenuHomeLink",
+        Link {
+            "data-name": "NavMenuHomeLink",
             class: "{merged_class}",
-            href: "{href}",
-            aria_label: aria_label.as_deref().unwrap_or(""),
+            to: href,
+            "aria-label": aria_label.as_deref().unwrap_or(""),
             {children}
         }
     }
@@ -104,10 +103,10 @@ pub fn NavMenuLinkGrid(
         class.as_deref().unwrap_or("")
     );
     rsx! {
-        MobileLink {
-            data_name: "NavMenuLinkGrid",
+        Link {
+            "data-name": "NavMenuLinkGrid",
             class: "{merged_class}",
-            href: "{href}",
+            to: href,
             {children}
         }
     }
@@ -240,13 +239,13 @@ pub fn NavMenuTrigger(
     );
 
     rsx! {
-        MobileLink {
+        Link {
             class: "{merged_class}",
-            data_name: "NavMenuTrigger",
-            data_state: "closed",
-            aria_expanded: "false",
-            aria_controls: "radix-_R_16inpfiv3b_-content-radix-_R_1d6inpfiv3b_",
-            href: "{href}",
+            "data-name": "NavMenuTrigger",
+            "data-state": "closed",
+            "aria-expanded": "false",
+            "aria-controls": "radix-_R_16inpfiv3b_-content-radix-_R_1d6inpfiv3b_",
+            to: href,
             span { {children} }
             ChevronDown { class: "relative ml-1.5 opacity-75 transition duration-300 top-[1px] size-3 group-hover/dropdown:rotate-180 group-hover/dropdown:translate-y-px group-focus-within/dropdown:rotate-180 group-focus-within/dropdown:translate-y-px" }
         }

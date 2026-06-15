@@ -29,7 +29,7 @@ pub fn HeaderDocs() -> Element {
                         Button {
                             href: "/create",
                             size: ButtonSize::Sm,
-                            class: "rounded-xl",
+                            class: "hidden rounded-xl md:inline-flex",
                             Plus {}
                             "New"
                         }

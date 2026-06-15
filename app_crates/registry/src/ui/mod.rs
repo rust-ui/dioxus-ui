@@ -55,7 +55,6 @@ pub mod link;
 pub mod marquee;
 pub mod mask;
 pub mod menubar;
-pub mod mobile_link;
 pub mod multi_select;
 pub mod navigation_menu;
 pub mod pagination;
