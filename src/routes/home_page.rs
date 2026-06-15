@@ -99,7 +99,7 @@ fn SectionHeader() -> Element {
 
                 div { class: "flex flex-wrap gap-4 justify-center mt-4",
                     Button {
-                        href: ComponentsRoutes::base_url(),
+                        href: "/components/button",
                         variant: ButtonVariant::Outline,
                         "Browse Components"
                     }
