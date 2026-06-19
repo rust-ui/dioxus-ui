@@ -2,11 +2,11 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_button_group_separator::DemoButtonGroupSeparator;
 use registry::demos::demo_button_group_icon::DemoButtonGroupIcon;
-use registry::demos::demo_button_group_sizes::DemoButtonGroupSizes;
 use registry::demos::demo_button_group_input::DemoButtonGroupInput;
 use registry::demos::demo_button_group_rtl::DemoButtonGroupRtl;
+use registry::demos::demo_button_group_separator::DemoButtonGroupSeparator;
+use registry::demos::demo_button_group_sizes::DemoButtonGroupSizes;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;

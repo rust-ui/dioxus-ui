@@ -2,13 +2,13 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_form::DemoForm;
-use registry::demos::demo_form_validation::DemoFormValidation;
-use registry::demos::demo_form_group::DemoFormGroup;
-use registry::demos::demo_form_fieldset::DemoFormFieldset;
-use registry::demos::demo_form_error::DemoFormError;
-use registry::demos::demo_form_select::DemoFormSelect;
 use registry::demos::demo_auto_form::DemoAutoForm;
+use registry::demos::demo_form::DemoForm;
+use registry::demos::demo_form_error::DemoFormError;
+use registry::demos::demo_form_fieldset::DemoFormFieldset;
+use registry::demos::demo_form_group::DemoFormGroup;
+use registry::demos::demo_form_select::DemoFormSelect;
+use registry::demos::demo_form_validation::DemoFormValidation;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;

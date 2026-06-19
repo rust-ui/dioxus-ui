@@ -2,8 +2,8 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_radio_group::DemoRadioGroup;
 use registry::demos::demo_radio_button_custom::DemoRadioButtonCustom;
+use registry::demos::demo_radio_group::DemoRadioGroup;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;

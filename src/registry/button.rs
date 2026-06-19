@@ -3,15 +3,15 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_button::DemoButton;
-use registry::demos::demo_button_variants::DemoButtonVariants;
-use registry::demos::demo_button_sizes::DemoButtonSizes;
 use registry::demos::demo_button_disabled::DemoButtonDisabled;
-use registry::demos::demo_button_stateful::DemoButtonStateful;
-use registry::demos::demo_button_reactive::DemoButtonReactive;
-use registry::demos::demo_button_override::DemoButtonOverride;
-use registry::demos::demo_button_href::DemoButtonHref;
 use registry::demos::demo_button_group::DemoButtonGroup;
 use registry::demos::demo_button_group_icon::DemoButtonGroupIcon;
+use registry::demos::demo_button_href::DemoButtonHref;
+use registry::demos::demo_button_override::DemoButtonOverride;
+use registry::demos::demo_button_reactive::DemoButtonReactive;
+use registry::demos::demo_button_sizes::DemoButtonSizes;
+use registry::demos::demo_button_stateful::DemoButtonStateful;
+use registry::demos::demo_button_variants::DemoButtonVariants;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
