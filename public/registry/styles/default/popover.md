@@ -1,0 +1,182 @@
+---
+title: "Popover"
+name: "popover"
+cargo_dependencies: ["tw_merge"]
+registry_dependencies: []
+type: "components:ui"
+path: "ui/popover.rs"
+description: "A floating panel that opens on click, anchored to a trigger element."
+tags: []
+---
+
+# Popover
+
+A floating panel that opens on click, anchored to a trigger element.
+
+## Installation
+
+To add this component demo in your app, run:
+
+```bash
+# cargo install ui-cli --force
+ui add popover
+```
+
+## Component Code
+
+```rust
+use std::sync::atomic::{AtomicU64, Ordering};
+
+use dioxus::prelude::*;
+use tw_merge::tw_merge;
+
+static POPOVER_COUNTER: AtomicU64 = AtomicU64::new(0);
+
+fn use_popover_id() -> String {
+    use_hook(|| {
+        let id = POPOVER_COUNTER.fetch_add(1, Ordering::Relaxed);
+        format!("{id}")
+    })
+}
+
+#[derive(Clone)]
+struct PopoverContext {
+    anchor_name: String,
+    trigger_id: String,
+    content_id: String,
+}
+
+#[derive(Clone, Copy, PartialEq, Default)]
+pub enum PopoverAlign {
+    Start,
+    StartOuter,
+    End,
+    EndOuter,
+    #[default]
+    Center,
+}
+
+#[component]
+pub fn Popover(#[props(default = PopoverAlign::Center)] align: PopoverAlign, children: Element) -> Element {
+    let id = use_popover_id();
+    let anchor_name = format!("--anchor_{id}");
+    let trigger_id = format!("popover-trigger-{id}");
+    let content_id = format!("popover_{id}");
+
+    provide_context(PopoverContext {
+        anchor_name: anchor_name.clone(),
+        trigger_id: trigger_id.clone(),
+        content_id: content_id.clone(),
+    });
+
+    let (position_styles, transform_origin) = match align {
+        PopoverAlign::Start => (
+            "left: anchor(left); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) { top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }".to_string(),
+            "left top".to_string(),
+        ),
+        PopoverAlign::StartOuter => (
+            "right: anchor(left); top: anchor(top); margin-right: 8px; @position-try(flip-block) { top: anchor(bottom); margin-top: 8px; }".to_string(),
+            "right top".to_string(),
+        ),
+        PopoverAlign::End => (
+            "right: anchor(right); bottom: anchor(top); margin-bottom: 8px; @position-try(flip-block) { top: anchor(bottom); bottom: auto; margin-top: 8px; margin-bottom: 0; }".to_string(),
+            "right top".to_string(),
+        ),
+        PopoverAlign::EndOuter => (
+            "left: anchor(right); top: anchor(top); margin-left: 8px; @position-try(flip-block) { top: anchor(bottom); margin-top: 8px; }".to_string(),
+            "left top".to_string(),
+        ),
+        PopoverAlign::Center => ("position-area: block-start;".to_string(), "center top".to_string()),
+    };
+
+    let css = format!(
+        "#{content_id} {{ position: fixed; position-anchor: {anchor_name}; {position_styles} transform-origin: {transform_origin}; }}"
+    );
+
+    let tid = trigger_id.clone();
+    let cid = content_id.clone();
+    let script = format!(
+        r#"(function() {{
+        const setup = () => {{
+            const trigger = document.getElementById('{tid}');
+            const content = document.getElementById('{cid}');
+            if (!trigger || !content) {{ setTimeout(setup, 50); return; }}
+            if (trigger.hasAttribute('data-popover-init')) return;
+            trigger.setAttribute('data-popover-init', 'true');
+            const close = () => content.setAttribute('data-state', 'closed');
+            trigger.addEventListener('click', e => {{
+                e.stopPropagation();
+                const isOpen = content.getAttribute('data-state') === 'open';
+                content.setAttribute('data-state', isOpen ? 'closed' : 'open');
+            }});
+            document.addEventListener('click', e => {{
+                if (!content.contains(e.target) && e.target !== trigger) close();
+            }});
+            document.addEventListener('keydown', e => {{ if (e.key === 'Escape') close(); }});
+        }};
+        if (document.readyState === 'loading') {{ document.addEventListener('DOMContentLoaded', setup); }} else {{ setup(); }}
+    }})();"#
+    );
+
+    rsx! {
+        style { dangerous_inner_html: "{css}" }
+        {children}
+        script { dangerous_inner_html: "{script}" }
+    }
+}
+
+#[component]
+pub fn PopoverTrigger(
+    #[props(into, optional)] class: Option<String>,
+    #[props(default = false)] disabled: bool,
+    #[props(into, optional)] aria_label: Option<String>,
+    children: Element,
+) -> Element {
+    let ctx = use_context::<PopoverContext>();
+    rsx! {
+        button {
+            "data-name": "PopoverTrigger",
+            id: "{ctx.trigger_id}",
+            class: tw_merge!(
+                "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 cursor-pointer",
+                class.as_deref().unwrap_or("")
+            ),
+            disabled,
+            "aria-label": aria_label.as_deref(),
+            style: "anchor-name: {ctx.anchor_name};",
+            {children}
+        }
+    }
+}
+
+#[component]
+pub fn PopoverContent(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let ctx = use_context::<PopoverContext>();
+    let c = tw_merge!(
+        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none pointer-events-none opacity-0 transition-all duration-150 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        div {
+            "data-name": "PopoverContent",
+            id: "{ctx.content_id}",
+            class: "{c}",
+            "data-state": "closed",
+            role: "dialog",
+            {children}
+        }
+    }
+}
+
+#[component]
+pub fn PopoverTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("font-medium leading-none", class.as_deref().unwrap_or(""));
+    rsx! { p { "data-name": "PopoverTitle", class: "{merged}", {children} } }
+}
+
+#[component]
+pub fn PopoverDescription(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+    let merged = tw_merge!("text-sm text-muted-foreground mt-1", class.as_deref().unwrap_or(""));
+    rsx! { p { "data-name": "PopoverDescription", class: "{merged}", {children} } }
+}
+```

@@ -1,0 +1,395 @@
+# Registry Tree Dependency
+
+Each dependency level is shown with progressive bullet points: * for components, ** for their dependencies, *** for nested dependencies.
+
+```
+* accordion (ui)
+  ** cargo: tw_merge
+* alert (ui)
+  ** cargo: tw_merge
+* alert_dialog (ui)
+  ** dialog (ui)
+    *** cargo: tw_merge
+* animate (ui)
+  ** cargo: tw_merge
+* aspect_ratio (ui)
+  ** cargo: tw_merge
+* auto_form (ui)
+  ** cargo: tw_merge
+* avatar (ui)
+  ** cargo: tw_merge
+* badge (ui)
+  ** cargo: tw_merge
+* bento_grid (ui)
+  ** cargo: tw_merge
+* bottom_nav (ui)
+  ** cargo: tw_merge
+* breadcrumb (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* button (ui)
+  ** cargo: tw_merge
+* button_action (ui)
+  ** cargo: tw_merge
+  ** button (ui)
+    *** cargo: tw_merge
+  ** use_press_hold (hooks)
+    *** cargo: wasm_bindgen
+* button_group (ui)
+  ** cargo: tw_merge
+  ** separator (ui)
+    *** cargo: tw_merge
+* callout (ui)
+  ** cargo: tw_merge
+* card (ui)
+  ** cargo: tw_merge
+* card_carousel (ui)
+  ** cargo: tw_merge
+* carousel (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* chat (ui)
+  ** cargo: tw_merge
+* checkbox (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* chips (ui)
+* collapsible (ui)
+  ** cargo: tw_merge
+* command (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** button (ui)
+    *** cargo: tw_merge
+* context_menu (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** cargo: wasm_bindgen
+  ** use_random (hooks)
+* data_grid (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** checkbox (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+  ** dropdown_menu (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** use_random (hooks)
+  ** use_cell_edit (hooks)
+    *** data_grid (cycle)
+  ** use_virtual_scroll (hooks)
+    *** cargo: wasm_bindgen
+* data_table (ui)
+* date_picker (ui)
+  ** cargo: time
+  ** cargo: tw_merge
+* dialog (ui)
+  ** cargo: tw_merge
+* direction_provider (ui)
+  ** cargo: tw_merge
+* drag_and_drop (ui)
+  ** cargo: tw_merge
+  ** cargo: wasm_bindgen
+  ** cargo: web_sys
+* drawer (ui)
+  ** cargo: tw_merge
+  ** button (ui)
+    *** cargo: tw_merge
+* dropdown_menu (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** use_random (hooks)
+* empty (ui)
+  ** cargo: tw_merge
+* expandable (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* faq_transition (ui)
+  ** cargo: tw_merge
+* field (ui)
+  ** cargo: tw_merge
+  ** separator (ui)
+    *** cargo: tw_merge
+* form (ui)
+  ** cargo: tw_merge
+  ** label (ui)
+    *** cargo: tw_merge
+  ** separator (ui)
+    *** cargo: tw_merge
+  ** use_form (hooks)
+    *** cargo: serde
+* hover_card (ui)
+  ** cargo: tw_merge
+* image (ui)
+  ** cargo: tw_merge
+* input (ui)
+  ** cargo: tw_merge
+* input_group (ui)
+  ** cargo: tw_merge
+  ** input (ui)
+    *** cargo: tw_merge
+* input_otp (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* input_phone (ui)
+  ** cargo: icons/dioxus
+  ** cargo: serde
+  ** cargo: tw_merge
+  ** command (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** button (ui)
+      **** cargo: tw_merge
+  ** input (ui)
+    *** cargo: tw_merge
+  ** popover (ui)
+    *** cargo: tw_merge
+* input_prompt (ui)
+  ** cargo: tw_merge
+  ** button (ui)
+    *** cargo: tw_merge
+  ** input_group (ui)
+    *** cargo: tw_merge
+    *** input (ui)
+      **** cargo: tw_merge
+* item (ui)
+  ** cargo: tw_merge
+* kbd (ui)
+  ** cargo: tw_merge
+* label (ui)
+  ** cargo: tw_merge
+* marquee (ui)
+  ** cargo: tw_merge
+  ** mask (ui)
+    *** cargo: tw_merge
+* mask (ui)
+  ** cargo: tw_merge
+* menubar (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** use_random (hooks)
+* multi_select (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** use_can_scroll_vertical (hooks)
+  ** use_random (hooks)
+* navigation_menu (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** use_random (hooks)
+* pagination (ui)
+  ** cargo: tw_merge
+* popover (ui)
+  ** cargo: tw_merge
+* pressable (ui)
+  ** cargo: tw_merge
+* progress (ui)
+  ** cargo: tw_merge
+* radio_button (ui)
+  ** cargo: tw_merge
+* radio_button_group (ui)
+  ** cargo: tw_merge
+* scroll_area (ui)
+  ** cargo: tw_merge
+* select (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** use_can_scroll_vertical (hooks)
+  ** use_random (hooks)
+* select_native (ui)
+  ** cargo: tw_merge
+* separator (ui)
+  ** cargo: tw_merge
+* sheet (ui)
+  ** cargo: tw_merge
+  ** button (ui)
+    *** cargo: tw_merge
+* shimmer (ui)
+  ** cargo: tw_merge
+* skeleton (ui)
+  ** cargo: tw_merge
+* slider (ui)
+  ** cargo: tw_merge
+* sonner (ui)
+  ** cargo: tw_merge
+* spinner (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* status (ui)
+  ** cargo: tw_merge
+* switch (ui)
+  ** cargo: tw_merge
+* table (ui)
+  ** cargo: tw_merge
+* tabs (ui)
+  ** cargo: tw_merge
+* textarea (ui)
+  ** cargo: tw_merge
+* theme_toggle (ui)
+  ** cargo: icons/dioxus
+* toggle (ui)
+  ** cargo: tw_merge
+* toggle_group (ui)
+  ** cargo: tw_merge
+* toolbar (ui)
+  ** cargo: tw_merge
+  ** separator (ui)
+    *** cargo: tw_merge
+* tooltip (ui)
+  ** cargo: tw_merge
+* use_breadcrumb (hooks)
+* use_can_scroll (hooks)
+* use_can_scroll_vertical (hooks)
+* use_card_carousel (hooks)
+  ** cargo: wasm_bindgen
+  ** cargo: web_sys
+* use_cell_edit (hooks)
+  ** data_grid (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** checkbox (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+    *** dropdown_menu (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** use_random (hooks)
+    *** use_cell_edit (cycle)
+    *** use_virtual_scroll (hooks)
+      **** cargo: wasm_bindgen
+* use_cell_selection (hooks)
+  ** data_grid (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** checkbox (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+    *** dropdown_menu (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** use_random (hooks)
+    *** use_cell_edit (hooks)
+      **** data_grid (cycle)
+    *** use_virtual_scroll (hooks)
+      **** cargo: wasm_bindgen
+* use_click_outside (hooks)
+  ** cargo: wasm_bindgen
+* use_column_state (hooks)
+  ** cargo: strum
+  ** data_grid (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** checkbox (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+    *** dropdown_menu (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** use_random (hooks)
+    *** use_cell_edit (hooks)
+      **** data_grid (cycle)
+    *** use_virtual_scroll (hooks)
+      **** cargo: wasm_bindgen
+* use_copy_clipboard (hooks)
+  ** cargo: wasm_bindgen
+* use_data_grid_state (hooks)
+  ** data_grid (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** checkbox (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+    *** dropdown_menu (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** use_random (hooks)
+    *** use_cell_edit (hooks)
+      **** data_grid (cycle)
+    *** use_virtual_scroll (hooks)
+      **** cargo: wasm_bindgen
+  ** use_cell_selection (hooks)
+    *** data_grid (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** checkbox (ui)
+        ***** cargo: icons/dioxus
+        ***** cargo: tw_merge
+      **** dropdown_menu (ui)
+        ***** cargo: icons/dioxus
+        ***** cargo: tw_merge
+        ***** use_random (hooks)
+      **** use_cell_edit (hooks)
+        ***** data_grid (cycle)
+      **** use_virtual_scroll (hooks)
+        ***** cargo: wasm_bindgen
+  ** use_click_outside (hooks)
+    *** cargo: wasm_bindgen
+  ** use_drag_selection (hooks)
+    *** data_grid (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** checkbox (ui)
+        ***** cargo: icons/dioxus
+        ***** cargo: tw_merge
+      **** dropdown_menu (ui)
+        ***** cargo: icons/dioxus
+        ***** cargo: tw_merge
+        ***** use_random (hooks)
+      **** use_cell_edit (hooks)
+        ***** data_grid (cycle)
+      **** use_virtual_scroll (hooks)
+        ***** cargo: wasm_bindgen
+* use_data_scrolled (hooks)
+  ** cargo: wasm_bindgen
+* use_drag_selection (hooks)
+  ** data_grid (ui)
+    *** cargo: icons/dioxus
+    *** cargo: tw_merge
+    *** checkbox (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+    *** dropdown_menu (ui)
+      **** cargo: icons/dioxus
+      **** cargo: tw_merge
+      **** use_random (hooks)
+    *** use_cell_edit (hooks)
+      **** data_grid (cycle)
+    *** use_virtual_scroll (hooks)
+      **** cargo: wasm_bindgen
+* use_form (hooks)
+  ** cargo: serde
+* use_handle_day_click (hooks)
+  ** cargo: time
+* use_history (hooks)
+  ** cargo: wasm_bindgen
+  ** cargo: web_sys
+* use_history_stack (hooks)
+* use_horizontal_scroll (hooks)
+  ** cargo: strum
+  ** cargo: wasm_bindgen
+* use_input_otp (hooks)
+  ** cargo: wasm_bindgen
+  ** cargo: web_sys
+* use_is_mobile (hooks)
+* use_lock_body_scroll (hooks)
+* use_lock_body_scroll_dialog (hooks)
+  ** cargo: wasm_bindgen
+* use_lock_body_scroll_popover (hooks)
+  ** cargo: wasm_bindgen
+* use_locks (hooks)
+* use_media_query (hooks)
+  ** cargo: wasm_bindgen
+* use_pagination (hooks)
+* use_press_hold (hooks)
+  ** cargo: wasm_bindgen
+* use_random (hooks)
+* use_scroll_lock (hooks)
+  ** cargo: wasm_bindgen
+* use_theme_mode (hooks)
+* use_virtual_scroll (hooks)
+  ** cargo: wasm_bindgen
+* use_workflow (hooks)
+  ** cargo: serde
+  ** cargo: strum
+```
