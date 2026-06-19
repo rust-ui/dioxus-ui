@@ -3,9 +3,9 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_badge::DemoBadge;
+use registry::demos::demo_badge_variants::DemoBadgeVariants;
 use registry::demos::demo_badge_colors::DemoBadgeColors;
 use registry::demos::demo_badge_custom::DemoBadgeCustom;
-use registry::demos::demo_badge_variants::DemoBadgeVariants;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;

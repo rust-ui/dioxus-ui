@@ -2,8 +2,8 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_direction_provider::DemoDirectionProvider;
 use registry::demos::demo_direction_provider_default::DemoDirectionProviderDefault;
+use registry::demos::demo_direction_provider::DemoDirectionProvider;
 use registry::demos::demo_direction_provider_rtl::DemoDirectionProviderRtl;
 
 use super::RegistryEntry;

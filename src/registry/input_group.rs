@@ -3,9 +3,9 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_input_group::DemoInputGroup;
+use registry::demos::demo_input_group_text::DemoInputGroupText;
 use registry::demos::demo_input_group_block::DemoInputGroupBlock;
 use registry::demos::demo_input_group_rtl::DemoInputGroupRtl;
-use registry::demos::demo_input_group_text::DemoInputGroupText;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
