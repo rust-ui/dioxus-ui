@@ -3,6 +3,8 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_dropzone::DemoDropzone;
+use registry::demos::demo_dropzone_grid::DemoDropzoneGrid;
+use registry::demos::demo_dropzone_toggle::DemoDropzoneToggle;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
@@ -17,5 +19,7 @@ pub static DROPZONE: RegistryEntry = RegistryEntry {
 fn dropzone_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDropzone", |_| rsx! { DemoDropzone {} });
+    c.add("DemoDropzoneGrid", |_| rsx! { DemoDropzoneGrid {} });
+    c.add("DemoDropzoneToggle", |_| rsx! { DemoDropzoneToggle {} });
     c
 }

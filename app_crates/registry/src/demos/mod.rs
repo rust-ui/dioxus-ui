@@ -131,6 +131,8 @@ pub mod demo_dropdown_menu_start_outer;
 pub mod demo_dropdown_menu_user;
 pub mod demo_dropdown_menu_user_icon;
 pub mod demo_dropzone;
+pub mod demo_dropzone_grid;
+pub mod demo_dropzone_toggle;
 pub mod demo_empty;
 pub mod demo_empty_avatar_group;
 pub mod demo_empty_background;

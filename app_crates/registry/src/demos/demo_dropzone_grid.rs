@@ -1,10 +1,10 @@
 use dioxus::prelude::*;
 use icons::Upload;
 
-use crate::ui::dropzone::{Dropzone, DropzoneArea, DropzoneFileList, DropzoneHint, DropzoneIcon, DropzoneLabel};
+use crate::ui::dropzone::{Dropzone, DropzoneArea, DropzoneFileGrid, DropzoneHint, DropzoneIcon, DropzoneLabel};
 
 #[component]
-pub fn DemoDropzone() -> Element {
+pub fn DemoDropzoneGrid() -> Element {
     rsx! {
         div { class: "max-w-[700px] mx-auto w-full",
             Dropzone {
@@ -12,7 +12,7 @@ pub fn DemoDropzone() -> Element {
                     div { class: "space-y-1",
                         h2 { class: "text-base font-semibold", "Upload files" }
                         p { class: "text-sm text-muted-foreground",
-                            "Drag and drop your files here or click to browse."
+                            "Files appear as a card grid with image/video previews."
                         }
                     }
                     DropzoneArea {
@@ -20,7 +20,7 @@ pub fn DemoDropzone() -> Element {
                         DropzoneLabel { "Drag & drop files, or click to select" }
                         DropzoneHint { "Any file — up to 8 files, 8 MB each" }
                     }
-                    DropzoneFileList {}
+                    DropzoneFileGrid {}
                 }
             }
         }

@@ -33,6 +33,7 @@ pub mod dialog;
 pub mod direction_provider;
 pub mod drag_and_drop;
 pub mod drawer;
+pub mod dropzone;
 pub mod dropdown_menu;
 pub mod empty;
 pub mod expandable;
