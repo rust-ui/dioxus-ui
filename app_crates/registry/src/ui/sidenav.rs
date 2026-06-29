@@ -252,7 +252,8 @@ pub fn SidenavWrapper(
 #[component]
 pub fn SidenavResizeHandle(#[props(into, optional)] class: Option<String>) -> Element {
     use_effect(move || {
-        eval(r#"(function() {
+        eval(
+            r#"(function() {
             const h = document.querySelector('[data-sidenav-resize-handle]');
             if (!h || h.dataset.initialized) return;
             h.dataset.initialized = '1';
@@ -286,7 +287,8 @@ pub fn SidenavResizeHandle(#[props(into, optional)] class: Option<String>) -> El
                 document.addEventListener('mousemove', move);
                 document.addEventListener('mouseup', up);
             });
-        })();"#);
+        })();"#,
+        );
     });
 
     let merged_class = tw_merge!(

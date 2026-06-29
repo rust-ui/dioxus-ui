@@ -2,8 +2,8 @@ use dioxus::prelude::*;
 use icons::Upload;
 
 use crate::ui::dropzone::{
-    Dropzone, DropzoneArea, DropzoneCtx, DropzoneFileGrid, DropzoneFileList, DropzoneHint,
-    DropzoneIcon, DropzoneLabel, DropzoneViewToggle, ViewMode,
+    Dropzone, DropzoneArea, DropzoneCtx, DropzoneFileGrid, DropzoneFileList, DropzoneHint, DropzoneIcon, DropzoneLabel,
+    DropzoneViewToggle, ViewMode,
 };
 
 #[component]
