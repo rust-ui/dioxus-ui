@@ -1,3 +1,4 @@
+use dioxus::document::eval;
 use dioxus::prelude::*;
 use dioxus_core::has_context;
 use tw_merge::tw_merge;
@@ -223,6 +224,8 @@ pub fn SidenavInput(
 pub fn SidenavWrapper(
     #[props(into, optional)] class: Option<String>,
     #[props(default = true)] default_open: bool,
+    #[props(default = 160)] min_width: u32,
+    #[props(default = 480)] max_width: u32,
     children: Element,
 ) -> Element {
     let open = use_signal(|| default_open);
@@ -231,7 +234,71 @@ pub fn SidenavWrapper(
         "group/sidenav-wrapper has-data-[variant=Inset]:bg-sidenav flex h-full w-full",
         class.as_deref().unwrap_or("")
     );
-    rsx! { div { "data-name": "SidenavWrapper", class: "{merged_class}", {children} } }
+    rsx! {
+        div {
+            "data-name": "SidenavWrapper",
+            "data-min-width": "{min_width}",
+            "data-max-width": "{max_width}",
+            style: "--sidenav-width: 256px",
+            class: "{merged_class}",
+            {children}
+        }
+    }
+}
+
+/// Drag handle — place inside `Sidenav`, on the trailing edge.
+/// Reads `data-min-width` / `data-max-width` from the nearest `SidenavWrapper`
+/// for clamping; persists width to localStorage as `sidenav-width`.
+#[component]
+pub fn SidenavResizeHandle(#[props(into, optional)] class: Option<String>) -> Element {
+    use_effect(move || {
+        eval(r#"(function() {
+            const h = document.querySelector('[data-sidenav-resize-handle]');
+            if (!h || h.dataset.initialized) return;
+            h.dataset.initialized = '1';
+
+            const wrapper = h.closest('[data-name="SidenavWrapper"]');
+            if (!wrapper) return;
+
+            const saved = localStorage.getItem('sidenav-width');
+            if (saved) wrapper.style.setProperty('--sidenav-width', saved + 'px');
+
+            h.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                document.body.style.userSelect = 'none';
+                const aside = wrapper.querySelector('aside');
+                const x0 = e.clientX;
+                const w0 = aside ? aside.getBoundingClientRect().width : 256;
+                const mn = parseInt(wrapper.dataset.minWidth) || 160;
+                const mx = parseInt(wrapper.dataset.maxWidth) || 480;
+
+                function move(e) {
+                    const w = Math.max(mn, Math.min(mx, w0 + e.clientX - x0));
+                    wrapper.style.setProperty('--sidenav-width', w + 'px');
+                }
+                function up() {
+                    document.body.style.userSelect = '';
+                    const aside = wrapper.querySelector('aside');
+                    if (aside) localStorage.setItem('sidenav-width', aside.getBoundingClientRect().width);
+                    document.removeEventListener('mousemove', move);
+                    document.removeEventListener('mouseup', up);
+                }
+                document.addEventListener('mousemove', move);
+                document.addEventListener('mouseup', up);
+            });
+        })();"#);
+    });
+
+    let merged_class = tw_merge!(
+        "absolute top-0 right-0 w-1 h-full z-50 cursor-col-resize hover:bg-sidenav-border transition-colors",
+        class.as_deref().unwrap_or("")
+    );
+    rsx! {
+        div {
+            "data-sidenav-resize-handle": true,
+            class: "{merged_class}",
+        }
+    }
 }
 
 #[component]
