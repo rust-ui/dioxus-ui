@@ -1,29 +1,21 @@
 +++
 title = "Dropzone"
-description = "File drop area with drag-and-drop, click-to-browse, list/grid toggle, and file validation."
-tags = []
-is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+description = "Rust/UI component for drag-and-drop file uploads with list and grid views."
 +++
 
 <DemoDropzoneToggle />
 
 ## Installation
 
-Copy `ui/dropzone.rs` into your project and add `pub mod dropzone;` to your `ui/mod.rs`.
-
-Requires: `tw_merge`, `icons`, `web-sys` (wasm32), `wasm-bindgen`.
+Coming soon.
 
 ## Usage
 
 ```rust
-use crate::ui::dropzone::{
-    Dropzone, DropzoneArea, DropzoneFileList, DropzoneHint,
-    DropzoneIcon, DropzoneLabel, DropzoneViewToggle,
-    DropzoneCtx, ViewMode,
-};
+use crate::ui::dropzone::{Dropzone, DropzoneArea, DropzoneFileList, DropzoneHint, DropzoneIcon, DropzoneLabel};
+```
 
+```rust
 rsx! {
     Dropzone {
         DropzoneArea {
@@ -40,25 +32,21 @@ rsx! {
 
 ### List view
 
+Files appear as a row list with name, size, and remove button.
+
 <DemoDropzone />
 
 ### Grid view
+
+Files appear as a card grid with image and video previews on hover.
 
 <DemoDropzoneGrid />
 
 ### List / grid toggle
 
+Switch between list and grid view using the toggle buttons.
+
 <DemoDropzoneToggle />
-
-## Props
-
-### `Dropzone`
-
-| Prop | Type | Default | Description |
-|---|---|---|---|
-| `max_files` | `Option<usize>` | unlimited | Max number of files |
-| `max_size_mb` | `Option<f64>` | unlimited | Max size per file in MB |
-| `accept` | `Option<Vec<String>>` | all | Allowed MIME type prefixes |
 
 ## See Also
 
