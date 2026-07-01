@@ -7,7 +7,7 @@ pub fn Spinner(#[props(into, optional)] class: Option<String>) -> Element {
     let merged_class = tw_merge!("size-4 animate-spin", class.as_deref().unwrap_or(""));
 
     rsx! {
-        Loader { class: "{merged_class}" }
+        LoaderCircle { class: "{merged_class}" }
     }
 }
 
@@ -16,6 +16,6 @@ pub fn SpinnerCircle(#[props(into, optional)] class: Option<String>) -> Element 
     let merged_class = tw_merge!("size-4 animate-spin", class.as_deref().unwrap_or(""));
 
     rsx! {
-        LoaderCircle { class: "{merged_class}" }
+        Loader { class: "{merged_class}" }
     }
 }
