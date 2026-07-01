@@ -26,7 +26,6 @@ ui add use_data_scrolled
 
 ```rust
 use dioxus::prelude::*;
-
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::JsCast;
 

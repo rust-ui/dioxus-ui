@@ -49,6 +49,8 @@ pub enum ButtonSize {
     Sm,
     Lg,
     Icon,
+    IconSm,
+    IconXs,
 }
 
 impl ButtonVariant {
@@ -75,6 +77,8 @@ impl ButtonSize {
             ButtonSize::Sm => "h-8 rounded-md px-3 text-xs",
             ButtonSize::Lg => "h-10 rounded-md px-6",
             ButtonSize::Icon => "size-9",
+            ButtonSize::IconSm => "size-8 rounded-md",
+            ButtonSize::IconXs => "size-6 rounded-md",
         }
     }
 }
@@ -94,6 +98,8 @@ pub fn Button(
     #[props(optional)] onpointerup: Option<EventHandler<PointerEvent>>,
     #[props(optional)] onpointerleave: Option<EventHandler<PointerEvent>>,
     #[props(optional)] onpointercancel: Option<EventHandler<PointerEvent>>,
+    #[props(into, optional)] aria_label: Option<String>,
+    #[props(into, optional)] title: Option<String>,
     children: Element,
 ) -> Element {
     let merged_class = tw_merge!(
@@ -109,6 +115,8 @@ pub fn Button(
                 id: id,
                 class: "{merged_class}",
                 to: url,
+                "aria-label": aria_label.as_deref(),
+                title: title.as_deref(),
                 {children}
             }
         }
@@ -119,6 +127,8 @@ pub fn Button(
                 class: "{merged_class}",
                 r#type: button_type.as_deref().unwrap_or("button"),
                 disabled,
+                "aria-label": aria_label.as_deref(),
+                title: title.as_deref(),
                 onclick: move |e| {
                     if let Some(handler) = &onclick {
                         handler.call(e);

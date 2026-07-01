@@ -2,9 +2,9 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
+use registry::demos::demo_dropzone_toggle::DemoDropzoneToggle;
 use registry::demos::demo_dropzone::DemoDropzone;
 use registry::demos::demo_dropzone_grid::DemoDropzoneGrid;
-use registry::demos::demo_dropzone_toggle::DemoDropzoneToggle;
 
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
@@ -18,8 +18,8 @@ pub static DROPZONE: RegistryEntry = RegistryEntry {
 
 fn dropzone_components() -> MdComponents {
     let mut c = MdComponents::new();
+    c.add("DemoDropzoneToggle", |_| rsx! { DemoDropzoneToggle {} });
     c.add("DemoDropzone", |_| rsx! { DemoDropzone {} });
     c.add("DemoDropzoneGrid", |_| rsx! { DemoDropzoneGrid {} });
-    c.add("DemoDropzoneToggle", |_| rsx! { DemoDropzoneToggle {} });
     c
 }

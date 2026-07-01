@@ -6,12 +6,14 @@ alert
 alert_dialog
 animate
 aspect_ratio
+attachment
 auto_form
 avatar
 badge
 bento_grid
 bottom_nav
 breadcrumb
+bubble
 button
 button_action
 button_group
@@ -33,6 +35,7 @@ direction_provider
 drag_and_drop
 drawer
 dropdown_menu
+dropzone
 empty
 expandable
 faq_transition
@@ -51,6 +54,7 @@ label
 marquee
 mask
 menubar
+message
 multi_select
 navigation_menu
 pagination

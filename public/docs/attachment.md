@@ -1,0 +1,91 @@
++++
+title = "Attachment"
+description = "Displays a file or image attachment with media, name, metadata, and optional actions. Use it for files and images in chat composers, message threads, and upload lists."
++++
+
+<DemoAttachment />
+
+## Installation
+
+Coming soon.
+
+## Usage
+
+```rust
+use crate::ui::attachment::{
+    Attachment, AttachmentAction, AttachmentActions,
+    AttachmentContent, AttachmentDescription, AttachmentGroup,
+    AttachmentMedia, AttachmentTitle, AttachmentTrigger,
+};
+```
+
+```rust
+rsx! {
+    Attachment {
+        AttachmentMedia {
+            FileText {}
+        }
+        AttachmentContent {
+            AttachmentTitle { "sales-dashboard.pdf" }
+            AttachmentDescription { "PDF · 2.4 MB" }
+        }
+        AttachmentActions {
+            AttachmentAction { aria_label: "Remove sales-dashboard.pdf",
+                X {}
+            }
+        }
+    }
+}
+```
+
+## Composition
+
+```
+Attachment
+├── AttachmentMedia        (icon or image)
+├── AttachmentContent
+│   ├── AttachmentTitle
+│   └── AttachmentDescription
+├── AttachmentActions
+│   └── AttachmentAction   (ghost icon button, icon-xs by default)
+└── AttachmentTrigger      (absolute overlay — href → <a>, onclick → <button>)
+```
+
+Wrap multiple attachments in `AttachmentGroup` for a horizontally scrollable snap row.
+
+## Examples
+
+### Image
+
+Set `variant: AttachmentMediaVariant::Image` on `AttachmentMedia` and render an `img` inside it. Use `orientation: AttachmentOrientation::Vertical` to stack the media above the content.
+
+<DemoAttachmentImage />
+
+### States
+
+Use the `state` prop on `Attachment` to reflect upload progress. Available states: `Idle`, `Uploading`, `Processing`, `Error`, `Done`.
+
+<DemoAttachmentStates />
+
+### Sizes
+
+Use the `size` prop to control padding and icon sizing. Available: `Default`, `Sm`, `Xs`.
+
+<DemoAttachmentSizes />
+
+### Group
+
+Wrap attachments in `AttachmentGroup` to lay them out in a horizontally scrollable, snapping row.
+
+<DemoAttachmentGroup />
+
+### Trigger
+
+Add `AttachmentTrigger` inside an `Attachment` to make the whole card clickable. Pass `href` to render as an `<a>`, or `onclick` for a button trigger. Actions inside `AttachmentActions` remain independently clickable above the trigger.
+
+<DemoAttachmentTrigger />
+
+## See Also
+
+- [Bubble](/components/bubble)
+- [Message](/components/message)

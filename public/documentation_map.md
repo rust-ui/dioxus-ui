@@ -60,6 +60,21 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Usage
 * See Also
 
+### [Attachment](https://dioxus.rust-ui.com/docs/attachment)
+
+> Displays a file or image attachment with media, name, metadata, and optional actions. Use it for files and images in chat composers, message threads, and upload lists.
+
+* Installation
+* Usage
+* Composition
+* Examples
+  * Image
+  * States
+  * Sizes
+  * Group
+  * Trigger
+* See Also
+
 ### [Auto Form](https://dioxus.rust-ui.com/docs/auto_form)
 
 > Generate Dioxus forms automatically from typed Rust data structures.
@@ -119,6 +134,24 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Installation
 * Usage
   * RTL
+* See Also
+
+### [Bubble](https://dioxus.rust-ui.com/docs/bubble)
+
+> Displays a chat message bubble with multiple style variants and an optional reactions overlay.
+
+* Installation
+* Usage
+* Composition
+* Examples
+  * Variants
+  * Alignment
+  * Bubble Group
+  * Links and Buttons
+  * Reactions
+  * Show More / Collapsible
+  * Tooltip
+  * Popover
 * See Also
 
 ### [Button](https://dioxus.rust-ui.com/docs/button)
@@ -372,12 +405,14 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Dropzone](https://dioxus.rust-ui.com/docs/dropzone)
 
-> File drop area demo for drag-and-drop uploads in Dioxus.
+> Rust/UI component for drag-and-drop file uploads with list and grid views.
 
 * Installation
 * Usage
 * Examples
-  * File Drop Area
+  * List view
+  * Grid view
+  * List / grid toggle
 * See Also
 
 ### [Empty](https://dioxus.rust-ui.com/docs/empty)
@@ -556,6 +591,21 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Examples
   * Basic Menubar
   * RTL
+* See Also
+
+### [Message](https://dioxus.rust-ui.com/docs/message)
+
+> Displays a message in a conversation, with optional avatar, header, footer, and alignment.
+
+* Installation
+* Usage
+* Composition
+* Examples
+  * Avatar
+  * Group
+  * Header and Footer
+  * Actions
+  * Attachment
 * See Also
 
 ### [Multi Select](https://dioxus.rust-ui.com/docs/multi_select)

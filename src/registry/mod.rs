@@ -7,12 +7,14 @@ pub mod alert_dialog;
 pub mod animate;
 pub mod animate_group;
 pub mod aspect_ratio;
+pub mod attachment;
 pub mod auto_form;
 pub mod avatar;
 pub mod badge;
 pub mod bento_grid;
 pub mod bottom_nav;
 pub mod breadcrumb;
+pub mod bubble;
 pub mod button;
 pub mod button_action;
 pub mod button_group;
@@ -41,7 +43,6 @@ pub mod expandable;
 pub mod faq_transition;
 pub mod field;
 pub mod form;
-pub mod hooks;
 pub mod hover_card;
 pub mod image;
 pub mod input;
@@ -55,6 +56,7 @@ pub mod label;
 pub mod marquee;
 pub mod mask;
 pub mod menubar;
+pub mod message;
 pub mod multi_select;
 pub mod navigation_menu;
 pub mod pagination;
@@ -85,6 +87,7 @@ pub mod toggle;
 pub mod toggle_group;
 pub mod toolbar;
 pub mod tooltip;
+pub mod hooks;
 pub mod types;
 
 use accordion::ACCORDION;
@@ -93,12 +96,14 @@ use alert_dialog::ALERT_DIALOG;
 use animate::ANIMATE;
 use animate_group::ANIMATE_GROUP;
 use aspect_ratio::ASPECT_RATIO;
+use attachment::ATTACHMENT;
 use auto_form::AUTO_FORM;
 use avatar::AVATAR;
 use badge::BADGE;
 use bento_grid::BENTO_GRID;
 use bottom_nav::BOTTOM_NAV;
 use breadcrumb::BREADCRUMB;
+use bubble::BUBBLE;
 use button::BUTTON;
 use button_action::BUTTON_ACTION;
 use button_group::BUTTON_GROUP;
@@ -140,6 +145,7 @@ use label::LABEL;
 use marquee::MARQUEE;
 use mask::MASK;
 use menubar::MENUBAR;
+use message::MESSAGE;
 use multi_select::MULTI_SELECT;
 use navigation_menu::NAVIGATION_MENU;
 use pagination::PAGINATION;
@@ -179,12 +185,14 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &ANIMATE,
     &ANIMATE_GROUP,
     &ASPECT_RATIO,
+    &ATTACHMENT,
     &AUTO_FORM,
     &AVATAR,
     &BADGE,
     &BENTO_GRID,
     &BOTTOM_NAV,
     &BREADCRUMB,
+    &BUBBLE,
     &BUTTON,
     &BUTTON_ACTION,
     &BUTTON_GROUP,
@@ -226,6 +234,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &MARQUEE,
     &MASK,
     &MENUBAR,
+    &MESSAGE,
     &MULTI_SELECT,
     &NAVIGATION_MENU,
     &PAGINATION,

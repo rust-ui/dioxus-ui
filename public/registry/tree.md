@@ -14,6 +14,12 @@ Each dependency level is shown with progressive bullet points: * for components,
   ** cargo: tw_merge
 * aspect_ratio (ui)
   ** cargo: tw_merge
+* attachment (ui)
+  ** cargo: tw_merge
+  ** button (ui)
+    *** cargo: tw_merge
+  ** dialog (ui)
+    *** cargo: tw_merge
 * auto_form (ui)
   ** cargo: tw_merge
 * avatar (ui)
@@ -26,6 +32,8 @@ Each dependency level is shown with progressive bullet points: * for components,
   ** cargo: tw_merge
 * breadcrumb (ui)
   ** cargo: icons/dioxus
+  ** cargo: tw_merge
+* bubble (ui)
   ** cargo: tw_merge
 * button (ui)
   ** cargo: tw_merge
@@ -100,6 +108,10 @@ Each dependency level is shown with progressive bullet points: * for components,
   ** cargo: icons/dioxus
   ** cargo: tw_merge
   ** use_random (hooks)
+* dropzone (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** cargo: wasm_bindgen
 * empty (ui)
   ** cargo: tw_merge
 * expandable (ui)
@@ -169,6 +181,8 @@ Each dependency level is shown with progressive bullet points: * for components,
   ** cargo: icons/dioxus
   ** cargo: tw_merge
   ** use_random (hooks)
+* message (ui)
+  ** cargo: tw_merge
 * multi_select (ui)
   ** cargo: icons/dioxus
   ** cargo: tw_merge
