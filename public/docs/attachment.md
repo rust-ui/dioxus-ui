@@ -1,9 +1,10 @@
 +++
 title = "Attachment"
 description = "Displays a file or image attachment with media, name, metadata, and optional actions. Use it for files and images in chat composers, message threads, and upload lists."
+is_new = true
 +++
 
-<DemoAttachment />
+<DemoAttachment class="bg-accent" />
 
 ## Installation
 
@@ -59,31 +60,31 @@ Wrap multiple attachments in `AttachmentGroup` for a horizontally scrollable sna
 
 Set `variant: AttachmentMediaVariant::Image` on `AttachmentMedia` and render an `img` inside it. Use `orientation: AttachmentOrientation::Vertical` to stack the media above the content.
 
-<DemoAttachmentImage />
+<DemoAttachmentImage class="bg-accent" />
 
 ### States
 
 Use the `state` prop on `Attachment` to reflect upload progress. Available states: `Idle`, `Uploading`, `Processing`, `Error`, `Done`.
 
-<DemoAttachmentStates />
+<DemoAttachmentStates class="bg-accent" />
 
 ### Sizes
 
 Use the `size` prop to control padding and icon sizing. Available: `Default`, `Sm`, `Xs`.
 
-<DemoAttachmentSizes />
+<DemoAttachmentSizes class="bg-accent" />
 
 ### Group
 
 Wrap attachments in `AttachmentGroup` to lay them out in a horizontally scrollable, snapping row.
 
-<DemoAttachmentGroup />
+<DemoAttachmentGroup class="bg-accent" />
 
 ### Trigger
 
 Add `AttachmentTrigger` inside an `Attachment` to make the whole card clickable. Pass `href` to render as an `<a>`, or `onclick` for a button trigger. Actions inside `AttachmentActions` remain independently clickable above the trigger.
 
-<DemoAttachmentTrigger />
+<DemoAttachmentTrigger class="bg-accent" />
 
 ## See Also
 

@@ -3,6 +3,7 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 use dioxus::document::eval;
 use dioxus::prelude::*;
 use icons::{Code, Eye};
+use tw_merge::tw_merge;
 
 use crate::__registry__::source_map::get_demo_source;
 
@@ -15,7 +16,15 @@ enum DemoTab {
 }
 
 #[component]
-pub fn DemoWrapper(#[props(into, optional)] demo_name: Option<String>, children: Element) -> Element {
+pub fn DemoWrapper(
+    #[props(into, optional)] demo_name: Option<String>,
+    #[props(into, optional)] class: Option<String>,
+    children: Element,
+) -> Element {
+    let preview_classes = tw_merge!(
+        "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] bg-background p-4",
+        class.as_deref().unwrap_or("")
+    );
     let id = use_hook(|| DEMO_COUNTER.fetch_add(1, Ordering::Relaxed));
     let container_id = format!("demo-content-{id}");
     let handle_id = format!("demo-handle-{id}");
@@ -103,7 +112,7 @@ pub fn DemoWrapper(#[props(into, optional)] demo_name: Option<String>, children:
                     div {
                         id: "{container_id}",
                         "data-name": "Preview",
-                        class: "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] bg-background p-4",
+                        class: "{preview_classes}",
                         {children}
                     }
                     // Drag handle — visual pill, mousedown triggers JS resize
