@@ -43,6 +43,7 @@ pub mod expandable;
 pub mod faq_transition;
 pub mod field;
 pub mod form;
+pub mod get_started;
 pub mod hover_card;
 pub mod image;
 pub mod input;
@@ -53,6 +54,7 @@ pub mod input_prompt;
 pub mod item;
 pub mod kbd;
 pub mod label;
+pub mod marker;
 pub mod marquee;
 pub mod mask;
 pub mod menubar;
@@ -77,6 +79,7 @@ pub mod slider;
 pub mod sonner;
 pub mod spinner;
 pub mod status;
+pub mod stepper;
 pub mod switch;
 pub mod table;
 pub mod tabs;
@@ -142,6 +145,7 @@ use input_prompt::INPUT_PROMPT;
 use item::ITEM;
 use kbd::KBD;
 use label::LABEL;
+use marker::MARKER;
 use marquee::MARQUEE;
 use mask::MASK;
 use menubar::MENUBAR;
@@ -166,6 +170,7 @@ use slider::SLIDER;
 use sonner::SONNER;
 use spinner::SPINNER;
 use status::STATUS;
+use stepper::STEPPER;
 use switch::SWITCH;
 use table::TABLE;
 use tabs::TABS;
@@ -231,6 +236,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &ITEM,
     &KBD,
     &LABEL,
+    &MARKER,
     &MARQUEE,
     &MASK,
     &MENUBAR,
@@ -255,6 +261,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &SONNER,
     &SPINNER,
     &STATUS,
+    &STEPPER,
     &SWITCH,
     &TABLE,
     &TABS,

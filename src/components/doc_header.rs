@@ -13,7 +13,6 @@ use registry::ui::dropdown_menu::{
 };
 use registry::ui::separator::Separator;
 
-use crate::Route;
 use crate::registry::types::RegistryEntry;
 
 const COPY_TIMEOUT_MS: i32 = 2000;
@@ -38,6 +37,7 @@ pub fn DocHeader(
     let (breadcrumb_text, breadcrumb_href) = match section.as_str() {
         "components" => ("Components", "/docs/components"),
         "hooks" => ("Hooks", "/docs/hooks"),
+        "docs" => ("Get Started", "/docs/introduction"),
         _ => ("Components", "/docs/components"),
     };
 
@@ -129,14 +129,14 @@ pub fn DocHeader(
                     // Prev / Next compact
                     div { class: "flex gap-1",
                         if let Some(p) = prev {
-                            Link { to: Route::ComponentPage { name: p.slug.to_string() },
+                            a { href: "/{section}/{p.slug}",
                                 Button { variant: ButtonVariant::Ghost, size: ButtonSize::Sm,
                                     ChevronLeft { class: "size-3.5" }
                                 }
                             }
                         }
                         if let Some(n) = next {
-                            Link { to: Route::ComponentPage { name: n.slug.to_string() },
+                            a { href: "/{section}/{n.slug}",
                                 Button { variant: ButtonVariant::Ghost, size: ButtonSize::Sm,
                                     ChevronRight { class: "size-3.5" }
                                 }

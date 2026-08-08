@@ -125,15 +125,23 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
 
     // Check custom registry first — wrap in DemoWrapper for Preview/Code tabs
     if let Some(component) = components.0.get(&el.name.to_lowercase()) {
-        let demo_name = el.name.clone();
-        let class = (!el.classes.is_empty()).then(|| el.classes.join(" "));
-        let inner = component(MdNodeProps {
+        let node_props = MdNodeProps {
             id: el.id.clone(),
             classes: el.classes.clone(),
             attributes: el.attributes.clone(),
             children,
             text_content: extract_text(&el.children),
-        });
+        };
+
+        // `Install*` tags (e.g. `<InstallAlert />`) render standalone — they're not
+        // live demos, so they skip the Preview/Code demo chrome.
+        if el.name.to_lowercase().starts_with("install") {
+            return component(node_props);
+        }
+
+        let demo_name = el.name.clone();
+        let class = (!el.classes.is_empty()).then(|| el.classes.join(" "));
+        let inner = component(node_props);
         return rsx! { DemoWrapper { demo_name: demo_name, class: class, {inner} } };
     }
 

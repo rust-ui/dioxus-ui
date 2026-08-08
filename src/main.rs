@@ -27,10 +27,12 @@ use domain::workflows::routing::workflows_pages::WorkflowsPage;
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
 use routes::docs_layout::DocsLayout;
+use routes::docs_page::DocsPage;
 use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
 use routes::page_icons::PageIcons;
+use routes::page_not_found::PageNotFound;
 
 const FAVICON: Asset = asset!("/public/favicon.ico");
 const FAVICON_16: Asset = asset!("/public/icons/favicon-16x16.png");
@@ -55,6 +57,8 @@ enum Route {
             ComponentPage { name: String },
             #[route("/hooks/:name")]
             HookPage { name: String },
+            #[route("/docs/:name")]
+            DocsPage { name: String },
         #[end_layout]
         #[layout(BlocksLayout)]
             #[redirect("/blocks", || Route::LoginBlocks {})]
@@ -103,6 +107,8 @@ enum Route {
     WorkflowViewPage { id: String },
     #[route("/view/block/:id")]
     ViewRouter { id: String },
+    #[route("/:..segments")]
+    PageNotFound { segments: Vec<String> },
 }
 
 fn main() {

@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a callout to the user."
 
 ## Installation
 
-Coming soon.
+<InstallAlert />
 
 ## Usage
 

@@ -37,9 +37,11 @@ pub struct CommandItemData {
 /// PAGES_ITEMS
 pub const PAGES_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Home", href: "/", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "Components", href: "/components/accordion", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "CLI", href: "/components/accordion", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "Installation", href: "/components/accordion", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "Introduction", href: "/docs/introduction", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "Installation", href: "/docs/installation", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "Changelog", href: "/docs/changelog", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "Figma", href: "/docs/figma", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "RTL Support", href: "/docs/rtl", category: CommandCategory::Pages, add_cmd: None },
 ];
 
 /// COMPONENTS_ITEMS
@@ -96,6 +98,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Item", href: "/components/item", category: CommandCategory::Components, add_cmd: Some("item") },
     CommandItemData { label: "Kbd", href: "/components/kbd", category: CommandCategory::Components, add_cmd: Some("kbd") },
     CommandItemData { label: "Label", href: "/components/label", category: CommandCategory::Components, add_cmd: Some("label") },
+    CommandItemData { label: "Marker", href: "/components/marker", category: CommandCategory::Components, add_cmd: Some("marker") },
     CommandItemData { label: "Marquee", href: "/components/marquee", category: CommandCategory::Components, add_cmd: Some("marquee") },
     CommandItemData { label: "Mask", href: "/components/mask", category: CommandCategory::Components, add_cmd: Some("mask") },
     CommandItemData { label: "Menubar", href: "/components/menubar", category: CommandCategory::Components, add_cmd: Some("menubar") },
@@ -120,6 +123,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Sonner", href: "/components/sonner", category: CommandCategory::Components, add_cmd: Some("sonner") },
     CommandItemData { label: "Spinner", href: "/components/spinner", category: CommandCategory::Components, add_cmd: Some("spinner") },
     CommandItemData { label: "Status", href: "/components/status", category: CommandCategory::Components, add_cmd: Some("status") },
+    CommandItemData { label: "Stepper", href: "/components/stepper", category: CommandCategory::Components, add_cmd: Some("stepper") },
     CommandItemData { label: "Switch", href: "/components/switch", category: CommandCategory::Components, add_cmd: Some("switch") },
     CommandItemData { label: "Table", href: "/components/table", category: CommandCategory::Components, add_cmd: Some("table") },
     CommandItemData { label: "Tabs", href: "/components/tabs", category: CommandCategory::Components, add_cmd: Some("tabs") },
