@@ -51,10 +51,9 @@ This renders a file tree + highlighted starter files inside the installation doc
 Dioxus currently has a simpler `public/docs/installation.md` page with prose and a single CLI command block, but no equivalent interactive installation example.
 
 Status:
-- [ ] Decide whether Dioxus should also have an installation-specific interactive example
-- [ ] If yes, port or reimplement the tree/file-view example in Dioxus
+- [ ] Port or reimplement the installation-specific tree/file-view example in Dioxus
 
-This is now a secondary docs parity gap rather than a systemic install rollout blocker.
+This is now a secondary docs parity gap rather than a systemic install rollout blocker, but parity means Dioxus should match the Leptos installation experience.
 
 #### 2. Hooks exist but are not fully exposed in docs/navigation
 
@@ -149,17 +148,13 @@ Leptos has a dedicated overview page for browsing all component demos / hook dem
 I did not find an equivalent route/page on the Dioxus side.
 
 Status:
-- [ ] Decide whether Dioxus should expose an all-demos index page
-- [ ] If yes, add the route, page, and demo index source
+- [ ] Add the equivalent all-demos route, page, and demo index source to Dioxus
 
 This is a real discoverability gap for users browsing the docs at a higher level than individual pages.
 
 #### 7. Possibly missing download page
 
-- [ ] `page_download.rs` equivalent, if Dioxus distribution needs the same download UX as Leptos
-
-Decision needed:
-- Confirm whether Dioxus ships downloadable desktop binaries through the same UX before porting this page.
+- [ ] Port the `page_download.rs` equivalent so Dioxus matches the Leptos download UX
 
 #### 8. Command bar / top-level docs navigation taxonomy differs from Leptos
 
@@ -177,8 +172,8 @@ This may not always be a broken route, but it is a parity mismatch in navigation
 
 Status:
 - [ ] Review command-bar page entries for correct route targets
-- [ ] Decide whether get-started docs should live only under `/docs/:name` in Dioxus
-- [ ] Remove or justify duplicated docs entries under the component registry/search surface
+- [ ] Make get-started docs live under the same dedicated docs route structure as Leptos
+- [ ] Remove duplicated or misplaced docs entries under the component registry/search surface
 
 ### P3 — Medium/Low Priority: test coverage
 
@@ -227,10 +222,10 @@ Status:
 
 This is organizational parity, not a missing feature.
 
-#### 9. Domain-level items to confirm
+#### 9. Domain-level parity gaps
 
-- [ ] `bug_report` domain: confirm whether it is still relevant for Dioxus
-- [ ] Internal `docs` domain/page structure: confirm whether it should exist in Dioxus in the same form
+- [ ] Port the `bug_report` domain to Dioxus
+- [ ] Port the internal `docs` domain/page structure to Dioxus in the same form as Leptos
 
 Notes:
 - `icons` and `themes` are not actual gaps; they already exist under `app_crates/app_domain/src/`, just with different organization.
@@ -265,6 +260,6 @@ Components that exist on Dioxus only and are not parity gaps:
 2. Expose the missing hooks in docs, registry, sidenav, and navigation.
 3. Port the missing hook demos and missing item/input-group demos.
 4. Add the remaining user-facing docs pages: `workflow.md`, `cli.md`, `icons.md`.
-5. Decide whether `page_download` is actually relevant for Dioxus.
+5. Port the `page_download` equivalent and align top-level docs/search navigation with Leptos.
 6. Start Playwright parity only after the docs/demo surface above is stable.
-7. Leave constants/domain cleanup for last.
+7. Leave constants cleanup for last.
