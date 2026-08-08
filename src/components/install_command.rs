@@ -29,17 +29,14 @@ pub fn InstallCommand(
     let manual_highlighted = highlight_code(&raw_code, Some("rust"), None);
     let file_path = format!("app_crates/registry/src/ui/{name}.rs");
 
-    let tab_class = |t: Tab| {
-        if tab() == t {
-            "pb-2 text-sm font-bold text-foreground border-b-2 border-foreground -mb-px"
-        } else {
-            "pb-2 text-sm font-medium text-muted-foreground"
-        }
-    };
+    let tab_base = "inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 text-sm font-medium transition-colors";
+    let active = "bg-background text-foreground shadow-sm";
+    let inactive = "text-muted-foreground hover:text-foreground";
+    let tab_class = move |t: Tab| format!("{tab_base} {}", if tab() == t { active } else { inactive });
 
     rsx! {
         div { class: "flex flex-col w-full",
-            div { class: "flex gap-6 border-b border-border",
+            div { class: "self-start inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground",
                 button { class: "{tab_class(Tab::Cli)}", onclick: move |_| tab.set(Tab::Cli), "CLI" }
                 button { class: "{tab_class(Tab::Manual)}", onclick: move |_| tab.set(Tab::Manual), "Manual" }
             }

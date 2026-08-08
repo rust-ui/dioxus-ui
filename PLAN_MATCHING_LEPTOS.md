@@ -1,19 +1,49 @@
-# Plan: matching leptos (`app_crates/registry`, `app/src`)
+# Plan: Match Leptos Feature Parity
 
-Goal: dioxus-ui = feature parity with the leptos version (`/Users/user/dev/1-RUST/RUST-UI/app*`).
+Goal: bring `dioxus-ui` to practical feature parity with the Leptos implementation under `/Users/user/dev/1-RUST/RUST-UI/app*`.
 
-## 1. Missing UI components (`app_crates/registry/src/ui/`)
+This file tracks confirmed gaps only. It is organized by execution priority rather than by folder so it can be used as a working backlog.
 
-- [x] `marker.rs` — ported, wired (mod.rs, registry, sidenav, command bar), cargo check clean
-- [x] `stepper.rs` — ported, wired, cargo check clean
+## Current Summary
 
-Components dioxus has extra (not in leptos, leave as-is): `dropzone`, `radio_group`, `toggle`, `toolbar`, `workflow`.
+- Core UI component parity is effectively complete.
+- The largest visible product gap is documentation quality, especially install sections that still show placeholder content.
+- The largest structural gap is Playwright coverage.
+- The best implementation order is: install/docs rollout -> hooks exposure -> missing demos -> remaining docs pages -> test parity -> optional cleanup.
 
-## 2. Hooks — partially exposed
+## Priority Order
 
-Leptos has 9 hook docs in `public/docs/hooks/`; dioxus currently exposes only 3 (`use_copy_clipboard`, `use_lock_body_scroll`, `use_random`) in `src/registry/hooks/` and `src/__registry__/sidenav_hooks.rs`.
+### P0 — Highest Priority: user-visible gaps
 
-These 6 hook files exist on the dioxus side, but still have no doc page and no sidenav entry:
+These are the issues users will notice immediately when browsing the Dioxus docs site.
+
+#### 1. Installation sections still show placeholder content on most docs pages
+
+There are currently **92** `"Coming soon."` matches under `dioxus-ui/public/docs/`.
+
+Leptos does not have this gap: component docs render a real install block with CLI and manual installation guidance.
+
+Status:
+- [x] Generic Dioxus install component exists: `src/components/install_command.rs`
+- [x] Alert proof of concept is wired end-to-end
+- [ ] Roll out the same pattern to the remaining component docs
+- [ ] Verify that `ui-cli add <component>` is valid for Dioxus before documenting it broadly
+
+Recommended execution:
+1. Finish the install component rollout across all remaining component docs.
+2. Validate the CLI command format in `ui-cli`.
+3. Remove every remaining placeholder install section.
+
+#### 2. Hooks exist but are not fully exposed in docs/navigation
+
+Leptos has 9 hook docs in `public/docs/hooks/`.
+Dioxus currently exposes only 3 in docs/registry/navigation:
+
+- [x] `use_copy_clipboard`
+- [x] `use_lock_body_scroll`
+- [x] `use_random`
+
+These 6 hooks exist on the Dioxus side but are still missing docs-page wiring and sidenav exposure:
 
 - [ ] `use_history`
 - [ ] `use_horizontal_scroll`
@@ -22,11 +52,19 @@ These 6 hook files exist on the dioxus side, but still have no doc page and no s
 - [ ] `use_media_query`
 - [ ] `use_press_hold`
 
-Actions per hook:
-- doc `.md` in `public/docs/hooks/` (adapt from leptos `public/docs/hooks/*.md`)
-- entry in `src/__registry__/sidenav_hooks.rs`
+Required work per hook:
+- [ ] Add the markdown doc in `public/docs/hooks/`
+- [ ] Register it in `src/registry/hooks/`
+- [ ] Add the sidenav entry in `src/__registry__/sidenav_hooks.rs`
+- [ ] Ensure command bar / page navigation picks it up correctly
 
-Hook demos are a separate gap. Missing on dioxus side versus leptos:
+### P1 — High Priority: demo parity
+
+These gaps directly affect the usefulness of the docs because the site depends heavily on live demos.
+
+#### 3. Missing hook demos
+
+The following hook demos exist on the Leptos side but are still missing in Dioxus:
 
 - [ ] `demo_use_copy_to_clipboard.rs`
 - [ ] `demo_use_horizontal_scroll.rs`
@@ -37,80 +75,141 @@ Hook demos are a separate gap. Missing on dioxus side versus leptos:
 - [ ] `demo_use_press_hold.rs`
 - [ ] `demo_use_random.rs`
 
-- [x] `use_stepper` — ported, wired into `hooks/mod.rs`
-- [x] `demo_use_history.rs` — already present on dioxus side
+Already present:
+- [x] `demo_use_history.rs`
 
-## 3. Missing demos (component already exists on both sides)
+#### 4. Missing component demos
 
-Registry demo count: leptos `322`, dioxus `312`.
+Registry demo count:
+- Leptos: `322`
+- Dioxus: `312`
 
-- [ ] `demo_item_*` (5): file_upload, group, media_image, rtl, variants
-- [ ] `demo_input_group_*` (6): custom, dropdown, in_card, kbd, spinner, tooltip
+Confirmed missing demos:
+- [ ] `demo_item_file_upload.rs`
+- [ ] `demo_item_group.rs`
+- [ ] `demo_item_media_image.rs`
+- [ ] `demo_item_rtl.rs`
+- [ ] `demo_item_variants.rs`
+- [ ] `demo_input_group_custom.rs`
+- [ ] `demo_input_group_dropdown.rs`
+- [ ] `demo_input_group_in_card.rs`
+- [ ] `demo_input_group_kbd.rs`
+- [ ] `demo_input_group_spinner.rs`
+- [ ] `demo_input_group_tooltip.rs`
 - [ ] `demo_kbd_input_group.rs`
 - [ ] `demo_empty_input_group.rs`
-- [x] marker/stepper demos (12 files) — ported
 
-## 4. `constants/` module missing (minor, cosmetic)
+Already completed:
+- [x] Marker demos
+- [x] Stepper demos
 
-Leptos centralizes pagination/grid constants in `app_crates/registry/src/constants/{mod,pagination}.rs` (`PAGINATION::DEFAULT_PAGE_SIZE`, `PAGE_SIZE_OPTIONS`, `ROW_HEIGHT`), used by `use_virtual_scroll.rs`.
-Dioxus hardcodes the same values (e.g. `ROW_HEIGHT = 36`) inline in `use_virtual_scroll.rs` instead of a shared module. Functionally equivalent — optional refactor for parity, not a real feature gap.
+### P2 — Medium Priority: missing user-facing docs/pages
 
-- [ ] `app_crates/registry/src/constants/mod.rs` + `pagination.rs` (optional)
+These are smaller than the install/docs systemic gap, but they are still visible holes in the site.
 
-## 5. Missing docs for components already ported on dioxus side
+#### 5. Missing docs pages for surfaces that already exist
 
 - [ ] `public/docs/workflow.md`
+- [ ] `public/docs/cli.md`
+- [ ] `public/docs/icons.md`
 
-(`radio_group` doc already exists, just named `radio-group.md` — hyphen instead of underscore, inconsistent with rest but not missing.)
+Notes:
+- `workflow` exists as a Dioxus component surface but does not yet have a matching doc page.
+- `cli.md` should be written for the Dioxus workflow. Do not blindly copy the Leptos version.
+- `icons.md` is a docs-content gap only. Dioxus already has a dedicated `/icons` route via `src/routes/page_icons.rs`.
 
-## 6. Domain — to verify / discuss
+#### 6. Possibly missing download page
 
-- [ ] `bug_report` — absent everywhere, no trace on dioxus side. Check if relevant.
-- [ ] `docs` (internal domain/docs page) — absent. Check if relevant.
+- [ ] `page_download.rs` equivalent, if Dioxus distribution needs the same download UX as Leptos
 
-Note: `icons` and `themes` looked missing but already exist under `app_crates/app_domain/src/` (just organized differently from leptos `app/src/domain/`) — not an actual gap. Same for `charts` routing (`app_crates/app_routes/src/charts_routes.rs` exists, just not under `src/routes/`).
+Decision needed:
+- Confirm whether Dioxus ships downloadable desktop binaries through the same UX before porting this page.
 
-## 7. Missing general/static site pages
+### P3 — Medium/Low Priority: test coverage
 
-No doc, page, or route found anywhere in dioxus-ui for:
+This is a major gap, but it should follow the docs/demo stabilization work. Otherwise the tests will be ported against moving targets.
 
-- [x] Introduction (leptos: `public/docs/introduction.md`) — ported, wired via new `/docs/:name` route
-- [x] Installation (leptos: `public/docs/installation.md`) — ported, Framework Support section reframed for Dioxus
-- [x] Changelog (leptos: `public/docs/changelog.md`) — created fresh (dioxus has no history to backfill)
-- [x] Figma (leptos: `public/docs/figma.md`) — ported as-is
-- [x] RTL overview page (leptos: `public/docs/rtl.md`) — ported, added a live `DemoButtonRtl` example
-- [x] 404 / not-found route (leptos: `app/src/routes/page_not_found.rs`) — added `PageNotFound` + catch-all `#[route("/:..segments")]`
+#### 7. Missing Playwright coverage
 
-Lower priority / check relevance before porting:
-- [ ] Download page (leptos: `app/src/routes/page_download.rs`, desktop release downloads) — confirm dioxus ships/distributes the same way before porting
-- [ ] `cli.md` — present in leptos `public/docs/cli.md`, absent from dioxus `public/docs/`; dioxus has its own CLI (`ui-cli` crate), so this needs dioxus-specific content rather than a blind copy
-- [ ] `icons.md` static doc page — present in leptos `public/docs/icons.md`, absent from dioxus `public/docs/`; note that dioxus already has a dedicated `/icons` route via `src/routes/page_icons.rs`, so this is a docs-content gap, not a feature gap
+Current state:
+- Leptos component specs: `60`
+- Dioxus component specs: `3` (`card.spec.ts`, `node_canvas.spec.ts`, `workflow.spec.ts`)
+- Leptos hook specs: `6`
+- Dioxus hook specs: `0`
 
-## 8. E2E test coverage (Playwright) — large gap
+Missing hook test coverage:
+- [ ] Add `e2e/tests/hooks/`
+- [ ] Port `use-copy-clipboard.spec.ts`
+- [ ] Port `use-history.spec.ts`
+- [ ] Port `use-horizontal-scroll.spec.ts`
+- [ ] Port `use-lock-body-scroll.spec.ts`
+- [ ] Port `use-press-hold.spec.ts`
+- [ ] Port `use-random.spec.ts`
 
-Leptos `e2e/tests/components/` has 60 component `.spec.ts` files + a `hooks/` test folder. Dioxus `e2e/tests/components/` currently has only 3 specs: `card.spec.ts`, `node_canvas.spec.ts`, `workflow.spec.ts`.
+Missing component test coverage:
+- [ ] Port the missing component specs from Leptos (roughly 59 still missing on the Dioxus side)
 
-- [ ] Missing entire `hooks/` e2e test folder
-- [ ] Missing 6 hook specs from leptos: `use-copy-clipboard`, `use-history`, `use-horizontal-scroll`, `use-lock-body-scroll`, `use-press-hold`, `use-random`
-- [ ] Missing 59 component specs (accordion, alert, alert-dialog, auto-form, avatar, badge, bottom-nav, breadcrumb, button*, card-carousel, chart, checkbox, chips, combobox, command, context-menu, create-page, data-table, date-picker, dialog, drag-and-drop, drawer, dropdown-menu, dropzone, empty, form, input*, item, kbd, label, marquee, multi-select, pagination, popover, pressable, radio-button*, scroll-area, select, separator, sheet, sidenav, skeleton, slider, sonner, spinner, status, switch, table, tabs, textarea, theme-toggle, toast, tooltip)
+Recommended execution:
+1. Port tests first for hooks and components whose docs/demos are already finalized.
+2. Reuse Leptos selectors and expectations only where the Dioxus DOM and behavior actually match.
+3. Avoid bulk-copying tests before the remaining docs/demo work is stable.
 
-This is likely the biggest real quality/coverage gap versus leptos — worth its own pass once components/demos above are ported (tests need matching selectors/behavior to port meaningfully).
+### P4 — Low Priority: optional parity cleanup
 
-## 9. `## Installation` section is a stub on every doc page — systemic gap
+These are real differences, but not meaningful product gaps.
 
-Found by grepping "Coming soon" across `public/docs/`: there are currently **92** matches on the dioxus side. The previous 91/91 count is stale now that additional pages exist and Alert has already been converted to `<InstallAlert />`. Leptos never has this stub — every component doc renders a real `<StaticInstallBadge />`-style component instead.
+#### 8. Shared constants module
 
-Leptos mechanism (read for reference):
-- `app/src/domain/markdown_ui/components/static_install_wrapper.rs` — `StaticInstallWrapper` component: two tabs (CLI / Manual). CLI tab shows `cargo install ui-cli --force` + `ui add <demo_name>` + `ui add <install_name>`, syntax-highlighted (`SyntectHighlighterCode`). Manual tab shows the full raw component source with expand/collapse.
-- `app/src/__registry__/static_md_registry.rs` — lookup table mapping each component name (`MarkdownType` enum) to `{ install_name, demo_name, raw_code }`.
-- Per-component markdown files reference a per-component wrapper like `<StaticInstallBadge />`, resolved through the markdown-to-component pipeline (same one that resolves `<DemoBadge />` etc.).
+Leptos centralizes pagination/grid constants in:
+- `app_crates/registry/src/constants/mod.rs`
+- `app_crates/registry/src/constants/pagination.rs`
 
-Dioxus already has the building block needed (syntax highlighting exists: `dioxus-ui/src/markdown/highlight_code.rs`, syntect-based) — just missing the wrapper component + registry + wiring into all 91 doc pages.
+Dioxus currently hardcodes equivalent values inline, such as `ROW_HEIGHT = 36`, in places like `use_virtual_scroll.rs`.
 
-- [x] Design the dioxus version: built a single generic component `src/components/install_command.rs` (`InstallCommand { name, demo_name, raw_code }`) instead of 91 generated per-component wrapper functions like leptos — simpler since each registry file just passes its own `include_str!` + names as props.
-- [x] Build the CLI/Manual tabs component — reuses `registry::ui::tabs::{Tabs, TabsList, TabsTrigger, TabsContent}` + `highlight_code.rs`; Manual tab has expand/collapse via `Button` (Secondary/Sm), matching leptos's UX.
-- [x] Proof of concept done on **Alert**: `src/registry/alert.rs` registers `InstallAlert` tag calling `InstallCommand` with `include_str!("../../app_crates/registry/src/ui/alert.rs")`; `public/docs/alert.md` now uses `<InstallAlert />` instead of "Coming soon.". `cargo check --workspace` clean.
-- [ ] Roll out the same pattern to the other ~90 `public/docs/*.md` + `src/registry/*.rs` files (register an `Install<Name>` tag per component, same 3-line pattern as alert.rs)
-- [ ] Verify `ui-cli add <component>` command actually works for dioxus components before advertising it in the docs (check `ui-cli`'s dioxus support — `PLAN_HANDLE_DIOXUS.md` in that crate)
+Status:
+- [ ] Optional refactor to add `app_crates/registry/src/constants/mod.rs`
+- [ ] Optional refactor to add `app_crates/registry/src/constants/pagination.rs`
 
-Biggest systemic/visible gap for actual site visitors — every single component doc page shows a broken-looking stub. Alert now fixed as reference implementation for the rollout.
+This is organizational parity, not a missing feature.
+
+#### 9. Domain-level items to confirm
+
+- [ ] `bug_report` domain: confirm whether it is still relevant for Dioxus
+- [ ] Internal `docs` domain/page structure: confirm whether it should exist in Dioxus in the same form
+
+Notes:
+- `icons` and `themes` are not actual gaps; they already exist under `app_crates/app_domain/src/`, just with different organization.
+- `charts` routing is also not a real gap; it exists under `app_crates/app_routes/src/charts_routes.rs`.
+
+## Already Completed
+
+### UI component parity already handled
+
+- [x] `marker.rs`
+- [x] `stepper.rs`
+
+Components that exist on Dioxus only and are not parity gaps:
+- `dropzone`
+- `radio_group`
+- `toggle`
+- `toolbar`
+- `workflow`
+
+### General pages already handled
+
+- [x] Introduction
+- [x] Installation
+- [x] Changelog
+- [x] Figma
+- [x] RTL overview
+- [x] 404 / catch-all not-found route
+
+## Recommended Execution Plan
+
+1. Finish the install-section rollout across all component docs.
+2. Expose the missing hooks in docs, registry, sidenav, and navigation.
+3. Port the missing hook demos and missing item/input-group demos.
+4. Add the remaining user-facing docs pages: `workflow.md`, `cli.md`, `icons.md`.
+5. Decide whether `page_download` is actually relevant for Dioxus.
+6. Start Playwright parity only after the docs/demo surface above is stable.
+7. Leave constants/domain cleanup for last.
