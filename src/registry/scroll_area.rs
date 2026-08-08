@@ -22,11 +22,13 @@ fn scroll_area_components() -> MdComponents {
     c.add("DemoScrollArea", |_| rsx! { DemoScrollArea {} });
     c.add("DemoScrollAreaHorizontal", |_| rsx! { DemoScrollAreaHorizontal {} });
     c.add("DemoScrollAreaRtl", |_| rsx! { DemoScrollAreaRtl {} });
-    c.add("InstallScrollArea", |_| rsx! {
-        InstallCommand {
-            name: "scroll-area",
-            demo_name: "demo_scroll_area",
-            raw_code: include_str!("../../app_crates/registry/src/ui/scroll_area.rs"),
+    c.add("InstallScrollArea", |_| {
+        rsx! {
+            InstallCommand {
+                name: "scroll-area",
+                demo_name: "demo_scroll_area",
+                raw_code: include_str!("../../app_crates/registry/src/ui/scroll_area.rs"),
+            }
         }
     });
     c

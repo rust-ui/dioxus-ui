@@ -18,11 +18,13 @@ pub static ANIMATE_GROUP: RegistryEntry = RegistryEntry {
 fn animate_group_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAnimateGroup", |_| rsx! { DemoAnimateGroup {} });
-    c.add("InstallAnimateGroup", |_| rsx! {
-        InstallCommand {
-            name: "animate-group",
-            demo_name: "demo_animate_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+    c.add("InstallAnimateGroup", |_| {
+        rsx! {
+            InstallCommand {
+                name: "animate-group",
+                demo_name: "demo_animate_group",
+                raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+            }
         }
     });
     c

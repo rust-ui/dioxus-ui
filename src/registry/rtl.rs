@@ -7,12 +7,8 @@ use registry::demos::demo_button_rtl::DemoButtonRtl;
 use super::RegistryEntry;
 use crate::markdown::converter::MdComponents;
 
-pub static RTL: RegistryEntry = RegistryEntry {
-    slug: "rtl",
-    raw: include_str!("../../public/docs/rtl.md"),
-    tags: &[],
-    components: rtl_components,
-};
+pub static RTL: RegistryEntry =
+    RegistryEntry { slug: "rtl", raw: include_str!("../../public/docs/rtl.md"), tags: &[], components: rtl_components };
 
 fn rtl_components() -> MdComponents {
     let mut c = MdComponents::new();

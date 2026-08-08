@@ -18,11 +18,13 @@ pub static MASK: RegistryEntry = RegistryEntry {
 fn mask_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoMask", |_| rsx! { DemoMask {} });
-    c.add("InstallMask", |_| rsx! {
-        InstallCommand {
-            name: "mask",
-            demo_name: "demo_mask",
-            raw_code: include_str!("../../app_crates/registry/src/ui/mask.rs"),
+    c.add("InstallMask", |_| {
+        rsx! {
+            InstallCommand {
+                name: "mask",
+                demo_name: "demo_mask",
+                raw_code: include_str!("../../app_crates/registry/src/ui/mask.rs"),
+            }
         }
     });
     c

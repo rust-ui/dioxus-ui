@@ -20,11 +20,13 @@ fn alert_dialog_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAlertDialog", |_| rsx! { DemoAlertDialog {} });
     c.add("DemoAlertDialogSmallMedia", |_| rsx! { DemoAlertDialogSmallMedia {} });
-    c.add("InstallAlertDialog", |_| rsx! {
-        InstallCommand {
-            name: "alert-dialog",
-            demo_name: "demo_alert_dialog",
-            raw_code: include_str!("../../app_crates/registry/src/ui/alert_dialog.rs"),
+    c.add("InstallAlertDialog", |_| {
+        rsx! {
+            InstallCommand {
+                name: "alert-dialog",
+                demo_name: "demo_alert_dialog",
+                raw_code: include_str!("../../app_crates/registry/src/ui/alert_dialog.rs"),
+            }
         }
     });
     c

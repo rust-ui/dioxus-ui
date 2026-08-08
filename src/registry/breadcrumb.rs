@@ -20,11 +20,13 @@ fn breadcrumb_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoBreadcrumb", |_| rsx! { DemoBreadcrumb {} });
     c.add("DemoBreadcrumbRtl", |_| rsx! { DemoBreadcrumbRtl {} });
-    c.add("InstallBreadcrumb", |_| rsx! {
-        InstallCommand {
-            name: "breadcrumb",
-            demo_name: "demo_breadcrumb",
-            raw_code: include_str!("../../app_crates/registry/src/ui/breadcrumb.rs"),
+    c.add("InstallBreadcrumb", |_| {
+        rsx! {
+            InstallCommand {
+                name: "breadcrumb",
+                demo_name: "demo_breadcrumb",
+                raw_code: include_str!("../../app_crates/registry/src/ui/breadcrumb.rs"),
+            }
         }
     });
     c

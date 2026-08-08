@@ -2,13 +2,13 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_form::DemoForm;
-use registry::demos::demo_form_validation::DemoFormValidation;
-use registry::demos::demo_form_group::DemoFormGroup;
-use registry::demos::demo_form_fieldset::DemoFormFieldset;
-use registry::demos::demo_form_error::DemoFormError;
-use registry::demos::demo_form_select::DemoFormSelect;
 use registry::demos::demo_auto_form::DemoAutoForm;
+use registry::demos::demo_form::DemoForm;
+use registry::demos::demo_form_error::DemoFormError;
+use registry::demos::demo_form_fieldset::DemoFormFieldset;
+use registry::demos::demo_form_group::DemoFormGroup;
+use registry::demos::demo_form_select::DemoFormSelect;
+use registry::demos::demo_form_validation::DemoFormValidation;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -30,11 +30,13 @@ fn form_components() -> MdComponents {
     c.add("DemoFormError", |_| rsx! { DemoFormError {} });
     c.add("DemoFormSelect", |_| rsx! { DemoFormSelect {} });
     c.add("DemoAutoForm", |_| rsx! { DemoAutoForm {} });
-    c.add("InstallForm", |_| rsx! {
-        InstallCommand {
-            name: "form",
-            demo_name: "demo_form",
-            raw_code: include_str!("../../app_crates/registry/src/ui/form.rs"),
+    c.add("InstallForm", |_| {
+        rsx! {
+            InstallCommand {
+                name: "form",
+                demo_name: "demo_form",
+                raw_code: include_str!("../../app_crates/registry/src/ui/form.rs"),
+            }
         }
     });
     c

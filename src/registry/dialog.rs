@@ -20,11 +20,13 @@ fn dialog_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDialog", |_| rsx! { DemoDialog {} });
     c.add("DemoDialogScrollable", |_| rsx! { DemoDialogScrollable {} });
-    c.add("InstallDialog", |_| rsx! {
-        InstallCommand {
-            name: "dialog",
-            demo_name: "demo_dialog",
-            raw_code: include_str!("../../app_crates/registry/src/ui/dialog.rs"),
+    c.add("InstallDialog", |_| {
+        rsx! {
+            InstallCommand {
+                name: "dialog",
+                demo_name: "demo_dialog",
+                raw_code: include_str!("../../app_crates/registry/src/ui/dialog.rs"),
+            }
         }
     });
     c

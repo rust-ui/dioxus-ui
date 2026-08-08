@@ -20,11 +20,13 @@ fn accordion_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAccordion", |_| rsx! { DemoAccordion {} });
     c.add("DemoAccordionBordered", |_| rsx! { DemoAccordionBordered {} });
-    c.add("InstallAccordion", |_| rsx! {
-        InstallCommand {
-            name: "accordion",
-            demo_name: "demo_accordion",
-            raw_code: include_str!("../../app_crates/registry/src/ui/accordion.rs"),
+    c.add("InstallAccordion", |_| {
+        rsx! {
+            InstallCommand {
+                name: "accordion",
+                demo_name: "demo_accordion",
+                raw_code: include_str!("../../app_crates/registry/src/ui/accordion.rs"),
+            }
         }
     });
     c

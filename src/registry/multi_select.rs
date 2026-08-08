@@ -22,11 +22,13 @@ fn multi_select_components() -> MdComponents {
     c.add("DemoMultiSelect", |_| rsx! { DemoMultiSelect {} });
     c.add("DemoMultiSelectAlign", |_| rsx! { DemoMultiSelectAlign {} });
     c.add("DemoMultiSelectScrollable", |_| rsx! { DemoMultiSelectScrollable {} });
-    c.add("InstallMultiSelect", |_| rsx! {
-        InstallCommand {
-            name: "multi-select",
-            demo_name: "demo_multi_select",
-            raw_code: include_str!("../../app_crates/registry/src/ui/multi_select.rs"),
+    c.add("InstallMultiSelect", |_| {
+        rsx! {
+            InstallCommand {
+                name: "multi-select",
+                demo_name: "demo_multi_select",
+                raw_code: include_str!("../../app_crates/registry/src/ui/multi_select.rs"),
+            }
         }
     });
     c

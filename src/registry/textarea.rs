@@ -18,11 +18,13 @@ pub static TEXTAREA: RegistryEntry = RegistryEntry {
 fn textarea_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTextarea", |_| rsx! { DemoTextarea {} });
-    c.add("InstallTextarea", |_| rsx! {
-        InstallCommand {
-            name: "textarea",
-            demo_name: "demo_textarea",
-            raw_code: include_str!("../../app_crates/registry/src/ui/textarea.rs"),
+    c.add("InstallTextarea", |_| {
+        rsx! {
+            InstallCommand {
+                name: "textarea",
+                demo_name: "demo_textarea",
+                raw_code: include_str!("../../app_crates/registry/src/ui/textarea.rs"),
+            }
         }
     });
     c

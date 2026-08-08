@@ -18,11 +18,13 @@ pub static SHEET: RegistryEntry = RegistryEntry {
 fn sheet_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSheet", |_| rsx! { DemoSheet {} });
-    c.add("InstallSheet", |_| rsx! {
-        InstallCommand {
-            name: "sheet",
-            demo_name: "demo_sheet",
-            raw_code: include_str!("../../app_crates/registry/src/ui/sheet.rs"),
+    c.add("InstallSheet", |_| {
+        rsx! {
+            InstallCommand {
+                name: "sheet",
+                demo_name: "demo_sheet",
+                raw_code: include_str!("../../app_crates/registry/src/ui/sheet.rs"),
+            }
         }
     });
     c

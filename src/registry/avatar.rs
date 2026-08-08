@@ -20,11 +20,13 @@ fn avatar_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAvatar", |_| rsx! { DemoAvatar {} });
     c.add("DemoAvatarGroupCountIcon", |_| rsx! { DemoAvatarGroupCountIcon {} });
-    c.add("InstallAvatar", |_| rsx! {
-        InstallCommand {
-            name: "avatar",
-            demo_name: "demo_avatar",
-            raw_code: include_str!("../../app_crates/registry/src/ui/avatar.rs"),
+    c.add("InstallAvatar", |_| {
+        rsx! {
+            InstallCommand {
+                name: "avatar",
+                demo_name: "demo_avatar",
+                raw_code: include_str!("../../app_crates/registry/src/ui/avatar.rs"),
+            }
         }
     });
     c

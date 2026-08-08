@@ -22,11 +22,13 @@ fn context_menu_components() -> MdComponents {
     c.add("DemoContextMenu", |_| rsx! { DemoContextMenu {} });
     c.add("DemoContextMenuAction", |_| rsx! { DemoContextMenuAction {} });
     c.add("DemoContextMenuRtl", |_| rsx! { DemoContextMenuRtl {} });
-    c.add("InstallContextMenu", |_| rsx! {
-        InstallCommand {
-            name: "context-menu",
-            demo_name: "demo_context_menu",
-            raw_code: include_str!("../../app_crates/registry/src/ui/context_menu.rs"),
+    c.add("InstallContextMenu", |_| {
+        rsx! {
+            InstallCommand {
+                name: "context-menu",
+                demo_name: "demo_context_menu",
+                raw_code: include_str!("../../app_crates/registry/src/ui/context_menu.rs"),
+            }
         }
     });
     c

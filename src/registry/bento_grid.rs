@@ -20,11 +20,13 @@ fn bento_grid_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoBentoGrid", |_| rsx! { DemoBentoGrid {} });
     c.add("DemoBentoGrid6", |_| rsx! { DemoBentoGrid6 {} });
-    c.add("InstallBentoGrid", |_| rsx! {
-        InstallCommand {
-            name: "bento-grid",
-            demo_name: "demo_bento_grid",
-            raw_code: include_str!("../../app_crates/registry/src/ui/bento_grid.rs"),
+    c.add("InstallBentoGrid", |_| {
+        rsx! {
+            InstallCommand {
+                name: "bento-grid",
+                demo_name: "demo_bento_grid",
+                raw_code: include_str!("../../app_crates/registry/src/ui/bento_grid.rs"),
+            }
         }
     });
     c

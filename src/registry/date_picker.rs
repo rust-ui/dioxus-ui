@@ -3,12 +3,12 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_date_picker::DemoDatePicker;
+use registry::demos::demo_date_picker_booked::DemoDatePickerBooked;
 use registry::demos::demo_date_picker_dropdown::DemoDatePickerDropdown;
 use registry::demos::demo_date_picker_dual::DemoDatePickerDual;
 use registry::demos::demo_date_picker_dual_full::DemoDatePickerDualFull;
 use registry::demos::demo_date_picker_presets::DemoDatePickerPresets;
 use registry::demos::demo_date_picker_time::DemoDatePickerTime;
-use registry::demos::demo_date_picker_booked::DemoDatePickerBooked;
 use registry::demos::demo_date_picker_week_numbers::DemoDatePickerWeekNumbers;
 
 use super::RegistryEntry;
@@ -32,11 +32,13 @@ fn date_picker_components() -> MdComponents {
     c.add("DemoDatePickerTime", |_| rsx! { DemoDatePickerTime {} });
     c.add("DemoDatePickerBooked", |_| rsx! { DemoDatePickerBooked {} });
     c.add("DemoDatePickerWeekNumbers", |_| rsx! { DemoDatePickerWeekNumbers {} });
-    c.add("InstallDatePicker", |_| rsx! {
-        InstallCommand {
-            name: "date-picker",
-            demo_name: "demo_date_picker",
-            raw_code: include_str!("../../app_crates/registry/src/ui/date_picker.rs"),
+    c.add("InstallDatePicker", |_| {
+        rsx! {
+            InstallCommand {
+                name: "date-picker",
+                demo_name: "demo_date_picker",
+                raw_code: include_str!("../../app_crates/registry/src/ui/date_picker.rs"),
+            }
         }
     });
     c

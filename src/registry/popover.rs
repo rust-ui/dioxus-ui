@@ -18,11 +18,13 @@ pub static POPOVER: RegistryEntry = RegistryEntry {
 fn popover_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoPopover", |_| rsx! { DemoPopover {} });
-    c.add("InstallPopover", |_| rsx! {
-        InstallCommand {
-            name: "popover",
-            demo_name: "demo_popover",
-            raw_code: include_str!("../../app_crates/registry/src/ui/popover.rs"),
+    c.add("InstallPopover", |_| {
+        rsx! {
+            InstallCommand {
+                name: "popover",
+                demo_name: "demo_popover",
+                raw_code: include_str!("../../app_crates/registry/src/ui/popover.rs"),
+            }
         }
     });
     c

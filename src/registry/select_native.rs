@@ -18,11 +18,13 @@ pub static SELECT_NATIVE: RegistryEntry = RegistryEntry {
 fn select_native_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSelectNativeGroup", |_| rsx! { DemoSelectNativeGroup {} });
-    c.add("InstallSelectNative", |_| rsx! {
-        InstallCommand {
-            name: "select-native",
-            demo_name: "demo_select_native",
-            raw_code: include_str!("../../app_crates/registry/src/ui/select_native.rs"),
+    c.add("InstallSelectNative", |_| {
+        rsx! {
+            InstallCommand {
+                name: "select-native",
+                demo_name: "demo_select_native",
+                raw_code: include_str!("../../app_crates/registry/src/ui/select_native.rs"),
+            }
         }
     });
     c

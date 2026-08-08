@@ -3,8 +3,8 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_select::DemoSelect;
-use registry::demos::demo_select_scrollable::DemoSelectScrollable;
 use registry::demos::demo_select_rtl::DemoSelectRtl;
+use registry::demos::demo_select_scrollable::DemoSelectScrollable;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -22,11 +22,13 @@ fn select_components() -> MdComponents {
     c.add("DemoSelect", |_| rsx! { DemoSelect {} });
     c.add("DemoSelectScrollable", |_| rsx! { DemoSelectScrollable {} });
     c.add("DemoSelectRtl", |_| rsx! { DemoSelectRtl {} });
-    c.add("InstallSelect", |_| rsx! {
-        InstallCommand {
-            name: "select",
-            demo_name: "demo_select",
-            raw_code: include_str!("../../app_crates/registry/src/ui/select.rs"),
+    c.add("InstallSelect", |_| {
+        rsx! {
+            InstallCommand {
+                name: "select",
+                demo_name: "demo_select",
+                raw_code: include_str!("../../app_crates/registry/src/ui/select.rs"),
+            }
         }
     });
     c

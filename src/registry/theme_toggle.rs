@@ -18,11 +18,13 @@ pub static THEME_TOGGLE: RegistryEntry = RegistryEntry {
 fn theme_toggle_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoThemeToggle", |_| rsx! { DemoThemeToggle {} });
-    c.add("InstallThemeToggle", |_| rsx! {
-        InstallCommand {
-            name: "theme-toggle",
-            demo_name: "demo_theme_toggle",
-            raw_code: include_str!("../../app_crates/registry/src/ui/theme_toggle.rs"),
+    c.add("InstallThemeToggle", |_| {
+        rsx! {
+            InstallCommand {
+                name: "theme-toggle",
+                demo_name: "demo_theme_toggle",
+                raw_code: include_str!("../../app_crates/registry/src/ui/theme_toggle.rs"),
+            }
         }
     });
     c

@@ -18,11 +18,13 @@ pub static MARQUEE: RegistryEntry = RegistryEntry {
 fn marquee_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoMarquee", |_| rsx! { DemoMarquee {} });
-    c.add("InstallMarquee", |_| rsx! {
-        InstallCommand {
-            name: "marquee",
-            demo_name: "demo_marquee",
-            raw_code: include_str!("../../app_crates/registry/src/ui/marquee.rs"),
+    c.add("InstallMarquee", |_| {
+        rsx! {
+            InstallCommand {
+                name: "marquee",
+                demo_name: "demo_marquee",
+                raw_code: include_str!("../../app_crates/registry/src/ui/marquee.rs"),
+            }
         }
     });
     c

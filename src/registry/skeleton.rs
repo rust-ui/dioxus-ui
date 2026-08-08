@@ -3,11 +3,11 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_skeleton::DemoSkeleton;
-use registry::demos::demo_skeleton_image::DemoSkeletonImage;
 use registry::demos::demo_skeleton_avatar::DemoSkeletonAvatar;
-use registry::demos::demo_skeleton_text::DemoSkeletonText;
 use registry::demos::demo_skeleton_form::DemoSkeletonForm;
+use registry::demos::demo_skeleton_image::DemoSkeletonImage;
 use registry::demos::demo_skeleton_table::DemoSkeletonTable;
+use registry::demos::demo_skeleton_text::DemoSkeletonText;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -28,11 +28,13 @@ fn skeleton_components() -> MdComponents {
     c.add("DemoSkeletonText", |_| rsx! { DemoSkeletonText {} });
     c.add("DemoSkeletonForm", |_| rsx! { DemoSkeletonForm {} });
     c.add("DemoSkeletonTable", |_| rsx! { DemoSkeletonTable {} });
-    c.add("InstallSkeleton", |_| rsx! {
-        InstallCommand {
-            name: "skeleton",
-            demo_name: "demo_skeleton",
-            raw_code: include_str!("../../app_crates/registry/src/ui/skeleton.rs"),
+    c.add("InstallSkeleton", |_| {
+        rsx! {
+            InstallCommand {
+                name: "skeleton",
+                demo_name: "demo_skeleton",
+                raw_code: include_str!("../../app_crates/registry/src/ui/skeleton.rs"),
+            }
         }
     });
     c

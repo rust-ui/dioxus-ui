@@ -20,11 +20,13 @@ fn empty_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoEmpty", |_| rsx! { DemoEmpty {} });
     c.add("DemoEmptyMuted", |_| rsx! { DemoEmptyMuted {} });
-    c.add("InstallEmpty", |_| rsx! {
-        InstallCommand {
-            name: "empty",
-            demo_name: "demo_empty",
-            raw_code: include_str!("../../app_crates/registry/src/ui/empty.rs"),
+    c.add("InstallEmpty", |_| {
+        rsx! {
+            InstallCommand {
+                name: "empty",
+                demo_name: "demo_empty",
+                raw_code: include_str!("../../app_crates/registry/src/ui/empty.rs"),
+            }
         }
     });
     c

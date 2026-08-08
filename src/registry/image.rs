@@ -18,11 +18,13 @@ pub static IMAGE: RegistryEntry = RegistryEntry {
 fn image_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoImage", |_| rsx! { DemoImage {} });
-    c.add("InstallImage", |_| rsx! {
-        InstallCommand {
-            name: "image",
-            demo_name: "demo_image",
-            raw_code: include_str!("../../app_crates/registry/src/ui/image.rs"),
+    c.add("InstallImage", |_| {
+        rsx! {
+            InstallCommand {
+                name: "image",
+                demo_name: "demo_image",
+                raw_code: include_str!("../../app_crates/registry/src/ui/image.rs"),
+            }
         }
     });
     c

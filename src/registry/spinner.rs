@@ -20,11 +20,13 @@ fn spinner_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSpinner", |_| rsx! { DemoSpinner {} });
     c.add("DemoSpinnerButton", |_| rsx! { DemoSpinnerButton {} });
-    c.add("InstallSpinner", |_| rsx! {
-        InstallCommand {
-            name: "spinner",
-            demo_name: "demo_spinner",
-            raw_code: include_str!("../../app_crates/registry/src/ui/spinner.rs"),
+    c.add("InstallSpinner", |_| {
+        rsx! {
+            InstallCommand {
+                name: "spinner",
+                demo_name: "demo_spinner",
+                raw_code: include_str!("../../app_crates/registry/src/ui/spinner.rs"),
+            }
         }
     });
     c

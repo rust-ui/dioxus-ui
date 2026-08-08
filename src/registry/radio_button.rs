@@ -18,11 +18,13 @@ pub static RADIO_BUTTON: RegistryEntry = RegistryEntry {
 fn radio_button_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoRadioButton", |_| rsx! { DemoRadioButton {} });
-    c.add("InstallRadioButton", |_| rsx! {
-        InstallCommand {
-            name: "radio-button",
-            demo_name: "demo_radio_button",
-            raw_code: include_str!("../../app_crates/registry/src/ui/radio_button.rs"),
+    c.add("InstallRadioButton", |_| {
+        rsx! {
+            InstallCommand {
+                name: "radio-button",
+                demo_name: "demo_radio_button",
+                raw_code: include_str!("../../app_crates/registry/src/ui/radio_button.rs"),
+            }
         }
     });
     c

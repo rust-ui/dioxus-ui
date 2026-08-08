@@ -2,11 +2,11 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_button_group_separator::DemoButtonGroupSeparator;
 use registry::demos::demo_button_group_icon::DemoButtonGroupIcon;
-use registry::demos::demo_button_group_sizes::DemoButtonGroupSizes;
 use registry::demos::demo_button_group_input::DemoButtonGroupInput;
 use registry::demos::demo_button_group_rtl::DemoButtonGroupRtl;
+use registry::demos::demo_button_group_separator::DemoButtonGroupSeparator;
+use registry::demos::demo_button_group_sizes::DemoButtonGroupSizes;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -26,11 +26,13 @@ fn button_group_components() -> MdComponents {
     c.add("DemoButtonGroupSizes", |_| rsx! { DemoButtonGroupSizes {} });
     c.add("DemoButtonGroupInput", |_| rsx! { DemoButtonGroupInput {} });
     c.add("DemoButtonGroupRtl", |_| rsx! { DemoButtonGroupRtl {} });
-    c.add("InstallButtonGroup", |_| rsx! {
-        InstallCommand {
-            name: "button-group",
-            demo_name: "demo_button_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/button_group.rs"),
+    c.add("InstallButtonGroup", |_| {
+        rsx! {
+            InstallCommand {
+                name: "button-group",
+                demo_name: "demo_button_group",
+                raw_code: include_str!("../../app_crates/registry/src/ui/button_group.rs"),
+            }
         }
     });
     c

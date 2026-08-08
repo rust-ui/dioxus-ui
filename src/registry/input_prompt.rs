@@ -20,11 +20,13 @@ fn input_prompt_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoInputPrompt", |_| rsx! { DemoInputPrompt {} });
     c.add("DemoInputPromptWithTools", |_| rsx! { DemoInputPromptWithTools {} });
-    c.add("InstallInputPrompt", |_| rsx! {
-        InstallCommand {
-            name: "input-prompt",
-            demo_name: "demo_input_prompt",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_prompt.rs"),
+    c.add("InstallInputPrompt", |_| {
+        rsx! {
+            InstallCommand {
+                name: "input-prompt",
+                demo_name: "demo_input_prompt",
+                raw_code: include_str!("../../app_crates/registry/src/ui/input_prompt.rs"),
+            }
         }
     });
     c

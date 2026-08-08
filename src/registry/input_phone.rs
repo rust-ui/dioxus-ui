@@ -20,11 +20,13 @@ fn input_phone_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoInputPhone", |_| rsx! { DemoInputPhone {} });
     c.add("DemoInputPhoneDisabled", |_| rsx! { DemoInputPhoneDisabled {} });
-    c.add("InstallInputPhone", |_| rsx! {
-        InstallCommand {
-            name: "input-phone",
-            demo_name: "demo_input_phone",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_phone.rs"),
+    c.add("InstallInputPhone", |_| {
+        rsx! {
+            InstallCommand {
+                name: "input-phone",
+                demo_name: "demo_input_phone",
+                raw_code: include_str!("../../app_crates/registry/src/ui/input_phone.rs"),
+            }
         }
     });
     c

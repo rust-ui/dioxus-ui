@@ -26,11 +26,13 @@ fn card_components() -> MdComponents {
     c.add("DemoCardGroup", |_| rsx! { DemoCardGroup {} });
     c.add("DemoCardReverse", |_| rsx! { DemoCardReverse {} });
     c.add("DemoCardSm", |_| rsx! { DemoCardSm {} });
-    c.add("InstallCard", |_| rsx! {
-        InstallCommand {
-            name: "card",
-            demo_name: "demo_card",
-            raw_code: include_str!("../../app_crates/registry/src/ui/card.rs"),
+    c.add("InstallCard", |_| {
+        rsx! {
+            InstallCommand {
+                name: "card",
+                demo_name: "demo_card",
+                raw_code: include_str!("../../app_crates/registry/src/ui/card.rs"),
+            }
         }
     });
     c

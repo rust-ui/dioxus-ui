@@ -18,11 +18,13 @@ pub static COMBOBOX: RegistryEntry = RegistryEntry {
 fn combobox_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCombobox", |_| rsx! { DemoCombobox {} });
-    c.add("InstallCombobox", |_| rsx! {
-        InstallCommand {
-            name: "combobox",
-            demo_name: "demo_combobox",
-            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+    c.add("InstallCombobox", |_| {
+        rsx! {
+            InstallCommand {
+                name: "combobox",
+                demo_name: "demo_combobox",
+                raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+            }
         }
     });
     c

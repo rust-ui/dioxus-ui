@@ -3,13 +3,13 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_marker::DemoMarker;
-use registry::demos::demo_marker_variants::DemoMarkerVariants;
 use registry::demos::demo_marker_border::DemoMarkerBorder;
-use registry::demos::demo_marker_separator::DemoMarkerSeparator;
 use registry::demos::demo_marker_icon::DemoMarkerIcon;
-use registry::demos::demo_marker_status::DemoMarkerStatus;
-use registry::demos::demo_marker_shimmer::DemoMarkerShimmer;
 use registry::demos::demo_marker_link_button::DemoMarkerLinkButton;
+use registry::demos::demo_marker_separator::DemoMarkerSeparator;
+use registry::demos::demo_marker_shimmer::DemoMarkerShimmer;
+use registry::demos::demo_marker_status::DemoMarkerStatus;
+use registry::demos::demo_marker_variants::DemoMarkerVariants;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -32,11 +32,13 @@ fn marker_components() -> MdComponents {
     c.add("DemoMarkerStatus", |_| rsx! { DemoMarkerStatus {} });
     c.add("DemoMarkerShimmer", |_| rsx! { DemoMarkerShimmer {} });
     c.add("DemoMarkerLinkButton", |_| rsx! { DemoMarkerLinkButton {} });
-    c.add("InstallMarker", |_| rsx! {
-        InstallCommand {
-            name: "marker",
-            demo_name: "demo_marker",
-            raw_code: include_str!("../../app_crates/registry/src/ui/marker.rs"),
+    c.add("InstallMarker", |_| {
+        rsx! {
+            InstallCommand {
+                name: "marker",
+                demo_name: "demo_marker",
+                raw_code: include_str!("../../app_crates/registry/src/ui/marker.rs"),
+            }
         }
     });
     c

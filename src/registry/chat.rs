@@ -18,11 +18,13 @@ pub static CHAT: RegistryEntry = RegistryEntry {
 fn chat_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoChat", |_| rsx! { DemoChat {} });
-    c.add("InstallChat", |_| rsx! {
-        InstallCommand {
-            name: "chat",
-            demo_name: "demo_chat",
-            raw_code: include_str!("../../app_crates/registry/src/ui/chat.rs"),
+    c.add("InstallChat", |_| {
+        rsx! {
+            InstallCommand {
+                name: "chat",
+                demo_name: "demo_chat",
+                raw_code: include_str!("../../app_crates/registry/src/ui/chat.rs"),
+            }
         }
     });
     c

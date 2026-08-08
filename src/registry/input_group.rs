@@ -3,9 +3,9 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_input_group::DemoInputGroup;
-use registry::demos::demo_input_group_text::DemoInputGroupText;
 use registry::demos::demo_input_group_block::DemoInputGroupBlock;
 use registry::demos::demo_input_group_rtl::DemoInputGroupRtl;
+use registry::demos::demo_input_group_text::DemoInputGroupText;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -24,11 +24,13 @@ fn input_group_components() -> MdComponents {
     c.add("DemoInputGroupText", |_| rsx! { DemoInputGroupText {} });
     c.add("DemoInputGroupBlock", |_| rsx! { DemoInputGroupBlock {} });
     c.add("DemoInputGroupRtl", |_| rsx! { DemoInputGroupRtl {} });
-    c.add("InstallInputGroup", |_| rsx! {
-        InstallCommand {
-            name: "input-group",
-            demo_name: "demo_input_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_group.rs"),
+    c.add("InstallInputGroup", |_| {
+        rsx! {
+            InstallCommand {
+                name: "input-group",
+                demo_name: "demo_input_group",
+                raw_code: include_str!("../../app_crates/registry/src/ui/input_group.rs"),
+            }
         }
     });
     c

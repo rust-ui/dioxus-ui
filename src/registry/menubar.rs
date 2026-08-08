@@ -20,11 +20,13 @@ fn menubar_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoMenubar", |_| rsx! { DemoMenubar {} });
     c.add("DemoMenubarRtl", |_| rsx! { DemoMenubarRtl {} });
-    c.add("InstallMenubar", |_| rsx! {
-        InstallCommand {
-            name: "menubar",
-            demo_name: "demo_menubar",
-            raw_code: include_str!("../../app_crates/registry/src/ui/menubar.rs"),
+    c.add("InstallMenubar", |_| {
+        rsx! {
+            InstallCommand {
+                name: "menubar",
+                demo_name: "demo_menubar",
+                raw_code: include_str!("../../app_crates/registry/src/ui/menubar.rs"),
+            }
         }
     });
     c

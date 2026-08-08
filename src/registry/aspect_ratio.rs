@@ -18,11 +18,13 @@ pub static ASPECT_RATIO: RegistryEntry = RegistryEntry {
 fn aspect_ratio_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAspectRatio", |_| rsx! { DemoAspectRatio {} });
-    c.add("InstallAspectRatio", |_| rsx! {
-        InstallCommand {
-            name: "aspect-ratio",
-            demo_name: "demo_aspect_ratio",
-            raw_code: include_str!("../../app_crates/registry/src/ui/aspect_ratio.rs"),
+    c.add("InstallAspectRatio", |_| {
+        rsx! {
+            InstallCommand {
+                name: "aspect-ratio",
+                demo_name: "demo_aspect_ratio",
+                raw_code: include_str!("../../app_crates/registry/src/ui/aspect_ratio.rs"),
+            }
         }
     });
     c

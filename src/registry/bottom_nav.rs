@@ -18,11 +18,13 @@ pub static BOTTOM_NAV: RegistryEntry = RegistryEntry {
 fn bottom_nav_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoBottomNav", |_| rsx! { DemoBottomNav {} });
-    c.add("InstallBottomNav", |_| rsx! {
-        InstallCommand {
-            name: "bottom-nav",
-            demo_name: "demo_bottom_nav",
-            raw_code: include_str!("../../app_crates/registry/src/ui/bottom_nav.rs"),
+    c.add("InstallBottomNav", |_| {
+        rsx! {
+            InstallCommand {
+                name: "bottom-nav",
+                demo_name: "demo_bottom_nav",
+                raw_code: include_str!("../../app_crates/registry/src/ui/bottom_nav.rs"),
+            }
         }
     });
     c

@@ -3,9 +3,9 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_badge::DemoBadge;
-use registry::demos::demo_badge_variants::DemoBadgeVariants;
 use registry::demos::demo_badge_colors::DemoBadgeColors;
 use registry::demos::demo_badge_custom::DemoBadgeCustom;
+use registry::demos::demo_badge_variants::DemoBadgeVariants;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -24,11 +24,13 @@ fn badge_components() -> MdComponents {
     c.add("DemoBadgeVariants", |_| rsx! { DemoBadgeVariants {} });
     c.add("DemoBadgeColors", |_| rsx! { DemoBadgeColors {} });
     c.add("DemoBadgeCustom", |_| rsx! { DemoBadgeCustom {} });
-    c.add("InstallBadge", |_| rsx! {
-        InstallCommand {
-            name: "badge",
-            demo_name: "demo_badge",
-            raw_code: include_str!("../../app_crates/registry/src/ui/badge.rs"),
+    c.add("InstallBadge", |_| {
+        rsx! {
+            InstallCommand {
+                name: "badge",
+                demo_name: "demo_badge",
+                raw_code: include_str!("../../app_crates/registry/src/ui/badge.rs"),
+            }
         }
     });
     c

@@ -2,8 +2,8 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_radio_group::DemoRadioGroup;
 use registry::demos::demo_radio_button_custom::DemoRadioButtonCustom;
+use registry::demos::demo_radio_group::DemoRadioGroup;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -20,11 +20,13 @@ fn radio_group_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoRadioGroup", |_| rsx! { DemoRadioGroup {} });
     c.add("DemoRadioButtonCustom", |_| rsx! { DemoRadioButtonCustom {} });
-    c.add("InstallRadioGroup", |_| rsx! {
-        InstallCommand {
-            name: "radio-group",
-            demo_name: "demo_radio_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/radio_group.rs"),
+    c.add("InstallRadioGroup", |_| {
+        rsx! {
+            InstallCommand {
+                name: "radio-group",
+                demo_name: "demo_radio_group",
+                raw_code: include_str!("../../app_crates/registry/src/ui/radio_group.rs"),
+            }
         }
     });
     c

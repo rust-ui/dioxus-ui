@@ -18,11 +18,13 @@ pub static TOGGLE: RegistryEntry = RegistryEntry {
 fn toggle_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoToggle", |_| rsx! { DemoToggle {} });
-    c.add("InstallToggle", |_| rsx! {
-        InstallCommand {
-            name: "toggle",
-            demo_name: "demo_toggle",
-            raw_code: include_str!("../../app_crates/registry/src/ui/toggle.rs"),
+    c.add("InstallToggle", |_| {
+        rsx! {
+            InstallCommand {
+                name: "toggle",
+                demo_name: "demo_toggle",
+                raw_code: include_str!("../../app_crates/registry/src/ui/toggle.rs"),
+            }
         }
     });
     c

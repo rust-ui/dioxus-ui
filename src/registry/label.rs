@@ -18,11 +18,13 @@ pub static LABEL: RegistryEntry = RegistryEntry {
 fn label_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoLabel", |_| rsx! { DemoLabel {} });
-    c.add("InstallLabel", |_| rsx! {
-        InstallCommand {
-            name: "label",
-            demo_name: "demo_label",
-            raw_code: include_str!("../../app_crates/registry/src/ui/label.rs"),
+    c.add("InstallLabel", |_| {
+        rsx! {
+            InstallCommand {
+                name: "label",
+                demo_name: "demo_label",
+                raw_code: include_str!("../../app_crates/registry/src/ui/label.rs"),
+            }
         }
     });
     c

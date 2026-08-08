@@ -18,11 +18,13 @@ pub static SEPARATOR: RegistryEntry = RegistryEntry {
 fn separator_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSeparator", |_| rsx! { DemoSeparator {} });
-    c.add("InstallSeparator", |_| rsx! {
-        InstallCommand {
-            name: "separator",
-            demo_name: "demo_separator",
-            raw_code: include_str!("../../app_crates/registry/src/ui/separator.rs"),
+    c.add("InstallSeparator", |_| {
+        rsx! {
+            InstallCommand {
+                name: "separator",
+                demo_name: "demo_separator",
+                raw_code: include_str!("../../app_crates/registry/src/ui/separator.rs"),
+            }
         }
     });
     c

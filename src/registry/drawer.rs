@@ -18,11 +18,13 @@ pub static DRAWER: RegistryEntry = RegistryEntry {
 fn drawer_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDrawer", |_| rsx! { DemoDrawer {} });
-    c.add("InstallDrawer", |_| rsx! {
-        InstallCommand {
-            name: "drawer",
-            demo_name: "demo_drawer",
-            raw_code: include_str!("../../app_crates/registry/src/ui/drawer.rs"),
+    c.add("InstallDrawer", |_| {
+        rsx! {
+            InstallCommand {
+                name: "drawer",
+                demo_name: "demo_drawer",
+                raw_code: include_str!("../../app_crates/registry/src/ui/drawer.rs"),
+            }
         }
     });
     c

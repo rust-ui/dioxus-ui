@@ -18,11 +18,13 @@ pub static ANIMATE: RegistryEntry = RegistryEntry {
 fn animate_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAnimate", |_| rsx! { DemoAnimate {} });
-    c.add("InstallAnimate", |_| rsx! {
-        InstallCommand {
-            name: "animate",
-            demo_name: "demo_animate",
-            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+    c.add("InstallAnimate", |_| {
+        rsx! {
+            InstallCommand {
+                name: "animate",
+                demo_name: "demo_animate",
+                raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+            }
         }
     });
     c

@@ -20,11 +20,13 @@ fn data_table_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDataTable", |_| rsx! { DemoDataTable {} });
     c.add("DemoDataTableFilters", |_| rsx! { DemoDataTableFilters {} });
-    c.add("InstallDataTable", |_| rsx! {
-        InstallCommand {
-            name: "data-table",
-            demo_name: "demo_data_table",
-            raw_code: include_str!("../../app_crates/registry/src/ui/data_table.rs"),
+    c.add("InstallDataTable", |_| {
+        rsx! {
+            InstallCommand {
+                name: "data-table",
+                demo_name: "demo_data_table",
+                raw_code: include_str!("../../app_crates/registry/src/ui/data_table.rs"),
+            }
         }
     });
     c

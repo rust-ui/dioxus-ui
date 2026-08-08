@@ -3,10 +3,10 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_attachment::DemoAttachment;
-use registry::demos::demo_attachment_image::DemoAttachmentImage;
-use registry::demos::demo_attachment_states::DemoAttachmentStates;
-use registry::demos::demo_attachment_sizes::DemoAttachmentSizes;
 use registry::demos::demo_attachment_group::DemoAttachmentGroup;
+use registry::demos::demo_attachment_image::DemoAttachmentImage;
+use registry::demos::demo_attachment_sizes::DemoAttachmentSizes;
+use registry::demos::demo_attachment_states::DemoAttachmentStates;
 use registry::demos::demo_attachment_trigger::DemoAttachmentTrigger;
 
 use super::RegistryEntry;
@@ -28,11 +28,13 @@ fn attachment_components() -> MdComponents {
     c.add("DemoAttachmentSizes", |_| rsx! { DemoAttachmentSizes {} });
     c.add("DemoAttachmentGroup", |_| rsx! { DemoAttachmentGroup {} });
     c.add("DemoAttachmentTrigger", |_| rsx! { DemoAttachmentTrigger {} });
-    c.add("InstallAttachment", |_| rsx! {
-        InstallCommand {
-            name: "attachment",
-            demo_name: "demo_attachment",
-            raw_code: include_str!("../../app_crates/registry/src/ui/attachment.rs"),
+    c.add("InstallAttachment", |_| {
+        rsx! {
+            InstallCommand {
+                name: "attachment",
+                demo_name: "demo_attachment",
+                raw_code: include_str!("../../app_crates/registry/src/ui/attachment.rs"),
+            }
         }
     });
     c

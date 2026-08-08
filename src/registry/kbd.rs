@@ -8,21 +8,19 @@ use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
-pub static KBD: RegistryEntry = RegistryEntry {
-    slug: "kbd",
-    raw: include_str!("../../public/docs/kbd.md"),
-    tags: &[],
-    components: kbd_components,
-};
+pub static KBD: RegistryEntry =
+    RegistryEntry { slug: "kbd", raw: include_str!("../../public/docs/kbd.md"), tags: &[], components: kbd_components };
 
 fn kbd_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoKbd", |_| rsx! { DemoKbd {} });
-    c.add("InstallKbd", |_| rsx! {
-        InstallCommand {
-            name: "kbd",
-            demo_name: "demo_kbd",
-            raw_code: include_str!("../../app_crates/registry/src/ui/kbd.rs"),
+    c.add("InstallKbd", |_| {
+        rsx! {
+            InstallCommand {
+                name: "kbd",
+                demo_name: "demo_kbd",
+                raw_code: include_str!("../../app_crates/registry/src/ui/kbd.rs"),
+            }
         }
     });
     c

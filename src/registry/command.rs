@@ -20,11 +20,13 @@ fn command_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCommand", |_| rsx! { DemoCommand {} });
     c.add("DemoCommandDialog", |_| rsx! { DemoCommandDialog {} });
-    c.add("InstallCommand", |_| rsx! {
-        InstallCommand {
-            name: "command",
-            demo_name: "demo_command",
-            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+    c.add("InstallCommand", |_| {
+        rsx! {
+            InstallCommand {
+                name: "command",
+                demo_name: "demo_command",
+                raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+            }
         }
     });
     c

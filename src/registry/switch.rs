@@ -18,11 +18,13 @@ pub static SWITCH: RegistryEntry = RegistryEntry {
 fn switch_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSwitch", |_| rsx! { DemoSwitch {} });
-    c.add("InstallSwitch", |_| rsx! {
-        InstallCommand {
-            name: "switch",
-            demo_name: "demo_switch",
-            raw_code: include_str!("../../app_crates/registry/src/ui/switch.rs"),
+    c.add("InstallSwitch", |_| {
+        rsx! {
+            InstallCommand {
+                name: "switch",
+                demo_name: "demo_switch",
+                raw_code: include_str!("../../app_crates/registry/src/ui/switch.rs"),
+            }
         }
     });
     c

@@ -18,11 +18,13 @@ pub static TOOLTIP: RegistryEntry = RegistryEntry {
 fn tooltip_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTooltip", |_| rsx! { DemoTooltip {} });
-    c.add("InstallTooltip", |_| rsx! {
-        InstallCommand {
-            name: "tooltip",
-            demo_name: "demo_tooltip",
-            raw_code: include_str!("../../app_crates/registry/src/ui/tooltip.rs"),
+    c.add("InstallTooltip", |_| {
+        rsx! {
+            InstallCommand {
+                name: "tooltip",
+                demo_name: "demo_tooltip",
+                raw_code: include_str!("../../app_crates/registry/src/ui/tooltip.rs"),
+            }
         }
     });
     c

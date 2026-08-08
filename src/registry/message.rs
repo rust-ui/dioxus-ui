@@ -3,11 +3,11 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_message::DemoMessage;
+use registry::demos::demo_message_actions::DemoMessageActions;
+use registry::demos::demo_message_attachment::DemoMessageAttachment;
 use registry::demos::demo_message_avatar::DemoMessageAvatar;
 use registry::demos::demo_message_group::DemoMessageGroup;
 use registry::demos::demo_message_header_footer::DemoMessageHeaderFooter;
-use registry::demos::demo_message_actions::DemoMessageActions;
-use registry::demos::demo_message_attachment::DemoMessageAttachment;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -28,11 +28,13 @@ fn message_components() -> MdComponents {
     c.add("DemoMessageHeaderFooter", |_| rsx! { DemoMessageHeaderFooter {} });
     c.add("DemoMessageActions", |_| rsx! { DemoMessageActions {} });
     c.add("DemoMessageAttachment", |_| rsx! { DemoMessageAttachment {} });
-    c.add("InstallMessage", |_| rsx! {
-        InstallCommand {
-            name: "message",
-            demo_name: "demo_message",
-            raw_code: include_str!("../../app_crates/registry/src/ui/message.rs"),
+    c.add("InstallMessage", |_| {
+        rsx! {
+            InstallCommand {
+                name: "message",
+                demo_name: "demo_message",
+                raw_code: include_str!("../../app_crates/registry/src/ui/message.rs"),
+            }
         }
     });
     c

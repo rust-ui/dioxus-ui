@@ -22,11 +22,13 @@ fn callout_components() -> MdComponents {
     c.add("DemoCallout", |_| rsx! { DemoCallout {} });
     c.add("DemoCalloutInfo", |_| rsx! { DemoCalloutInfo {} });
     c.add("DemoCalloutWarning", |_| rsx! { DemoCalloutWarning {} });
-    c.add("InstallCallout", |_| rsx! {
-        InstallCommand {
-            name: "callout",
-            demo_name: "demo_callout",
-            raw_code: include_str!("../../app_crates/registry/src/ui/callout.rs"),
+    c.add("InstallCallout", |_| {
+        rsx! {
+            InstallCommand {
+                name: "callout",
+                demo_name: "demo_callout",
+                raw_code: include_str!("../../app_crates/registry/src/ui/callout.rs"),
+            }
         }
     });
     c

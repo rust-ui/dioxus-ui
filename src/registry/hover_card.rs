@@ -20,11 +20,13 @@ fn hover_card_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoHoverCard", |_| rsx! { DemoHoverCard {} });
     c.add("DemoHoverCardRtl", |_| rsx! { DemoHoverCardRtl {} });
-    c.add("InstallHoverCard", |_| rsx! {
-        InstallCommand {
-            name: "hover-card",
-            demo_name: "demo_hover_card",
-            raw_code: include_str!("../../app_crates/registry/src/ui/hover_card.rs"),
+    c.add("InstallHoverCard", |_| {
+        rsx! {
+            InstallCommand {
+                name: "hover-card",
+                demo_name: "demo_hover_card",
+                raw_code: include_str!("../../app_crates/registry/src/ui/hover_card.rs"),
+            }
         }
     });
     c

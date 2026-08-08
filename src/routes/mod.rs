@@ -6,6 +6,6 @@ pub mod home_layout;
 pub mod home_page;
 pub mod home_page_sparkles;
 pub mod hook_page;
-pub mod page_not_found;
 pub mod page_icons;
+pub mod page_not_found;
 pub mod test_server_functions;

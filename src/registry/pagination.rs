@@ -18,11 +18,13 @@ pub static PAGINATION: RegistryEntry = RegistryEntry {
 fn pagination_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoPagination", |_| rsx! { DemoPagination {} });
-    c.add("InstallPagination", |_| rsx! {
-        InstallCommand {
-            name: "pagination",
-            demo_name: "demo_pagination",
-            raw_code: include_str!("../../app_crates/registry/src/ui/pagination.rs"),
+    c.add("InstallPagination", |_| {
+        rsx! {
+            InstallCommand {
+                name: "pagination",
+                demo_name: "demo_pagination",
+                raw_code: include_str!("../../app_crates/registry/src/ui/pagination.rs"),
+            }
         }
     });
     c

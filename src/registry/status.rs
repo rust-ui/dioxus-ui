@@ -20,11 +20,13 @@ fn status_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoStatus", |_| rsx! { DemoStatus {} });
     c.add("DemoStatusVariants", |_| rsx! { DemoStatusVariants {} });
-    c.add("InstallStatus", |_| rsx! {
-        InstallCommand {
-            name: "status",
-            demo_name: "demo_status",
-            raw_code: include_str!("../../app_crates/registry/src/ui/status.rs"),
+    c.add("InstallStatus", |_| {
+        rsx! {
+            InstallCommand {
+                name: "status",
+                demo_name: "demo_status",
+                raw_code: include_str!("../../app_crates/registry/src/ui/status.rs"),
+            }
         }
     });
     c

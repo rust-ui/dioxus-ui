@@ -18,11 +18,13 @@ pub static PROGRESS: RegistryEntry = RegistryEntry {
 fn progress_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoProgress", |_| rsx! { DemoProgress {} });
-    c.add("InstallProgress", |_| rsx! {
-        InstallCommand {
-            name: "progress",
-            demo_name: "demo_progress",
-            raw_code: include_str!("../../app_crates/registry/src/ui/progress.rs"),
+    c.add("InstallProgress", |_| {
+        rsx! {
+            InstallCommand {
+                name: "progress",
+                demo_name: "demo_progress",
+                raw_code: include_str!("../../app_crates/registry/src/ui/progress.rs"),
+            }
         }
     });
     c

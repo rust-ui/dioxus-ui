@@ -2,8 +2,8 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use registry::demos::demo_direction_provider_default::DemoDirectionProviderDefault;
 use registry::demos::demo_direction_provider::DemoDirectionProvider;
+use registry::demos::demo_direction_provider_default::DemoDirectionProviderDefault;
 use registry::demos::demo_direction_provider_rtl::DemoDirectionProviderRtl;
 
 use super::RegistryEntry;
@@ -22,11 +22,13 @@ fn direction_provider_components() -> MdComponents {
     c.add("DemoDirectionProviderDefault", |_| rsx! { DemoDirectionProviderDefault {} });
     c.add("DemoDirectionProvider", |_| rsx! { DemoDirectionProvider {} });
     c.add("DemoDirectionProviderRtl", |_| rsx! { DemoDirectionProviderRtl {} });
-    c.add("InstallDirectionProvider", |_| rsx! {
-        InstallCommand {
-            name: "direction-provider",
-            demo_name: "demo_direction_provider",
-            raw_code: include_str!("../../app_crates/registry/src/ui/direction_provider.rs"),
+    c.add("InstallDirectionProvider", |_| {
+        rsx! {
+            InstallCommand {
+                name: "direction-provider",
+                demo_name: "demo_direction_provider",
+                raw_code: include_str!("../../app_crates/registry/src/ui/direction_provider.rs"),
+            }
         }
     });
     c

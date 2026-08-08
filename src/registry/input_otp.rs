@@ -20,11 +20,13 @@ fn input_otp_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoInputOtp", |_| rsx! { DemoInputOtp {} });
     c.add("DemoInputOtpSeparator", |_| rsx! { DemoInputOtpSeparator {} });
-    c.add("InstallInputOtp", |_| rsx! {
-        InstallCommand {
-            name: "input-otp",
-            demo_name: "demo_input_otp",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_otp.rs"),
+    c.add("InstallInputOtp", |_| {
+        rsx! {
+            InstallCommand {
+                name: "input-otp",
+                demo_name: "demo_input_otp",
+                raw_code: include_str!("../../app_crates/registry/src/ui/input_otp.rs"),
+            }
         }
     });
     c

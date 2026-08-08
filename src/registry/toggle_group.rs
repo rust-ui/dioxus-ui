@@ -18,11 +18,13 @@ pub static TOGGLE_GROUP: RegistryEntry = RegistryEntry {
 fn toggle_group_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoToggleGroup", |_| rsx! { DemoToggleGroup {} });
-    c.add("InstallToggleGroup", |_| rsx! {
-        InstallCommand {
-            name: "toggle-group",
-            demo_name: "demo_toggle_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/toggle_group.rs"),
+    c.add("InstallToggleGroup", |_| {
+        rsx! {
+            InstallCommand {
+                name: "toggle-group",
+                demo_name: "demo_toggle_group",
+                raw_code: include_str!("../../app_crates/registry/src/ui/toggle_group.rs"),
+            }
         }
     });
     c

@@ -18,11 +18,13 @@ pub static CHECKBOX: RegistryEntry = RegistryEntry {
 fn checkbox_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCheckbox", |_| rsx! { DemoCheckbox {} });
-    c.add("InstallCheckbox", |_| rsx! {
-        InstallCommand {
-            name: "checkbox",
-            demo_name: "demo_checkbox",
-            raw_code: include_str!("../../app_crates/registry/src/ui/checkbox.rs"),
+    c.add("InstallCheckbox", |_| {
+        rsx! {
+            InstallCommand {
+                name: "checkbox",
+                demo_name: "demo_checkbox",
+                raw_code: include_str!("../../app_crates/registry/src/ui/checkbox.rs"),
+            }
         }
     });
     c

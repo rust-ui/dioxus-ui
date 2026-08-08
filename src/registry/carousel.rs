@@ -18,11 +18,13 @@ pub static CAROUSEL: RegistryEntry = RegistryEntry {
 fn carousel_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCarousel", |_| rsx! { DemoCarousel {} });
-    c.add("InstallCarousel", |_| rsx! {
-        InstallCommand {
-            name: "carousel",
-            demo_name: "demo_carousel",
-            raw_code: include_str!("../../app_crates/registry/src/ui/carousel.rs"),
+    c.add("InstallCarousel", |_| {
+        rsx! {
+            InstallCommand {
+                name: "carousel",
+                demo_name: "demo_carousel",
+                raw_code: include_str!("../../app_crates/registry/src/ui/carousel.rs"),
+            }
         }
     });
     c

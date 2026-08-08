@@ -3,14 +3,14 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_bubble::DemoBubble;
-use registry::demos::demo_bubble_variants::DemoBubbleVariants;
 use registry::demos::demo_bubble_alignment::DemoBubbleAlignment;
+use registry::demos::demo_bubble_collapsible::DemoBubbleCollapsible;
 use registry::demos::demo_bubble_group::DemoBubbleGroup;
 use registry::demos::demo_bubble_link_button::DemoBubbleLinkButton;
-use registry::demos::demo_bubble_reactions::DemoBubbleReactions;
-use registry::demos::demo_bubble_collapsible::DemoBubbleCollapsible;
-use registry::demos::demo_bubble_tooltip::DemoBubbleTooltip;
 use registry::demos::demo_bubble_popover::DemoBubblePopover;
+use registry::demos::demo_bubble_reactions::DemoBubbleReactions;
+use registry::demos::demo_bubble_tooltip::DemoBubbleTooltip;
+use registry::demos::demo_bubble_variants::DemoBubbleVariants;
 
 use super::RegistryEntry;
 use crate::components::install_command::InstallCommand;
@@ -34,11 +34,13 @@ fn bubble_components() -> MdComponents {
     c.add("DemoBubbleCollapsible", |_| rsx! { DemoBubbleCollapsible {} });
     c.add("DemoBubbleTooltip", |_| rsx! { DemoBubbleTooltip {} });
     c.add("DemoBubblePopover", |_| rsx! { DemoBubblePopover {} });
-    c.add("InstallBubble", |_| rsx! {
-        InstallCommand {
-            name: "bubble",
-            demo_name: "demo_bubble",
-            raw_code: include_str!("../../app_crates/registry/src/ui/bubble.rs"),
+    c.add("InstallBubble", |_| {
+        rsx! {
+            InstallCommand {
+                name: "bubble",
+                demo_name: "demo_bubble",
+                raw_code: include_str!("../../app_crates/registry/src/ui/bubble.rs"),
+            }
         }
     });
     c

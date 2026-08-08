@@ -20,11 +20,13 @@ fn collapsible_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCollapsible", |_| rsx! { DemoCollapsible {} });
     c.add("DemoCollapsibleSettings", |_| rsx! { DemoCollapsibleSettings {} });
-    c.add("InstallCollapsible", |_| rsx! {
-        InstallCommand {
-            name: "collapsible",
-            demo_name: "demo_collapsible",
-            raw_code: include_str!("../../app_crates/registry/src/ui/collapsible.rs"),
+    c.add("InstallCollapsible", |_| {
+        rsx! {
+            InstallCommand {
+                name: "collapsible",
+                demo_name: "demo_collapsible",
+                raw_code: include_str!("../../app_crates/registry/src/ui/collapsible.rs"),
+            }
         }
     });
     c

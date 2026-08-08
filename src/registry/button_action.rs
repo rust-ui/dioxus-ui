@@ -18,11 +18,13 @@ pub static BUTTON_ACTION: RegistryEntry = RegistryEntry {
 fn button_action_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoButtonAction", |_| rsx! { DemoButtonAction {} });
-    c.add("InstallButtonAction", |_| rsx! {
-        InstallCommand {
-            name: "button-action",
-            demo_name: "demo_button_action",
-            raw_code: include_str!("../../app_crates/registry/src/ui/button_action.rs"),
+    c.add("InstallButtonAction", |_| {
+        rsx! {
+            InstallCommand {
+                name: "button-action",
+                demo_name: "demo_button_action",
+                raw_code: include_str!("../../app_crates/registry/src/ui/button_action.rs"),
+            }
         }
     });
     c
