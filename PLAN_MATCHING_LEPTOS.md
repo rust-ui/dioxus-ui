@@ -7,7 +7,7 @@ This file tracks confirmed gaps only. It is organized by execution priority rath
 ## Current Summary
 
 - Core UI component parity is effectively complete.
-- The largest visible product gap is documentation quality, especially install sections that still show placeholder content.
+- The largest visible product gap is now docs completeness for hooks and a few remaining docs pages, not the component install rollout itself.
 - The largest structural gap is Playwright coverage.
 - The best implementation order is: install/docs rollout -> hooks exposure -> missing demos -> remaining docs pages -> test parity -> optional cleanup.
 
@@ -17,22 +17,44 @@ This file tracks confirmed gaps only. It is organized by execution priority rath
 
 These are the issues users will notice immediately when browsing the Dioxus docs site.
 
-#### 1. Installation sections still show placeholder content on most docs pages
+#### 1. Installation rollout is mostly complete
 
-There are currently **92** `"Coming soon."` matches under `dioxus-ui/public/docs/`.
+The old large-scale install placeholder gap is no longer the main issue.
 
-Leptos does not have this gap: component docs render a real install block with CLI and manual installation guidance.
+Current state checked in the repo:
+- `96` markdown docs under `dioxus-ui/public/docs`
+- `88` docs already use an `<Install... />` tag
+- only `4` docs still contain a literal `"Coming soon."`
+
+Those 4 remaining placeholder cases are:
+- [ ] `public/docs/figma.md`
+- [ ] `public/docs/hooks/use_copy_clipboard.md`
+- [ ] `public/docs/hooks/use_lock_body_scroll.md`
+- [ ] `public/docs/hooks/use_random.md`
+
+Interpretation:
+- Component installation coverage is largely done.
+- The remaining install-related work is now concentrated in hook docs and a non-component static page (`figma.md`).
 
 Status:
 - [x] Generic Dioxus install component exists: `src/components/install_command.rs`
-- [x] Alert proof of concept is wired end-to-end
-- [ ] Roll out the same pattern to the remaining component docs
+- [x] Component docs broadly use `<Install... />` wrappers now
 - [ ] Verify that `ui-cli add <component>` is valid for Dioxus before documenting it broadly
+- [ ] Replace the final remaining placeholder docs listed above
 
-Recommended execution:
-1. Finish the install component rollout across all remaining component docs.
-2. Validate the CLI command format in `ui-cli`.
-3. Remove every remaining placeholder install section.
+#### 1b. Installation page content is still less complete than Leptos
+
+Leptos has an additional installation-specific interactive documentation block:
+- `app/src/registry/md_docs/docs_installation_cli_tree_view.rs`
+
+This renders a file tree + highlighted starter files inside the installation docs flow.
+Dioxus currently has a simpler `public/docs/installation.md` page with prose and a single CLI command block, but no equivalent interactive installation example.
+
+Status:
+- [ ] Decide whether Dioxus should also have an installation-specific interactive example
+- [ ] If yes, port or reimplement the tree/file-view example in Dioxus
+
+This is now a secondary docs parity gap rather than a systemic install rollout blocker.
 
 #### 2. Hooks exist but are not fully exposed in docs/navigation
 
@@ -118,12 +140,45 @@ Notes:
 - `cli.md` should be written for the Dioxus workflow. Do not blindly copy the Leptos version.
 - `icons.md` is a docs-content gap only. Dioxus already has a dedicated `/icons` route via `src/routes/page_icons.rs`.
 
-#### 6. Possibly missing download page
+#### 6. Missing “all demos” overview page
+
+Leptos has a dedicated overview page for browsing all component demos / hook demos:
+- `app/src/domain/docs/routing/page_all_demos.rs`
+- supported by `app/src/__registry__/demos_sidenav.rs`
+
+I did not find an equivalent route/page on the Dioxus side.
+
+Status:
+- [ ] Decide whether Dioxus should expose an all-demos index page
+- [ ] If yes, add the route, page, and demo index source
+
+This is a real discoverability gap for users browsing the docs at a higher level than individual pages.
+
+#### 7. Possibly missing download page
 
 - [ ] `page_download.rs` equivalent, if Dioxus distribution needs the same download UX as Leptos
 
 Decision needed:
 - Confirm whether Dioxus ships downloadable desktop binaries through the same UX before porting this page.
+
+#### 8. Command bar / top-level docs navigation taxonomy differs from Leptos
+
+Leptos command-bar page entries point to dedicated page routes such as:
+- `/docs/components/cli`
+- `/docs/components/installation`
+- `/icons`
+
+Dioxus currently uses a different and partially collapsed scheme in `src/__registry__/command_bar.rs`:
+- `Components`, `CLI`, and `Installation` page entries all exist under `CommandCategory::Pages`
+- but `CLI` and `Installation` point to component-style routes
+- and get-started docs like `Introduction`, `Installation`, `Changelog`, `Figma`, `RTL` also appear inside the component list
+
+This may not always be a broken route, but it is a parity mismatch in navigation structure and information architecture.
+
+Status:
+- [ ] Review command-bar page entries for correct route targets
+- [ ] Decide whether get-started docs should live only under `/docs/:name` in Dioxus
+- [ ] Remove or justify duplicated docs entries under the component registry/search surface
 
 ### P3 — Medium/Low Priority: test coverage
 
