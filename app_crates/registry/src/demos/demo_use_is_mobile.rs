@@ -11,12 +11,12 @@ pub fn DemoUseIsMobile() -> Element {
         div { class: "flex flex-col gap-3 items-center",
             div { class: "flex gap-2 items-center text-sm font-medium",
                 if is_mobile() {
-                    rsx! {
+                    Fragment {
                         Smartphone { class: "size-4" }
                         span { "Mobile" }
                     }
                 } else {
-                    rsx! {
+                    Fragment {
                         Monitor { class: "size-4" }
                         span { "Desktop" }
                     }

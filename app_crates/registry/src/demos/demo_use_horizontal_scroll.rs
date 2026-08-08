@@ -8,6 +8,7 @@ use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 pub fn DemoUseHorizontalScroll() -> Element {
     let scroll_container_element = use_signal(|| None::<web_sys::Element>);
     let scroll_ctx = use_horizontal_scroll(scroll_container_element.into(), None, None);
+    let scroll_state = (scroll_ctx.scroll_state)();
 
     rsx! {
         div { class: "w-full",
@@ -17,14 +18,14 @@ pub fn DemoUseHorizontalScroll() -> Element {
                     Button {
                         variant: ButtonVariant::Secondary,
                         size: ButtonSize::IconSm,
-                        disabled: scroll_ctx.scroll_state() == HorizontalScrollState::Start,
+                        disabled: scroll_state == HorizontalScrollState::Start,
                         onclick: move |_| scroll_ctx.scroll_by.call(-1),
                         ChevronLeft { class: "size-4" }
                     }
                     Button {
                         variant: ButtonVariant::Secondary,
                         size: ButtonSize::IconSm,
-                        disabled: scroll_ctx.scroll_state() == HorizontalScrollState::End,
+                        disabled: scroll_state == HorizontalScrollState::End,
                         onclick: move |_| scroll_ctx.scroll_by.call(1),
                         ChevronRight { class: "size-4" }
                     }
@@ -48,7 +49,7 @@ pub fn DemoUseHorizontalScroll() -> Element {
 
             div { class: "mt-4 text-sm text-muted-foreground",
                 "Scroll state: "
-                span { class: "font-semibold", "{scroll_ctx.scroll_state()}" }
+                span { class: "font-semibold", "{scroll_state}" }
             }
         }
     }

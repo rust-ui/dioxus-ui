@@ -39,9 +39,9 @@ fn DemoUseLocksInner() -> Element {
                                 size: ButtonSize::Icon,
                                 onclick: move |_| locks_for_click.toggle_lock(param),
                                 if locks.is_locked(param) {
-                                    rsx! { Lock { class: "size-3.5" } }
+                                    Lock { class: "size-3.5" }
                                 } else {
-                                    rsx! { LockOpen { class: "size-3.5" } }
+                                    LockOpen { class: "size-3.5" }
                                 }
                             }
                         }

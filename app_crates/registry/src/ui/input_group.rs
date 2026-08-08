@@ -116,6 +116,7 @@ pub fn InputGroupButton(
     #[props(default = InputGroupButtonVariant::default())] variant: InputGroupButtonVariant,
     #[props(default = InputGroupButtonSize::default())] size: InputGroupButtonSize,
     #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] aria_label: Option<String>,
     #[props(optional)] onclick: Option<EventHandler<MouseEvent>>,
     children: Element,
 ) -> Element {
@@ -125,6 +126,7 @@ pub fn InputGroupButton(
         button {
             r#type: "button",
             class: "{merged}",
+            aria_label: aria_label,
             onclick: move |e| {
                 if let Some(handler) = &onclick {
                     handler.call(e);

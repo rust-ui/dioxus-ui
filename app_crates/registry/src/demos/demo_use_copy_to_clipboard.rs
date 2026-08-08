@@ -21,9 +21,9 @@ pub fn DemoUseCopyToClipboard() -> Element {
                 variant: ButtonVariant::Outline,
                 onclick: move |_| copy_to_clipboard(&url()),
                 if copied() {
-                    rsx! { Check {} }
+                    Check { class: "w-4 h-4" }
                 } else {
-                    rsx! { Copy {} }
+                    Copy { class: "w-4 h-4" }
                 }
             }
         }

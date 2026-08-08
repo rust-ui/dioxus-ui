@@ -13,17 +13,17 @@ pub fn DemoUseMediaQuery() -> Element {
             div { class: "flex gap-2 items-center",
                 span { class: "text-sm text-muted-foreground", ">= 768px (md)" }
                 if is_md() {
-                    rsx! { Badge { variant: BadgeVariant::Default, "matches" } }
+                    Badge { variant: BadgeVariant::Default, "matches" }
                 } else {
-                    rsx! { Badge { variant: BadgeVariant::Secondary, "no match" } }
+                    Badge { variant: BadgeVariant::Secondary, "no match" }
                 }
             }
             div { class: "flex gap-2 items-center",
                 span { class: "text-sm text-muted-foreground", ">= 1024px (lg)" }
                 if is_lg() {
-                    rsx! { Badge { variant: BadgeVariant::Default, "matches" } }
+                    Badge { variant: BadgeVariant::Default, "matches" }
                 } else {
-                    rsx! { Badge { variant: BadgeVariant::Secondary, "no match" } }
+                    Badge { variant: BadgeVariant::Secondary, "no match" }
                 }
             }
             p { class: "text-xs text-muted-foreground", "Resize the window to see the signals update." }
