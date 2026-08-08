@@ -4,6 +4,12 @@ Goal: make `dioxus-ui` use the same docs/registry/workflow architecture as the L
 
 Constraint: this is not "equivalent architecture". We want the same architecture and the same responsibility split as Leptos wherever Dioxus does not force a technical difference.
 
+Decision rule:
+
+- when there is a design or architecture choice, Dioxus should copy Leptos as literally as possible
+- do not keep a Dioxus-specific variant just because it already works
+- only keep a difference when there is a concrete Dioxus technical constraint
+
 This file tracks the confirmed gaps and the implementation order needed to align Dioxus to that exact target.
 
 ## Current Conclusion
@@ -26,11 +32,14 @@ Completed:
   - `demos_sidenav.rs`
   - `my_command_bar_constants.rs`
 
-The remaining work is now mostly non-architectural:
+The remaining work is now mostly about literal parity and cleanup:
 
-- finishing content parity for any pages/hooks that still exist in Leptos but not yet in Dioxus
+- porting Leptos internal API shapes like `MarkdownType` / `get_static_registry_entry(...)` instead of merely keeping a compatible Dioxus variant
+- tightening the last naming/module differences inside `src/__registry__/`
+- closing the remaining tree mismatches in `src/` and `app_crates/`
 - cleaning missing frontmatter assets (`image`, `image_dark`) in many docs files
-- removing leftover warnings unrelated to the docs architecture migration
+- adding the remaining support pages and broader test parity
+- deciding whether Dioxus-only extras should remain mixed into the same public docs surface or be isolated from the Leptos-parity surface
 
 ## Exact Target Architecture
 
@@ -248,8 +257,8 @@ Current note:
 
 Required work:
 
-- [ ] Decide whether to port the Leptos `MarkdownType` enum literally
-- [ ] Decide whether to port `get_static_registry_entry(...)` literally
+- [ ] Port the Leptos `MarkdownType` enum literally unless Dioxus proves a hard blocker
+- [ ] Port `get_static_registry_entry(...)` literally unless Dioxus proves a hard blocker
 - [x] Store demo/install metadata centrally instead of scattering it across `src/registry/*.rs`
 - [x] Ensure wrappers resolve code/install metadata from that central source
 
@@ -281,7 +290,8 @@ Required work:
 - [x] audit current `dioxus-ui/src/__registry__/mod.rs`
 - [x] make `static_md_registry` a first-class module there
 - [ ] rename remaining modules to match Leptos more literally where needed
-- [ ] decide what to do with Dioxus-only modules like `all_workflows.rs`
+- [ ] isolate or remove Dioxus-only modules like `all_workflows.rs` from the Leptos-parity path
+- [ ] collapse generated helpers like `sidenav_get_started.rs`, `sidenav_hooks.rs`, `source_map.rs` if Leptos does not need separate files for those responsibilities
 - [ ] ensure command bar constants and demo sidenav data live in `__registry__`, not mixed into the old docs registry layer
 
 ### P1 — Finish the remaining structure mismatches
@@ -301,7 +311,10 @@ Required work:
 - [x] Verify every hook lives under `dioxus-ui/app_crates/registry/src/hooks/`
 - [x] Verify every UI primitive/component lives under `dioxus-ui/app_crates/registry/src/ui/`
 - [x] Remove the old docs-registry duplication between `src/registry/` and `app_crates/registry/`
-- [ ] Add `app_crates/app_components/` if we want to mirror Leptos even more literally
+- [ ] Add `dioxus-ui/app_crates/app_components/` to mirror Leptos literally
+- [ ] Mirror Leptos `app_crates/registry/src/constants/` if the same ownership exists on the Leptos side
+- [ ] Mirror Leptos `app_crates/registry/src/utils/` if the same ownership exists on the Leptos side
+- [ ] Decide whether Dioxus-only `app_crates/registry/src/workflows/` stays outside the Leptos-parity surface or is split more cleanly
 
 #### 7. Make docs pages declarative instead of registry-driven per page
 
@@ -316,43 +329,81 @@ Required work:
 - [x] Normalize demo/install tags to the central workflow
 - [x] Remove page-specific rendering logic that existed only because of the old Dioxus registry design
 
+#### 7b. Match `app_crates/app_domain` ownership more literally
+
+Leptos `app_crates/app_domain/src/` contains:
+
+- `constants/`
+- `icons/`
+- `markdown_config/`
+- `themes/`
+- `utils/`
+
+Current Dioxus mismatch:
+
+- `markdown_config/` is missing
+- `utils/` is missing
+
+Required work:
+
+- [ ] Add `dioxus-ui/app_crates/app_domain/src/markdown_config/` or move equivalent logic there
+- [ ] Add `dioxus-ui/app_crates/app_domain/src/utils/` or move equivalent logic there
+- [ ] Audit any Dioxus equivalents currently living under `src/markdown/`, `src/utils/`, or other app-level locations and move them to the Leptos-style crate when appropriate
+
+#### 7c. Match top-level `src/` layout more literally
+
+Observed tree differences versus Leptos:
+
+- Leptos has `src/lib.rs`; Dioxus currently has `src/main.rs`
+- Leptos has `src/shell.rs`; Dioxus does not
+- Leptos has `src/domain/tests/`; Dioxus currently uses `src/domain/test/`
+- Leptos does not expose Dioxus-only top-level areas like `src/markdown/` in that same shape
+
+Required work:
+
+- [ ] Port the app entry layout toward the Leptos shape as far as Dioxus allows (`lib.rs` / bootstrap split / `shell.rs`)
+- [ ] Rename `src/domain/test/` to match Leptos `src/domain/tests/` if no Dioxus constraint blocks it
+- [ ] Audit whether `src/markdown/` should be folded into the same Leptos-style ownership boundaries instead of remaining as a Dioxus-specific top-level bucket
+- [ ] Audit whether `src/components/` should be split more like Leptos components once `app_crates/app_components/` is added
+
 ### P2 — Finish missing content after architecture parity
 
 After the workflow matches, fill remaining content gaps.
 
 #### 8. Hook docs parity
 
-Leptos hook docs set is larger than the currently exposed Dioxus set.
+This parity pass is now done for the Leptos hook docs set currently mirrored in Dioxus.
 
-Missing or not fully wired on Dioxus:
+Completed:
 
-- [ ] `use_history`
-- [ ] `use_horizontal_scroll`
-- [ ] `use_is_mobile`
-- [ ] `use_locks`
-- [ ] `use_media_query`
-- [ ] `use_press_hold`
+- [x] `use_history`
+- [x] `use_horizontal_scroll`
+- [x] `use_is_mobile`
+- [x] `use_locks`
+- [x] `use_media_query`
+- [x] `use_press_hold`
 
-Required per hook:
+Completed per hook:
 
-- [ ] add or finish markdown doc
-- [ ] wire it into the central markdown registry
-- [ ] expose it in sidenav
-- [ ] expose it in command/search navigation
-- [ ] verify demo/install/code metadata resolution via the new central workflow
+- [x] markdown doc added or completed
+- [x] central markdown registry wiring
+- [x] sidenav exposure
+- [x] command/search navigation exposure
+- [x] demo/install/code metadata resolution verified through the central workflow
 
 #### 9. Remaining install/docs placeholders
 
-Still confirmed as placeholder-style gaps:
+Still worth improving:
 
-- [ ] `public/docs/figma.md`
-- [ ] `public/docs/hooks/use_copy_clipboard.md`
-- [ ] `public/docs/hooks/use_lock_body_scroll.md`
-- [ ] `public/docs/hooks/use_random.md`
+- [ ] enrich `public/docs/figma.md` if we want the same content depth as Leptos
+- [ ] review docs frontmatter completeness across `public/docs/**` for `image` / `image_dark`
 
-Also missing relative to Leptos install experience:
+Already handled:
 
-- [ ] installation docs tree/file-view block equivalent to Leptos `docs_installation_cli_tree_view.rs`
+- [x] `public/docs/hooks/use_copy_clipboard.md`
+- [x] `public/docs/hooks/use_lock_body_scroll.md`
+- [x] `public/docs/hooks/use_random.md`
+- [x] installation docs tree/file-view block equivalent to Leptos `docs_installation_cli_tree_view.rs`
 
 #### 10. Missing component demos
 
@@ -408,11 +459,33 @@ Required work:
 
 #### 13. Missing overview/supporting pages
 
-- [ ] `public/docs/workflow.md`
+- [ ] `public/docs/workflow.md` if we want the same support-page set as Leptos
 - [x] `public/docs/cli.md`
 - [x] `public/docs/icons.md`
 - [ ] all-demos overview page equivalent
 - [ ] download page equivalent if still present in Leptos UX
+
+#### 13b. Isolate Dioxus-only docs from the Leptos-parity surface
+
+Current confirmed file-tree difference in docs:
+
+Dioxus still exposes component docs that do not exist in Leptos:
+
+- [ ] `components/bento_grid.md`
+- [ ] `components/chat.md`
+- [ ] `components/expandable.md`
+- [ ] `components/faq_transition.md`
+- [ ] `components/image.md`
+- [ ] `components/mask.md`
+- [ ] `components/radio-group.md`
+- [ ] `components/select_native.md`
+- [ ] `components/toggle.md`
+- [ ] `components/toolbar.md`
+
+Required work:
+
+- [ ] decide whether these are moved out of the Leptos-parity docs surface
+- [ ] or add an explicit separation so the Leptos-matching docs IA stays literal
 
 ### P4 — Test parity after workflow stabilization
 
@@ -460,11 +533,16 @@ Required work:
 - [x] Changelog page exists
 - [x] Figma page exists
 - [x] RTL overview exists
+- [x] hook docs parity for `use_history`, `use_horizontal_scroll`, `use_is_mobile`, `use_locks`, `use_media_query`, `use_press_hold`
+- [x] hook demos parity for `use_copy_to_clipboard`, `use_horizontal_scroll`, `use_is_mobile`, `use_lock_body_scroll`, `use_locks`, `use_media_query`, `use_press_hold`, `use_random`
+- [x] item docs/demo parity pass completed
+- [x] input-group docs/demo parity pass completed
 
 ## Recommended Execution Order
 
 1. Decide whether to copy Leptos `MarkdownType` / `get_static_registry_entry(...)` literally
 2. Tighten remaining `__registry__` naming/module differences
-3. Finish missing hooks, demos, and install/docs placeholders
-4. Align navigation and route taxonomy
-5. Port Playwright coverage
+3. Close crate/tree mismatches: `app_components`, `app_domain/markdown_config`, `app_domain/utils`, `domain/tests`, entry layout
+4. Clean docs frontmatter/assets and any remaining shallow support docs
+5. Add remaining support pages (`workflow`, all-demos, download) and isolate Dioxus-only docs from the Leptos-parity surface
+6. Port Playwright coverage
