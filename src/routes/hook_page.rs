@@ -2,18 +2,18 @@ use app_config::SeoMeta;
 use dioxus::prelude::*;
 use icons::{ChevronLeft, ChevronRight};
 
+use crate::__registry__::static_md_registry::{find_hook_entry, hook_prev_next, MyMd};
 use crate::components::doc_header::DocHeader;
 use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
-use crate::markdown::converter::{convert_md, extract_toc};
-use crate::registry::hooks::{self, prev_next};
+use crate::markdown::converter::extract_toc;
 use crate::registry::types::RegistryEntry;
 
 #[component]
 pub fn HookPage(name: String) -> Element {
-    let entry = hooks::find(&name);
-    let (prev, next) = prev_next(&name);
+    let entry = find_hook_entry(&name);
+    let (prev, next) = hook_prev_next(&name);
 
     let mut toc: Signal<Vec<TocItem>> = use_context();
     let toc_items: Vec<TocItem> = entry.map(|e| extract_toc(e.body_md())).unwrap_or_default();
@@ -42,7 +42,7 @@ pub fn HookPage(name: String) -> Element {
                         prev,
                         next,
                     }
-                    {convert_md(e.body_md(), &(e.components)())}
+                    MyMd { raw: e.raw }
                     div { class: "mt-14 mb-6",
                         NewsletterSignup {}
                     }

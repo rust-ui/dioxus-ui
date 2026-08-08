@@ -9466,6 +9466,11 @@
       max-width: var(--container-2xl);
     }
   }
+  .lg\:max-w-\[280px\] {
+    @media (width >= 64rem) {
+      max-width: 280px;
+    }
+  }
   .lg\:max-w-none {
     @media (width >= 64rem) {
       max-width: none;
@@ -9504,6 +9509,16 @@
   .lg\:grid-cols-\[minmax\(0\,1fr\)_18rem\] {
     @media (width >= 64rem) {
       grid-template-columns: minmax(0,1fr) 18rem;
+    }
+  }
+  .lg\:flex-row {
+    @media (width >= 64rem) {
+      flex-direction: row;
+    }
+  }
+  .lg\:items-start {
+    @media (width >= 64rem) {
+      align-items: flex-start;
     }
   }
   .lg\:gap-6 {

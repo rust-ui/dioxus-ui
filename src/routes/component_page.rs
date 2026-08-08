@@ -2,18 +2,18 @@ use app_config::SeoMeta;
 use dioxus::prelude::*;
 use icons::{ChevronLeft, ChevronRight};
 
+use crate::__registry__::static_md_registry::{component_prev_next, find_component_entry, MyMd};
 use crate::components::doc_header::DocHeader;
 use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
-use crate::markdown::converter::{convert_md, extract_toc};
+use crate::markdown::converter::extract_toc;
 use crate::registry::types::RegistryEntry;
-use crate::registry::{self, prev_next};
 
 #[component]
 pub fn ComponentPage(name: String) -> Element {
-    let entry = registry::find(&name);
-    let (prev, next) = prev_next(&name);
+    let entry = find_component_entry(&name);
+    let (prev, next) = component_prev_next(&name);
 
     let mut toc: Signal<Vec<TocItem>> = use_context();
     let toc_items: Vec<TocItem> = entry.map(|e| extract_toc(e.body_md())).unwrap_or_default();
@@ -42,7 +42,7 @@ pub fn ComponentPage(name: String) -> Element {
                         prev,
                         next,
                     }
-                    {convert_md(e.body_md(), &(e.components)())}
+                    MyMd { raw: e.raw }
                     div { class: "mt-14 mb-6",
                         NewsletterSignup {}
                     }

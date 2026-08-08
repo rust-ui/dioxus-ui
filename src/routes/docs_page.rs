@@ -2,39 +2,18 @@ use app_config::SeoMeta;
 use dioxus::prelude::*;
 use icons::{ChevronLeft, ChevronRight};
 
+use crate::__registry__::static_md_registry::{find_get_started_entry, get_started_prev_next, MyMd};
 use crate::components::doc_header::DocHeader;
 use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
-use crate::markdown::converter::{convert_md, extract_toc};
-use crate::registry::changelog::CHANGELOG;
-use crate::registry::figma::FIGMA;
-use crate::registry::installation::INSTALLATION;
-use crate::registry::introduction::INTRODUCTION;
-use crate::registry::rtl::RTL;
+use crate::markdown::converter::extract_toc;
 use crate::registry::types::RegistryEntry;
-
-static GET_STARTED: &[&RegistryEntry] = &[&INTRODUCTION, &INSTALLATION, &CHANGELOG, &FIGMA, &RTL];
-
-fn find(slug: &str) -> Option<&'static RegistryEntry> {
-    GET_STARTED.iter().copied().find(|e| e.slug == slug)
-}
-
-fn prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'static RegistryEntry>) {
-    let pos = GET_STARTED.iter().position(|e| e.slug == slug);
-    match pos {
-        None => (None, None),
-        Some(i) => (
-            if i > 0 { Some(GET_STARTED[i - 1]) } else { None },
-            if i + 1 < GET_STARTED.len() { Some(GET_STARTED[i + 1]) } else { None },
-        ),
-    }
-}
 
 #[component]
 pub fn DocsPage(name: String) -> Element {
-    let entry = find(&name);
-    let (prev, next) = prev_next(&name);
+    let entry = find_get_started_entry(&name);
+    let (prev, next) = get_started_prev_next(&name);
 
     let mut toc: Signal<Vec<TocItem>> = use_context();
     let toc_items: Vec<TocItem> = entry.map(|e| extract_toc(e.body_md())).unwrap_or_default();
@@ -63,7 +42,7 @@ pub fn DocsPage(name: String) -> Element {
                         prev,
                         next,
                     }
-                    {convert_md(e.body_md(), &(e.components)())}
+                    MyMd { raw: e.raw }
                     div { class: "mt-14 mb-6",
                         NewsletterSignup {}
                     }
