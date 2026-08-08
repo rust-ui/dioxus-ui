@@ -496,13 +496,22 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Input Group](https://dioxus.rust-ui.com/docs/components/input-group)
 
-> An input with inline prefix/suffix addons such as icons or buttons.
+> A component that combines inputs with addons like icons, text, or buttons.
 
 * Installation
+* Components
 * Usage
 * Examples
   * Text Addons
   * Block Layout
+  * Custom Control
+  * Dropdown
+  * In Card
+  * Kbd
+  * Spinner
+  * Tooltip
+  * Kbd Input Group
+  * Empty State
   * RTL
 * See Also
 
@@ -540,10 +549,18 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Item](https://dioxus.rust-ui.com/docs/components/item)
 
-> A flexible list item component with media, content, and action slots.
+> A flexible container component for displaying list items with media, content, and actions.
 
 * Installation
+* Components
 * Usage
+* Examples
+  * Variants
+  * Dropdown Menu
+  * Item Group
+  * Image Media
+  * File Upload List
+  * RTL
 * See Also
 
 ### [Kbd](https://dioxus.rust-ui.com/docs/components/kbd)
@@ -917,6 +934,28 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Framework Support
 * Installation
 
+### [CLI](https://dioxus.rust-ui.com/docs/cli)
+
+> Learn how to use the Rust/UI CLI to install components, initialize projects, and manage your component library efficiently.
+
+* Installation
+* Commands
+  * Starters (optional, quick start)
+  * Init (existing projects)
+  * Add
+* Getting Started
+
+### [Icons](https://dioxus.rust-ui.com/docs/icons)
+
+> Beautiful SVG icons for Rust applications. 1,600+ Lucide icons with full Leptos and Dioxus support, Tailwind CSS integration, and zero dependencies.
+
+* Installation
+* Quick Start
+* Features
+* Browse All Icons
+* Styling & Customization
+* Why Choose Our Icons?
+
 ### [Figma](https://dioxus.rust-ui.com/docs/figma)
 
 > Coming soon.
@@ -946,22 +985,96 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Use Copy Clipboard](https://dioxus.rust-ui.com/docs/hooks/use-copy-clipboard)
 
-> A Dioxus hook that copies text to clipboard with optional timeout to show copied state.
+> A reactive hook that copies text to the clipboard and exposes a temporary copied state for feedback UI.
 
+* Installation
 * Usage
-* Example
+* Return Value
+* Examples
+  * Default
+* See Also
+
+### [Use History](https://dioxus.rust-ui.com/docs/hooks/use-history)
+
+> Undo/redo history stack for URL-based state, with keyboard shortcuts (⌘Z / ⌘⇧Z).
+
+* Installation
+* API
+* Usage
+* Methods
+* Examples
+  * Default
+* See Also
+
+### [Use Horizontal Scroll](https://dioxus.rust-ui.com/docs/hooks/use-horizontal-scroll)
+
+> A Rust/UI hook that manages horizontal scrolling with state tracking and programmatic scroll controls.
+
+* Installation
+* Usage
+* Examples
+  * Default
+
+### [Use Is Mobile](https://dioxus.rust-ui.com/docs/hooks/use-is-mobile)
+
+> A reactive hook that returns true when the viewport is below the mobile breakpoint (768px).
+
+* Installation
+* Usage
+* Examples
+  * Default
+* See Also
 
 ### [Use Lock Body Scroll](https://dioxus.rust-ui.com/docs/hooks/use-lock-body-scroll)
 
-> A Dioxus hook that locks and unlocks body scrolling, useful for modal dialogs, sheets, and overlays.
+> A signal-based hook that locks and unlocks body scrolling, useful for dialogs, sheets, and overlays.
 
+* Installation
 * Usage
-* Example
+* Return Value
+* Examples
+  * Default
+* See Also
+
+### [Use Locks](https://dioxus.rust-ui.com/docs/hooks/use-locks)
+
+> Context hook for locking design params against randomization so each param can be toggled individually.
+
+* Installation
+* API
+* Usage
+* Methods
+* Examples
+  * Default
+* See Also
+
+### [Use Media Query](https://dioxus.rust-ui.com/docs/hooks/use-media-query)
+
+> A reactive hook that tracks whether a CSS media query matches, updating automatically when the viewport changes.
+
+* Installation
+* Usage
+* Examples
+  * Default
+* See Also
+
+### [Use Press Hold](https://dioxus.rust-ui.com/docs/hooks/use-press-hold)
+
+> A Rust/UI hook for press-and-hold interactions with animated progress.
+
+* Installation
+* Usage
+* Examples
+  * Default
 
 ### [Use Random](https://dioxus.rust-ui.com/docs/hooks/use-random)
 
-> A Dioxus hook that generates unique random IDs for DOM elements and CSS animations.
+> Utility helpers for generating unique IDs and transition names for DOM elements and CSS animations.
 
+* Installation
 * Usage
-* Example
+* API
+* Examples
+  * Random ID Generation
+* See Also
 

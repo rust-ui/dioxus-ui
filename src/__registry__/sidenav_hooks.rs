@@ -5,6 +5,12 @@ use crate::__registry__::demos_sidenav::SidenavItem;
 
 pub static SIDENAV_HOOKS_ITEMS: &[SidenavItem] = &[
     SidenavItem { label: "Use Copy Clipboard", slug: "use-copy-clipboard", is_new: false },
+    SidenavItem { label: "Use History", slug: "use-history", is_new: false },
+    SidenavItem { label: "Use Horizontal Scroll", slug: "use-horizontal-scroll", is_new: false },
+    SidenavItem { label: "Use Is Mobile", slug: "use-is-mobile", is_new: false },
     SidenavItem { label: "Use Lock Body Scroll", slug: "use-lock-body-scroll", is_new: false },
+    SidenavItem { label: "Use Locks", slug: "use-locks", is_new: false },
+    SidenavItem { label: "Use Media Query", slug: "use-media-query", is_new: false },
+    SidenavItem { label: "Use Press Hold", slug: "use-press-hold", is_new: false },
     SidenavItem { label: "Use Random", slug: "use-random", is_new: false },
 ];

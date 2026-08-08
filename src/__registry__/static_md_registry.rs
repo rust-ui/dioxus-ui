@@ -108,6 +108,7 @@ use registry::demos::demo_dropzone::DemoDropzone;
 use registry::demos::demo_dropzone_grid::DemoDropzoneGrid;
 use registry::demos::demo_dropzone_toggle::DemoDropzoneToggle;
 use registry::demos::demo_empty::DemoEmpty;
+use registry::demos::demo_empty_input_group::DemoEmptyInputGroup;
 use registry::demos::demo_empty_muted::DemoEmptyMuted;
 use registry::demos::demo_expandable::DemoExpandable;
 use registry::demos::demo_faq_transition::DemoFaqTransition;
@@ -126,8 +127,14 @@ use registry::demos::demo_input::DemoInput;
 use registry::demos::demo_input_copy::DemoInputCopy;
 use registry::demos::demo_input_group::DemoInputGroup;
 use registry::demos::demo_input_group_block::DemoInputGroupBlock;
+use registry::demos::demo_input_group_custom::DemoInputGroupCustom;
+use registry::demos::demo_input_group_dropdown::DemoInputGroupDropdown;
+use registry::demos::demo_input_group_in_card::DemoInputGroupInCard;
+use registry::demos::demo_input_group_kbd::DemoInputGroupKbd;
 use registry::demos::demo_input_group_rtl::DemoInputGroupRtl;
+use registry::demos::demo_input_group_spinner::DemoInputGroupSpinner;
 use registry::demos::demo_input_group_text::DemoInputGroupText;
+use registry::demos::demo_input_group_tooltip::DemoInputGroupTooltip;
 use registry::demos::demo_input_otp::DemoInputOtp;
 use registry::demos::demo_input_otp_separator::DemoInputOtpSeparator;
 use registry::demos::demo_input_phone::DemoInputPhone;
@@ -135,7 +142,14 @@ use registry::demos::demo_input_phone_disabled::DemoInputPhoneDisabled;
 use registry::demos::demo_input_prompt::DemoInputPrompt;
 use registry::demos::demo_input_prompt_with_tools::DemoInputPromptWithTools;
 use registry::demos::demo_item::DemoItem;
+use registry::demos::demo_item_dropdown_menu::DemoItemDropdownMenu;
+use registry::demos::demo_item_file_upload::DemoItemFileUpload;
+use registry::demos::demo_item_group::DemoItemGroup;
+use registry::demos::demo_item_media_image::DemoItemMediaImage;
+use registry::demos::demo_item_rtl::DemoItemRtl;
+use registry::demos::demo_item_variants::DemoItemVariants;
 use registry::demos::demo_kbd::DemoKbd;
+use registry::demos::demo_kbd_input_group::DemoKbdInputGroup;
 use registry::demos::demo_label::DemoLabel;
 use registry::demos::demo_marker::DemoMarker;
 use registry::demos::demo_marker_border::DemoMarkerBorder;
@@ -208,6 +222,15 @@ use registry::demos::demo_toggle::DemoToggle;
 use registry::demos::demo_toggle_group::DemoToggleGroup;
 use registry::demos::demo_toolbar::DemoToolbar;
 use registry::demos::demo_tooltip::DemoTooltip;
+use registry::demos::demo_use_copy_to_clipboard::DemoUseCopyToClipboard;
+use registry::demos::demo_use_history::DemoUseHistory;
+use registry::demos::demo_use_horizontal_scroll::DemoUseHorizontalScroll;
+use registry::demos::demo_use_is_mobile::DemoUseIsMobile;
+use registry::demos::demo_use_lock_body_scroll::DemoUseLockBodyScroll;
+use registry::demos::demo_use_locks::DemoUseLocks;
+use registry::demos::demo_use_media_query::DemoUseMediaQuery;
+use registry::demos::demo_use_press_hold::DemoUsePressHold;
+use registry::demos::demo_use_random::DemoUseRandom;
 
 use crate::domain::markdown_ui::components::static_demo_wrapper::StaticDemoWrapper;
 use crate::domain::markdown_ui::components::static_install_wrapper::StaticInstallWrapper;
@@ -339,6 +362,7 @@ pub enum MarkdownType {
     StaticDemoDropzoneGrid,
     StaticDemoDropzoneToggle,
     StaticDemoEmpty,
+    StaticDemoEmptyInputGroup,
     StaticDemoEmptyMuted,
     StaticDemoExpandable,
     StaticDemoFaqTransition,
@@ -357,8 +381,14 @@ pub enum MarkdownType {
     StaticDemoInputCopy,
     StaticDemoInputGroup,
     StaticDemoInputGroupBlock,
+    StaticDemoInputGroupCustom,
+    StaticDemoInputGroupDropdown,
+    StaticDemoInputGroupInCard,
+    StaticDemoInputGroupKbd,
     StaticDemoInputGroupRtl,
+    StaticDemoInputGroupSpinner,
     StaticDemoInputGroupText,
+    StaticDemoInputGroupTooltip,
     StaticDemoInputOtp,
     StaticDemoInputOtpSeparator,
     StaticDemoInputPhone,
@@ -366,7 +396,14 @@ pub enum MarkdownType {
     StaticDemoInputPrompt,
     StaticDemoInputPromptWithTools,
     StaticDemoItem,
+    StaticDemoItemDropdownMenu,
+    StaticDemoItemFileUpload,
+    StaticDemoItemGroup,
+    StaticDemoItemMediaImage,
+    StaticDemoItemRtl,
+    StaticDemoItemVariants,
     StaticDemoKbd,
+    StaticDemoKbdInputGroup,
     StaticDemoLabel,
     StaticDemoMarker,
     StaticDemoMarkerBorder,
@@ -439,6 +476,15 @@ pub enum MarkdownType {
     StaticDemoToggleGroup,
     StaticDemoToolbar,
     StaticDemoTooltip,
+    StaticDemoUseCopyToClipboard,
+    StaticDemoUseHistory,
+    StaticDemoUseHorizontalScroll,
+    StaticDemoUseIsMobile,
+    StaticDemoUseLockBodyScroll,
+    StaticDemoUseLocks,
+    StaticDemoUseMediaQuery,
+    StaticDemoUsePressHold,
+    StaticDemoUseRandom,
     StaticDocsInstallationCliTreeView,
     StaticInstallAccordion,
     StaticInstallAlert,
@@ -529,7 +575,13 @@ pub enum MarkdownType {
     StaticInstallToolbar,
     StaticInstallTooltip,
     StaticInstallUseCopyClipboard,
+    StaticInstallUseHistory,
+    StaticInstallUseHorizontalScroll,
+    StaticInstallUseIsMobile,
     StaticInstallUseLockBodyScroll,
+    StaticInstallUseLocks,
+    StaticInstallUseMediaQuery,
+    StaticInstallUsePressHold,
     StaticInstallUseRandom,
 }
 
@@ -1165,6 +1217,12 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             file_path: "public/docs/components/empty.md",
             install_name: "empty",
         }),
+        MarkdownType::StaticDemoEmptyInputGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_empty_input_group.rs"),
+            demo_name: "demo_empty_input_group",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
         MarkdownType::StaticDemoEmptyMuted => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_empty_muted.rs"),
             demo_name: "demo_empty_muted",
@@ -1273,15 +1331,51 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             file_path: "public/docs/components/input-group.md",
             install_name: "input_group",
         }),
+        MarkdownType::StaticDemoInputGroupCustom => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_custom.rs"),
+            demo_name: "demo_input_group_custom",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupDropdown => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_dropdown.rs"),
+            demo_name: "demo_input_group_dropdown",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupInCard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_in_card.rs"),
+            demo_name: "demo_input_group_in_card",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupKbd => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_kbd.rs"),
+            demo_name: "demo_input_group_kbd",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
         MarkdownType::StaticDemoInputGroupRtl => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_rtl.rs"),
             demo_name: "demo_input_group_rtl",
             file_path: "public/docs/components/input-group.md",
             install_name: "input_group",
         }),
+        MarkdownType::StaticDemoInputGroupSpinner => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_spinner.rs"),
+            demo_name: "demo_input_group_spinner",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
         MarkdownType::StaticDemoInputGroupText => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_text.rs"),
             demo_name: "demo_input_group_text",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupTooltip => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_tooltip.rs"),
+            demo_name: "demo_input_group_tooltip",
             file_path: "public/docs/components/input-group.md",
             install_name: "input_group",
         }),
@@ -1327,11 +1421,53 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             file_path: "public/docs/components/item.md",
             install_name: "item",
         }),
+        MarkdownType::StaticDemoItemDropdownMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item_dropdown_menu.rs"),
+            demo_name: "demo_item_dropdown_menu",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
+        MarkdownType::StaticDemoItemFileUpload => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item_file_upload.rs"),
+            demo_name: "demo_item_file_upload",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
+        MarkdownType::StaticDemoItemGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item_group.rs"),
+            demo_name: "demo_item_group",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
+        MarkdownType::StaticDemoItemMediaImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item_media_image.rs"),
+            demo_name: "demo_item_media_image",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
+        MarkdownType::StaticDemoItemRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item_rtl.rs"),
+            demo_name: "demo_item_rtl",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
+        MarkdownType::StaticDemoItemVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item_variants.rs"),
+            demo_name: "demo_item_variants",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
         MarkdownType::StaticDemoKbd => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_kbd.rs"),
             demo_name: "demo_kbd",
             file_path: "public/docs/components/kbd.md",
             install_name: "kbd",
+        }),
+        MarkdownType::StaticDemoKbdInputGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_kbd_input_group.rs"),
+            demo_name: "demo_kbd_input_group",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
         }),
         MarkdownType::StaticDemoLabel => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_label.rs"),
@@ -1764,6 +1900,60 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             demo_name: "demo_tooltip",
             file_path: "public/docs/components/tooltip.md",
             install_name: "tooltip",
+        }),
+        MarkdownType::StaticDemoUseCopyToClipboard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_copy_to_clipboard.rs"),
+            demo_name: "demo_use_copy_to_clipboard",
+            file_path: "public/docs/hooks/use-copy-clipboard.md",
+            install_name: "use_copy_clipboard",
+        }),
+        MarkdownType::StaticDemoUseHistory => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_history.rs"),
+            demo_name: "demo_use_history",
+            file_path: "public/docs/hooks/use-history.md",
+            install_name: "use_history",
+        }),
+        MarkdownType::StaticDemoUseHorizontalScroll => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_horizontal_scroll.rs"),
+            demo_name: "demo_use_horizontal_scroll",
+            file_path: "public/docs/hooks/use-horizontal-scroll.md",
+            install_name: "use_horizontal_scroll",
+        }),
+        MarkdownType::StaticDemoUseIsMobile => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_is_mobile.rs"),
+            demo_name: "demo_use_is_mobile",
+            file_path: "public/docs/hooks/use-is-mobile.md",
+            install_name: "use_is_mobile",
+        }),
+        MarkdownType::StaticDemoUseLockBodyScroll => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_lock_body_scroll.rs"),
+            demo_name: "demo_use_lock_body_scroll",
+            file_path: "public/docs/hooks/use-lock-body-scroll.md",
+            install_name: "use_lock_body_scroll",
+        }),
+        MarkdownType::StaticDemoUseLocks => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_locks.rs"),
+            demo_name: "demo_use_locks",
+            file_path: "public/docs/hooks/use-locks.md",
+            install_name: "use_locks",
+        }),
+        MarkdownType::StaticDemoUseMediaQuery => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_media_query.rs"),
+            demo_name: "demo_use_media_query",
+            file_path: "public/docs/hooks/use-media-query.md",
+            install_name: "use_media_query",
+        }),
+        MarkdownType::StaticDemoUsePressHold => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_press_hold.rs"),
+            demo_name: "demo_use_press_hold",
+            file_path: "public/docs/hooks/use-press-hold.md",
+            install_name: "use_press_hold",
+        }),
+        MarkdownType::StaticDemoUseRandom => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_use_random.rs"),
+            demo_name: "demo_use_random",
+            file_path: "public/docs/hooks/use-random.md",
+            install_name: "use_random",
         }),
         MarkdownType::StaticDocsInstallationCliTreeView => None,
         MarkdownType::StaticInstallAccordion => Some(&StaticRegistryEntry {
@@ -2300,11 +2490,47 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             file_path: "app_crates/registry/src/hooks/use_copy_clipboard.rs",
             install_name: "use_copy_clipboard",
         }),
+        MarkdownType::StaticInstallUseHistory => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_history.rs"),
+            demo_name: "demo_use_history",
+            file_path: "app_crates/registry/src/hooks/use_history.rs",
+            install_name: "use_history",
+        }),
+        MarkdownType::StaticInstallUseHorizontalScroll => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_horizontal_scroll.rs"),
+            demo_name: "demo_use_horizontal_scroll",
+            file_path: "app_crates/registry/src/hooks/use_horizontal_scroll.rs",
+            install_name: "use_horizontal_scroll",
+        }),
+        MarkdownType::StaticInstallUseIsMobile => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_is_mobile.rs"),
+            demo_name: "demo_use_is_mobile",
+            file_path: "app_crates/registry/src/hooks/use_is_mobile.rs",
+            install_name: "use_is_mobile",
+        }),
         MarkdownType::StaticInstallUseLockBodyScroll => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/hooks/use_lock_body_scroll.rs"),
             demo_name: "demo_use_lock_body_scroll",
             file_path: "app_crates/registry/src/hooks/use_lock_body_scroll.rs",
             install_name: "use_lock_body_scroll",
+        }),
+        MarkdownType::StaticInstallUseLocks => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_locks.rs"),
+            demo_name: "demo_use_locks",
+            file_path: "app_crates/registry/src/hooks/use_locks.rs",
+            install_name: "use_locks",
+        }),
+        MarkdownType::StaticInstallUseMediaQuery => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_media_query.rs"),
+            demo_name: "demo_use_media_query",
+            file_path: "app_crates/registry/src/hooks/use_media_query.rs",
+            install_name: "use_media_query",
+        }),
+        MarkdownType::StaticInstallUsePressHold => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_press_hold.rs"),
+            demo_name: "demo_use_press_hold",
+            file_path: "app_crates/registry/src/hooks/use_press_hold.rs",
+            install_name: "use_press_hold",
         }),
         MarkdownType::StaticInstallUseRandom => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/hooks/use_random.rs"),
@@ -3372,6 +3598,16 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
+    combined_components.add("StaticEmptyInputGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoEmptyInputGroup,
+                class: class,
+                DemoEmptyInputGroup {}
+            }
+        }
+    });
     combined_components.add("StaticEmptyMuted", |props| {
         let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
         rsx! {
@@ -3552,6 +3788,46 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
+    combined_components.add("StaticInputGroupCustom", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupCustom,
+                class: class,
+                DemoInputGroupCustom {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupDropdown", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupDropdown,
+                class: class,
+                DemoInputGroupDropdown {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupInCard", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupInCard,
+                class: class,
+                DemoInputGroupInCard {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupKbd", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupKbd,
+                class: class,
+                DemoInputGroupKbd {}
+            }
+        }
+    });
     combined_components.add("StaticInputGroupRtl", |props| {
         let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
         rsx! {
@@ -3562,6 +3838,16 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
+    combined_components.add("StaticInputGroupSpinner", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupSpinner,
+                class: class,
+                DemoInputGroupSpinner {}
+            }
+        }
+    });
     combined_components.add("StaticInputGroupText", |props| {
         let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
         rsx! {
@@ -3569,6 +3855,16 @@ fn build_md_components() -> MdComponents {
                 demo_type: MarkdownType::StaticDemoInputGroupText,
                 class: class,
                 DemoInputGroupText {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupTooltip", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupTooltip,
+                class: class,
+                DemoInputGroupTooltip {}
             }
         }
     });
@@ -3642,6 +3938,66 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
+    combined_components.add("StaticItemDropdownMenu", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItemDropdownMenu,
+                class: class,
+                DemoItemDropdownMenu {}
+            }
+        }
+    });
+    combined_components.add("StaticItemFileUpload", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItemFileUpload,
+                class: class,
+                DemoItemFileUpload {}
+            }
+        }
+    });
+    combined_components.add("StaticItemGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItemGroup,
+                class: class,
+                DemoItemGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticItemMediaImage", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItemMediaImage,
+                class: class,
+                DemoItemMediaImage {}
+            }
+        }
+    });
+    combined_components.add("StaticItemRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItemRtl,
+                class: class,
+                DemoItemRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticItemVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItemVariants,
+                class: class,
+                DemoItemVariants {}
+            }
+        }
+    });
     combined_components.add("StaticKbd", |props| {
         let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
         rsx! {
@@ -3649,6 +4005,16 @@ fn build_md_components() -> MdComponents {
                 demo_type: MarkdownType::StaticDemoKbd,
                 class: class,
                 DemoKbd {}
+            }
+        }
+    });
+    combined_components.add("StaticKbdInputGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoKbdInputGroup,
+                class: class,
+                DemoKbdInputGroup {}
             }
         }
     });
@@ -4372,6 +4738,96 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
+    combined_components.add("StaticUseCopyToClipboard", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseCopyToClipboard,
+                class: class,
+                DemoUseCopyToClipboard {}
+            }
+        }
+    });
+    combined_components.add("StaticUseHistory", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseHistory,
+                class: class,
+                DemoUseHistory {}
+            }
+        }
+    });
+    combined_components.add("StaticUseHorizontalScroll", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseHorizontalScroll,
+                class: class,
+                DemoUseHorizontalScroll {}
+            }
+        }
+    });
+    combined_components.add("StaticUseIsMobile", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseIsMobile,
+                class: class,
+                DemoUseIsMobile {}
+            }
+        }
+    });
+    combined_components.add("StaticUseLockBodyScroll", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseLockBodyScroll,
+                class: class,
+                DemoUseLockBodyScroll {}
+            }
+        }
+    });
+    combined_components.add("StaticUseLocks", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseLocks,
+                class: class,
+                DemoUseLocks {}
+            }
+        }
+    });
+    combined_components.add("StaticUseMediaQuery", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseMediaQuery,
+                class: class,
+                DemoUseMediaQuery {}
+            }
+        }
+    });
+    combined_components.add("StaticUsePressHold", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUsePressHold,
+                class: class,
+                DemoUsePressHold {}
+            }
+        }
+    });
+    combined_components.add("StaticUseRandom", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoUseRandom,
+                class: class,
+                DemoUseRandom {}
+            }
+        }
+    });
     combined_components.add("StaticInstallAccordion", |_| rsx! {
         StaticInstallWrapper {
             install_type: MarkdownType::StaticInstallAccordion,
@@ -4817,9 +5273,39 @@ fn build_md_components() -> MdComponents {
             install_type: MarkdownType::StaticInstallUseCopyClipboard,
         }
     });
+    combined_components.add("StaticInstallUseHistory", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallUseHistory,
+        }
+    });
+    combined_components.add("StaticInstallUseHorizontalScroll", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallUseHorizontalScroll,
+        }
+    });
+    combined_components.add("StaticInstallUseIsMobile", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallUseIsMobile,
+        }
+    });
     combined_components.add("StaticInstallUseLockBodyScroll", |_| rsx! {
         StaticInstallWrapper {
             install_type: MarkdownType::StaticInstallUseLockBodyScroll,
+        }
+    });
+    combined_components.add("StaticInstallUseLocks", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallUseLocks,
+        }
+    });
+    combined_components.add("StaticInstallUseMediaQuery", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallUseMediaQuery,
+        }
+    });
+    combined_components.add("StaticInstallUsePressHold", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallUsePressHold,
         }
     });
     combined_components.add("StaticInstallUseRandom", |_| rsx! {
@@ -4929,6 +5415,12 @@ pub static BUTTON_ACTION: RegistryEntry = RegistryEntry {
 pub static BUTTON_GROUP: RegistryEntry = RegistryEntry {
     slug: "button-group",
     raw: include_str!("../../public/docs/components/button-group.md"),
+    tags: &[],
+};
+
+pub static CLI: RegistryEntry = RegistryEntry {
+    slug: "cli",
+    raw: include_str!("../../public/docs/cli.md"),
     tags: &[],
 };
 
@@ -5100,6 +5592,12 @@ pub static HOVER_CARD: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
+pub static ICONS: RegistryEntry = RegistryEntry {
+    slug: "icons",
+    raw: include_str!("../../public/docs/icons.md"),
+    tags: &[],
+};
+
 pub static IMAGE: RegistryEntry = RegistryEntry {
     slug: "image",
     raw: include_str!("../../public/docs/components/image.md"),
@@ -5115,7 +5613,7 @@ pub static INPUT: RegistryEntry = RegistryEntry {
 pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
     slug: "input-group",
     raw: include_str!("../../public/docs/components/input-group.md"),
-    tags: &[],
+    tags: &["input"],
 };
 
 pub static INPUT_OTP: RegistryEntry = RegistryEntry {
@@ -5391,19 +5889,55 @@ pub static TOOLTIP: RegistryEntry = RegistryEntry {
 pub static USE_COPY_CLIPBOARD: RegistryEntry = RegistryEntry {
     slug: "use-copy-clipboard",
     raw: include_str!("../../public/docs/hooks/use-copy-clipboard.md"),
-    tags: &[],
+    tags: &["utils"],
+};
+
+pub static USE_HISTORY: RegistryEntry = RegistryEntry {
+    slug: "use-history",
+    raw: include_str!("../../public/docs/hooks/use-history.md"),
+    tags: &["utils"],
+};
+
+pub static USE_HORIZONTAL_SCROLL: RegistryEntry = RegistryEntry {
+    slug: "use-horizontal-scroll",
+    raw: include_str!("../../public/docs/hooks/use-horizontal-scroll.md"),
+    tags: &["utils"],
+};
+
+pub static USE_IS_MOBILE: RegistryEntry = RegistryEntry {
+    slug: "use-is-mobile",
+    raw: include_str!("../../public/docs/hooks/use-is-mobile.md"),
+    tags: &["utils"],
 };
 
 pub static USE_LOCK_BODY_SCROLL: RegistryEntry = RegistryEntry {
     slug: "use-lock-body-scroll",
     raw: include_str!("../../public/docs/hooks/use-lock-body-scroll.md"),
-    tags: &[],
+    tags: &["utils", "dialog"],
+};
+
+pub static USE_LOCKS: RegistryEntry = RegistryEntry {
+    slug: "use-locks",
+    raw: include_str!("../../public/docs/hooks/use-locks.md"),
+    tags: &["utils"],
+};
+
+pub static USE_MEDIA_QUERY: RegistryEntry = RegistryEntry {
+    slug: "use-media-query",
+    raw: include_str!("../../public/docs/hooks/use-media-query.md"),
+    tags: &["utils"],
+};
+
+pub static USE_PRESS_HOLD: RegistryEntry = RegistryEntry {
+    slug: "use-press-hold",
+    raw: include_str!("../../public/docs/hooks/use-press-hold.md"),
+    tags: &["utils"],
 };
 
 pub static USE_RANDOM: RegistryEntry = RegistryEntry {
     slug: "use-random",
     raw: include_str!("../../public/docs/hooks/use-random.md"),
-    tags: &[],
+    tags: &["utils", "animation", "css"],
 };
 
 pub static COMPONENT_REGISTRY: &[&RegistryEntry] = &[
@@ -5499,13 +6033,21 @@ pub static COMPONENT_REGISTRY: &[&RegistryEntry] = &[
 
 pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[
     &USE_COPY_CLIPBOARD,
+    &USE_HISTORY,
+    &USE_HORIZONTAL_SCROLL,
+    &USE_IS_MOBILE,
     &USE_LOCK_BODY_SCROLL,
+    &USE_LOCKS,
+    &USE_MEDIA_QUERY,
+    &USE_PRESS_HOLD,
     &USE_RANDOM,
 ];
 
 pub static GET_STARTED_REGISTRY: &[&RegistryEntry] = &[
+    &CLI,
     &CHANGELOG,
     &FIGMA,
+    &ICONS,
     &INSTALLATION,
     &INTRODUCTION,
     &RTL,

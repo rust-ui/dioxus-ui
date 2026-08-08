@@ -98,19 +98,19 @@ pub fn FirstNavMenu() -> Element {
                         NavMenuTitle { "Get Started" }
                         ul { class: "mt-1",
                             li {
-                                NavMenuLinkGrid { href: "/docs/components/introduction", class: "items-center",
+                                NavMenuLinkGrid { href: "/docs/introduction", class: "items-center",
                                     IconWrapper { Frame {} }
                                     NavMenuLinkTitle { "Introduction" }
                                 }
                             }
                             li {
-                                NavMenuLinkGrid { href: "/docs/components/installation", class: "items-center",
+                                NavMenuLinkGrid { href: "/docs/installation", class: "items-center",
                                     IconWrapper { Compass {} }
                                     NavMenuLinkTitle { "Installation" }
                                 }
                             }
                             li {
-                                NavMenuLinkGrid { href: "/docs/components/changelog", class: "items-center",
+                                NavMenuLinkGrid { href: "/docs/changelog", class: "items-center",
                                     IconWrapper { AlignHorizontalSpaceAround {} }
                                     NavMenuLinkTitle { "Changelog" }
                                 }

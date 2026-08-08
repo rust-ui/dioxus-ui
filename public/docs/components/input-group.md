@@ -1,6 +1,10 @@
 +++
 title = "Input Group"
-description = "An input with inline prefix/suffix addons such as icons or buttons."
+description = "A component that combines inputs with addons like icons, text, or buttons."
+tags = ["input"]
+is_new = false
+image = "/images/thumbnails/input.webp"
+image_dark = "/images/thumbnails/input-dark.webp"
 +++
 
 <StaticInputGroup />
@@ -9,10 +13,20 @@ description = "An input with inline prefix/suffix addons such as icons or button
 
 <StaticInstallInputGroup />
 
+## Components
+
+The InputGroup component is composed of several subcomponents:
+
+- **InputGroup**: Main wrapper component for input and addons
+- **InputGroupInput**: The input field element
+- **InputGroupAddon**: Addon container for icons, text, or buttons
+- **InputGroupText**: Text helper for prefixes, suffixes, and status labels
+- **InputGroupButton**: Compact button helper for addon actions
+
 ## Usage
 
 ```rust
-use crate::ui::input_group::{InputGroup, InputGroupAddon, InputGroupInput};
+use registry::ui::input_group::{InputGroup, InputGroupAddon, InputGroupInput};
 ```
 
 ```rust
@@ -36,6 +50,38 @@ rsx! {
 
 <StaticInputGroupBlock />
 
+### Custom Control
+
+<StaticInputGroupCustom />
+
+### Dropdown
+
+<StaticInputGroupDropdown />
+
+### In Card
+
+<StaticInputGroupInCard />
+
+### Kbd
+
+<StaticInputGroupKbd />
+
+### Spinner
+
+<StaticInputGroupSpinner />
+
+### Tooltip
+
+<StaticInputGroupTooltip />
+
+### Kbd Input Group
+
+<StaticKbdInputGroup />
+
+### Empty State
+
+<StaticEmptyInputGroup />
+
 ### RTL
 
 <StaticInputGroupRtl />
@@ -44,3 +90,4 @@ rsx! {
 
 - [Input](/components/input)
 - [Button](/components/button)
+- [Label](/components/label)

@@ -358,32 +358,32 @@ Also missing relative to Leptos install experience:
 
 Confirmed missing versus Leptos:
 
-- [ ] `demo_item_file_upload.rs`
-- [ ] `demo_item_group.rs`
-- [ ] `demo_item_media_image.rs`
-- [ ] `demo_item_rtl.rs`
-- [ ] `demo_item_variants.rs`
-- [ ] `demo_input_group_custom.rs`
-- [ ] `demo_input_group_dropdown.rs`
-- [ ] `demo_input_group_in_card.rs`
-- [ ] `demo_input_group_kbd.rs`
-- [ ] `demo_input_group_spinner.rs`
-- [ ] `demo_input_group_tooltip.rs`
-- [ ] `demo_kbd_input_group.rs`
-- [ ] `demo_empty_input_group.rs`
+- [x] `demo_item_file_upload.rs`
+- [x] `demo_item_group.rs`
+- [x] `demo_item_media_image.rs`
+- [x] `demo_item_rtl.rs`
+- [x] `demo_item_variants.rs`
+- [x] `demo_input_group_custom.rs`
+- [x] `demo_input_group_dropdown.rs`
+- [x] `demo_input_group_in_card.rs`
+- [x] `demo_input_group_kbd.rs`
+- [x] `demo_input_group_spinner.rs`
+- [x] `demo_input_group_tooltip.rs`
+- [x] `demo_kbd_input_group.rs`
+- [x] `demo_empty_input_group.rs`
 
 #### 11. Missing hook demos
 
 Confirmed missing versus Leptos:
 
-- [ ] `demo_use_copy_to_clipboard.rs`
-- [ ] `demo_use_horizontal_scroll.rs`
-- [ ] `demo_use_is_mobile.rs`
-- [ ] `demo_use_lock_body_scroll.rs`
-- [ ] `demo_use_locks.rs`
-- [ ] `demo_use_media_query.rs`
-- [ ] `demo_use_press_hold.rs`
-- [ ] `demo_use_random.rs`
+- [x] `demo_use_copy_to_clipboard.rs`
+- [x] `demo_use_horizontal_scroll.rs`
+- [x] `demo_use_is_mobile.rs`
+- [x] `demo_use_lock_body_scroll.rs`
+- [x] `demo_use_locks.rs`
+- [x] `demo_use_media_query.rs`
+- [x] `demo_use_press_hold.rs`
+- [x] `demo_use_random.rs`
 
 Already present:
 
@@ -402,15 +402,15 @@ Confirmed mismatch today:
 
 Required work:
 
-- [ ] align command bar route targets with the Leptos structure
-- [ ] align docs/get-started/component grouping with the Leptos IA
-- [ ] remove duplicated or misplaced entries created by the old Dioxus registry design
+- [x] align command bar route targets with the Leptos structure
+- [x] align docs/get-started/component grouping with the Leptos IA
+- [x] remove duplicated or misplaced entries created by the old Dioxus registry design
 
 #### 13. Missing overview/supporting pages
 
 - [ ] `public/docs/workflow.md`
-- [ ] `public/docs/cli.md`
-- [ ] `public/docs/icons.md`
+- [x] `public/docs/cli.md`
+- [x] `public/docs/icons.md`
 - [ ] all-demos overview page equivalent
 - [ ] download page equivalent if still present in Leptos UX
 
@@ -455,6 +455,8 @@ Required work:
 - [x] `dropzone`, `radio_group`, `toggle`, `toolbar` are not Leptos parity blockers by themselves
 - [x] Introduction page exists
 - [x] Installation page exists
+- [x] CLI page exists
+- [x] Icons page exists
 - [x] Changelog page exists
 - [x] Figma page exists
 - [x] RTL overview exists

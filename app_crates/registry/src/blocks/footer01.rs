@@ -90,7 +90,7 @@ pub fn CardSection() -> Element {
                         CardDescription { class: "mt-4 mb-6 text-balance",
                             "A registry of reusable Dioxus components built with Tailwind CSS. Copy, paste, and customize for your Rust applications."
                         }
-                        Button { href: "/docs/components/installation", "Start now" }
+                        Button { href: "/docs/installation", "Start now" }
                     }
 
                     SvgGridPattern {}
