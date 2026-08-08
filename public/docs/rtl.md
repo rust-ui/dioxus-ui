@@ -97,7 +97,7 @@ rsx! {
 }
 ```
 
-<DemoButtonRtl />
+<StaticButtonRtl />
 
 ---
 

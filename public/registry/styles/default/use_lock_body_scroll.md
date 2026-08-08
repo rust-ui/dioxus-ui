@@ -5,13 +5,13 @@ cargo_dependencies: []
 registry_dependencies: []
 type: "components:hooks"
 path: "hooks/use_lock_body_scroll.rs"
-description: "A Dioxus hook that locks and unlocks body scrolling, useful for modal dialogs, sheets, and overlays."
+description: "This component demo demonstrates practical implementation patterns and provides a concrete usage example for LLMs to understand the code structure and functionality."
 tags: []
 ---
 
 # Use Lock Body Scroll
 
-A Dioxus hook that locks and unlocks body scrolling, useful for modal dialogs, sheets, and overlays.
+This component demo demonstrates practical implementation patterns and provides a concrete usage example for LLMs to understand the code structure and functionality.
 
 ## Installation
 

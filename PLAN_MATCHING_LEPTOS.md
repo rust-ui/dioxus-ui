@@ -8,17 +8,29 @@ This file tracks the confirmed gaps and the implementation order needed to align
 
 ## Current Conclusion
 
-The main remaining gap is not "a few missing docs". The main gap is that Dioxus currently uses a different markdown registry architecture than Leptos.
+The original architecture mismatch has now been fixed in the Dioxus repo.
 
-Confirmed mismatch:
+Completed:
 
-- Leptos builds markdown component wiring centrally in `app/src/__registry__/static_md_registry.rs`
-- Leptos keeps `app/src/registry/` very small
-- Leptos routes demo/install/docs rendering through shared wrappers
-- Dioxus currently spreads markdown component wiring across many files under `dioxus-ui/src/registry/*.rs`
-- Files like `dioxus-ui/src/registry/alert.rs` do not match the Leptos workflow
+- `dioxus-ui/src/__registry__/static_md_registry.rs` is now the central markdown assembly point
+- docs/component/hook routes render through the central markdown path
+- shared wrappers now exist for demos, install blocks, and md docs utility blocks
+- `dioxus-ui/src/registry/` has been reduced to the Leptos-style minimal role
+- the old generated per-component docs registry files under `src/registry/*.rs` have been removed
+- markdown docs now use the Leptos-style `Static*` / `StaticInstall*` workflow
+- `public/docs` now follows the Leptos-style split with:
+  - root get-started docs
+  - `public/docs/components/`
+  - `public/docs/hooks/`
+- Dioxus private registry naming is now closer to Leptos:
+  - `demos_sidenav.rs`
+  - `my_command_bar_constants.rs`
 
-So the first job is to replace the current Dioxus docs architecture with the Leptos one, then finish the remaining content.
+The remaining work is now mostly non-architectural:
+
+- finishing content parity for any pages/hooks that still exist in Leptos but not yet in Dioxus
+- cleaning missing frontmatter assets (`image`, `image_dark`) in many docs files
+- removing leftover warnings unrelated to the docs architecture migration
 
 ## Exact Target Architecture
 
@@ -171,24 +183,16 @@ Anything outside this target split needs to be justified by a real Dioxus-specif
 
 ## Priority Order
 
-### P0 — Replace the current Dioxus docs architecture with the Leptos one
+### P0 — Core docs architecture replacement
 
-This is the blocking priority. Without this, adding more docs or hooks keeps reinforcing the wrong structure.
+This is now done for the docs markdown workflow and registry split.
 
 #### 1. Delete the current per-component registry pattern
 
-Current Dioxus state:
+Status:
 
-- many files under `dioxus-ui/src/registry/*.rs`
-- each page builds its own `MdComponents`
-- example: `dioxus-ui/src/registry/alert.rs`
-
-This is the pattern to remove:
-
-- `dioxus-ui/src/registry/alert.rs`
-- `dioxus-ui/src/registry/button.rs`
-- `dioxus-ui/src/registry/...`
-- `dioxus-ui/src/registry/hooks/...`
+- [x] old per-component docs registry pattern removed
+- [x] old hook docs registry pattern removed
 
 Target state:
 
@@ -199,12 +203,14 @@ Target state:
 
 Required work:
 
-- [ ] Add `dioxus-ui/src/__registry__/static_md_registry.rs`
-- [ ] Centralize all `MdComponents` registrations there
-- [ ] Stop treating each docs page like its own registry module
-- [ ] Remove the dependency on `src/registry/<component>.rs` and `src/registry/hooks/<hook>.rs` for markdown component wiring
-- [ ] Delete obsolete per-component docs registry files once the central path is live
-- [ ] Keep page metadata and markdown loading aligned with the Leptos pattern
+- [x] Add `dioxus-ui/src/__registry__/static_md_registry.rs`
+- [x] Centralize all `MdComponents` registrations there
+- [x] Stop treating each docs page like its own registry module
+- [x] Remove the dependency on `src/registry/<component>.rs` and `src/registry/hooks/<hook>.rs` for markdown component wiring
+- [x] Delete obsolete per-component docs registry files once the central path is live
+- [x] Keep page metadata and markdown loading aligned with the Leptos pattern
+- [x] Move Dioxus docs into the same root/components/hooks split as Leptos
+- [x] Switch markdown tags from `Demo*` / `Install*` to `Static*` / `StaticInstall*`
 
 #### 2. Copy the Leptos wrapper flow into Dioxus
 
@@ -222,10 +228,10 @@ Target state in Dioxus:
 
 Required work:
 
-- [ ] Add `dioxus-ui/src/domain/markdown_ui/components/static_demo_wrapper.rs`
-- [ ] Add `dioxus-ui/src/domain/markdown_ui/components/static_install_wrapper.rs`
-- [ ] Add `dioxus-ui/src/domain/markdown_ui/components/static_md_docs_wrapper.rs`
-- [ ] Route markdown tag rendering through these wrappers instead of per-page ad hoc components
+- [x] Add `dioxus-ui/src/domain/markdown_ui/components/static_demo_wrapper.rs`
+- [x] Add `dioxus-ui/src/domain/markdown_ui/components/static_install_wrapper.rs`
+- [x] Add `dioxus-ui/src/domain/markdown_ui/components/static_md_docs_wrapper.rs`
+- [x] Route markdown tag rendering through these wrappers instead of per-page ad hoc components
 
 #### 3. Copy the Leptos unified markdown registry model
 
@@ -235,12 +241,17 @@ Leptos has a unified registry model:
 - static registry entry getters
 - shared mapping for demo/install/doc block metadata
 
+Current note:
+
+- Dioxus now has the central registry file and central metadata ownership
+- it does not yet copy the Leptos `MarkdownType` / `get_static_registry_entry(...)` API shape literally
+
 Required work:
 
-- [ ] Add a Dioxus `MarkdownType`
-- [ ] Add a Dioxus `get_static_registry_entry(...)`
-- [ ] Store demo/install metadata centrally instead of scattering it across `src/registry/*.rs`
-- [ ] Ensure wrappers resolve code/install metadata from that central source
+- [ ] Decide whether to port the Leptos `MarkdownType` enum literally
+- [ ] Decide whether to port `get_static_registry_entry(...)` literally
+- [x] Store demo/install metadata centrally instead of scattering it across `src/registry/*.rs`
+- [x] Ensure wrappers resolve code/install metadata from that central source
 
 #### 4. Make `src/registry/` match the Leptos shape
 
@@ -248,13 +259,13 @@ Leptos `app/src/registry/` is minimal and mainly used for md docs helper content
 
 Required work:
 
-- [ ] Audit every file in `dioxus-ui/src/registry/`
-- [ ] Shrink it toward the Leptos shape:
-- [ ] keep `mod.rs`
-- [ ] keep only `md_docs/...` style helper content if still needed
-- [ ] remove component registry files from `src/registry/`
-- [ ] remove hook registry files from `src/registry/hooks/`
-- [ ] move docs/demo/install assembly concerns into `src/__registry__/`
+- [x] Audit every file in `dioxus-ui/src/registry/`
+- [x] Shrink it toward the Leptos shape
+- [x] keep `mod.rs`
+- [x] keep only `md_docs/...` style helper content if still needed
+- [x] remove component registry files from `src/registry/`
+- [x] remove hook registry files from `src/registry/hooks/`
+- [x] move docs/demo/install assembly concerns into `src/__registry__/`
 
 #### 5. Make `src/__registry__/mod.rs` match the Leptos role
 
@@ -267,12 +278,13 @@ Leptos currently exposes:
 
 Required work:
 
-- [ ] audit current `dioxus-ui/src/__registry__/mod.rs`
-- [ ] make `static_md_registry` a first-class module there
-- [ ] keep or rename other modules so the overall responsibility split matches Leptos
+- [x] audit current `dioxus-ui/src/__registry__/mod.rs`
+- [x] make `static_md_registry` a first-class module there
+- [ ] rename remaining modules to match Leptos more literally where needed
+- [ ] decide what to do with Dioxus-only modules like `all_workflows.rs`
 - [ ] ensure command bar constants and demo sidenav data live in `__registry__`, not mixed into the old docs registry layer
 
-### P1 — Move Dioxus content into the same responsibility split as Leptos
+### P1 — Finish the remaining structure mismatches
 
 Once the architecture is corrected, we need the same ownership boundaries.
 
@@ -285,10 +297,11 @@ User requirement confirmed:
 
 Required work:
 
-- [ ] Verify every demo lives under `dioxus-ui/app_crates/registry/src/demos/`
-- [ ] Verify every hook lives under `dioxus-ui/app_crates/registry/src/hooks/`
-- [ ] Verify every UI primitive/component lives under `dioxus-ui/app_crates/registry/src/ui/`
-- [ ] Remove any accidental duplication between `src/registry/` and `app_crates/registry/`
+- [x] Verify every demo lives under `dioxus-ui/app_crates/registry/src/demos/`
+- [x] Verify every hook lives under `dioxus-ui/app_crates/registry/src/hooks/`
+- [x] Verify every UI primitive/component lives under `dioxus-ui/app_crates/registry/src/ui/`
+- [x] Remove the old docs-registry duplication between `src/registry/` and `app_crates/registry/`
+- [ ] Add `app_crates/app_components/` if we want to mirror Leptos even more literally
 
 #### 7. Make docs pages declarative instead of registry-driven per page
 
@@ -300,8 +313,8 @@ Target state:
 Required work:
 
 - [ ] Review all docs markdown in `public/docs/`
-- [ ] Normalize demo/install tags to the Leptos-style central workflow
-- [ ] Remove page-specific rendering logic when it exists only because of the current Dioxus registry design
+- [x] Normalize demo/install tags to the central workflow
+- [x] Remove page-specific rendering logic that existed only because of the old Dioxus registry design
 
 ### P2 — Finish missing content after architecture parity
 
@@ -430,6 +443,11 @@ Required work:
 
 ## Already Confirmed As Done Or Not A Gap
 
+- [x] central docs architecture moved to `src/__registry__/static_md_registry.rs`
+- [x] per-component docs registry files removed
+- [x] shared markdown wrappers added
+- [x] `src/registry/md_docs/docs_installation_cli_tree_view.rs` added
+- [x] component/docs/hook pages now render through the central markdown registry
 - [x] Core UI component parity is broadly in place
 - [x] `marker` parity handled
 - [x] `stepper` parity handled
@@ -443,11 +461,8 @@ Required work:
 
 ## Recommended Execution Order
 
-1. Build `dioxus-ui/src/__registry__/static_md_registry.rs`
-2. Add the shared wrapper files under `src/domain/markdown_ui/components/`
-3. Remove the current per-component `src/registry/*.rs` and `src/registry/hooks/*.rs` assembly pattern
-4. Shrink `dioxus-ui/src/registry/` to the Leptos-style role
-5. Re-wire existing docs pages onto the new central workflow
-6. Finish missing hooks, demos, and install/docs placeholders
-7. Align navigation and route taxonomy
-8. Port Playwright coverage
+1. Decide whether to copy Leptos `MarkdownType` / `get_static_registry_entry(...)` literally
+2. Tighten remaining `__registry__` naming/module differences
+3. Finish missing hooks, demos, and install/docs placeholders
+4. Align navigation and route taxonomy
+5. Port Playwright coverage

@@ -5,7 +5,7 @@ use dioxus::prelude::*;
 use icons::{Code, Eye};
 use tw_merge::tw_merge;
 
-use crate::__registry__::source_map::get_demo_source;
+use crate::__registry__::static_md_registry::{get_static_registry_entry, MarkdownType};
 
 static DEMO_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
@@ -17,7 +17,7 @@ enum DemoTab {
 
 #[component]
 pub fn StaticDemoWrapper(
-    demo_name: &'static str,
+    demo_type: MarkdownType,
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
@@ -123,8 +123,8 @@ pub fn StaticDemoWrapper(
 
             div { style: "{code_display()}",
                 {
-                    if let Some(code) = get_demo_source(demo_name) {
-                        let code = code.to_string();
+                    if let Some(demo_data) = get_static_registry_entry(demo_type) {
+                        let code = demo_data.raw_code.to_string();
                         let highlighted = crate::markdown::highlight_code::highlight_code(&code, Some("rust"), None);
                         let copy_id = format!("copy-btn-{id}");
                         let cid = copy_id.clone();

@@ -5,13 +5,13 @@ cargo_dependencies: []
 registry_dependencies: []
 type: "components:hooks"
 path: "hooks/use_random.rs"
-description: "A Dioxus hook that generates unique random IDs for DOM elements and CSS animations."
+description: "This component demo demonstrates practical implementation patterns and provides a concrete usage example for LLMs to understand the code structure and functionality."
 tags: []
 ---
 
 # Use Random
 
-A Dioxus hook that generates unique random IDs for DOM elements and CSS animations.
+This component demo demonstrates practical implementation patterns and provides a concrete usage example for LLMs to understand the code structure and functionality.
 
 ## Installation
 

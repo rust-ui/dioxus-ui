@@ -5,13 +5,13 @@ cargo_dependencies: ["wasm_bindgen"]
 registry_dependencies: []
 type: "components:hooks"
 path: "hooks/use_copy_clipboard.rs"
-description: "A Dioxus hook that copies text to clipboard with optional timeout to show copied state."
+description: "This component demo demonstrates practical implementation patterns and provides a concrete usage example for LLMs to understand the code structure and functionality."
 tags: []
 ---
 
 # Use Copy Clipboard
 
-A Dioxus hook that copies text to clipboard with optional timeout to show copied state.
+This component demo demonstrates practical implementation patterns and provides a concrete usage example for LLMs to understand the code structure and functionality.
 
 ## Installation
 

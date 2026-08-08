@@ -11,6 +11,893 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * **Nested bullets** show the heading structure within each page
 
 
+## Components
+
+### [Accordion](https://dioxus.rust-ui.com/docs/components/accordion)
+
+> Rust/UI component that displays an Accordion.
+
+* Installation
+* Usage
+* Bordered
+* See Also
+
+### [Alert](https://dioxus.rust-ui.com/docs/components/alert)
+
+> Rust/UI component that displays a callout to the user.
+
+* Installation
+* Usage
+* Examples
+  * Destructive
+* See Also
+
+### [Animate](https://dioxus.rust-ui.com/docs/components/animate)
+
+> A wrapper that applies entrance animations and hover animations via CSS.
+
+* Installation
+* Usage
+* Examples
+  * Staggered Group
+* See Also
+
+### [Animate Group](https://dioxus.rust-ui.com/docs/components/animate-group)
+
+> Animated group container for staggered enter transitions in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Staggered Group
+* See Also
+
+### [Aspect Ratio](https://dioxus.rust-ui.com/docs/components/aspect_ratio)
+
+> A container that maintains a given aspect ratio for its content.
+
+* Installation
+* Usage
+* See Also
+
+### [Attachment](https://dioxus.rust-ui.com/docs/components/attachment)
+
+> Displays a file or image attachment with media, name, metadata, and optional actions. Use it for files and images in chat composers, message threads, and upload lists.
+
+* Installation
+* Usage
+* Composition
+* Examples
+  * Image
+  * States
+  * Sizes
+  * Group
+  * Trigger
+* See Also
+
+### [Auto Form](https://dioxus.rust-ui.com/docs/components/auto-form)
+
+> Generate Dioxus forms automatically from typed Rust data structures.
+
+* Installation
+* Usage
+* Examples
+  * Generated Form
+* See Also
+
+### [Avatar](https://dioxus.rust-ui.com/docs/components/avatar)
+
+> Rust/UI component that displays an avatar with image and fallback support.
+
+* Installation
+* Usage
+* Examples
+  * Fallback
+  * Sizes
+  * Group Count with Icon
+* See Also
+
+### [Badge](https://dioxus.rust-ui.com/docs/components/badge)
+
+> Rust/UI component that displays a badge or a component that looks like a badge.
+
+* Installation
+* Usage
+* Examples
+  * Variants
+  * Colors
+  * Custom
+* See Also
+
+### [Bento Grid](https://dioxus.rust-ui.com/docs/components/bento_grid)
+
+> A CSS grid layout for bento-style card arrangements.
+
+* Installation
+* Usage
+* Examples
+  * 6-Column
+* See Also
+
+### [Bottom Nav](https://dioxus.rust-ui.com/docs/components/bottom-nav)
+
+> A mobile bottom navigation bar with touch-optimized buttons.
+
+* Installation
+* Usage
+* See Also
+
+### [Breadcrumb](https://dioxus.rust-ui.com/docs/components/breadcrumb)
+
+> Rust/UI component that displays the path to the current resource using a hierarchy of links.
+
+* Installation
+* Usage
+  * RTL
+* See Also
+
+### [Bubble](https://dioxus.rust-ui.com/docs/components/bubble)
+
+> Displays a chat message bubble with multiple style variants and an optional reactions overlay.
+
+* Installation
+* Usage
+* Composition
+* Examples
+  * Variants
+  * Alignment
+  * Bubble Group
+  * Links and Buttons
+  * Reactions
+  * Show More / Collapsible
+  * Tooltip
+  * Popover
+* See Also
+
+### [Button](https://dioxus.rust-ui.com/docs/components/button)
+
+> Rust/UI component that displays a button or a component that looks like a button.
+
+* Installation
+* Usage
+* Examples
+  * Variants
+  * Sizes
+  * Disabled
+  * Stateful
+  * Reactive
+  * Overriding Button
+  * With Href
+  * Button Group
+  * Button Group with Icons
+* See Also
+
+### [Button Action](https://dioxus.rust-ui.com/docs/components/button-action)
+
+> Press-and-hold action button for destructive or sensitive interactions in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Hold To Confirm
+* See Also
+
+### [Button Group](https://dioxus.rust-ui.com/docs/components/button-group)
+
+> Rust/UI component that groups buttons together into a cohesive unit.
+
+* Installation
+* Usage
+* Examples
+  * With Separator
+  * With Icons
+  * Sizes
+  * With Input
+  * RTL
+* See Also
+
+### [Callout](https://dioxus.rust-ui.com/docs/components/callout)
+
+> A callout component for displaying notes, info, and warnings.
+
+* Installation
+* Usage
+* Examples
+  * Info
+  * Warning
+* See Also
+
+### [Card](https://dioxus.rust-ui.com/docs/components/card)
+
+> Rust/UI component that displays a card with header, content and footer.
+
+* Installation
+* Components
+* Usage
+* Examples
+  * Card with Action
+  * Card Group
+  * Card Reverse
+  * Card SM
+* See Also
+
+### [Card Carousel](https://dioxus.rust-ui.com/docs/components/card-carousel)
+
+> A compact image carousel with overlay nav and indicators.
+
+* Installation
+* Usage
+* See Also
+
+### [Carousel](https://dioxus.rust-ui.com/docs/components/carousel)
+
+> A scrollable carousel with keyboard navigation, looping, and orientation support.
+
+* Installation
+* Usage
+* See Also
+
+### [Chat](https://dioxus.rust-ui.com/docs/components/chat)
+
+> Chat UI layout components for building messaging interfaces.
+
+* Installation
+* Usage
+* See Also
+
+### [Checkbox](https://dioxus.rust-ui.com/docs/components/checkbox)
+
+> Rust/UI component that displays a control that allows the user to toggle between checked and not checked.
+
+* Installation
+* Usage
+* Examples
+  * With Label
+  * Disabled
+* See Also
+
+### [Chips](https://dioxus.rust-ui.com/docs/components/chips)
+
+> Rust/UI component that displays a chip or a component that looks like a chip.
+
+* Installation
+* Usage
+* See Also
+
+### [Collapsible](https://dioxus.rust-ui.com/docs/components/collapsible)
+
+> An interactive component which expands/collapses a panel with smooth animation.
+
+* Installation
+* Usage
+  * Settings
+* See Also
+
+### [Combobox](https://dioxus.rust-ui.com/docs/components/combobox)
+
+> Searchable selection UI built with command-style filtering in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Searchable Select
+* See Also
+
+### [Command](https://dioxus.rust-ui.com/docs/components/command)
+
+> Fast, composable, unstyled command menu for Dioxus.
+
+* Installation
+* Components
+* Usage
+* Examples
+  * Inline Command
+  * Command Dialog
+* See Also
+
+### [Context Menu](https://dioxus.rust-ui.com/docs/components/context-menu)
+
+> Right-click context menu patterns for Dioxus applications.
+
+* Installation
+* Usage
+* Examples
+  * Basic Context Menu
+  * Action Menu
+  * RTL
+* See Also
+
+### [Data Grid](https://dioxus.rust-ui.com/docs/components/data-grid)
+
+> High-performance data grid with virtual scrolling, column pinning, cell selection, drag selection, and copy-to-clipboard.
+
+* Installation
+* Components
+* Hooks
+* Traits
+* Utilities
+* Usage
+* Features
+* See Also
+
+### [Data Table](https://dioxus.rust-ui.com/docs/components/data-table)
+
+> Structured data table demos for sorting, filtering, and tabular presentation in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Data Table
+  * Filtered Table
+* See Also
+
+### [Date Picker](https://dioxus.rust-ui.com/docs/components/date-picker)
+
+> Calendar and date selection components for Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Date Picker
+  * Dropdown
+  * Dual Calendar
+  * Full Dual Picker
+  * Presets
+  * Time
+  * Booked Days
+  * Week Numbers
+* See Also
+
+### [Dialog](https://dioxus.rust-ui.com/docs/components/dialog)
+
+> Rust/UI component that displays a modal dialog that the user can interact with.
+
+* Installation
+* Usage
+* Scrollable
+* See Also
+
+### [Direction Provider](https://dioxus.rust-ui.com/docs/components/direction-provider)
+
+> RTL and LTR direction context for Dioxus components.
+
+* Installation
+* Usage
+* Examples
+  * Default Direction
+  * Custom Direction
+  * RTL
+* See Also
+
+### [Drag And Drop](https://dioxus.rust-ui.com/docs/components/drag-and-drop)
+
+> Drag and drop sortable interface patterns in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Sortable Items
+* See Also
+
+### [Drawer](https://dioxus.rust-ui.com/docs/components/drawer)
+
+> A bottom sheet that slides up from the bottom of the screen.
+
+* Installation
+* Usage
+* See Also
+
+### [Dropdown Menu](https://dioxus.rust-ui.com/docs/components/dropdown-menu)
+
+> Composable dropdown menu primitives for Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Menu
+  * Destructive Action
+  * Start / End Alignment
+  * Outer Alignment
+  * User Menu
+  * Radio And Select Patterns
+  * RTL
+* See Also
+
+### [Dropzone](https://dioxus.rust-ui.com/docs/components/dropzone)
+
+> Rust/UI component for drag-and-drop file uploads with list and grid views.
+
+* Installation
+* Usage
+* Examples
+  * List view
+  * Grid view
+  * List / grid toggle
+* See Also
+
+### [Empty](https://dioxus.rust-ui.com/docs/components/empty)
+
+> Use the Empty component to display a empty state.
+
+* Installation
+* Usage
+* Muted
+* See Also
+
+### [Expandable](https://dioxus.rust-ui.com/docs/components/expandable)
+
+> A trigger that expands to reveal additional content with a close button.
+
+* Installation
+* Usage
+* See Also
+
+### [FAQ Transition](https://dioxus.rust-ui.com/docs/components/faq_transition)
+
+> Accordion-style FAQ sections using CSS checkbox peer transitions.
+
+* Installation
+* Usage
+* See Also
+
+### [Field](https://dioxus.rust-ui.com/docs/components/field)
+
+> Form field layout components for labels, descriptions, and error messages.
+
+* Installation
+* Usage
+* Examples
+  * RTL
+* See Also
+
+### [Form](https://dioxus.rust-ui.com/docs/components/form)
+
+> Typed form composition primitives for Dioxus with field context and validation helpers.
+
+* Installation
+* Usage
+* Examples
+  * Basic Form
+  * Validation
+  * Group
+  * Fieldset
+  * Error
+  * Select
+  * Auto Form
+* See Also
+
+### [Hover Card](https://dioxus.rust-ui.com/docs/components/hover-card)
+
+> A floating card that appears on hover using CSS anchor positioning.
+
+* Installation
+* Usage
+* Examples
+  * RTL
+* See Also
+
+### [Image](https://dioxus.rust-ui.com/docs/components/image)
+
+> An image component with lazy loading and responsive support.
+
+* Installation
+* Usage
+* See Also
+
+### [Input](https://dioxus.rust-ui.com/docs/components/input)
+
+> Rust/UI component that displays an input field that allows the user to enter text.
+
+* Usage
+* Examples
+  * Input Copy
+* Installation
+* See Also
+
+### [Input Group](https://dioxus.rust-ui.com/docs/components/input-group)
+
+> An input with inline prefix/suffix addons such as icons or buttons.
+
+* Installation
+* Usage
+* Examples
+  * Text Addons
+  * Block Layout
+  * RTL
+* See Also
+
+### [Input OTP](https://dioxus.rust-ui.com/docs/components/input-otp)
+
+> A one-time password input with individual digit slots.
+
+* Installation
+* Usage
+* Examples
+  * With Separator
+* See Also
+
+### [Input Phone](https://dioxus.rust-ui.com/docs/components/input-phone)
+
+> Phone number input with country selection and formatting for Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Phone Input
+  * Disabled
+* See Also
+
+### [Input Prompt](https://dioxus.rust-ui.com/docs/components/input-prompt)
+
+> Prompt-style input surface for asking questions and submitting contextual actions in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Prompt
+  * Prompt With Tools
+* See Also
+
+### [Item](https://dioxus.rust-ui.com/docs/components/item)
+
+> A flexible list item component with media, content, and action slots.
+
+* Installation
+* Usage
+* See Also
+
+### [Kbd](https://dioxus.rust-ui.com/docs/components/kbd)
+
+> Display keyboard shortcuts and key combinations with proper styling.
+
+* Installation
+* Usage
+* Examples
+  * Key Combination
+* See Also
+
+### [Label](https://dioxus.rust-ui.com/docs/components/label)
+
+> Rust/UI component that displays a label for an input field.
+
+* Installation
+* Usage
+* Examples
+  * With Input
+* See Also
+
+### [Marker](https://dioxus.rust-ui.com/docs/components/marker)
+
+> Rust/UI component for inline status markers, timeline separators, and event indicators.
+
+* Installation
+* Usage
+* Examples
+  * Variants
+  * Border
+  * Separator
+  * Icon
+  * Status
+  * Shimmer
+  * Link / Button
+* See Also
+
+### [Marquee](https://dioxus.rust-ui.com/docs/components/marquee)
+
+> An infinite scrolling marquee with pause-on-hover support.
+
+* Installation
+* Usage
+* See Also
+
+### [Mask](https://dioxus.rust-ui.com/docs/components/mask)
+
+> Gradient fade masks for left, right, top, or bottom edges.
+
+* Installation
+* Usage
+* See Also
+
+### [Menubar](https://dioxus.rust-ui.com/docs/components/menubar)
+
+> Desktop-style menubar interactions for Dioxus applications.
+
+* Installation
+* Usage
+* Examples
+  * Basic Menubar
+  * RTL
+* See Also
+
+### [Message](https://dioxus.rust-ui.com/docs/components/message)
+
+> Displays a message in a conversation, with optional avatar, header, footer, and alignment.
+
+* Installation
+* Usage
+* Composition
+* Examples
+  * Avatar
+  * Group
+  * Header and Footer
+  * Actions
+  * Attachment
+* See Also
+
+### [Multi Select](https://dioxus.rust-ui.com/docs/components/multi-select)
+
+> Multi-value selection component for Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Multi Select
+  * Alignment
+  * Scrollable
+* See Also
+
+### [Navigation Menu](https://dioxus.rust-ui.com/docs/components/navigation_menu)
+
+> Composable navigation menu layouts for Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Navigation Menu
+  * Complex Navigation
+  * RTL
+* See Also
+
+### [Pagination](https://dioxus.rust-ui.com/docs/components/pagination)
+
+> Rust/UI component that displays a pagination component.
+
+* Installation
+* Usage
+* See Also
+
+### [Popover](https://dioxus.rust-ui.com/docs/components/popover)
+
+> A floating panel that opens on click, anchored to a trigger element.
+
+* Installation
+* Usage
+* See Also
+
+### [Pressable](https://dioxus.rust-ui.com/docs/components/pressable)
+
+> A wrapper that adds press feedback (scale effect) to any children.
+
+* Installation
+* Usage
+* See Also
+
+### [Progress](https://dioxus.rust-ui.com/docs/components/progress)
+
+> Rust/UI component that displays a progress bar indicating task completion.
+
+* Installation
+* Usage
+* Examples
+  * Animated
+* See Also
+
+### [Radio Button](https://dioxus.rust-ui.com/docs/components/radio-button)
+
+> A signal-driven radio group for selecting a single option from a list.
+
+* Installation
+* Usage
+* See Also
+
+### [Radio Button Group](https://dioxus.rust-ui.com/docs/components/radio-button-group)
+
+> A CSS-styled radio button group with custom visual selection.
+
+* Installation
+* Usage
+* Examples
+  * RTL
+* See Also
+
+### [Radio Group](https://dioxus.rust-ui.com/docs/components/radio-group)
+
+> Rust/UI component that displays a set of radio buttons where only one can be selected at a time.
+
+* Installation
+* Usage
+* Examples
+  * Custom Style
+* See Also
+
+### [Scroll Area](https://dioxus.rust-ui.com/docs/components/scroll-area)
+
+> A scrollable container with a custom scrollbar.
+
+* Installation
+* Usage
+* Examples
+  * Horizontal
+  * RTL
+* See Also
+
+### [Select](https://dioxus.rust-ui.com/docs/components/select)
+
+> Composable select component for choosing a single value in Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Select
+  * Scrollable
+  * RTL
+* See Also
+
+### [Separator](https://dioxus.rust-ui.com/docs/components/separator)
+
+> Rust/UI component that displays a separator line.
+
+* Installation
+* Usage
+* See Also
+
+### [Sheet](https://dioxus.rust-ui.com/docs/components/sheet)
+
+> A panel that slides in from any edge of the screen, built on top of Dialog.
+
+* Installation
+* Usage
+* See Also
+
+### [Shimmer](https://dioxus.rust-ui.com/docs/components/shimmer)
+
+> A loading shimmer effect overlay driven by a signal.
+
+* Installation
+* Usage
+* See Also
+
+### [Skeleton](https://dioxus.rust-ui.com/docs/components/skeleton)
+
+> Rust/UI component that show a placeholder while content is loading.
+
+* Installation
+* Usage
+* Examples
+  * Skeleton Image
+  * Skeleton Avatar
+  * Skeleton Text
+  * Skeleton Form
+  * Skeleton Table
+* See Also
+
+### [Slider](https://dioxus.rust-ui.com/docs/components/slider)
+
+> Rust/UI component that allows users to select a value from a range.
+
+* Installation
+* Usage
+* States
+* See Also
+
+### [Sonner](https://dioxus.rust-ui.com/docs/components/sonner)
+
+> Toast-style notification API and demos inspired by Sonner for Dioxus.
+
+* Installation
+* Usage
+* Examples
+  * Basic Sonner
+  * Variants
+  * Positions
+* See Also
+
+### [Spinner](https://dioxus.rust-ui.com/docs/components/spinner)
+
+> A loading spinner component with animation for indicating processing states.
+
+* Installation
+* Usage
+* Examples
+  * In Button
+* See Also
+
+### [Status](https://dioxus.rust-ui.com/docs/components/status)
+
+> Rust/UI component for displaying statuses.
+
+* Installation
+* Usage
+* Variants
+* See Also
+
+### [Stepper](https://dioxus.rust-ui.com/docs/components/stepper)
+
+> Rust/UI component for multi-step flows with a shared, navigable step index.
+
+* Installation
+* Usage
+* Examples
+  * Vertical
+  * Controlled
+* See Also
+
+### [Switch](https://dioxus.rust-ui.com/docs/components/switch)
+
+> Rust/UI component that displays a control that allows the user to toggle between checked and not checked.
+
+* Installation
+* Usage
+* Examples
+  * With Label
+* See Also
+
+### [Table](https://dioxus.rust-ui.com/docs/components/table)
+
+> Rust/UI component that displays a table with header, body and footer.
+
+* Installation
+* Usage
+* See Also
+
+### [Tabs](https://dioxus.rust-ui.com/docs/components/tabs)
+
+> Rust/UI component that displays a set of layered sections of content, known as tab pages, that are displayed one at a time.
+
+* Installation
+* Usage
+* See Also
+
+### [Textarea](https://dioxus.rust-ui.com/docs/components/textarea)
+
+> Rust/UI component that displays a textarea.
+
+* Installation
+* Usage
+* Examples
+  * Disabled
+* See Also
+
+### [Toast](https://dioxus.rust-ui.com/docs/components/toast)
+
+> Rust/UI component that displays toast notifications.
+
+* Variants
+* Installation
+* Usage
+* Examples
+  * Basic Toast
+  * Variants
+* See Also
+
+### [Toggle](https://dioxus.rust-ui.com/docs/components/toggle)
+
+> Rust/UI component that displays a two-state button that can be either on or off.
+
+* Installation
+* Usage
+* See Also
+
+### [Toolbar](https://dioxus.rust-ui.com/docs/components/toolbar)
+
+> A composable toolbar with toggle groups, buttons, separators, and links.
+
+* Installation
+* Usage
+* Examples
+  * Formatting
+* See Also
+
+### [Tooltip](https://dioxus.rust-ui.com/docs/components/tooltip)
+
+> A popup component that displays informative text when users hover over, focus on, or click an element.
+
+* Installation
+* Usage
+* Positions
+* See Also
+
+
 ## Getting Started
 
 ### [Introduction](https://dioxus.rust-ui.com/docs/introduction)
@@ -42,703 +929,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 * 2026-08-08
 
-### [Accordion](https://dioxus.rust-ui.com/docs/accordion)
-
-> Rust/UI component that displays an Accordion.
-
-* Installation
-* Usage
-* Bordered
-* See Also
-
-### [Alert](https://dioxus.rust-ui.com/docs/alert)
-
-> Rust/UI component that displays a callout to the user.
-
-* Installation
-* Usage
-* Examples
-  * Destructive
-* See Also
-
-### [Animate](https://dioxus.rust-ui.com/docs/animate)
-
-> A wrapper that applies entrance animations and hover animations via CSS.
-
-* Installation
-* Usage
-* Examples
-  * Staggered Group
-* See Also
-
-### [Animate Group](https://dioxus.rust-ui.com/docs/animate_group)
-
-> Animated group container for staggered enter transitions in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Staggered Group
-* See Also
-
-### [Aspect Ratio](https://dioxus.rust-ui.com/docs/aspect_ratio)
-
-> A container that maintains a given aspect ratio for its content.
-
-* Installation
-* Usage
-* See Also
-
-### [Attachment](https://dioxus.rust-ui.com/docs/attachment)
-
-> Displays a file or image attachment with media, name, metadata, and optional actions. Use it for files and images in chat composers, message threads, and upload lists.
-
-* Installation
-* Usage
-* Composition
-* Examples
-  * Image
-  * States
-  * Sizes
-  * Group
-  * Trigger
-* See Also
-
-### [Auto Form](https://dioxus.rust-ui.com/docs/auto_form)
-
-> Generate Dioxus forms automatically from typed Rust data structures.
-
-* Installation
-* Usage
-* Examples
-  * Generated Form
-* See Also
-
-### [Avatar](https://dioxus.rust-ui.com/docs/avatar)
-
-> Rust/UI component that displays an avatar with image and fallback support.
-
-* Installation
-* Usage
-* Examples
-  * Fallback
-  * Sizes
-  * Group Count with Icon
-* See Also
-
-### [Badge](https://dioxus.rust-ui.com/docs/badge)
-
-> Rust/UI component that displays a badge or a component that looks like a badge.
-
-* Installation
-* Usage
-* Examples
-  * Variants
-  * Colors
-  * Custom
-* See Also
-
-### [Bento Grid](https://dioxus.rust-ui.com/docs/bento_grid)
-
-> A CSS grid layout for bento-style card arrangements.
-
-* Installation
-* Usage
-* Examples
-  * 6-Column
-* See Also
-
-### [Bottom Nav](https://dioxus.rust-ui.com/docs/bottom_nav)
-
-> A mobile bottom navigation bar with touch-optimized buttons.
-
-* Installation
-* Usage
-* See Also
-
-### [Breadcrumb](https://dioxus.rust-ui.com/docs/breadcrumb)
-
-> Rust/UI component that displays the path to the current resource using a hierarchy of links.
-
-* Installation
-* Usage
-  * RTL
-* See Also
-
-### [Bubble](https://dioxus.rust-ui.com/docs/bubble)
-
-> Displays a chat message bubble with multiple style variants and an optional reactions overlay.
-
-* Installation
-* Usage
-* Composition
-* Examples
-  * Variants
-  * Alignment
-  * Bubble Group
-  * Links and Buttons
-  * Reactions
-  * Show More / Collapsible
-  * Tooltip
-  * Popover
-* See Also
-
-### [Button](https://dioxus.rust-ui.com/docs/button)
-
-> Rust/UI component that displays a button or a component that looks like a button.
-
-* Installation
-* Usage
-* Examples
-  * Variants
-  * Sizes
-  * Disabled
-  * Stateful
-  * Reactive
-  * Overriding Button
-  * With Href
-  * Button Group
-  * Button Group with Icons
-* See Also
-
-### [Button Action](https://dioxus.rust-ui.com/docs/button_action)
-
-> Press-and-hold action button for destructive or sensitive interactions in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Hold To Confirm
-* See Also
-
-### [Button Group](https://dioxus.rust-ui.com/docs/button_group)
-
-> Rust/UI component that groups buttons together into a cohesive unit.
-
-* Installation
-* Usage
-* Examples
-  * With Separator
-  * With Icons
-  * Sizes
-  * With Input
-  * RTL
-* See Also
-
-### [Callout](https://dioxus.rust-ui.com/docs/callout)
-
-> A callout component for displaying notes, info, and warnings.
-
-* Installation
-* Usage
-* Examples
-  * Info
-  * Warning
-* See Also
-
-### [Card](https://dioxus.rust-ui.com/docs/card)
-
-> Rust/UI component that displays a card with header, content and footer.
-
-* Installation
-* Components
-* Usage
-* Examples
-  * Card with Action
-  * Card Group
-  * Card Reverse
-  * Card SM
-* See Also
-
-### [Card Carousel](https://dioxus.rust-ui.com/docs/card_carousel)
-
-> A compact image carousel with overlay nav and indicators.
-
-* Installation
-* Usage
-* See Also
-
-### [Carousel](https://dioxus.rust-ui.com/docs/carousel)
-
-> A scrollable carousel with keyboard navigation, looping, and orientation support.
-
-* Installation
-* Usage
-* See Also
-
-### [Chat](https://dioxus.rust-ui.com/docs/chat)
-
-> Chat UI layout components for building messaging interfaces.
-
-* Installation
-* Usage
-* See Also
-
-### [Checkbox](https://dioxus.rust-ui.com/docs/checkbox)
-
-> Rust/UI component that displays a control that allows the user to toggle between checked and not checked.
-
-* Installation
-* Usage
-* Examples
-  * With Label
-  * Disabled
-* See Also
-
-### [Chips](https://dioxus.rust-ui.com/docs/chips)
-
-> Rust/UI component that displays a chip or a component that looks like a chip.
-
-* Installation
-* Usage
-* See Also
-
-### [Collapsible](https://dioxus.rust-ui.com/docs/collapsible)
-
-> An interactive component which expands/collapses a panel with smooth animation.
-
-* Installation
-* Usage
-  * Settings
-* See Also
-
-### [Combobox](https://dioxus.rust-ui.com/docs/combobox)
-
-> Searchable selection UI built with command-style filtering in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Searchable Select
-* See Also
-
-### [Command](https://dioxus.rust-ui.com/docs/command)
-
-> Fast, composable, unstyled command menu for Dioxus.
-
-* Installation
-* Components
-* Usage
-* Examples
-  * Inline Command
-  * Command Dialog
-* See Also
-
-### [Context Menu](https://dioxus.rust-ui.com/docs/context_menu)
-
-> Right-click context menu patterns for Dioxus applications.
-
-* Installation
-* Usage
-* Examples
-  * Basic Context Menu
-  * Action Menu
-  * RTL
-* See Also
-
-### [Data Grid](https://dioxus.rust-ui.com/docs/data_grid)
-
-> High-performance data grid with virtual scrolling, column pinning, cell selection, drag selection, and copy-to-clipboard.
-
-* Installation
-* Components
-* Hooks
-* Traits
-* Utilities
-* Usage
-* Features
-* See Also
-
-### [Data Table](https://dioxus.rust-ui.com/docs/data_table)
-
-> Structured data table demos for sorting, filtering, and tabular presentation in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Data Table
-  * Filtered Table
-* See Also
-
-### [Date Picker](https://dioxus.rust-ui.com/docs/date_picker)
-
-> Calendar and date selection components for Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Date Picker
-  * Dropdown
-  * Dual Calendar
-  * Full Dual Picker
-  * Presets
-  * Time
-  * Booked Days
-  * Week Numbers
-* See Also
-
-### [Dialog](https://dioxus.rust-ui.com/docs/dialog)
-
-> Rust/UI component that displays a modal dialog that the user can interact with.
-
-* Installation
-* Usage
-* Scrollable
-* See Also
-
-### [Direction Provider](https://dioxus.rust-ui.com/docs/direction_provider)
-
-> RTL and LTR direction context for Dioxus components.
-
-* Installation
-* Usage
-* Examples
-  * Default Direction
-  * Custom Direction
-  * RTL
-* See Also
-
-### [Drag And Drop](https://dioxus.rust-ui.com/docs/drag_and_drop)
-
-> Drag and drop sortable interface patterns in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Sortable Items
-* See Also
-
-### [Drawer](https://dioxus.rust-ui.com/docs/drawer)
-
-> A bottom sheet that slides up from the bottom of the screen.
-
-* Installation
-* Usage
-* See Also
-
-### [Dropdown Menu](https://dioxus.rust-ui.com/docs/dropdown_menu)
-
-> Composable dropdown menu primitives for Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Menu
-  * Destructive Action
-  * Start / End Alignment
-  * Outer Alignment
-  * User Menu
-  * Radio And Select Patterns
-  * RTL
-* See Also
-
-### [Dropzone](https://dioxus.rust-ui.com/docs/dropzone)
-
-> Rust/UI component for drag-and-drop file uploads with list and grid views.
-
-* Installation
-* Usage
-* Examples
-  * List view
-  * Grid view
-  * List / grid toggle
-* See Also
-
-### [Empty](https://dioxus.rust-ui.com/docs/empty)
-
-> Use the Empty component to display a empty state.
-
-* Installation
-* Usage
-* Muted
-* See Also
-
-### [Expandable](https://dioxus.rust-ui.com/docs/expandable)
-
-> A trigger that expands to reveal additional content with a close button.
-
-* Installation
-* Usage
-* See Also
-
-### [FAQ Transition](https://dioxus.rust-ui.com/docs/faq_transition)
-
-> Accordion-style FAQ sections using CSS checkbox peer transitions.
-
-* Installation
-* Usage
-* See Also
-
-### [Field](https://dioxus.rust-ui.com/docs/field)
-
-> Form field layout components for labels, descriptions, and error messages.
-
-* Installation
-* Usage
-* Examples
-  * RTL
-* See Also
-
-### [Form](https://dioxus.rust-ui.com/docs/form)
-
-> Typed form composition primitives for Dioxus with field context and validation helpers.
-
-* Installation
-* Usage
-* Examples
-  * Basic Form
-  * Validation
-  * Group
-  * Fieldset
-  * Error
-  * Select
-  * Auto Form
-* See Also
-
-### [Hover Card](https://dioxus.rust-ui.com/docs/hover_card)
-
-> A floating card that appears on hover using CSS anchor positioning.
-
-* Installation
-* Usage
-* Examples
-  * RTL
-* See Also
-
-### [Image](https://dioxus.rust-ui.com/docs/image)
-
-> An image component with lazy loading and responsive support.
-
-* Installation
-* Usage
-* See Also
-
-### [Input](https://dioxus.rust-ui.com/docs/input)
-
-> Rust/UI component that displays an input field that allows the user to enter text.
-
-* Usage
-* Examples
-  * Input Copy
-* Installation
-* See Also
-
-### [Input Group](https://dioxus.rust-ui.com/docs/input_group)
-
-> An input with inline prefix/suffix addons such as icons or buttons.
-
-* Installation
-* Usage
-* Examples
-  * Text Addons
-  * Block Layout
-  * RTL
-* See Also
-
-### [Input OTP](https://dioxus.rust-ui.com/docs/input_otp)
-
-> A one-time password input with individual digit slots.
-
-* Installation
-* Usage
-* Examples
-  * With Separator
-* See Also
-
-### [Input Phone](https://dioxus.rust-ui.com/docs/input_phone)
-
-> Phone number input with country selection and formatting for Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Phone Input
-  * Disabled
-* See Also
-
-### [Input Prompt](https://dioxus.rust-ui.com/docs/input_prompt)
-
-> Prompt-style input surface for asking questions and submitting contextual actions in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Prompt
-  * Prompt With Tools
-* See Also
-
-### [Item](https://dioxus.rust-ui.com/docs/item)
-
-> A flexible list item component with media, content, and action slots.
-
-* Installation
-* Usage
-* See Also
-
-### [Kbd](https://dioxus.rust-ui.com/docs/kbd)
-
-> Display keyboard shortcuts and key combinations with proper styling.
-
-* Installation
-* Usage
-* Examples
-  * Key Combination
-* See Also
-
-### [Label](https://dioxus.rust-ui.com/docs/label)
-
-> Rust/UI component that displays a label for an input field.
-
-* Installation
-* Usage
-* Examples
-  * With Input
-* See Also
-
-### [Marker](https://dioxus.rust-ui.com/docs/marker)
-
-> Rust/UI component for inline status markers, timeline separators, and event indicators.
-
-* Installation
-* Usage
-* Examples
-  * Variants
-  * Border
-  * Separator
-  * Icon
-  * Status
-  * Shimmer
-  * Link / Button
-* See Also
-
-### [Marquee](https://dioxus.rust-ui.com/docs/marquee)
-
-> An infinite scrolling marquee with pause-on-hover support.
-
-* Installation
-* Usage
-* See Also
-
-### [Mask](https://dioxus.rust-ui.com/docs/mask)
-
-> Gradient fade masks for left, right, top, or bottom edges.
-
-* Installation
-* Usage
-* See Also
-
-### [Menubar](https://dioxus.rust-ui.com/docs/menubar)
-
-> Desktop-style menubar interactions for Dioxus applications.
-
-* Installation
-* Usage
-* Examples
-  * Basic Menubar
-  * RTL
-* See Also
-
-### [Message](https://dioxus.rust-ui.com/docs/message)
-
-> Displays a message in a conversation, with optional avatar, header, footer, and alignment.
-
-* Installation
-* Usage
-* Composition
-* Examples
-  * Avatar
-  * Group
-  * Header and Footer
-  * Actions
-  * Attachment
-* See Also
-
-### [Multi Select](https://dioxus.rust-ui.com/docs/multi_select)
-
-> Multi-value selection component for Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Multi Select
-  * Alignment
-  * Scrollable
-* See Also
-
-### [Navigation Menu](https://dioxus.rust-ui.com/docs/navigation_menu)
-
-> Composable navigation menu layouts for Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Navigation Menu
-  * Complex Navigation
-  * RTL
-* See Also
-
-### [Pagination](https://dioxus.rust-ui.com/docs/pagination)
-
-> Rust/UI component that displays a pagination component.
-
-* Installation
-* Usage
-* See Also
-
-### [Popover](https://dioxus.rust-ui.com/docs/popover)
-
-> A floating panel that opens on click, anchored to a trigger element.
-
-* Installation
-* Usage
-* See Also
-
-### [Pressable](https://dioxus.rust-ui.com/docs/pressable)
-
-> A wrapper that adds press feedback (scale effect) to any children.
-
-* Installation
-* Usage
-* See Also
-
-### [Progress](https://dioxus.rust-ui.com/docs/progress)
-
-> Rust/UI component that displays a progress bar indicating task completion.
-
-* Installation
-* Usage
-* Examples
-  * Animated
-* See Also
-
-### [Radio Button](https://dioxus.rust-ui.com/docs/radio_button)
-
-> A signal-driven radio group for selecting a single option from a list.
-
-* Installation
-* Usage
-* See Also
-
-### [Radio Button Group](https://dioxus.rust-ui.com/docs/radio_button_group)
-
-> A CSS-styled radio button group with custom visual selection.
-
-* Installation
-* Usage
-* Examples
-  * RTL
-* See Also
-
-### [Radio Group](https://dioxus.rust-ui.com/docs/radio-group)
-
-> Rust/UI component that displays a set of radio buttons where only one can be selected at a time.
-
-* Installation
-* Usage
-* Examples
-  * Custom Style
-* See Also
-
 ### [RTL Support](https://dioxus.rust-ui.com/docs/rtl)
 
 > Enable right-to-left layout support in your Rust/UI project. Physical Tailwind CSS classes are automatically transformed to logical equivalents when installing components.
@@ -751,211 +941,24 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Example
 * Verifying RTL is Enabled
 
-### [Scroll Area](https://dioxus.rust-ui.com/docs/scroll_area)
-
-> A scrollable container with a custom scrollbar.
-
-* Installation
-* Usage
-* Examples
-  * Horizontal
-  * RTL
-* See Also
-
-### [Select](https://dioxus.rust-ui.com/docs/select)
-
-> Composable select component for choosing a single value in Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Select
-  * Scrollable
-  * RTL
-* See Also
-
-### [Separator](https://dioxus.rust-ui.com/docs/separator)
-
-> Rust/UI component that displays a separator line.
-
-* Installation
-* Usage
-* See Also
-
-### [Sheet](https://dioxus.rust-ui.com/docs/sheet)
-
-> A panel that slides in from any edge of the screen, built on top of Dialog.
-
-* Installation
-* Usage
-* See Also
-
-### [Shimmer](https://dioxus.rust-ui.com/docs/shimmer)
-
-> A loading shimmer effect overlay driven by a signal.
-
-* Installation
-* Usage
-* See Also
-
-### [Skeleton](https://dioxus.rust-ui.com/docs/skeleton)
-
-> Rust/UI component that show a placeholder while content is loading.
-
-* Installation
-* Usage
-* Examples
-  * Skeleton Image
-  * Skeleton Avatar
-  * Skeleton Text
-  * Skeleton Form
-  * Skeleton Table
-* See Also
-
-### [Slider](https://dioxus.rust-ui.com/docs/slider)
-
-> Rust/UI component that allows users to select a value from a range.
-
-* Installation
-* Usage
-* States
-* See Also
-
-### [Sonner](https://dioxus.rust-ui.com/docs/sonner)
-
-> Toast-style notification API and demos inspired by Sonner for Dioxus.
-
-* Installation
-* Usage
-* Examples
-  * Basic Sonner
-  * Variants
-  * Positions
-* See Also
-
-### [Spinner](https://dioxus.rust-ui.com/docs/spinner)
-
-> A loading spinner component with animation for indicating processing states.
-
-* Installation
-* Usage
-* Examples
-  * In Button
-* See Also
-
-### [Status](https://dioxus.rust-ui.com/docs/status)
-
-> Rust/UI component for displaying statuses.
-
-* Installation
-* Usage
-* Variants
-* See Also
-
-### [Stepper](https://dioxus.rust-ui.com/docs/stepper)
-
-> Rust/UI component for multi-step flows with a shared, navigable step index.
-
-* Installation
-* Usage
-* Examples
-  * Vertical
-  * Controlled
-* See Also
-
-### [Switch](https://dioxus.rust-ui.com/docs/switch)
-
-> Rust/UI component that displays a control that allows the user to toggle between checked and not checked.
-
-* Installation
-* Usage
-* Examples
-  * With Label
-* See Also
-
-### [Table](https://dioxus.rust-ui.com/docs/table)
-
-> Rust/UI component that displays a table with header, body and footer.
-
-* Installation
-* Usage
-* See Also
-
-### [Tabs](https://dioxus.rust-ui.com/docs/tabs)
-
-> Rust/UI component that displays a set of layered sections of content, known as tab pages, that are displayed one at a time.
-
-* Installation
-* Usage
-* See Also
-
-### [Textarea](https://dioxus.rust-ui.com/docs/textarea)
-
-> Rust/UI component that displays a textarea.
-
-* Installation
-* Usage
-* Examples
-  * Disabled
-* See Also
-
-### [Toast](https://dioxus.rust-ui.com/docs/toast)
-
-> Rust/UI component that displays toast notifications.
-
-* Variants
-* Installation
-* Usage
-* Examples
-  * Basic Toast
-  * Variants
-* See Also
-
-### [Toggle](https://dioxus.rust-ui.com/docs/toggle)
-
-> Rust/UI component that displays a two-state button that can be either on or off.
-
-* Installation
-* Usage
-* See Also
-
-### [Toolbar](https://dioxus.rust-ui.com/docs/toolbar)
-
-> A composable toolbar with toggle groups, buttons, separators, and links.
-
-* Installation
-* Usage
-* Examples
-  * Formatting
-* See Also
-
-### [Tooltip](https://dioxus.rust-ui.com/docs/tooltip)
-
-> A popup component that displays informative text when users hover over, focus on, or click an element.
-
-* Installation
-* Usage
-* Positions
-* See Also
-
 
 ## Hooks
 
-### [Use Copy Clipboard](https://dioxus.rust-ui.com/docs/hooks/use_copy_clipboard)
+### [Use Copy Clipboard](https://dioxus.rust-ui.com/docs/hooks/use-copy-clipboard)
 
 > A Dioxus hook that copies text to clipboard with optional timeout to show copied state.
 
 * Usage
 * Example
 
-### [Use Lock Body Scroll](https://dioxus.rust-ui.com/docs/hooks/use_lock_body_scroll)
+### [Use Lock Body Scroll](https://dioxus.rust-ui.com/docs/hooks/use-lock-body-scroll)
 
 > A Dioxus hook that locks and unlocks body scrolling, useful for modal dialogs, sheets, and overlays.
 
 * Usage
 * Example
 
-### [Use Random](https://dioxus.rust-ui.com/docs/hooks/use_random)
+### [Use Random](https://dioxus.rust-ui.com/docs/hooks/use-random)
 
 > A Dioxus hook that generates unique random IDs for DOM elements and CSS animations.
 

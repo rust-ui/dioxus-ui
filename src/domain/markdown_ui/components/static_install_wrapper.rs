@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use registry::ui::button::{Button, ButtonVariant};
 
+use crate::__registry__::static_md_registry::{get_static_registry_entry, MarkdownType};
 use crate::components::steps::{Step, Steps};
 use crate::markdown::highlight_code::highlight_code;
 
@@ -12,14 +13,21 @@ enum Tab {
 }
 
 #[component]
-pub fn StaticInstallWrapper(install_name: &'static str, demo_name: &'static str, raw_code: &'static str) -> Element {
+pub fn StaticInstallWrapper(install_type: MarkdownType) -> Element {
     let mut tab = use_signal(Tab::default);
     let mut expanded = use_signal(|| false);
 
-    let cli_code = format!("# cargo install ui-cli --force\nui add {demo_name}\nui add {install_name}");
+    let Some(install_data) = get_static_registry_entry(install_type) else {
+        return rsx! { p { "Install not found in static registry" } };
+    };
+
+    let cli_code = format!(
+        "# cargo install ui-cli --force\nui add {}\nui add {}",
+        install_data.demo_name, install_data.install_name
+    );
     let cli_highlighted = highlight_code(&cli_code, Some("bash"), None);
-    let manual_highlighted = highlight_code(raw_code, Some("rust"), None);
-    let file_path = format!("app_crates/registry/src/ui/{install_name}.rs");
+    let manual_highlighted = highlight_code(install_data.raw_code, Some("rust"), None);
+    let file_path = install_data.file_path;
 
     let tab_base = "inline-flex items-center gap-1.5 rounded-sm px-3 py-1.5 text-sm font-medium transition-colors";
     let active = "bg-background text-foreground shadow-sm";

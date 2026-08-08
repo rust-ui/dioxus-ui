@@ -1,4 +1,4 @@
-use crate::__registry__::sidenav::SidenavItem;
+use crate::__registry__::demos_sidenav::SidenavItem;
 
 pub static SIDENAV_GET_STARTED_ITEMS: &[SidenavItem] = &[
     SidenavItem { label: "Introduction", slug: "introduction", is_new: false },

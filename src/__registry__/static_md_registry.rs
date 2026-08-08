@@ -2,6 +2,7 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
+use strum::{AsRefStr, EnumString};
 use registry::demos::demo_accordion::DemoAccordion;
 use registry::demos::demo_accordion_bordered::DemoAccordionBordered;
 use registry::demos::demo_alert::DemoAlert;
@@ -223,1857 +224,4607 @@ pub fn MyMd(raw: &'static str) -> Element {
     convert_md(body, &components)
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct StaticRegistryEntry {
+    pub raw_code: &'static str,
+    pub demo_name: &'static str,
+    pub file_path: &'static str,
+    pub install_name: &'static str,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, EnumString, AsRefStr)]
+pub enum MarkdownType {
+    StaticDemoAccordion,
+    StaticDemoAccordionBordered,
+    StaticDemoAlert,
+    StaticDemoAlertDialog,
+    StaticDemoAlertDialogSmallMedia,
+    StaticDemoAnimate,
+    StaticDemoAnimateGroup,
+    StaticDemoAspectRatio,
+    StaticDemoAttachment,
+    StaticDemoAttachmentGroup,
+    StaticDemoAttachmentImage,
+    StaticDemoAttachmentSizes,
+    StaticDemoAttachmentStates,
+    StaticDemoAttachmentTrigger,
+    StaticDemoAutoForm,
+    StaticDemoAvatar,
+    StaticDemoAvatarGroupCountIcon,
+    StaticDemoBadge,
+    StaticDemoBadgeColors,
+    StaticDemoBadgeCustom,
+    StaticDemoBadgeVariants,
+    StaticDemoBentoGrid,
+    StaticDemoBentoGrid6,
+    StaticDemoBottomNav,
+    StaticDemoBreadcrumb,
+    StaticDemoBreadcrumbRtl,
+    StaticDemoBubble,
+    StaticDemoBubbleAlignment,
+    StaticDemoBubbleCollapsible,
+    StaticDemoBubbleGroup,
+    StaticDemoBubbleLinkButton,
+    StaticDemoBubblePopover,
+    StaticDemoBubbleReactions,
+    StaticDemoBubbleTooltip,
+    StaticDemoBubbleVariants,
+    StaticDemoButton,
+    StaticDemoButtonAction,
+    StaticDemoButtonDisabled,
+    StaticDemoButtonGroup,
+    StaticDemoButtonGroupIcon,
+    StaticDemoButtonGroupInput,
+    StaticDemoButtonGroupRtl,
+    StaticDemoButtonGroupSeparator,
+    StaticDemoButtonGroupSizes,
+    StaticDemoButtonHref,
+    StaticDemoButtonOverride,
+    StaticDemoButtonReactive,
+    StaticDemoButtonRtl,
+    StaticDemoButtonSizes,
+    StaticDemoButtonStateful,
+    StaticDemoButtonVariants,
+    StaticDemoCallout,
+    StaticDemoCalloutInfo,
+    StaticDemoCalloutWarning,
+    StaticDemoCard,
+    StaticDemoCardAction,
+    StaticDemoCardCarousel,
+    StaticDemoCardGroup,
+    StaticDemoCardReverse,
+    StaticDemoCardSm,
+    StaticDemoCarousel,
+    StaticDemoChat,
+    StaticDemoCheckbox,
+    StaticDemoChips,
+    StaticDemoCollapsible,
+    StaticDemoCollapsibleSettings,
+    StaticDemoCombobox,
+    StaticDemoCommand,
+    StaticDemoCommandDialog,
+    StaticDemoContextMenu,
+    StaticDemoContextMenuAction,
+    StaticDemoContextMenuRtl,
+    StaticDemoDataGrid,
+    StaticDemoDataTable,
+    StaticDemoDataTableFilters,
+    StaticDemoDatePicker,
+    StaticDemoDatePickerBooked,
+    StaticDemoDatePickerDropdown,
+    StaticDemoDatePickerDual,
+    StaticDemoDatePickerDualFull,
+    StaticDemoDatePickerPresets,
+    StaticDemoDatePickerTime,
+    StaticDemoDatePickerWeekNumbers,
+    StaticDemoDialog,
+    StaticDemoDialogScrollable,
+    StaticDemoDirectionProvider,
+    StaticDemoDirectionProviderDefault,
+    StaticDemoDirectionProviderRtl,
+    StaticDemoDragAndDrop,
+    StaticDemoDrawer,
+    StaticDemoDropdownMenu,
+    StaticDemoDropdownMenuDestructive,
+    StaticDemoDropdownMenuEnd,
+    StaticDemoDropdownMenuEndOuter,
+    StaticDemoDropdownMenuRadio,
+    StaticDemoDropdownMenuRtl,
+    StaticDemoDropdownMenuSelect,
+    StaticDemoDropdownMenuStart,
+    StaticDemoDropdownMenuStartOuter,
+    StaticDemoDropdownMenuUser,
+    StaticDemoDropdownMenuUserIcon,
+    StaticDemoDropzone,
+    StaticDemoDropzoneGrid,
+    StaticDemoDropzoneToggle,
+    StaticDemoEmpty,
+    StaticDemoEmptyMuted,
+    StaticDemoExpandable,
+    StaticDemoFaqTransition,
+    StaticDemoField,
+    StaticDemoFieldRtl,
+    StaticDemoForm,
+    StaticDemoFormError,
+    StaticDemoFormFieldset,
+    StaticDemoFormGroup,
+    StaticDemoFormSelect,
+    StaticDemoFormValidation,
+    StaticDemoHoverCard,
+    StaticDemoHoverCardRtl,
+    StaticDemoImage,
+    StaticDemoInput,
+    StaticDemoInputCopy,
+    StaticDemoInputGroup,
+    StaticDemoInputGroupBlock,
+    StaticDemoInputGroupRtl,
+    StaticDemoInputGroupText,
+    StaticDemoInputOtp,
+    StaticDemoInputOtpSeparator,
+    StaticDemoInputPhone,
+    StaticDemoInputPhoneDisabled,
+    StaticDemoInputPrompt,
+    StaticDemoInputPromptWithTools,
+    StaticDemoItem,
+    StaticDemoKbd,
+    StaticDemoLabel,
+    StaticDemoMarker,
+    StaticDemoMarkerBorder,
+    StaticDemoMarkerIcon,
+    StaticDemoMarkerLinkButton,
+    StaticDemoMarkerSeparator,
+    StaticDemoMarkerShimmer,
+    StaticDemoMarkerStatus,
+    StaticDemoMarkerVariants,
+    StaticDemoMarquee,
+    StaticDemoMask,
+    StaticDemoMenubar,
+    StaticDemoMenubarRtl,
+    StaticDemoMessage,
+    StaticDemoMessageActions,
+    StaticDemoMessageAttachment,
+    StaticDemoMessageAvatar,
+    StaticDemoMessageGroup,
+    StaticDemoMessageHeaderFooter,
+    StaticDemoMultiSelect,
+    StaticDemoMultiSelectAlign,
+    StaticDemoMultiSelectScrollable,
+    StaticDemoNavigationMenu,
+    StaticDemoNavigationMenuComplex,
+    StaticDemoNavigationMenuRtl,
+    StaticDemoPagination,
+    StaticDemoPopover,
+    StaticDemoPressable,
+    StaticDemoProgress,
+    StaticDemoRadioButton,
+    StaticDemoRadioButtonCustom,
+    StaticDemoRadioButtonGroup,
+    StaticDemoRadioButtonGroupRtl,
+    StaticDemoRadioGroup,
+    StaticDemoScrollArea,
+    StaticDemoScrollAreaHorizontal,
+    StaticDemoScrollAreaRtl,
+    StaticDemoSelect,
+    StaticDemoSelectNativeGroup,
+    StaticDemoSelectRtl,
+    StaticDemoSelectScrollable,
+    StaticDemoSeparator,
+    StaticDemoSheet,
+    StaticDemoShimmer,
+    StaticDemoSkeleton,
+    StaticDemoSkeletonAvatar,
+    StaticDemoSkeletonForm,
+    StaticDemoSkeletonImage,
+    StaticDemoSkeletonTable,
+    StaticDemoSkeletonText,
+    StaticDemoSlider,
+    StaticDemoSonner,
+    StaticDemoSonnerPositions,
+    StaticDemoSonnerVariants,
+    StaticDemoSpinner,
+    StaticDemoSpinnerButton,
+    StaticDemoStatus,
+    StaticDemoStatusVariants,
+    StaticDemoStepper,
+    StaticDemoStepperControlled,
+    StaticDemoStepperVertical,
+    StaticDemoSwitch,
+    StaticDemoTable,
+    StaticDemoTabs,
+    StaticDemoTextarea,
+    StaticDemoThemeToggle,
+    StaticDemoToast,
+    StaticDemoToastVariants,
+    StaticDemoToggle,
+    StaticDemoToggleGroup,
+    StaticDemoToolbar,
+    StaticDemoTooltip,
+    StaticDocsInstallationCliTreeView,
+    StaticInstallAccordion,
+    StaticInstallAlert,
+    StaticInstallAlertDialog,
+    StaticInstallAnimate,
+    StaticInstallAnimateGroup,
+    StaticInstallAspectRatio,
+    StaticInstallAttachment,
+    StaticInstallAutoForm,
+    StaticInstallAvatar,
+    StaticInstallBadge,
+    StaticInstallBentoGrid,
+    StaticInstallBottomNav,
+    StaticInstallBreadcrumb,
+    StaticInstallBubble,
+    StaticInstallButton,
+    StaticInstallButtonAction,
+    StaticInstallButtonGroup,
+    StaticInstallCallout,
+    StaticInstallCard,
+    StaticInstallCardCarousel,
+    StaticInstallCarousel,
+    StaticInstallChat,
+    StaticInstallCheckbox,
+    StaticInstallChips,
+    StaticInstallCollapsible,
+    StaticInstallCombobox,
+    StaticInstallCommand,
+    StaticInstallContextMenu,
+    StaticInstallDataGrid,
+    StaticInstallDataTable,
+    StaticInstallDatePicker,
+    StaticInstallDialog,
+    StaticInstallDirectionProvider,
+    StaticInstallDragAndDrop,
+    StaticInstallDrawer,
+    StaticInstallDropdownMenu,
+    StaticInstallDropzone,
+    StaticInstallEmpty,
+    StaticInstallExpandable,
+    StaticInstallFaqTransition,
+    StaticInstallField,
+    StaticInstallForm,
+    StaticInstallHoverCard,
+    StaticInstallImage,
+    StaticInstallInput,
+    StaticInstallInputGroup,
+    StaticInstallInputOtp,
+    StaticInstallInputPhone,
+    StaticInstallInputPrompt,
+    StaticInstallItem,
+    StaticInstallKbd,
+    StaticInstallLabel,
+    StaticInstallMarker,
+    StaticInstallMarquee,
+    StaticInstallMask,
+    StaticInstallMenubar,
+    StaticInstallMessage,
+    StaticInstallMultiSelect,
+    StaticInstallNavigationMenu,
+    StaticInstallPagination,
+    StaticInstallPopover,
+    StaticInstallPressable,
+    StaticInstallProgress,
+    StaticInstallRadioButton,
+    StaticInstallRadioButtonGroup,
+    StaticInstallRadioGroup,
+    StaticInstallScrollArea,
+    StaticInstallSelect,
+    StaticInstallSelectNative,
+    StaticInstallSeparator,
+    StaticInstallSheet,
+    StaticInstallShimmer,
+    StaticInstallSkeleton,
+    StaticInstallSlider,
+    StaticInstallSonner,
+    StaticInstallSpinner,
+    StaticInstallStatus,
+    StaticInstallStepper,
+    StaticInstallSwitch,
+    StaticInstallTable,
+    StaticInstallTabs,
+    StaticInstallTextarea,
+    StaticInstallThemeToggle,
+    StaticInstallToast,
+    StaticInstallToggle,
+    StaticInstallToggleGroup,
+    StaticInstallToolbar,
+    StaticInstallTooltip,
+    StaticInstallUseCopyClipboard,
+    StaticInstallUseLockBodyScroll,
+    StaticInstallUseRandom,
+}
+
+pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static StaticRegistryEntry> {
+    match markdown_type {
+        MarkdownType::StaticDemoAccordion => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_accordion.rs"),
+            demo_name: "demo_accordion",
+            file_path: "public/docs/components/accordion.md",
+            install_name: "accordion",
+        }),
+        MarkdownType::StaticDemoAccordionBordered => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_accordion_bordered.rs"),
+            demo_name: "demo_accordion_bordered",
+            file_path: "public/docs/components/accordion.md",
+            install_name: "accordion",
+        }),
+        MarkdownType::StaticDemoAlert => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_alert.rs"),
+            demo_name: "demo_alert",
+            file_path: "public/docs/components/alert.md",
+            install_name: "alert",
+        }),
+        MarkdownType::StaticDemoAlertDialog => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_alert_dialog.rs"),
+            demo_name: "demo_alert_dialog",
+            file_path: "public/docs/components/alert-dialog.md",
+            install_name: "alert_dialog",
+        }),
+        MarkdownType::StaticDemoAlertDialogSmallMedia => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_alert_dialog_small_media.rs"),
+            demo_name: "demo_alert_dialog_small_media",
+            file_path: "public/docs/components/alert-dialog.md",
+            install_name: "alert_dialog",
+        }),
+        MarkdownType::StaticDemoAnimate => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_animate.rs"),
+            demo_name: "demo_animate",
+            file_path: "public/docs/components/animate.md",
+            install_name: "animate",
+        }),
+        MarkdownType::StaticDemoAnimateGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_animate_group.rs"),
+            demo_name: "demo_animate_group",
+            file_path: "public/docs/components/animate-group.md",
+            install_name: "animate_group",
+        }),
+        MarkdownType::StaticDemoAspectRatio => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_aspect_ratio.rs"),
+            demo_name: "demo_aspect_ratio",
+            file_path: "public/docs/components/aspect_ratio.md",
+            install_name: "aspect_ratio",
+        }),
+        MarkdownType::StaticDemoAttachment => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_attachment.rs"),
+            demo_name: "demo_attachment",
+            file_path: "public/docs/components/attachment.md",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticDemoAttachmentGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_attachment_group.rs"),
+            demo_name: "demo_attachment_group",
+            file_path: "public/docs/components/attachment.md",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticDemoAttachmentImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_attachment_image.rs"),
+            demo_name: "demo_attachment_image",
+            file_path: "public/docs/components/attachment.md",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticDemoAttachmentSizes => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_attachment_sizes.rs"),
+            demo_name: "demo_attachment_sizes",
+            file_path: "public/docs/components/attachment.md",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticDemoAttachmentStates => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_attachment_states.rs"),
+            demo_name: "demo_attachment_states",
+            file_path: "public/docs/components/attachment.md",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticDemoAttachmentTrigger => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_attachment_trigger.rs"),
+            demo_name: "demo_attachment_trigger",
+            file_path: "public/docs/components/attachment.md",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticDemoAutoForm => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_auto_form.rs"),
+            demo_name: "demo_auto_form",
+            file_path: "public/docs/components/auto-form.md",
+            install_name: "auto_form",
+        }),
+        MarkdownType::StaticDemoAvatar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_avatar.rs"),
+            demo_name: "demo_avatar",
+            file_path: "public/docs/components/avatar.md",
+            install_name: "avatar",
+        }),
+        MarkdownType::StaticDemoAvatarGroupCountIcon => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_avatar_group_count_icon.rs"),
+            demo_name: "demo_avatar_group_count_icon",
+            file_path: "public/docs/components/avatar.md",
+            install_name: "avatar",
+        }),
+        MarkdownType::StaticDemoBadge => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_badge.rs"),
+            demo_name: "demo_badge",
+            file_path: "public/docs/components/badge.md",
+            install_name: "badge",
+        }),
+        MarkdownType::StaticDemoBadgeColors => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_badge_colors.rs"),
+            demo_name: "demo_badge_colors",
+            file_path: "public/docs/components/badge.md",
+            install_name: "badge",
+        }),
+        MarkdownType::StaticDemoBadgeCustom => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_badge_custom.rs"),
+            demo_name: "demo_badge_custom",
+            file_path: "public/docs/components/badge.md",
+            install_name: "badge",
+        }),
+        MarkdownType::StaticDemoBadgeVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_badge_variants.rs"),
+            demo_name: "demo_badge_variants",
+            file_path: "public/docs/components/badge.md",
+            install_name: "badge",
+        }),
+        MarkdownType::StaticDemoBentoGrid => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bento_grid.rs"),
+            demo_name: "demo_bento_grid",
+            file_path: "public/docs/components/bento_grid.md",
+            install_name: "bento_grid",
+        }),
+        MarkdownType::StaticDemoBentoGrid6 => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bento_grid6.rs"),
+            demo_name: "demo_bento_grid6",
+            file_path: "public/docs/components/bento_grid.md",
+            install_name: "bento_grid",
+        }),
+        MarkdownType::StaticDemoBottomNav => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bottom_nav.rs"),
+            demo_name: "demo_bottom_nav",
+            file_path: "public/docs/components/bottom-nav.md",
+            install_name: "bottom_nav",
+        }),
+        MarkdownType::StaticDemoBreadcrumb => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_breadcrumb.rs"),
+            demo_name: "demo_breadcrumb",
+            file_path: "public/docs/components/breadcrumb.md",
+            install_name: "breadcrumb",
+        }),
+        MarkdownType::StaticDemoBreadcrumbRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_breadcrumb_rtl.rs"),
+            demo_name: "demo_breadcrumb_rtl",
+            file_path: "public/docs/components/breadcrumb.md",
+            install_name: "breadcrumb",
+        }),
+        MarkdownType::StaticDemoBubble => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble.rs"),
+            demo_name: "demo_bubble",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleAlignment => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_alignment.rs"),
+            demo_name: "demo_bubble_alignment",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleCollapsible => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_collapsible.rs"),
+            demo_name: "demo_bubble_collapsible",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_group.rs"),
+            demo_name: "demo_bubble_group",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleLinkButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_link_button.rs"),
+            demo_name: "demo_bubble_link_button",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubblePopover => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_popover.rs"),
+            demo_name: "demo_bubble_popover",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleReactions => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_reactions.rs"),
+            demo_name: "demo_bubble_reactions",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleTooltip => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_tooltip.rs"),
+            demo_name: "demo_bubble_tooltip",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoBubbleVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_bubble_variants.rs"),
+            demo_name: "demo_bubble_variants",
+            file_path: "public/docs/components/bubble.md",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticDemoButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button.rs"),
+            demo_name: "demo_button",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonAction => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_action.rs"),
+            demo_name: "demo_button_action",
+            file_path: "public/docs/components/button-action.md",
+            install_name: "button_action",
+        }),
+        MarkdownType::StaticDemoButtonDisabled => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_disabled.rs"),
+            demo_name: "demo_button_disabled",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_group.rs"),
+            demo_name: "demo_button_group",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonGroupIcon => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_group_icon.rs"),
+            demo_name: "demo_button_group_icon",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonGroupInput => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_group_input.rs"),
+            demo_name: "demo_button_group_input",
+            file_path: "public/docs/components/button-group.md",
+            install_name: "button_group",
+        }),
+        MarkdownType::StaticDemoButtonGroupRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_group_rtl.rs"),
+            demo_name: "demo_button_group_rtl",
+            file_path: "public/docs/components/button-group.md",
+            install_name: "button_group",
+        }),
+        MarkdownType::StaticDemoButtonGroupSeparator => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_group_separator.rs"),
+            demo_name: "demo_button_group_separator",
+            file_path: "public/docs/components/button-group.md",
+            install_name: "button_group",
+        }),
+        MarkdownType::StaticDemoButtonGroupSizes => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_group_sizes.rs"),
+            demo_name: "demo_button_group_sizes",
+            file_path: "public/docs/components/button-group.md",
+            install_name: "button_group",
+        }),
+        MarkdownType::StaticDemoButtonHref => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_href.rs"),
+            demo_name: "demo_button_href",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonOverride => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_override.rs"),
+            demo_name: "demo_button_override",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonReactive => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_reactive.rs"),
+            demo_name: "demo_button_reactive",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_rtl.rs"),
+            demo_name: "demo_button_rtl",
+            file_path: "public/docs/rtl.md",
+            install_name: "rtl",
+        }),
+        MarkdownType::StaticDemoButtonSizes => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_sizes.rs"),
+            demo_name: "demo_button_sizes",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonStateful => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_stateful.rs"),
+            demo_name: "demo_button_stateful",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoButtonVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_variants.rs"),
+            demo_name: "demo_button_variants",
+            file_path: "public/docs/components/button.md",
+            install_name: "button",
+        }),
+        MarkdownType::StaticDemoCallout => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_callout.rs"),
+            demo_name: "demo_callout",
+            file_path: "public/docs/components/callout.md",
+            install_name: "callout",
+        }),
+        MarkdownType::StaticDemoCalloutInfo => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_callout_info.rs"),
+            demo_name: "demo_callout_info",
+            file_path: "public/docs/components/callout.md",
+            install_name: "callout",
+        }),
+        MarkdownType::StaticDemoCalloutWarning => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_callout_warning.rs"),
+            demo_name: "demo_callout_warning",
+            file_path: "public/docs/components/callout.md",
+            install_name: "callout",
+        }),
+        MarkdownType::StaticDemoCard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_card.rs"),
+            demo_name: "demo_card",
+            file_path: "public/docs/components/card.md",
+            install_name: "card",
+        }),
+        MarkdownType::StaticDemoCardAction => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_card_action.rs"),
+            demo_name: "demo_card_action",
+            file_path: "public/docs/components/card.md",
+            install_name: "card",
+        }),
+        MarkdownType::StaticDemoCardCarousel => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_card_carousel.rs"),
+            demo_name: "demo_card_carousel",
+            file_path: "public/docs/components/card-carousel.md",
+            install_name: "card_carousel",
+        }),
+        MarkdownType::StaticDemoCardGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_card_group.rs"),
+            demo_name: "demo_card_group",
+            file_path: "public/docs/components/card.md",
+            install_name: "card",
+        }),
+        MarkdownType::StaticDemoCardReverse => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_card_reverse.rs"),
+            demo_name: "demo_card_reverse",
+            file_path: "public/docs/components/card.md",
+            install_name: "card",
+        }),
+        MarkdownType::StaticDemoCardSm => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_card_sm.rs"),
+            demo_name: "demo_card_sm",
+            file_path: "public/docs/components/card.md",
+            install_name: "card",
+        }),
+        MarkdownType::StaticDemoCarousel => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_carousel.rs"),
+            demo_name: "demo_carousel",
+            file_path: "public/docs/components/carousel.md",
+            install_name: "carousel",
+        }),
+        MarkdownType::StaticDemoChat => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_chat.rs"),
+            demo_name: "demo_chat",
+            file_path: "public/docs/components/chat.md",
+            install_name: "chat",
+        }),
+        MarkdownType::StaticDemoCheckbox => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_checkbox.rs"),
+            demo_name: "demo_checkbox",
+            file_path: "public/docs/components/checkbox.md",
+            install_name: "checkbox",
+        }),
+        MarkdownType::StaticDemoChips => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_chips.rs"),
+            demo_name: "demo_chips",
+            file_path: "public/docs/components/chips.md",
+            install_name: "chips",
+        }),
+        MarkdownType::StaticDemoCollapsible => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_collapsible.rs"),
+            demo_name: "demo_collapsible",
+            file_path: "public/docs/components/collapsible.md",
+            install_name: "collapsible",
+        }),
+        MarkdownType::StaticDemoCollapsibleSettings => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_collapsible_settings.rs"),
+            demo_name: "demo_collapsible_settings",
+            file_path: "public/docs/components/collapsible.md",
+            install_name: "collapsible",
+        }),
+        MarkdownType::StaticDemoCombobox => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_combobox.rs"),
+            demo_name: "demo_combobox",
+            file_path: "public/docs/components/combobox.md",
+            install_name: "combobox",
+        }),
+        MarkdownType::StaticDemoCommand => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_command.rs"),
+            demo_name: "demo_command",
+            file_path: "public/docs/components/command.md",
+            install_name: "command",
+        }),
+        MarkdownType::StaticDemoCommandDialog => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_command_dialog.rs"),
+            demo_name: "demo_command_dialog",
+            file_path: "public/docs/components/command.md",
+            install_name: "command",
+        }),
+        MarkdownType::StaticDemoContextMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_context_menu.rs"),
+            demo_name: "demo_context_menu",
+            file_path: "public/docs/components/context-menu.md",
+            install_name: "context_menu",
+        }),
+        MarkdownType::StaticDemoContextMenuAction => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_context_menu_action.rs"),
+            demo_name: "demo_context_menu_action",
+            file_path: "public/docs/components/context-menu.md",
+            install_name: "context_menu",
+        }),
+        MarkdownType::StaticDemoContextMenuRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_context_menu_rtl.rs"),
+            demo_name: "demo_context_menu_rtl",
+            file_path: "public/docs/components/context-menu.md",
+            install_name: "context_menu",
+        }),
+        MarkdownType::StaticDemoDataGrid => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_data_grid.rs"),
+            demo_name: "demo_data_grid",
+            file_path: "public/docs/components/data-grid.md",
+            install_name: "data_grid",
+        }),
+        MarkdownType::StaticDemoDataTable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_data_table.rs"),
+            demo_name: "demo_data_table",
+            file_path: "public/docs/components/data-table.md",
+            install_name: "data_table",
+        }),
+        MarkdownType::StaticDemoDataTableFilters => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_data_table_filters.rs"),
+            demo_name: "demo_data_table_filters",
+            file_path: "public/docs/components/data-table.md",
+            install_name: "data_table",
+        }),
+        MarkdownType::StaticDemoDatePicker => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker.rs"),
+            demo_name: "demo_date_picker",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerBooked => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_booked.rs"),
+            demo_name: "demo_date_picker_booked",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerDropdown => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_dropdown.rs"),
+            demo_name: "demo_date_picker_dropdown",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerDual => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_dual.rs"),
+            demo_name: "demo_date_picker_dual",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerDualFull => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_dual_full.rs"),
+            demo_name: "demo_date_picker_dual_full",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerPresets => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_presets.rs"),
+            demo_name: "demo_date_picker_presets",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerTime => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_time.rs"),
+            demo_name: "demo_date_picker_time",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDatePickerWeekNumbers => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_date_picker_week_numbers.rs"),
+            demo_name: "demo_date_picker_week_numbers",
+            file_path: "public/docs/components/date-picker.md",
+            install_name: "date_picker",
+        }),
+        MarkdownType::StaticDemoDialog => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dialog.rs"),
+            demo_name: "demo_dialog",
+            file_path: "public/docs/components/dialog.md",
+            install_name: "dialog",
+        }),
+        MarkdownType::StaticDemoDialogScrollable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dialog_scrollable.rs"),
+            demo_name: "demo_dialog_scrollable",
+            file_path: "public/docs/components/dialog.md",
+            install_name: "dialog",
+        }),
+        MarkdownType::StaticDemoDirectionProvider => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_direction_provider.rs"),
+            demo_name: "demo_direction_provider",
+            file_path: "public/docs/components/direction-provider.md",
+            install_name: "direction_provider",
+        }),
+        MarkdownType::StaticDemoDirectionProviderDefault => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_direction_provider_default.rs"),
+            demo_name: "demo_direction_provider_default",
+            file_path: "public/docs/components/direction-provider.md",
+            install_name: "direction_provider",
+        }),
+        MarkdownType::StaticDemoDirectionProviderRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_direction_provider_rtl.rs"),
+            demo_name: "demo_direction_provider_rtl",
+            file_path: "public/docs/components/direction-provider.md",
+            install_name: "direction_provider",
+        }),
+        MarkdownType::StaticDemoDragAndDrop => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_drag_and_drop.rs"),
+            demo_name: "demo_drag_and_drop",
+            file_path: "public/docs/components/drag-and-drop.md",
+            install_name: "drag_and_drop",
+        }),
+        MarkdownType::StaticDemoDrawer => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_drawer.rs"),
+            demo_name: "demo_drawer",
+            file_path: "public/docs/components/drawer.md",
+            install_name: "drawer",
+        }),
+        MarkdownType::StaticDemoDropdownMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu.rs"),
+            demo_name: "demo_dropdown_menu",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuDestructive => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_destructive.rs"),
+            demo_name: "demo_dropdown_menu_destructive",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuEnd => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_end.rs"),
+            demo_name: "demo_dropdown_menu_end",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuEndOuter => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_end_outer.rs"),
+            demo_name: "demo_dropdown_menu_end_outer",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuRadio => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_radio.rs"),
+            demo_name: "demo_dropdown_menu_radio",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_rtl.rs"),
+            demo_name: "demo_dropdown_menu_rtl",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuSelect => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_select.rs"),
+            demo_name: "demo_dropdown_menu_select",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuStart => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_start.rs"),
+            demo_name: "demo_dropdown_menu_start",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuStartOuter => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_start_outer.rs"),
+            demo_name: "demo_dropdown_menu_start_outer",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuUser => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_user.rs"),
+            demo_name: "demo_dropdown_menu_user",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropdownMenuUserIcon => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropdown_menu_user_icon.rs"),
+            demo_name: "demo_dropdown_menu_user_icon",
+            file_path: "public/docs/components/dropdown-menu.md",
+            install_name: "dropdown_menu",
+        }),
+        MarkdownType::StaticDemoDropzone => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropzone.rs"),
+            demo_name: "demo_dropzone",
+            file_path: "public/docs/components/dropzone.md",
+            install_name: "dropzone",
+        }),
+        MarkdownType::StaticDemoDropzoneGrid => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropzone_grid.rs"),
+            demo_name: "demo_dropzone_grid",
+            file_path: "public/docs/components/dropzone.md",
+            install_name: "dropzone",
+        }),
+        MarkdownType::StaticDemoDropzoneToggle => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_dropzone_toggle.rs"),
+            demo_name: "demo_dropzone_toggle",
+            file_path: "public/docs/components/dropzone.md",
+            install_name: "dropzone",
+        }),
+        MarkdownType::StaticDemoEmpty => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_empty.rs"),
+            demo_name: "demo_empty",
+            file_path: "public/docs/components/empty.md",
+            install_name: "empty",
+        }),
+        MarkdownType::StaticDemoEmptyMuted => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_empty_muted.rs"),
+            demo_name: "demo_empty_muted",
+            file_path: "public/docs/components/empty.md",
+            install_name: "empty",
+        }),
+        MarkdownType::StaticDemoExpandable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_expandable.rs"),
+            demo_name: "demo_expandable",
+            file_path: "public/docs/components/expandable.md",
+            install_name: "expandable",
+        }),
+        MarkdownType::StaticDemoFaqTransition => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_faq_transition.rs"),
+            demo_name: "demo_faq_transition",
+            file_path: "public/docs/components/faq_transition.md",
+            install_name: "faq_transition",
+        }),
+        MarkdownType::StaticDemoField => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_field.rs"),
+            demo_name: "demo_field",
+            file_path: "public/docs/components/field.md",
+            install_name: "field",
+        }),
+        MarkdownType::StaticDemoFieldRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_field_rtl.rs"),
+            demo_name: "demo_field_rtl",
+            file_path: "public/docs/components/field.md",
+            install_name: "field",
+        }),
+        MarkdownType::StaticDemoForm => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_form.rs"),
+            demo_name: "demo_form",
+            file_path: "public/docs/components/form.md",
+            install_name: "form",
+        }),
+        MarkdownType::StaticDemoFormError => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_form_error.rs"),
+            demo_name: "demo_form_error",
+            file_path: "public/docs/components/form.md",
+            install_name: "form",
+        }),
+        MarkdownType::StaticDemoFormFieldset => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_form_fieldset.rs"),
+            demo_name: "demo_form_fieldset",
+            file_path: "public/docs/components/form.md",
+            install_name: "form",
+        }),
+        MarkdownType::StaticDemoFormGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_form_group.rs"),
+            demo_name: "demo_form_group",
+            file_path: "public/docs/components/form.md",
+            install_name: "form",
+        }),
+        MarkdownType::StaticDemoFormSelect => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_form_select.rs"),
+            demo_name: "demo_form_select",
+            file_path: "public/docs/components/form.md",
+            install_name: "form",
+        }),
+        MarkdownType::StaticDemoFormValidation => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_form_validation.rs"),
+            demo_name: "demo_form_validation",
+            file_path: "public/docs/components/form.md",
+            install_name: "form",
+        }),
+        MarkdownType::StaticDemoHoverCard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_hover_card.rs"),
+            demo_name: "demo_hover_card",
+            file_path: "public/docs/components/hover-card.md",
+            install_name: "hover_card",
+        }),
+        MarkdownType::StaticDemoHoverCardRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_hover_card_rtl.rs"),
+            demo_name: "demo_hover_card_rtl",
+            file_path: "public/docs/components/hover-card.md",
+            install_name: "hover_card",
+        }),
+        MarkdownType::StaticDemoImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_image.rs"),
+            demo_name: "demo_image",
+            file_path: "public/docs/components/image.md",
+            install_name: "image",
+        }),
+        MarkdownType::StaticDemoInput => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input.rs"),
+            demo_name: "demo_input",
+            file_path: "public/docs/components/input.md",
+            install_name: "input",
+        }),
+        MarkdownType::StaticDemoInputCopy => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_copy.rs"),
+            demo_name: "demo_input_copy",
+            file_path: "public/docs/components/input.md",
+            install_name: "input",
+        }),
+        MarkdownType::StaticDemoInputGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group.rs"),
+            demo_name: "demo_input_group",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupBlock => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_block.rs"),
+            demo_name: "demo_input_group_block",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_rtl.rs"),
+            demo_name: "demo_input_group_rtl",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputGroupText => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_group_text.rs"),
+            demo_name: "demo_input_group_text",
+            file_path: "public/docs/components/input-group.md",
+            install_name: "input_group",
+        }),
+        MarkdownType::StaticDemoInputOtp => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_otp.rs"),
+            demo_name: "demo_input_otp",
+            file_path: "public/docs/components/input-otp.md",
+            install_name: "input_otp",
+        }),
+        MarkdownType::StaticDemoInputOtpSeparator => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_otp_separator.rs"),
+            demo_name: "demo_input_otp_separator",
+            file_path: "public/docs/components/input-otp.md",
+            install_name: "input_otp",
+        }),
+        MarkdownType::StaticDemoInputPhone => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_phone.rs"),
+            demo_name: "demo_input_phone",
+            file_path: "public/docs/components/input-phone.md",
+            install_name: "input_phone",
+        }),
+        MarkdownType::StaticDemoInputPhoneDisabled => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_phone_disabled.rs"),
+            demo_name: "demo_input_phone_disabled",
+            file_path: "public/docs/components/input-phone.md",
+            install_name: "input_phone",
+        }),
+        MarkdownType::StaticDemoInputPrompt => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_prompt.rs"),
+            demo_name: "demo_input_prompt",
+            file_path: "public/docs/components/input-prompt.md",
+            install_name: "input_prompt",
+        }),
+        MarkdownType::StaticDemoInputPromptWithTools => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_input_prompt_with_tools.rs"),
+            demo_name: "demo_input_prompt_with_tools",
+            file_path: "public/docs/components/input-prompt.md",
+            install_name: "input_prompt",
+        }),
+        MarkdownType::StaticDemoItem => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_item.rs"),
+            demo_name: "demo_item",
+            file_path: "public/docs/components/item.md",
+            install_name: "item",
+        }),
+        MarkdownType::StaticDemoKbd => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_kbd.rs"),
+            demo_name: "demo_kbd",
+            file_path: "public/docs/components/kbd.md",
+            install_name: "kbd",
+        }),
+        MarkdownType::StaticDemoLabel => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_label.rs"),
+            demo_name: "demo_label",
+            file_path: "public/docs/components/label.md",
+            install_name: "label",
+        }),
+        MarkdownType::StaticDemoMarker => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker.rs"),
+            demo_name: "demo_marker",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerBorder => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_border.rs"),
+            demo_name: "demo_marker_border",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerIcon => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_icon.rs"),
+            demo_name: "demo_marker_icon",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerLinkButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_link_button.rs"),
+            demo_name: "demo_marker_link_button",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerSeparator => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_separator.rs"),
+            demo_name: "demo_marker_separator",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerShimmer => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_shimmer.rs"),
+            demo_name: "demo_marker_shimmer",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerStatus => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_status.rs"),
+            demo_name: "demo_marker_status",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarkerVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marker_variants.rs"),
+            demo_name: "demo_marker_variants",
+            file_path: "public/docs/components/marker.md",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticDemoMarquee => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_marquee.rs"),
+            demo_name: "demo_marquee",
+            file_path: "public/docs/components/marquee.md",
+            install_name: "marquee",
+        }),
+        MarkdownType::StaticDemoMask => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_mask.rs"),
+            demo_name: "demo_mask",
+            file_path: "public/docs/components/mask.md",
+            install_name: "mask",
+        }),
+        MarkdownType::StaticDemoMenubar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_menubar.rs"),
+            demo_name: "demo_menubar",
+            file_path: "public/docs/components/menubar.md",
+            install_name: "menubar",
+        }),
+        MarkdownType::StaticDemoMenubarRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_menubar_rtl.rs"),
+            demo_name: "demo_menubar_rtl",
+            file_path: "public/docs/components/menubar.md",
+            install_name: "menubar",
+        }),
+        MarkdownType::StaticDemoMessage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_message.rs"),
+            demo_name: "demo_message",
+            file_path: "public/docs/components/message.md",
+            install_name: "message",
+        }),
+        MarkdownType::StaticDemoMessageActions => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_message_actions.rs"),
+            demo_name: "demo_message_actions",
+            file_path: "public/docs/components/message.md",
+            install_name: "message",
+        }),
+        MarkdownType::StaticDemoMessageAttachment => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_message_attachment.rs"),
+            demo_name: "demo_message_attachment",
+            file_path: "public/docs/components/message.md",
+            install_name: "message",
+        }),
+        MarkdownType::StaticDemoMessageAvatar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_message_avatar.rs"),
+            demo_name: "demo_message_avatar",
+            file_path: "public/docs/components/message.md",
+            install_name: "message",
+        }),
+        MarkdownType::StaticDemoMessageGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_message_group.rs"),
+            demo_name: "demo_message_group",
+            file_path: "public/docs/components/message.md",
+            install_name: "message",
+        }),
+        MarkdownType::StaticDemoMessageHeaderFooter => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_message_header_footer.rs"),
+            demo_name: "demo_message_header_footer",
+            file_path: "public/docs/components/message.md",
+            install_name: "message",
+        }),
+        MarkdownType::StaticDemoMultiSelect => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_multi_select.rs"),
+            demo_name: "demo_multi_select",
+            file_path: "public/docs/components/multi-select.md",
+            install_name: "multi_select",
+        }),
+        MarkdownType::StaticDemoMultiSelectAlign => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_multi_select_align.rs"),
+            demo_name: "demo_multi_select_align",
+            file_path: "public/docs/components/multi-select.md",
+            install_name: "multi_select",
+        }),
+        MarkdownType::StaticDemoMultiSelectScrollable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_multi_select_scrollable.rs"),
+            demo_name: "demo_multi_select_scrollable",
+            file_path: "public/docs/components/multi-select.md",
+            install_name: "multi_select",
+        }),
+        MarkdownType::StaticDemoNavigationMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_navigation_menu.rs"),
+            demo_name: "demo_navigation_menu",
+            file_path: "public/docs/components/navigation_menu.md",
+            install_name: "navigation_menu",
+        }),
+        MarkdownType::StaticDemoNavigationMenuComplex => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_navigation_menu_complex.rs"),
+            demo_name: "demo_navigation_menu_complex",
+            file_path: "public/docs/components/navigation_menu.md",
+            install_name: "navigation_menu",
+        }),
+        MarkdownType::StaticDemoNavigationMenuRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_navigation_menu_rtl.rs"),
+            demo_name: "demo_navigation_menu_rtl",
+            file_path: "public/docs/components/navigation_menu.md",
+            install_name: "navigation_menu",
+        }),
+        MarkdownType::StaticDemoPagination => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_pagination.rs"),
+            demo_name: "demo_pagination",
+            file_path: "public/docs/components/pagination.md",
+            install_name: "pagination",
+        }),
+        MarkdownType::StaticDemoPopover => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_popover.rs"),
+            demo_name: "demo_popover",
+            file_path: "public/docs/components/popover.md",
+            install_name: "popover",
+        }),
+        MarkdownType::StaticDemoPressable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_pressable.rs"),
+            demo_name: "demo_pressable",
+            file_path: "public/docs/components/pressable.md",
+            install_name: "pressable",
+        }),
+        MarkdownType::StaticDemoProgress => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_progress.rs"),
+            demo_name: "demo_progress",
+            file_path: "public/docs/components/progress.md",
+            install_name: "progress",
+        }),
+        MarkdownType::StaticDemoRadioButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_radio_button.rs"),
+            demo_name: "demo_radio_button",
+            file_path: "public/docs/components/radio-button.md",
+            install_name: "radio_button",
+        }),
+        MarkdownType::StaticDemoRadioButtonCustom => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_radio_button_custom.rs"),
+            demo_name: "demo_radio_button_custom",
+            file_path: "public/docs/components/radio-group.md",
+            install_name: "radio_group",
+        }),
+        MarkdownType::StaticDemoRadioButtonGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_radio_button_group.rs"),
+            demo_name: "demo_radio_button_group",
+            file_path: "public/docs/components/radio-button-group.md",
+            install_name: "radio_button_group",
+        }),
+        MarkdownType::StaticDemoRadioButtonGroupRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_radio_button_group_rtl.rs"),
+            demo_name: "demo_radio_button_group_rtl",
+            file_path: "public/docs/components/radio-button-group.md",
+            install_name: "radio_button_group",
+        }),
+        MarkdownType::StaticDemoRadioGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_radio_group.rs"),
+            demo_name: "demo_radio_group",
+            file_path: "public/docs/components/radio-group.md",
+            install_name: "radio_group",
+        }),
+        MarkdownType::StaticDemoScrollArea => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_scroll_area.rs"),
+            demo_name: "demo_scroll_area",
+            file_path: "public/docs/components/scroll-area.md",
+            install_name: "scroll_area",
+        }),
+        MarkdownType::StaticDemoScrollAreaHorizontal => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_scroll_area_horizontal.rs"),
+            demo_name: "demo_scroll_area_horizontal",
+            file_path: "public/docs/components/scroll-area.md",
+            install_name: "scroll_area",
+        }),
+        MarkdownType::StaticDemoScrollAreaRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_scroll_area_rtl.rs"),
+            demo_name: "demo_scroll_area_rtl",
+            file_path: "public/docs/components/scroll-area.md",
+            install_name: "scroll_area",
+        }),
+        MarkdownType::StaticDemoSelect => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_select.rs"),
+            demo_name: "demo_select",
+            file_path: "public/docs/components/select.md",
+            install_name: "select",
+        }),
+        MarkdownType::StaticDemoSelectNativeGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_select_native_group.rs"),
+            demo_name: "demo_select_native_group",
+            file_path: "public/docs/components/select_native.md",
+            install_name: "select_native",
+        }),
+        MarkdownType::StaticDemoSelectRtl => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_select_rtl.rs"),
+            demo_name: "demo_select_rtl",
+            file_path: "public/docs/components/select.md",
+            install_name: "select",
+        }),
+        MarkdownType::StaticDemoSelectScrollable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_select_scrollable.rs"),
+            demo_name: "demo_select_scrollable",
+            file_path: "public/docs/components/select.md",
+            install_name: "select",
+        }),
+        MarkdownType::StaticDemoSeparator => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_separator.rs"),
+            demo_name: "demo_separator",
+            file_path: "public/docs/components/separator.md",
+            install_name: "separator",
+        }),
+        MarkdownType::StaticDemoSheet => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_sheet.rs"),
+            demo_name: "demo_sheet",
+            file_path: "public/docs/components/sheet.md",
+            install_name: "sheet",
+        }),
+        MarkdownType::StaticDemoShimmer => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_shimmer.rs"),
+            demo_name: "demo_shimmer",
+            file_path: "public/docs/components/shimmer.md",
+            install_name: "shimmer",
+        }),
+        MarkdownType::StaticDemoSkeleton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_skeleton.rs"),
+            demo_name: "demo_skeleton",
+            file_path: "public/docs/components/skeleton.md",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticDemoSkeletonAvatar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_skeleton_avatar.rs"),
+            demo_name: "demo_skeleton_avatar",
+            file_path: "public/docs/components/skeleton.md",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticDemoSkeletonForm => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_skeleton_form.rs"),
+            demo_name: "demo_skeleton_form",
+            file_path: "public/docs/components/skeleton.md",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticDemoSkeletonImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_skeleton_image.rs"),
+            demo_name: "demo_skeleton_image",
+            file_path: "public/docs/components/skeleton.md",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticDemoSkeletonTable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_skeleton_table.rs"),
+            demo_name: "demo_skeleton_table",
+            file_path: "public/docs/components/skeleton.md",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticDemoSkeletonText => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_skeleton_text.rs"),
+            demo_name: "demo_skeleton_text",
+            file_path: "public/docs/components/skeleton.md",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticDemoSlider => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_slider.rs"),
+            demo_name: "demo_slider",
+            file_path: "public/docs/components/slider.md",
+            install_name: "slider",
+        }),
+        MarkdownType::StaticDemoSonner => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_sonner.rs"),
+            demo_name: "demo_sonner",
+            file_path: "public/docs/components/sonner.md",
+            install_name: "sonner",
+        }),
+        MarkdownType::StaticDemoSonnerPositions => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_sonner_positions.rs"),
+            demo_name: "demo_sonner_positions",
+            file_path: "public/docs/components/sonner.md",
+            install_name: "sonner",
+        }),
+        MarkdownType::StaticDemoSonnerVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_sonner_variants.rs"),
+            demo_name: "demo_sonner_variants",
+            file_path: "public/docs/components/sonner.md",
+            install_name: "sonner",
+        }),
+        MarkdownType::StaticDemoSpinner => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_spinner.rs"),
+            demo_name: "demo_spinner",
+            file_path: "public/docs/components/spinner.md",
+            install_name: "spinner",
+        }),
+        MarkdownType::StaticDemoSpinnerButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_spinner_button.rs"),
+            demo_name: "demo_spinner_button",
+            file_path: "public/docs/components/spinner.md",
+            install_name: "spinner",
+        }),
+        MarkdownType::StaticDemoStatus => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_status.rs"),
+            demo_name: "demo_status",
+            file_path: "public/docs/components/status.md",
+            install_name: "status",
+        }),
+        MarkdownType::StaticDemoStatusVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_status_variants.rs"),
+            demo_name: "demo_status_variants",
+            file_path: "public/docs/components/status.md",
+            install_name: "status",
+        }),
+        MarkdownType::StaticDemoStepper => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_stepper.rs"),
+            demo_name: "demo_stepper",
+            file_path: "public/docs/components/stepper.md",
+            install_name: "stepper",
+        }),
+        MarkdownType::StaticDemoStepperControlled => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_stepper_controlled.rs"),
+            demo_name: "demo_stepper_controlled",
+            file_path: "public/docs/components/stepper.md",
+            install_name: "stepper",
+        }),
+        MarkdownType::StaticDemoStepperVertical => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_stepper_vertical.rs"),
+            demo_name: "demo_stepper_vertical",
+            file_path: "public/docs/components/stepper.md",
+            install_name: "stepper",
+        }),
+        MarkdownType::StaticDemoSwitch => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_switch.rs"),
+            demo_name: "demo_switch",
+            file_path: "public/docs/components/switch.md",
+            install_name: "switch",
+        }),
+        MarkdownType::StaticDemoTable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_table.rs"),
+            demo_name: "demo_table",
+            file_path: "public/docs/components/table.md",
+            install_name: "table",
+        }),
+        MarkdownType::StaticDemoTabs => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_tabs.rs"),
+            demo_name: "demo_tabs",
+            file_path: "public/docs/components/tabs.md",
+            install_name: "tabs",
+        }),
+        MarkdownType::StaticDemoTextarea => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_textarea.rs"),
+            demo_name: "demo_textarea",
+            file_path: "public/docs/components/textarea.md",
+            install_name: "textarea",
+        }),
+        MarkdownType::StaticDemoThemeToggle => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_theme_toggle.rs"),
+            demo_name: "demo_theme_toggle",
+            file_path: "public/docs/components/theme-toggle.md",
+            install_name: "theme_toggle",
+        }),
+        MarkdownType::StaticDemoToast => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_toast.rs"),
+            demo_name: "demo_toast",
+            file_path: "public/docs/components/toast.md",
+            install_name: "toast",
+        }),
+        MarkdownType::StaticDemoToastVariants => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_toast_variants.rs"),
+            demo_name: "demo_toast_variants",
+            file_path: "public/docs/components/toast.md",
+            install_name: "toast",
+        }),
+        MarkdownType::StaticDemoToggle => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_toggle.rs"),
+            demo_name: "demo_toggle",
+            file_path: "public/docs/components/toggle.md",
+            install_name: "toggle",
+        }),
+        MarkdownType::StaticDemoToggleGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_toggle_group.rs"),
+            demo_name: "demo_toggle_group",
+            file_path: "public/docs/components/toggle-group.md",
+            install_name: "toggle_group",
+        }),
+        MarkdownType::StaticDemoToolbar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_toolbar.rs"),
+            demo_name: "demo_toolbar",
+            file_path: "public/docs/components/toolbar.md",
+            install_name: "toolbar",
+        }),
+        MarkdownType::StaticDemoTooltip => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_tooltip.rs"),
+            demo_name: "demo_tooltip",
+            file_path: "public/docs/components/tooltip.md",
+            install_name: "tooltip",
+        }),
+        MarkdownType::StaticDocsInstallationCliTreeView => None,
+        MarkdownType::StaticInstallAccordion => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/accordion.rs"),
+            demo_name: "demo_accordion",
+            file_path: "app_crates/registry/src/ui/accordion.rs",
+            install_name: "accordion",
+        }),
+        MarkdownType::StaticInstallAlert => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/alert.rs"),
+            demo_name: "demo_alert",
+            file_path: "app_crates/registry/src/ui/alert.rs",
+            install_name: "alert",
+        }),
+        MarkdownType::StaticInstallAlertDialog => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/alert_dialog.rs"),
+            demo_name: "demo_alert_dialog",
+            file_path: "app_crates/registry/src/ui/alert_dialog.rs",
+            install_name: "alert-dialog",
+        }),
+        MarkdownType::StaticInstallAnimate => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+            demo_name: "demo_animate",
+            file_path: "app_crates/registry/src/ui/animate.rs",
+            install_name: "animate",
+        }),
+        MarkdownType::StaticInstallAnimateGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+            demo_name: "demo_animate_group",
+            file_path: "app_crates/registry/src/ui/animate_group.rs",
+            install_name: "animate-group",
+        }),
+        MarkdownType::StaticInstallAspectRatio => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/aspect_ratio.rs"),
+            demo_name: "demo_aspect_ratio",
+            file_path: "app_crates/registry/src/ui/aspect_ratio.rs",
+            install_name: "aspect-ratio",
+        }),
+        MarkdownType::StaticInstallAttachment => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/attachment.rs"),
+            demo_name: "demo_attachment",
+            file_path: "app_crates/registry/src/ui/attachment.rs",
+            install_name: "attachment",
+        }),
+        MarkdownType::StaticInstallAutoForm => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/auto_form.rs"),
+            demo_name: "demo_auto_form",
+            file_path: "app_crates/registry/src/ui/auto_form.rs",
+            install_name: "auto-form",
+        }),
+        MarkdownType::StaticInstallAvatar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/avatar.rs"),
+            demo_name: "demo_avatar",
+            file_path: "app_crates/registry/src/ui/avatar.rs",
+            install_name: "avatar",
+        }),
+        MarkdownType::StaticInstallBadge => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/badge.rs"),
+            demo_name: "demo_badge",
+            file_path: "app_crates/registry/src/ui/badge.rs",
+            install_name: "badge",
+        }),
+        MarkdownType::StaticInstallBentoGrid => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/bento_grid.rs"),
+            demo_name: "demo_bento_grid",
+            file_path: "app_crates/registry/src/ui/bento_grid.rs",
+            install_name: "bento-grid",
+        }),
+        MarkdownType::StaticInstallBottomNav => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/bottom_nav.rs"),
+            demo_name: "demo_bottom_nav",
+            file_path: "app_crates/registry/src/ui/bottom_nav.rs",
+            install_name: "bottom-nav",
+        }),
+        MarkdownType::StaticInstallBreadcrumb => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/breadcrumb.rs"),
+            demo_name: "demo_breadcrumb",
+            file_path: "app_crates/registry/src/ui/breadcrumb.rs",
+            install_name: "breadcrumb",
+        }),
+        MarkdownType::StaticInstallBubble => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/bubble.rs"),
+            demo_name: "demo_bubble",
+            file_path: "app_crates/registry/src/ui/bubble.rs",
+            install_name: "bubble",
+        }),
+        MarkdownType::StaticInstallButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/button.rs"),
+            demo_name: "demo_button",
+            file_path: "app_crates/registry/src/ui/button.rs",
+            install_name: "button",
+        }),
+        MarkdownType::StaticInstallButtonAction => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/button_action.rs"),
+            demo_name: "demo_button_action",
+            file_path: "app_crates/registry/src/ui/button_action.rs",
+            install_name: "button-action",
+        }),
+        MarkdownType::StaticInstallButtonGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/button_group.rs"),
+            demo_name: "demo_button_group",
+            file_path: "app_crates/registry/src/ui/button_group.rs",
+            install_name: "button-group",
+        }),
+        MarkdownType::StaticInstallCallout => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/callout.rs"),
+            demo_name: "demo_callout",
+            file_path: "app_crates/registry/src/ui/callout.rs",
+            install_name: "callout",
+        }),
+        MarkdownType::StaticInstallCard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/card.rs"),
+            demo_name: "demo_card",
+            file_path: "app_crates/registry/src/ui/card.rs",
+            install_name: "card",
+        }),
+        MarkdownType::StaticInstallCardCarousel => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/card_carousel.rs"),
+            demo_name: "demo_card_carousel",
+            file_path: "app_crates/registry/src/ui/card_carousel.rs",
+            install_name: "card-carousel",
+        }),
+        MarkdownType::StaticInstallCarousel => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/carousel.rs"),
+            demo_name: "demo_carousel",
+            file_path: "app_crates/registry/src/ui/carousel.rs",
+            install_name: "carousel",
+        }),
+        MarkdownType::StaticInstallChat => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/chat.rs"),
+            demo_name: "demo_chat",
+            file_path: "app_crates/registry/src/ui/chat.rs",
+            install_name: "chat",
+        }),
+        MarkdownType::StaticInstallCheckbox => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/checkbox.rs"),
+            demo_name: "demo_checkbox",
+            file_path: "app_crates/registry/src/ui/checkbox.rs",
+            install_name: "checkbox",
+        }),
+        MarkdownType::StaticInstallChips => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/chips.rs"),
+            demo_name: "demo_chips",
+            file_path: "app_crates/registry/src/ui/chips.rs",
+            install_name: "chips",
+        }),
+        MarkdownType::StaticInstallCollapsible => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/collapsible.rs"),
+            demo_name: "demo_collapsible",
+            file_path: "app_crates/registry/src/ui/collapsible.rs",
+            install_name: "collapsible",
+        }),
+        MarkdownType::StaticInstallCombobox => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+            demo_name: "demo_combobox",
+            file_path: "app_crates/registry/src/ui/combobox.rs",
+            install_name: "combobox",
+        }),
+        MarkdownType::StaticInstallCommand => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+            demo_name: "demo_command",
+            file_path: "app_crates/registry/src/ui/command.rs",
+            install_name: "command",
+        }),
+        MarkdownType::StaticInstallContextMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/context_menu.rs"),
+            demo_name: "demo_context_menu",
+            file_path: "app_crates/registry/src/ui/context_menu.rs",
+            install_name: "context-menu",
+        }),
+        MarkdownType::StaticInstallDataGrid => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/data_grid.rs"),
+            demo_name: "demo_data_grid",
+            file_path: "app_crates/registry/src/ui/data_grid.rs",
+            install_name: "data-grid",
+        }),
+        MarkdownType::StaticInstallDataTable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/data_table.rs"),
+            demo_name: "demo_data_table",
+            file_path: "app_crates/registry/src/ui/data_table.rs",
+            install_name: "data-table",
+        }),
+        MarkdownType::StaticInstallDatePicker => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/date_picker.rs"),
+            demo_name: "demo_date_picker",
+            file_path: "app_crates/registry/src/ui/date_picker.rs",
+            install_name: "date-picker",
+        }),
+        MarkdownType::StaticInstallDialog => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/dialog.rs"),
+            demo_name: "demo_dialog",
+            file_path: "app_crates/registry/src/ui/dialog.rs",
+            install_name: "dialog",
+        }),
+        MarkdownType::StaticInstallDirectionProvider => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/direction_provider.rs"),
+            demo_name: "demo_direction_provider",
+            file_path: "app_crates/registry/src/ui/direction_provider.rs",
+            install_name: "direction-provider",
+        }),
+        MarkdownType::StaticInstallDragAndDrop => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/drag_and_drop.rs"),
+            demo_name: "demo_drag_and_drop",
+            file_path: "app_crates/registry/src/ui/drag_and_drop.rs",
+            install_name: "drag-and-drop",
+        }),
+        MarkdownType::StaticInstallDrawer => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/drawer.rs"),
+            demo_name: "demo_drawer",
+            file_path: "app_crates/registry/src/ui/drawer.rs",
+            install_name: "drawer",
+        }),
+        MarkdownType::StaticInstallDropdownMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/dropdown_menu.rs"),
+            demo_name: "demo_dropdown_menu",
+            file_path: "app_crates/registry/src/ui/dropdown_menu.rs",
+            install_name: "dropdown-menu",
+        }),
+        MarkdownType::StaticInstallDropzone => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/dropzone.rs"),
+            demo_name: "demo_dropzone",
+            file_path: "app_crates/registry/src/ui/dropzone.rs",
+            install_name: "dropzone",
+        }),
+        MarkdownType::StaticInstallEmpty => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/empty.rs"),
+            demo_name: "demo_empty",
+            file_path: "app_crates/registry/src/ui/empty.rs",
+            install_name: "empty",
+        }),
+        MarkdownType::StaticInstallExpandable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/expandable.rs"),
+            demo_name: "demo_expandable",
+            file_path: "app_crates/registry/src/ui/expandable.rs",
+            install_name: "expandable",
+        }),
+        MarkdownType::StaticInstallFaqTransition => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/faq_transition.rs"),
+            demo_name: "demo_faq_transition",
+            file_path: "app_crates/registry/src/ui/faq_transition.rs",
+            install_name: "faq-transition",
+        }),
+        MarkdownType::StaticInstallField => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/field.rs"),
+            demo_name: "demo_field",
+            file_path: "app_crates/registry/src/ui/field.rs",
+            install_name: "field",
+        }),
+        MarkdownType::StaticInstallForm => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/form.rs"),
+            demo_name: "demo_form",
+            file_path: "app_crates/registry/src/ui/form.rs",
+            install_name: "form",
+        }),
+        MarkdownType::StaticInstallHoverCard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/hover_card.rs"),
+            demo_name: "demo_hover_card",
+            file_path: "app_crates/registry/src/ui/hover_card.rs",
+            install_name: "hover-card",
+        }),
+        MarkdownType::StaticInstallImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/image.rs"),
+            demo_name: "demo_image",
+            file_path: "app_crates/registry/src/ui/image.rs",
+            install_name: "image",
+        }),
+        MarkdownType::StaticInstallInput => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/input.rs"),
+            demo_name: "demo_input",
+            file_path: "app_crates/registry/src/ui/input.rs",
+            install_name: "input",
+        }),
+        MarkdownType::StaticInstallInputGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/input_group.rs"),
+            demo_name: "demo_input_group",
+            file_path: "app_crates/registry/src/ui/input_group.rs",
+            install_name: "input-group",
+        }),
+        MarkdownType::StaticInstallInputOtp => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/input_otp.rs"),
+            demo_name: "demo_input_otp",
+            file_path: "app_crates/registry/src/ui/input_otp.rs",
+            install_name: "input-otp",
+        }),
+        MarkdownType::StaticInstallInputPhone => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/input_phone.rs"),
+            demo_name: "demo_input_phone",
+            file_path: "app_crates/registry/src/ui/input_phone.rs",
+            install_name: "input-phone",
+        }),
+        MarkdownType::StaticInstallInputPrompt => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/input_prompt.rs"),
+            demo_name: "demo_input_prompt",
+            file_path: "app_crates/registry/src/ui/input_prompt.rs",
+            install_name: "input-prompt",
+        }),
+        MarkdownType::StaticInstallItem => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/item.rs"),
+            demo_name: "demo_item",
+            file_path: "app_crates/registry/src/ui/item.rs",
+            install_name: "item",
+        }),
+        MarkdownType::StaticInstallKbd => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/kbd.rs"),
+            demo_name: "demo_kbd",
+            file_path: "app_crates/registry/src/ui/kbd.rs",
+            install_name: "kbd",
+        }),
+        MarkdownType::StaticInstallLabel => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/label.rs"),
+            demo_name: "demo_label",
+            file_path: "app_crates/registry/src/ui/label.rs",
+            install_name: "label",
+        }),
+        MarkdownType::StaticInstallMarker => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/marker.rs"),
+            demo_name: "demo_marker",
+            file_path: "app_crates/registry/src/ui/marker.rs",
+            install_name: "marker",
+        }),
+        MarkdownType::StaticInstallMarquee => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/marquee.rs"),
+            demo_name: "demo_marquee",
+            file_path: "app_crates/registry/src/ui/marquee.rs",
+            install_name: "marquee",
+        }),
+        MarkdownType::StaticInstallMask => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/mask.rs"),
+            demo_name: "demo_mask",
+            file_path: "app_crates/registry/src/ui/mask.rs",
+            install_name: "mask",
+        }),
+        MarkdownType::StaticInstallMenubar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/menubar.rs"),
+            demo_name: "demo_menubar",
+            file_path: "app_crates/registry/src/ui/menubar.rs",
+            install_name: "menubar",
+        }),
+        MarkdownType::StaticInstallMessage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/message.rs"),
+            demo_name: "demo_message",
+            file_path: "app_crates/registry/src/ui/message.rs",
+            install_name: "message",
+        }),
+        MarkdownType::StaticInstallMultiSelect => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/multi_select.rs"),
+            demo_name: "demo_multi_select",
+            file_path: "app_crates/registry/src/ui/multi_select.rs",
+            install_name: "multi-select",
+        }),
+        MarkdownType::StaticInstallNavigationMenu => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/navigation_menu.rs"),
+            demo_name: "demo_navigation_menu",
+            file_path: "app_crates/registry/src/ui/navigation_menu.rs",
+            install_name: "navigation-menu",
+        }),
+        MarkdownType::StaticInstallPagination => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/pagination.rs"),
+            demo_name: "demo_pagination",
+            file_path: "app_crates/registry/src/ui/pagination.rs",
+            install_name: "pagination",
+        }),
+        MarkdownType::StaticInstallPopover => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/popover.rs"),
+            demo_name: "demo_popover",
+            file_path: "app_crates/registry/src/ui/popover.rs",
+            install_name: "popover",
+        }),
+        MarkdownType::StaticInstallPressable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/pressable.rs"),
+            demo_name: "demo_pressable",
+            file_path: "app_crates/registry/src/ui/pressable.rs",
+            install_name: "pressable",
+        }),
+        MarkdownType::StaticInstallProgress => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/progress.rs"),
+            demo_name: "demo_progress",
+            file_path: "app_crates/registry/src/ui/progress.rs",
+            install_name: "progress",
+        }),
+        MarkdownType::StaticInstallRadioButton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/radio_button.rs"),
+            demo_name: "demo_radio_button",
+            file_path: "app_crates/registry/src/ui/radio_button.rs",
+            install_name: "radio-button",
+        }),
+        MarkdownType::StaticInstallRadioButtonGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/radio_button_group.rs"),
+            demo_name: "demo_radio_button_group",
+            file_path: "app_crates/registry/src/ui/radio_button_group.rs",
+            install_name: "radio-button-group",
+        }),
+        MarkdownType::StaticInstallRadioGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/radio_group.rs"),
+            demo_name: "demo_radio_group",
+            file_path: "app_crates/registry/src/ui/radio_group.rs",
+            install_name: "radio-group",
+        }),
+        MarkdownType::StaticInstallScrollArea => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/scroll_area.rs"),
+            demo_name: "demo_scroll_area",
+            file_path: "app_crates/registry/src/ui/scroll_area.rs",
+            install_name: "scroll-area",
+        }),
+        MarkdownType::StaticInstallSelect => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/select.rs"),
+            demo_name: "demo_select",
+            file_path: "app_crates/registry/src/ui/select.rs",
+            install_name: "select",
+        }),
+        MarkdownType::StaticInstallSelectNative => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/select_native.rs"),
+            demo_name: "demo_select_native",
+            file_path: "app_crates/registry/src/ui/select_native.rs",
+            install_name: "select-native",
+        }),
+        MarkdownType::StaticInstallSeparator => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/separator.rs"),
+            demo_name: "demo_separator",
+            file_path: "app_crates/registry/src/ui/separator.rs",
+            install_name: "separator",
+        }),
+        MarkdownType::StaticInstallSheet => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/sheet.rs"),
+            demo_name: "demo_sheet",
+            file_path: "app_crates/registry/src/ui/sheet.rs",
+            install_name: "sheet",
+        }),
+        MarkdownType::StaticInstallShimmer => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/shimmer.rs"),
+            demo_name: "demo_shimmer",
+            file_path: "app_crates/registry/src/ui/shimmer.rs",
+            install_name: "shimmer",
+        }),
+        MarkdownType::StaticInstallSkeleton => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/skeleton.rs"),
+            demo_name: "demo_skeleton",
+            file_path: "app_crates/registry/src/ui/skeleton.rs",
+            install_name: "skeleton",
+        }),
+        MarkdownType::StaticInstallSlider => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/slider.rs"),
+            demo_name: "demo_slider",
+            file_path: "app_crates/registry/src/ui/slider.rs",
+            install_name: "slider",
+        }),
+        MarkdownType::StaticInstallSonner => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/sonner.rs"),
+            demo_name: "demo_sonner",
+            file_path: "app_crates/registry/src/ui/sonner.rs",
+            install_name: "sonner",
+        }),
+        MarkdownType::StaticInstallSpinner => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/spinner.rs"),
+            demo_name: "demo_spinner",
+            file_path: "app_crates/registry/src/ui/spinner.rs",
+            install_name: "spinner",
+        }),
+        MarkdownType::StaticInstallStatus => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/status.rs"),
+            demo_name: "demo_status",
+            file_path: "app_crates/registry/src/ui/status.rs",
+            install_name: "status",
+        }),
+        MarkdownType::StaticInstallStepper => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/stepper.rs"),
+            demo_name: "demo_stepper",
+            file_path: "app_crates/registry/src/ui/stepper.rs",
+            install_name: "stepper",
+        }),
+        MarkdownType::StaticInstallSwitch => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/switch.rs"),
+            demo_name: "demo_switch",
+            file_path: "app_crates/registry/src/ui/switch.rs",
+            install_name: "switch",
+        }),
+        MarkdownType::StaticInstallTable => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/table.rs"),
+            demo_name: "demo_table",
+            file_path: "app_crates/registry/src/ui/table.rs",
+            install_name: "table",
+        }),
+        MarkdownType::StaticInstallTabs => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/tabs.rs"),
+            demo_name: "demo_tabs",
+            file_path: "app_crates/registry/src/ui/tabs.rs",
+            install_name: "tabs",
+        }),
+        MarkdownType::StaticInstallTextarea => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/textarea.rs"),
+            demo_name: "demo_textarea",
+            file_path: "app_crates/registry/src/ui/textarea.rs",
+            install_name: "textarea",
+        }),
+        MarkdownType::StaticInstallThemeToggle => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/theme_toggle.rs"),
+            demo_name: "demo_theme_toggle",
+            file_path: "app_crates/registry/src/ui/theme_toggle.rs",
+            install_name: "theme-toggle",
+        }),
+        MarkdownType::StaticInstallToast => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/toast_custom/mod.rs"),
+            demo_name: "demo_toast",
+            file_path: "app_crates/registry/src/ui/toast.rs",
+            install_name: "toast",
+        }),
+        MarkdownType::StaticInstallToggle => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/toggle.rs"),
+            demo_name: "demo_toggle",
+            file_path: "app_crates/registry/src/ui/toggle.rs",
+            install_name: "toggle",
+        }),
+        MarkdownType::StaticInstallToggleGroup => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/toggle_group.rs"),
+            demo_name: "demo_toggle_group",
+            file_path: "app_crates/registry/src/ui/toggle_group.rs",
+            install_name: "toggle-group",
+        }),
+        MarkdownType::StaticInstallToolbar => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/toolbar.rs"),
+            demo_name: "demo_toolbar",
+            file_path: "app_crates/registry/src/ui/toolbar.rs",
+            install_name: "toolbar",
+        }),
+        MarkdownType::StaticInstallTooltip => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/tooltip.rs"),
+            demo_name: "demo_tooltip",
+            file_path: "app_crates/registry/src/ui/tooltip.rs",
+            install_name: "tooltip",
+        }),
+        MarkdownType::StaticInstallUseCopyClipboard => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_copy_clipboard.rs"),
+            demo_name: "demo_use_copy_clipboard",
+            file_path: "app_crates/registry/src/hooks/use_copy_clipboard.rs",
+            install_name: "use_copy_clipboard",
+        }),
+        MarkdownType::StaticInstallUseLockBodyScroll => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_lock_body_scroll.rs"),
+            demo_name: "demo_use_lock_body_scroll",
+            file_path: "app_crates/registry/src/hooks/use_lock_body_scroll.rs",
+            install_name: "use_lock_body_scroll",
+        }),
+        MarkdownType::StaticInstallUseRandom => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/hooks/use_random.rs"),
+            demo_name: "demo_use_random",
+            file_path: "app_crates/registry/src/hooks/use_random.rs",
+            install_name: "use_random",
+        }),
+    }
+}
+
 fn build_md_components() -> MdComponents {
     let mut combined_components = MdComponents::new();
-    combined_components.add("DocsInstallationCliTreeView", |_| rsx! {
+    combined_components.add("StaticDocsInstallationCliTreeView", |_| rsx! {
         StaticMdDocsWrapper {
             DocsInstallationCliTreeView {}
         }
     });
-    combined_components.add("DemoAccordion", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAccordion",
-            DemoAccordion {}
-        }
-    });
-    combined_components.add("DemoAccordionBordered", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAccordionBordered",
-            DemoAccordionBordered {}
-        }
-    });
-    combined_components.add("DemoAlert", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAlert",
-            DemoAlert {}
-        }
-    });
-    combined_components.add("DemoAlertDialog", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAlertDialog",
-            DemoAlertDialog {}
-        }
-    });
-    combined_components.add("DemoAlertDialogSmallMedia", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAlertDialogSmallMedia",
-            DemoAlertDialogSmallMedia {}
-        }
-    });
-    combined_components.add("DemoAnimate", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAnimate",
-            DemoAnimate {}
-        }
-    });
-    combined_components.add("DemoAnimateGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAnimateGroup",
-            DemoAnimateGroup {}
-        }
-    });
-    combined_components.add("DemoAspectRatio", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAspectRatio",
-            DemoAspectRatio {}
-        }
-    });
-    combined_components.add("DemoAttachment", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAttachment",
-            DemoAttachment {}
-        }
-    });
-    combined_components.add("DemoAttachmentGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAttachmentGroup",
-            DemoAttachmentGroup {}
-        }
-    });
-    combined_components.add("DemoAttachmentImage", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAttachmentImage",
-            DemoAttachmentImage {}
-        }
-    });
-    combined_components.add("DemoAttachmentSizes", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAttachmentSizes",
-            DemoAttachmentSizes {}
-        }
-    });
-    combined_components.add("DemoAttachmentStates", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAttachmentStates",
-            DemoAttachmentStates {}
-        }
-    });
-    combined_components.add("DemoAttachmentTrigger", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAttachmentTrigger",
-            DemoAttachmentTrigger {}
-        }
-    });
-    combined_components.add("DemoAutoForm", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAutoForm",
-            DemoAutoForm {}
-        }
-    });
-    combined_components.add("DemoAvatar", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAvatar",
-            DemoAvatar {}
-        }
-    });
-    combined_components.add("DemoAvatarGroupCountIcon", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoAvatarGroupCountIcon",
-            DemoAvatarGroupCountIcon {}
-        }
-    });
-    combined_components.add("DemoBadge", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBadge",
-            DemoBadge {}
-        }
-    });
-    combined_components.add("DemoBadgeColors", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBadgeColors",
-            DemoBadgeColors {}
-        }
-    });
-    combined_components.add("DemoBadgeCustom", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBadgeCustom",
-            DemoBadgeCustom {}
-        }
-    });
-    combined_components.add("DemoBadgeVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBadgeVariants",
-            DemoBadgeVariants {}
-        }
-    });
-    combined_components.add("DemoBentoGrid", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBentoGrid",
-            DemoBentoGrid {}
-        }
-    });
-    combined_components.add("DemoBentoGrid6", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBentoGrid6",
-            DemoBentoGrid6 {}
-        }
-    });
-    combined_components.add("DemoBottomNav", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBottomNav",
-            DemoBottomNav {}
-        }
-    });
-    combined_components.add("DemoBreadcrumb", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBreadcrumb",
-            DemoBreadcrumb {}
-        }
-    });
-    combined_components.add("DemoBreadcrumbRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBreadcrumbRtl",
-            DemoBreadcrumbRtl {}
-        }
-    });
-    combined_components.add("DemoBubble", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubble",
-            DemoBubble {}
-        }
-    });
-    combined_components.add("DemoBubbleAlignment", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleAlignment",
-            DemoBubbleAlignment {}
-        }
-    });
-    combined_components.add("DemoBubbleCollapsible", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleCollapsible",
-            DemoBubbleCollapsible {}
-        }
-    });
-    combined_components.add("DemoBubbleGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleGroup",
-            DemoBubbleGroup {}
-        }
-    });
-    combined_components.add("DemoBubbleLinkButton", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleLinkButton",
-            DemoBubbleLinkButton {}
-        }
-    });
-    combined_components.add("DemoBubblePopover", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubblePopover",
-            DemoBubblePopover {}
-        }
-    });
-    combined_components.add("DemoBubbleReactions", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleReactions",
-            DemoBubbleReactions {}
-        }
-    });
-    combined_components.add("DemoBubbleTooltip", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleTooltip",
-            DemoBubbleTooltip {}
-        }
-    });
-    combined_components.add("DemoBubbleVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoBubbleVariants",
-            DemoBubbleVariants {}
-        }
-    });
-    combined_components.add("DemoButton", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButton",
-            DemoButton {}
-        }
-    });
-    combined_components.add("DemoButtonAction", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonAction",
-            DemoButtonAction {}
-        }
-    });
-    combined_components.add("DemoButtonDisabled", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonDisabled",
-            DemoButtonDisabled {}
-        }
-    });
-    combined_components.add("DemoButtonGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonGroup",
-            DemoButtonGroup {}
-        }
-    });
-    combined_components.add("DemoButtonGroupIcon", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonGroupIcon",
-            DemoButtonGroupIcon {}
-        }
-    });
-    combined_components.add("DemoButtonGroupInput", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonGroupInput",
-            DemoButtonGroupInput {}
-        }
-    });
-    combined_components.add("DemoButtonGroupRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonGroupRtl",
-            DemoButtonGroupRtl {}
-        }
-    });
-    combined_components.add("DemoButtonGroupSeparator", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonGroupSeparator",
-            DemoButtonGroupSeparator {}
-        }
-    });
-    combined_components.add("DemoButtonGroupSizes", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonGroupSizes",
-            DemoButtonGroupSizes {}
-        }
-    });
-    combined_components.add("DemoButtonHref", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonHref",
-            DemoButtonHref {}
-        }
-    });
-    combined_components.add("DemoButtonOverride", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonOverride",
-            DemoButtonOverride {}
-        }
-    });
-    combined_components.add("DemoButtonReactive", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonReactive",
-            DemoButtonReactive {}
-        }
-    });
-    combined_components.add("DemoButtonRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonRtl",
-            DemoButtonRtl {}
-        }
-    });
-    combined_components.add("DemoButtonSizes", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonSizes",
-            DemoButtonSizes {}
-        }
-    });
-    combined_components.add("DemoButtonStateful", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonStateful",
-            DemoButtonStateful {}
-        }
-    });
-    combined_components.add("DemoButtonVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoButtonVariants",
-            DemoButtonVariants {}
-        }
-    });
-    combined_components.add("DemoCallout", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCallout",
-            DemoCallout {}
-        }
-    });
-    combined_components.add("DemoCalloutInfo", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCalloutInfo",
-            DemoCalloutInfo {}
-        }
-    });
-    combined_components.add("DemoCalloutWarning", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCalloutWarning",
-            DemoCalloutWarning {}
-        }
-    });
-    combined_components.add("DemoCard", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCard",
-            DemoCard {}
-        }
-    });
-    combined_components.add("DemoCardAction", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCardAction",
-            DemoCardAction {}
-        }
-    });
-    combined_components.add("DemoCardCarousel", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCardCarousel",
-            DemoCardCarousel {}
-        }
-    });
-    combined_components.add("DemoCardGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCardGroup",
-            DemoCardGroup {}
-        }
-    });
-    combined_components.add("DemoCardReverse", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCardReverse",
-            DemoCardReverse {}
-        }
-    });
-    combined_components.add("DemoCardSm", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCardSm",
-            DemoCardSm {}
-        }
-    });
-    combined_components.add("DemoCarousel", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCarousel",
-            DemoCarousel {}
-        }
-    });
-    combined_components.add("DemoChat", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoChat",
-            DemoChat {}
-        }
-    });
-    combined_components.add("DemoCheckbox", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCheckbox",
-            DemoCheckbox {}
-        }
-    });
-    combined_components.add("DemoChips", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoChips",
-            DemoChips {}
-        }
-    });
-    combined_components.add("DemoCollapsible", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCollapsible",
-            DemoCollapsible {}
-        }
-    });
-    combined_components.add("DemoCollapsibleSettings", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCollapsibleSettings",
-            DemoCollapsibleSettings {}
-        }
-    });
-    combined_components.add("DemoCombobox", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCombobox",
-            DemoCombobox {}
-        }
-    });
-    combined_components.add("DemoCommand", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCommand",
-            DemoCommand {}
-        }
-    });
-    combined_components.add("DemoCommandDialog", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoCommandDialog",
-            DemoCommandDialog {}
-        }
-    });
-    combined_components.add("DemoContextMenu", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoContextMenu",
-            DemoContextMenu {}
-        }
-    });
-    combined_components.add("DemoContextMenuAction", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoContextMenuAction",
-            DemoContextMenuAction {}
-        }
-    });
-    combined_components.add("DemoContextMenuRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoContextMenuRtl",
-            DemoContextMenuRtl {}
-        }
-    });
-    combined_components.add("DemoDataGrid", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDataGrid",
-            DemoDataGrid {}
-        }
-    });
-    combined_components.add("DemoDataTable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDataTable",
-            DemoDataTable {}
-        }
-    });
-    combined_components.add("DemoDataTableFilters", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDataTableFilters",
-            DemoDataTableFilters {}
-        }
-    });
-    combined_components.add("DemoDatePicker", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePicker",
-            DemoDatePicker {}
-        }
-    });
-    combined_components.add("DemoDatePickerBooked", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerBooked",
-            DemoDatePickerBooked {}
-        }
-    });
-    combined_components.add("DemoDatePickerDropdown", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerDropdown",
-            DemoDatePickerDropdown {}
-        }
-    });
-    combined_components.add("DemoDatePickerDual", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerDual",
-            DemoDatePickerDual {}
-        }
-    });
-    combined_components.add("DemoDatePickerDualFull", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerDualFull",
-            DemoDatePickerDualFull {}
-        }
-    });
-    combined_components.add("DemoDatePickerPresets", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerPresets",
-            DemoDatePickerPresets {}
-        }
-    });
-    combined_components.add("DemoDatePickerTime", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerTime",
-            DemoDatePickerTime {}
-        }
-    });
-    combined_components.add("DemoDatePickerWeekNumbers", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDatePickerWeekNumbers",
-            DemoDatePickerWeekNumbers {}
-        }
-    });
-    combined_components.add("DemoDialog", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDialog",
-            DemoDialog {}
-        }
-    });
-    combined_components.add("DemoDialogScrollable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDialogScrollable",
-            DemoDialogScrollable {}
-        }
-    });
-    combined_components.add("DemoDirectionProvider", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDirectionProvider",
-            DemoDirectionProvider {}
-        }
-    });
-    combined_components.add("DemoDirectionProviderDefault", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDirectionProviderDefault",
-            DemoDirectionProviderDefault {}
-        }
-    });
-    combined_components.add("DemoDirectionProviderRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDirectionProviderRtl",
-            DemoDirectionProviderRtl {}
-        }
-    });
-    combined_components.add("DemoDragAndDrop", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDragAndDrop",
-            DemoDragAndDrop {}
-        }
-    });
-    combined_components.add("DemoDrawer", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDrawer",
-            DemoDrawer {}
-        }
-    });
-    combined_components.add("DemoDropdownMenu", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenu",
-            DemoDropdownMenu {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuDestructive", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuDestructive",
-            DemoDropdownMenuDestructive {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuEnd", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuEnd",
-            DemoDropdownMenuEnd {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuEndOuter", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuEndOuter",
-            DemoDropdownMenuEndOuter {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuRadio", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuRadio",
-            DemoDropdownMenuRadio {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuRtl",
-            DemoDropdownMenuRtl {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuSelect", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuSelect",
-            DemoDropdownMenuSelect {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuStart", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuStart",
-            DemoDropdownMenuStart {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuStartOuter", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuStartOuter",
-            DemoDropdownMenuStartOuter {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuUser", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuUser",
-            DemoDropdownMenuUser {}
-        }
-    });
-    combined_components.add("DemoDropdownMenuUserIcon", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropdownMenuUserIcon",
-            DemoDropdownMenuUserIcon {}
-        }
-    });
-    combined_components.add("DemoDropzone", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropzone",
-            DemoDropzone {}
-        }
-    });
-    combined_components.add("DemoDropzoneGrid", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropzoneGrid",
-            DemoDropzoneGrid {}
-        }
-    });
-    combined_components.add("DemoDropzoneToggle", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoDropzoneToggle",
-            DemoDropzoneToggle {}
-        }
-    });
-    combined_components.add("DemoEmpty", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoEmpty",
-            DemoEmpty {}
-        }
-    });
-    combined_components.add("DemoEmptyMuted", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoEmptyMuted",
-            DemoEmptyMuted {}
-        }
-    });
-    combined_components.add("DemoExpandable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoExpandable",
-            DemoExpandable {}
-        }
-    });
-    combined_components.add("DemoFaqTransition", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFaqTransition",
-            DemoFaqTransition {}
-        }
-    });
-    combined_components.add("DemoField", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoField",
-            DemoField {}
-        }
-    });
-    combined_components.add("DemoFieldRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFieldRtl",
-            DemoFieldRtl {}
-        }
-    });
-    combined_components.add("DemoForm", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoForm",
-            DemoForm {}
-        }
-    });
-    combined_components.add("DemoFormError", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFormError",
-            DemoFormError {}
-        }
-    });
-    combined_components.add("DemoFormFieldset", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFormFieldset",
-            DemoFormFieldset {}
-        }
-    });
-    combined_components.add("DemoFormGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFormGroup",
-            DemoFormGroup {}
-        }
-    });
-    combined_components.add("DemoFormSelect", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFormSelect",
-            DemoFormSelect {}
-        }
-    });
-    combined_components.add("DemoFormValidation", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoFormValidation",
-            DemoFormValidation {}
-        }
-    });
-    combined_components.add("DemoHoverCard", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoHoverCard",
-            DemoHoverCard {}
-        }
-    });
-    combined_components.add("DemoHoverCardRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoHoverCardRtl",
-            DemoHoverCardRtl {}
-        }
-    });
-    combined_components.add("DemoImage", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoImage",
-            DemoImage {}
-        }
-    });
-    combined_components.add("DemoInput", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInput",
-            DemoInput {}
-        }
-    });
-    combined_components.add("DemoInputCopy", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputCopy",
-            DemoInputCopy {}
-        }
-    });
-    combined_components.add("DemoInputGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputGroup",
-            DemoInputGroup {}
-        }
-    });
-    combined_components.add("DemoInputGroupBlock", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputGroupBlock",
-            DemoInputGroupBlock {}
-        }
-    });
-    combined_components.add("DemoInputGroupRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputGroupRtl",
-            DemoInputGroupRtl {}
-        }
-    });
-    combined_components.add("DemoInputGroupText", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputGroupText",
-            DemoInputGroupText {}
-        }
-    });
-    combined_components.add("DemoInputOtp", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputOtp",
-            DemoInputOtp {}
-        }
-    });
-    combined_components.add("DemoInputOtpSeparator", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputOtpSeparator",
-            DemoInputOtpSeparator {}
-        }
-    });
-    combined_components.add("DemoInputPhone", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputPhone",
-            DemoInputPhone {}
-        }
-    });
-    combined_components.add("DemoInputPhoneDisabled", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputPhoneDisabled",
-            DemoInputPhoneDisabled {}
-        }
-    });
-    combined_components.add("DemoInputPrompt", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputPrompt",
-            DemoInputPrompt {}
-        }
-    });
-    combined_components.add("DemoInputPromptWithTools", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoInputPromptWithTools",
-            DemoInputPromptWithTools {}
-        }
-    });
-    combined_components.add("DemoItem", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoItem",
-            DemoItem {}
-        }
-    });
-    combined_components.add("DemoKbd", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoKbd",
-            DemoKbd {}
-        }
-    });
-    combined_components.add("DemoLabel", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoLabel",
-            DemoLabel {}
-        }
-    });
-    combined_components.add("DemoMarker", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarker",
-            DemoMarker {}
-        }
-    });
-    combined_components.add("DemoMarkerBorder", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerBorder",
-            DemoMarkerBorder {}
-        }
-    });
-    combined_components.add("DemoMarkerIcon", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerIcon",
-            DemoMarkerIcon {}
-        }
-    });
-    combined_components.add("DemoMarkerLinkButton", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerLinkButton",
-            DemoMarkerLinkButton {}
-        }
-    });
-    combined_components.add("DemoMarkerSeparator", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerSeparator",
-            DemoMarkerSeparator {}
-        }
-    });
-    combined_components.add("DemoMarkerShimmer", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerShimmer",
-            DemoMarkerShimmer {}
-        }
-    });
-    combined_components.add("DemoMarkerStatus", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerStatus",
-            DemoMarkerStatus {}
-        }
-    });
-    combined_components.add("DemoMarkerVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarkerVariants",
-            DemoMarkerVariants {}
-        }
-    });
-    combined_components.add("DemoMarquee", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMarquee",
-            DemoMarquee {}
-        }
-    });
-    combined_components.add("DemoMask", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMask",
-            DemoMask {}
-        }
-    });
-    combined_components.add("DemoMenubar", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMenubar",
-            DemoMenubar {}
-        }
-    });
-    combined_components.add("DemoMenubarRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMenubarRtl",
-            DemoMenubarRtl {}
-        }
-    });
-    combined_components.add("DemoMessage", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMessage",
-            DemoMessage {}
-        }
-    });
-    combined_components.add("DemoMessageActions", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMessageActions",
-            DemoMessageActions {}
-        }
-    });
-    combined_components.add("DemoMessageAttachment", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMessageAttachment",
-            DemoMessageAttachment {}
-        }
-    });
-    combined_components.add("DemoMessageAvatar", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMessageAvatar",
-            DemoMessageAvatar {}
-        }
-    });
-    combined_components.add("DemoMessageGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMessageGroup",
-            DemoMessageGroup {}
-        }
-    });
-    combined_components.add("DemoMessageHeaderFooter", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMessageHeaderFooter",
-            DemoMessageHeaderFooter {}
-        }
-    });
-    combined_components.add("DemoMultiSelect", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMultiSelect",
-            DemoMultiSelect {}
-        }
-    });
-    combined_components.add("DemoMultiSelectAlign", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMultiSelectAlign",
-            DemoMultiSelectAlign {}
-        }
-    });
-    combined_components.add("DemoMultiSelectScrollable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoMultiSelectScrollable",
-            DemoMultiSelectScrollable {}
-        }
-    });
-    combined_components.add("DemoNavigationMenu", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoNavigationMenu",
-            DemoNavigationMenu {}
-        }
-    });
-    combined_components.add("DemoNavigationMenuComplex", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoNavigationMenuComplex",
-            DemoNavigationMenuComplex {}
-        }
-    });
-    combined_components.add("DemoNavigationMenuRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoNavigationMenuRtl",
-            DemoNavigationMenuRtl {}
-        }
-    });
-    combined_components.add("DemoPagination", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoPagination",
-            DemoPagination {}
-        }
-    });
-    combined_components.add("DemoPopover", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoPopover",
-            DemoPopover {}
-        }
-    });
-    combined_components.add("DemoPressable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoPressable",
-            DemoPressable {}
-        }
-    });
-    combined_components.add("DemoProgress", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoProgress",
-            DemoProgress {}
-        }
-    });
-    combined_components.add("DemoRadioButton", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoRadioButton",
-            DemoRadioButton {}
-        }
-    });
-    combined_components.add("DemoRadioButtonCustom", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoRadioButtonCustom",
-            DemoRadioButtonCustom {}
-        }
-    });
-    combined_components.add("DemoRadioButtonGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoRadioButtonGroup",
-            DemoRadioButtonGroup {}
-        }
-    });
-    combined_components.add("DemoRadioButtonGroupRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoRadioButtonGroupRtl",
-            DemoRadioButtonGroupRtl {}
-        }
-    });
-    combined_components.add("DemoRadioGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoRadioGroup",
-            DemoRadioGroup {}
-        }
-    });
-    combined_components.add("DemoScrollArea", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoScrollArea",
-            DemoScrollArea {}
-        }
-    });
-    combined_components.add("DemoScrollAreaHorizontal", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoScrollAreaHorizontal",
-            DemoScrollAreaHorizontal {}
-        }
-    });
-    combined_components.add("DemoScrollAreaRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoScrollAreaRtl",
-            DemoScrollAreaRtl {}
-        }
-    });
-    combined_components.add("DemoSelect", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSelect",
-            DemoSelect {}
-        }
-    });
-    combined_components.add("DemoSelectNativeGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSelectNativeGroup",
-            DemoSelectNativeGroup {}
-        }
-    });
-    combined_components.add("DemoSelectRtl", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSelectRtl",
-            DemoSelectRtl {}
-        }
-    });
-    combined_components.add("DemoSelectScrollable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSelectScrollable",
-            DemoSelectScrollable {}
-        }
-    });
-    combined_components.add("DemoSeparator", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSeparator",
-            DemoSeparator {}
-        }
-    });
-    combined_components.add("DemoSheet", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSheet",
-            DemoSheet {}
-        }
-    });
-    combined_components.add("DemoShimmer", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoShimmer",
-            DemoShimmer {}
-        }
-    });
-    combined_components.add("DemoSkeleton", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSkeleton",
-            DemoSkeleton {}
-        }
-    });
-    combined_components.add("DemoSkeletonAvatar", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSkeletonAvatar",
-            DemoSkeletonAvatar {}
-        }
-    });
-    combined_components.add("DemoSkeletonForm", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSkeletonForm",
-            DemoSkeletonForm {}
-        }
-    });
-    combined_components.add("DemoSkeletonImage", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSkeletonImage",
-            DemoSkeletonImage {}
-        }
-    });
-    combined_components.add("DemoSkeletonTable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSkeletonTable",
-            DemoSkeletonTable {}
-        }
-    });
-    combined_components.add("DemoSkeletonText", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSkeletonText",
-            DemoSkeletonText {}
-        }
-    });
-    combined_components.add("DemoSlider", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSlider",
-            DemoSlider {}
-        }
-    });
-    combined_components.add("DemoSonner", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSonner",
-            DemoSonner {}
-        }
-    });
-    combined_components.add("DemoSonnerPositions", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSonnerPositions",
-            DemoSonnerPositions {}
-        }
-    });
-    combined_components.add("DemoSonnerVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSonnerVariants",
-            DemoSonnerVariants {}
-        }
-    });
-    combined_components.add("DemoSpinner", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSpinner",
-            DemoSpinner {}
-        }
-    });
-    combined_components.add("DemoSpinnerButton", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSpinnerButton",
-            DemoSpinnerButton {}
-        }
-    });
-    combined_components.add("DemoStatus", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoStatus",
-            DemoStatus {}
-        }
-    });
-    combined_components.add("DemoStatusVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoStatusVariants",
-            DemoStatusVariants {}
-        }
-    });
-    combined_components.add("DemoStepper", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoStepper",
-            DemoStepper {}
-        }
-    });
-    combined_components.add("DemoStepperControlled", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoStepperControlled",
-            DemoStepperControlled {}
-        }
-    });
-    combined_components.add("DemoStepperVertical", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoStepperVertical",
-            DemoStepperVertical {}
-        }
-    });
-    combined_components.add("DemoSwitch", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoSwitch",
-            DemoSwitch {}
-        }
-    });
-    combined_components.add("DemoTable", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoTable",
-            DemoTable {}
-        }
-    });
-    combined_components.add("DemoTabs", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoTabs",
-            DemoTabs {}
-        }
-    });
-    combined_components.add("DemoTextarea", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoTextarea",
-            DemoTextarea {}
-        }
-    });
-    combined_components.add("DemoThemeToggle", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoThemeToggle",
-            DemoThemeToggle {}
-        }
-    });
-    combined_components.add("DemoToast", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoToast",
-            DemoToast {}
-        }
-    });
-    combined_components.add("DemoToastVariants", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoToastVariants",
-            DemoToastVariants {}
-        }
-    });
-    combined_components.add("DemoToggle", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoToggle",
-            DemoToggle {}
-        }
-    });
-    combined_components.add("DemoToggleGroup", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoToggleGroup",
-            DemoToggleGroup {}
-        }
-    });
-    combined_components.add("DemoToolbar", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoToolbar",
-            DemoToolbar {}
-        }
-    });
-    combined_components.add("DemoTooltip", |_| rsx! {
-        StaticDemoWrapper {
-            demo_name: "DemoTooltip",
-            DemoTooltip {}
-        }
-    });
-    combined_components.add("InstallAccordion", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "accordion",
-            demo_name: "demo_accordion",
-            raw_code: include_str!("../../app_crates/registry/src/ui/accordion.rs"),
-        }
-    });
-    combined_components.add("InstallAlert", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "alert",
-            demo_name: "demo_alert",
-            raw_code: include_str!("../../app_crates/registry/src/ui/alert.rs"),
-        }
-    });
-    combined_components.add("InstallAlertDialog", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "alert-dialog",
-            demo_name: "demo_alert_dialog",
-            raw_code: include_str!("../../app_crates/registry/src/ui/alert_dialog.rs"),
-        }
-    });
-    combined_components.add("InstallAnimate", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "animate",
-            demo_name: "demo_animate",
-            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
-        }
-    });
-    combined_components.add("InstallAnimateGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "animate-group",
-            demo_name: "demo_animate_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
-        }
-    });
-    combined_components.add("InstallAspectRatio", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "aspect-ratio",
-            demo_name: "demo_aspect_ratio",
-            raw_code: include_str!("../../app_crates/registry/src/ui/aspect_ratio.rs"),
-        }
-    });
-    combined_components.add("InstallAttachment", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "attachment",
-            demo_name: "demo_attachment",
-            raw_code: include_str!("../../app_crates/registry/src/ui/attachment.rs"),
-        }
-    });
-    combined_components.add("InstallAutoForm", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "auto-form",
-            demo_name: "demo_auto_form",
-            raw_code: include_str!("../../app_crates/registry/src/ui/auto_form.rs"),
-        }
-    });
-    combined_components.add("InstallAvatar", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "avatar",
-            demo_name: "demo_avatar",
-            raw_code: include_str!("../../app_crates/registry/src/ui/avatar.rs"),
-        }
-    });
-    combined_components.add("InstallBadge", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "badge",
-            demo_name: "demo_badge",
-            raw_code: include_str!("../../app_crates/registry/src/ui/badge.rs"),
-        }
-    });
-    combined_components.add("InstallBentoGrid", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "bento-grid",
-            demo_name: "demo_bento_grid",
-            raw_code: include_str!("../../app_crates/registry/src/ui/bento_grid.rs"),
-        }
-    });
-    combined_components.add("InstallBottomNav", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "bottom-nav",
-            demo_name: "demo_bottom_nav",
-            raw_code: include_str!("../../app_crates/registry/src/ui/bottom_nav.rs"),
-        }
-    });
-    combined_components.add("InstallBreadcrumb", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "breadcrumb",
-            demo_name: "demo_breadcrumb",
-            raw_code: include_str!("../../app_crates/registry/src/ui/breadcrumb.rs"),
-        }
-    });
-    combined_components.add("InstallBubble", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "bubble",
-            demo_name: "demo_bubble",
-            raw_code: include_str!("../../app_crates/registry/src/ui/bubble.rs"),
-        }
-    });
-    combined_components.add("InstallButton", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "button",
-            demo_name: "demo_button",
-            raw_code: include_str!("../../app_crates/registry/src/ui/button.rs"),
-        }
-    });
-    combined_components.add("InstallButtonAction", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "button-action",
-            demo_name: "demo_button_action",
-            raw_code: include_str!("../../app_crates/registry/src/ui/button_action.rs"),
-        }
-    });
-    combined_components.add("InstallButtonGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "button-group",
-            demo_name: "demo_button_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/button_group.rs"),
-        }
-    });
-    combined_components.add("InstallCallout", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "callout",
-            demo_name: "demo_callout",
-            raw_code: include_str!("../../app_crates/registry/src/ui/callout.rs"),
-        }
-    });
-    combined_components.add("InstallCard", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "card",
-            demo_name: "demo_card",
-            raw_code: include_str!("../../app_crates/registry/src/ui/card.rs"),
-        }
-    });
-    combined_components.add("InstallCardCarousel", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "card-carousel",
-            demo_name: "demo_card_carousel",
-            raw_code: include_str!("../../app_crates/registry/src/ui/card_carousel.rs"),
-        }
-    });
-    combined_components.add("InstallCarousel", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "carousel",
-            demo_name: "demo_carousel",
-            raw_code: include_str!("../../app_crates/registry/src/ui/carousel.rs"),
-        }
-    });
-    combined_components.add("InstallChat", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "chat",
-            demo_name: "demo_chat",
-            raw_code: include_str!("../../app_crates/registry/src/ui/chat.rs"),
-        }
-    });
-    combined_components.add("InstallCheckbox", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "checkbox",
-            demo_name: "demo_checkbox",
-            raw_code: include_str!("../../app_crates/registry/src/ui/checkbox.rs"),
-        }
-    });
-    combined_components.add("InstallChips", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "chips",
-            demo_name: "demo_chips",
-            raw_code: include_str!("../../app_crates/registry/src/ui/chips.rs"),
-        }
-    });
-    combined_components.add("InstallCollapsible", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "collapsible",
-            demo_name: "demo_collapsible",
-            raw_code: include_str!("../../app_crates/registry/src/ui/collapsible.rs"),
-        }
-    });
-    combined_components.add("InstallCombobox", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "combobox",
-            demo_name: "demo_combobox",
-            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
-        }
-    });
-    combined_components.add("InstallCommand", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "command",
-            demo_name: "demo_command",
-            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
-        }
-    });
-    combined_components.add("InstallContextMenu", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "context-menu",
-            demo_name: "demo_context_menu",
-            raw_code: include_str!("../../app_crates/registry/src/ui/context_menu.rs"),
-        }
-    });
-    combined_components.add("InstallDataGrid", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "data-grid",
-            demo_name: "demo_data_grid",
-            raw_code: include_str!("../../app_crates/registry/src/ui/data_grid.rs"),
-        }
-    });
-    combined_components.add("InstallDataTable", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "data-table",
-            demo_name: "demo_data_table",
-            raw_code: include_str!("../../app_crates/registry/src/ui/data_table.rs"),
-        }
-    });
-    combined_components.add("InstallDatePicker", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "date-picker",
-            demo_name: "demo_date_picker",
-            raw_code: include_str!("../../app_crates/registry/src/ui/date_picker.rs"),
-        }
-    });
-    combined_components.add("InstallDialog", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "dialog",
-            demo_name: "demo_dialog",
-            raw_code: include_str!("../../app_crates/registry/src/ui/dialog.rs"),
-        }
-    });
-    combined_components.add("InstallDirectionProvider", |_| rsx! {
-        StaticInstallWrapper {
-            install_name: "direction-provider",
-            demo_name: "demo_direction_provider",
-            raw_code: include_str!("../../app_crates/registry/src/ui/direction_provider.rs"),
-        }
-    });
-    combined_components.add("InstallDragAndDrop", |_| rsx! {
+    combined_components.add("StaticAccordion", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAccordion,
+                class: class,
+                DemoAccordion {}
+            }
+        }
+    });
+    combined_components.add("StaticAccordionBordered", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAccordionBordered,
+                class: class,
+                DemoAccordionBordered {}
+            }
+        }
+    });
+    combined_components.add("StaticAlert", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAlert,
+                class: class,
+                DemoAlert {}
+            }
+        }
+    });
+    combined_components.add("StaticAlertDialog", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAlertDialog,
+                class: class,
+                DemoAlertDialog {}
+            }
+        }
+    });
+    combined_components.add("StaticAlertDialogSmallMedia", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAlertDialogSmallMedia,
+                class: class,
+                DemoAlertDialogSmallMedia {}
+            }
+        }
+    });
+    combined_components.add("StaticAnimate", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAnimate,
+                class: class,
+                DemoAnimate {}
+            }
+        }
+    });
+    combined_components.add("StaticAnimateGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAnimateGroup,
+                class: class,
+                DemoAnimateGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticAspectRatio", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAspectRatio,
+                class: class,
+                DemoAspectRatio {}
+            }
+        }
+    });
+    combined_components.add("StaticAttachment", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAttachment,
+                class: class,
+                DemoAttachment {}
+            }
+        }
+    });
+    combined_components.add("StaticAttachmentGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAttachmentGroup,
+                class: class,
+                DemoAttachmentGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticAttachmentImage", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAttachmentImage,
+                class: class,
+                DemoAttachmentImage {}
+            }
+        }
+    });
+    combined_components.add("StaticAttachmentSizes", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAttachmentSizes,
+                class: class,
+                DemoAttachmentSizes {}
+            }
+        }
+    });
+    combined_components.add("StaticAttachmentStates", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAttachmentStates,
+                class: class,
+                DemoAttachmentStates {}
+            }
+        }
+    });
+    combined_components.add("StaticAttachmentTrigger", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAttachmentTrigger,
+                class: class,
+                DemoAttachmentTrigger {}
+            }
+        }
+    });
+    combined_components.add("StaticAutoForm", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAutoForm,
+                class: class,
+                DemoAutoForm {}
+            }
+        }
+    });
+    combined_components.add("StaticAvatar", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAvatar,
+                class: class,
+                DemoAvatar {}
+            }
+        }
+    });
+    combined_components.add("StaticAvatarGroupCountIcon", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoAvatarGroupCountIcon,
+                class: class,
+                DemoAvatarGroupCountIcon {}
+            }
+        }
+    });
+    combined_components.add("StaticBadge", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBadge,
+                class: class,
+                DemoBadge {}
+            }
+        }
+    });
+    combined_components.add("StaticBadgeColors", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBadgeColors,
+                class: class,
+                DemoBadgeColors {}
+            }
+        }
+    });
+    combined_components.add("StaticBadgeCustom", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBadgeCustom,
+                class: class,
+                DemoBadgeCustom {}
+            }
+        }
+    });
+    combined_components.add("StaticBadgeVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBadgeVariants,
+                class: class,
+                DemoBadgeVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticBentoGrid", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBentoGrid,
+                class: class,
+                DemoBentoGrid {}
+            }
+        }
+    });
+    combined_components.add("StaticBentoGrid6", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBentoGrid6,
+                class: class,
+                DemoBentoGrid6 {}
+            }
+        }
+    });
+    combined_components.add("StaticBottomNav", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBottomNav,
+                class: class,
+                DemoBottomNav {}
+            }
+        }
+    });
+    combined_components.add("StaticBreadcrumb", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBreadcrumb,
+                class: class,
+                DemoBreadcrumb {}
+            }
+        }
+    });
+    combined_components.add("StaticBreadcrumbRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBreadcrumbRtl,
+                class: class,
+                DemoBreadcrumbRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticBubble", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubble,
+                class: class,
+                DemoBubble {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleAlignment", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleAlignment,
+                class: class,
+                DemoBubbleAlignment {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleCollapsible", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleCollapsible,
+                class: class,
+                DemoBubbleCollapsible {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleGroup,
+                class: class,
+                DemoBubbleGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleLinkButton", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleLinkButton,
+                class: class,
+                DemoBubbleLinkButton {}
+            }
+        }
+    });
+    combined_components.add("StaticBubblePopover", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubblePopover,
+                class: class,
+                DemoBubblePopover {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleReactions", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleReactions,
+                class: class,
+                DemoBubbleReactions {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleTooltip", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleTooltip,
+                class: class,
+                DemoBubbleTooltip {}
+            }
+        }
+    });
+    combined_components.add("StaticBubbleVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoBubbleVariants,
+                class: class,
+                DemoBubbleVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticButton", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButton,
+                class: class,
+                DemoButton {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonAction", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonAction,
+                class: class,
+                DemoButtonAction {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonDisabled", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonDisabled,
+                class: class,
+                DemoButtonDisabled {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonGroup,
+                class: class,
+                DemoButtonGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonGroupIcon", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonGroupIcon,
+                class: class,
+                DemoButtonGroupIcon {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonGroupInput", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonGroupInput,
+                class: class,
+                DemoButtonGroupInput {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonGroupRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonGroupRtl,
+                class: class,
+                DemoButtonGroupRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonGroupSeparator", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonGroupSeparator,
+                class: class,
+                DemoButtonGroupSeparator {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonGroupSizes", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonGroupSizes,
+                class: class,
+                DemoButtonGroupSizes {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonHref", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonHref,
+                class: class,
+                DemoButtonHref {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonOverride", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonOverride,
+                class: class,
+                DemoButtonOverride {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonReactive", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonReactive,
+                class: class,
+                DemoButtonReactive {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonRtl,
+                class: class,
+                DemoButtonRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonSizes", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonSizes,
+                class: class,
+                DemoButtonSizes {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonStateful", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonStateful,
+                class: class,
+                DemoButtonStateful {}
+            }
+        }
+    });
+    combined_components.add("StaticButtonVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoButtonVariants,
+                class: class,
+                DemoButtonVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticCallout", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCallout,
+                class: class,
+                DemoCallout {}
+            }
+        }
+    });
+    combined_components.add("StaticCalloutInfo", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCalloutInfo,
+                class: class,
+                DemoCalloutInfo {}
+            }
+        }
+    });
+    combined_components.add("StaticCalloutWarning", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCalloutWarning,
+                class: class,
+                DemoCalloutWarning {}
+            }
+        }
+    });
+    combined_components.add("StaticCard", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCard,
+                class: class,
+                DemoCard {}
+            }
+        }
+    });
+    combined_components.add("StaticCardAction", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCardAction,
+                class: class,
+                DemoCardAction {}
+            }
+        }
+    });
+    combined_components.add("StaticCardCarousel", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCardCarousel,
+                class: class,
+                DemoCardCarousel {}
+            }
+        }
+    });
+    combined_components.add("StaticCardGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCardGroup,
+                class: class,
+                DemoCardGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticCardReverse", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCardReverse,
+                class: class,
+                DemoCardReverse {}
+            }
+        }
+    });
+    combined_components.add("StaticCardSm", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCardSm,
+                class: class,
+                DemoCardSm {}
+            }
+        }
+    });
+    combined_components.add("StaticCarousel", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCarousel,
+                class: class,
+                DemoCarousel {}
+            }
+        }
+    });
+    combined_components.add("StaticChat", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoChat,
+                class: class,
+                DemoChat {}
+            }
+        }
+    });
+    combined_components.add("StaticCheckbox", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCheckbox,
+                class: class,
+                DemoCheckbox {}
+            }
+        }
+    });
+    combined_components.add("StaticChips", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoChips,
+                class: class,
+                DemoChips {}
+            }
+        }
+    });
+    combined_components.add("StaticCollapsible", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCollapsible,
+                class: class,
+                DemoCollapsible {}
+            }
+        }
+    });
+    combined_components.add("StaticCollapsibleSettings", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCollapsibleSettings,
+                class: class,
+                DemoCollapsibleSettings {}
+            }
+        }
+    });
+    combined_components.add("StaticCombobox", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCombobox,
+                class: class,
+                DemoCombobox {}
+            }
+        }
+    });
+    combined_components.add("StaticCommand", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCommand,
+                class: class,
+                DemoCommand {}
+            }
+        }
+    });
+    combined_components.add("StaticCommandDialog", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoCommandDialog,
+                class: class,
+                DemoCommandDialog {}
+            }
+        }
+    });
+    combined_components.add("StaticContextMenu", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoContextMenu,
+                class: class,
+                DemoContextMenu {}
+            }
+        }
+    });
+    combined_components.add("StaticContextMenuAction", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoContextMenuAction,
+                class: class,
+                DemoContextMenuAction {}
+            }
+        }
+    });
+    combined_components.add("StaticContextMenuRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoContextMenuRtl,
+                class: class,
+                DemoContextMenuRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticDataGrid", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDataGrid,
+                class: class,
+                DemoDataGrid {}
+            }
+        }
+    });
+    combined_components.add("StaticDataTable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDataTable,
+                class: class,
+                DemoDataTable {}
+            }
+        }
+    });
+    combined_components.add("StaticDataTableFilters", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDataTableFilters,
+                class: class,
+                DemoDataTableFilters {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePicker", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePicker,
+                class: class,
+                DemoDatePicker {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerBooked", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerBooked,
+                class: class,
+                DemoDatePickerBooked {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerDropdown", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerDropdown,
+                class: class,
+                DemoDatePickerDropdown {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerDual", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerDual,
+                class: class,
+                DemoDatePickerDual {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerDualFull", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerDualFull,
+                class: class,
+                DemoDatePickerDualFull {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerPresets", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerPresets,
+                class: class,
+                DemoDatePickerPresets {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerTime", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerTime,
+                class: class,
+                DemoDatePickerTime {}
+            }
+        }
+    });
+    combined_components.add("StaticDatePickerWeekNumbers", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDatePickerWeekNumbers,
+                class: class,
+                DemoDatePickerWeekNumbers {}
+            }
+        }
+    });
+    combined_components.add("StaticDialog", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDialog,
+                class: class,
+                DemoDialog {}
+            }
+        }
+    });
+    combined_components.add("StaticDialogScrollable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDialogScrollable,
+                class: class,
+                DemoDialogScrollable {}
+            }
+        }
+    });
+    combined_components.add("StaticDirectionProvider", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDirectionProvider,
+                class: class,
+                DemoDirectionProvider {}
+            }
+        }
+    });
+    combined_components.add("StaticDirectionProviderDefault", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDirectionProviderDefault,
+                class: class,
+                DemoDirectionProviderDefault {}
+            }
+        }
+    });
+    combined_components.add("StaticDirectionProviderRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDirectionProviderRtl,
+                class: class,
+                DemoDirectionProviderRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticDragAndDrop", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDragAndDrop,
+                class: class,
+                DemoDragAndDrop {}
+            }
+        }
+    });
+    combined_components.add("StaticDrawer", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDrawer,
+                class: class,
+                DemoDrawer {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenu", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenu,
+                class: class,
+                DemoDropdownMenu {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuDestructive", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuDestructive,
+                class: class,
+                DemoDropdownMenuDestructive {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuEnd", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuEnd,
+                class: class,
+                DemoDropdownMenuEnd {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuEndOuter", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuEndOuter,
+                class: class,
+                DemoDropdownMenuEndOuter {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuRadio", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuRadio,
+                class: class,
+                DemoDropdownMenuRadio {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuRtl,
+                class: class,
+                DemoDropdownMenuRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuSelect", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuSelect,
+                class: class,
+                DemoDropdownMenuSelect {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuStart", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuStart,
+                class: class,
+                DemoDropdownMenuStart {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuStartOuter", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuStartOuter,
+                class: class,
+                DemoDropdownMenuStartOuter {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuUser", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuUser,
+                class: class,
+                DemoDropdownMenuUser {}
+            }
+        }
+    });
+    combined_components.add("StaticDropdownMenuUserIcon", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropdownMenuUserIcon,
+                class: class,
+                DemoDropdownMenuUserIcon {}
+            }
+        }
+    });
+    combined_components.add("StaticDropzone", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropzone,
+                class: class,
+                DemoDropzone {}
+            }
+        }
+    });
+    combined_components.add("StaticDropzoneGrid", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropzoneGrid,
+                class: class,
+                DemoDropzoneGrid {}
+            }
+        }
+    });
+    combined_components.add("StaticDropzoneToggle", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoDropzoneToggle,
+                class: class,
+                DemoDropzoneToggle {}
+            }
+        }
+    });
+    combined_components.add("StaticEmpty", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoEmpty,
+                class: class,
+                DemoEmpty {}
+            }
+        }
+    });
+    combined_components.add("StaticEmptyMuted", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoEmptyMuted,
+                class: class,
+                DemoEmptyMuted {}
+            }
+        }
+    });
+    combined_components.add("StaticExpandable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoExpandable,
+                class: class,
+                DemoExpandable {}
+            }
+        }
+    });
+    combined_components.add("StaticFaqTransition", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFaqTransition,
+                class: class,
+                DemoFaqTransition {}
+            }
+        }
+    });
+    combined_components.add("StaticField", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoField,
+                class: class,
+                DemoField {}
+            }
+        }
+    });
+    combined_components.add("StaticFieldRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFieldRtl,
+                class: class,
+                DemoFieldRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticForm", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoForm,
+                class: class,
+                DemoForm {}
+            }
+        }
+    });
+    combined_components.add("StaticFormError", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFormError,
+                class: class,
+                DemoFormError {}
+            }
+        }
+    });
+    combined_components.add("StaticFormFieldset", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFormFieldset,
+                class: class,
+                DemoFormFieldset {}
+            }
+        }
+    });
+    combined_components.add("StaticFormGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFormGroup,
+                class: class,
+                DemoFormGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticFormSelect", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFormSelect,
+                class: class,
+                DemoFormSelect {}
+            }
+        }
+    });
+    combined_components.add("StaticFormValidation", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoFormValidation,
+                class: class,
+                DemoFormValidation {}
+            }
+        }
+    });
+    combined_components.add("StaticHoverCard", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoHoverCard,
+                class: class,
+                DemoHoverCard {}
+            }
+        }
+    });
+    combined_components.add("StaticHoverCardRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoHoverCardRtl,
+                class: class,
+                DemoHoverCardRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticImage", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoImage,
+                class: class,
+                DemoImage {}
+            }
+        }
+    });
+    combined_components.add("StaticInput", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInput,
+                class: class,
+                DemoInput {}
+            }
+        }
+    });
+    combined_components.add("StaticInputCopy", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputCopy,
+                class: class,
+                DemoInputCopy {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroup,
+                class: class,
+                DemoInputGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupBlock", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupBlock,
+                class: class,
+                DemoInputGroupBlock {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupRtl,
+                class: class,
+                DemoInputGroupRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticInputGroupText", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputGroupText,
+                class: class,
+                DemoInputGroupText {}
+            }
+        }
+    });
+    combined_components.add("StaticInputOtp", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputOtp,
+                class: class,
+                DemoInputOtp {}
+            }
+        }
+    });
+    combined_components.add("StaticInputOtpSeparator", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputOtpSeparator,
+                class: class,
+                DemoInputOtpSeparator {}
+            }
+        }
+    });
+    combined_components.add("StaticInputPhone", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputPhone,
+                class: class,
+                DemoInputPhone {}
+            }
+        }
+    });
+    combined_components.add("StaticInputPhoneDisabled", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputPhoneDisabled,
+                class: class,
+                DemoInputPhoneDisabled {}
+            }
+        }
+    });
+    combined_components.add("StaticInputPrompt", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputPrompt,
+                class: class,
+                DemoInputPrompt {}
+            }
+        }
+    });
+    combined_components.add("StaticInputPromptWithTools", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoInputPromptWithTools,
+                class: class,
+                DemoInputPromptWithTools {}
+            }
+        }
+    });
+    combined_components.add("StaticItem", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoItem,
+                class: class,
+                DemoItem {}
+            }
+        }
+    });
+    combined_components.add("StaticKbd", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoKbd,
+                class: class,
+                DemoKbd {}
+            }
+        }
+    });
+    combined_components.add("StaticLabel", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoLabel,
+                class: class,
+                DemoLabel {}
+            }
+        }
+    });
+    combined_components.add("StaticMarker", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarker,
+                class: class,
+                DemoMarker {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerBorder", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerBorder,
+                class: class,
+                DemoMarkerBorder {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerIcon", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerIcon,
+                class: class,
+                DemoMarkerIcon {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerLinkButton", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerLinkButton,
+                class: class,
+                DemoMarkerLinkButton {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerSeparator", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerSeparator,
+                class: class,
+                DemoMarkerSeparator {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerShimmer", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerShimmer,
+                class: class,
+                DemoMarkerShimmer {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerStatus", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerStatus,
+                class: class,
+                DemoMarkerStatus {}
+            }
+        }
+    });
+    combined_components.add("StaticMarkerVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarkerVariants,
+                class: class,
+                DemoMarkerVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticMarquee", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMarquee,
+                class: class,
+                DemoMarquee {}
+            }
+        }
+    });
+    combined_components.add("StaticMask", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMask,
+                class: class,
+                DemoMask {}
+            }
+        }
+    });
+    combined_components.add("StaticMenubar", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMenubar,
+                class: class,
+                DemoMenubar {}
+            }
+        }
+    });
+    combined_components.add("StaticMenubarRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMenubarRtl,
+                class: class,
+                DemoMenubarRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticMessage", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMessage,
+                class: class,
+                DemoMessage {}
+            }
+        }
+    });
+    combined_components.add("StaticMessageActions", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMessageActions,
+                class: class,
+                DemoMessageActions {}
+            }
+        }
+    });
+    combined_components.add("StaticMessageAttachment", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMessageAttachment,
+                class: class,
+                DemoMessageAttachment {}
+            }
+        }
+    });
+    combined_components.add("StaticMessageAvatar", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMessageAvatar,
+                class: class,
+                DemoMessageAvatar {}
+            }
+        }
+    });
+    combined_components.add("StaticMessageGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMessageGroup,
+                class: class,
+                DemoMessageGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticMessageHeaderFooter", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMessageHeaderFooter,
+                class: class,
+                DemoMessageHeaderFooter {}
+            }
+        }
+    });
+    combined_components.add("StaticMultiSelect", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMultiSelect,
+                class: class,
+                DemoMultiSelect {}
+            }
+        }
+    });
+    combined_components.add("StaticMultiSelectAlign", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMultiSelectAlign,
+                class: class,
+                DemoMultiSelectAlign {}
+            }
+        }
+    });
+    combined_components.add("StaticMultiSelectScrollable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoMultiSelectScrollable,
+                class: class,
+                DemoMultiSelectScrollable {}
+            }
+        }
+    });
+    combined_components.add("StaticNavigationMenu", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoNavigationMenu,
+                class: class,
+                DemoNavigationMenu {}
+            }
+        }
+    });
+    combined_components.add("StaticNavigationMenuComplex", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoNavigationMenuComplex,
+                class: class,
+                DemoNavigationMenuComplex {}
+            }
+        }
+    });
+    combined_components.add("StaticNavigationMenuRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoNavigationMenuRtl,
+                class: class,
+                DemoNavigationMenuRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticPagination", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoPagination,
+                class: class,
+                DemoPagination {}
+            }
+        }
+    });
+    combined_components.add("StaticPopover", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoPopover,
+                class: class,
+                DemoPopover {}
+            }
+        }
+    });
+    combined_components.add("StaticPressable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoPressable,
+                class: class,
+                DemoPressable {}
+            }
+        }
+    });
+    combined_components.add("StaticProgress", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoProgress,
+                class: class,
+                DemoProgress {}
+            }
+        }
+    });
+    combined_components.add("StaticRadioButton", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoRadioButton,
+                class: class,
+                DemoRadioButton {}
+            }
+        }
+    });
+    combined_components.add("StaticRadioButtonCustom", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoRadioButtonCustom,
+                class: class,
+                DemoRadioButtonCustom {}
+            }
+        }
+    });
+    combined_components.add("StaticRadioButtonGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoRadioButtonGroup,
+                class: class,
+                DemoRadioButtonGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticRadioButtonGroupRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoRadioButtonGroupRtl,
+                class: class,
+                DemoRadioButtonGroupRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticRadioGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoRadioGroup,
+                class: class,
+                DemoRadioGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticScrollArea", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoScrollArea,
+                class: class,
+                DemoScrollArea {}
+            }
+        }
+    });
+    combined_components.add("StaticScrollAreaHorizontal", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoScrollAreaHorizontal,
+                class: class,
+                DemoScrollAreaHorizontal {}
+            }
+        }
+    });
+    combined_components.add("StaticScrollAreaRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoScrollAreaRtl,
+                class: class,
+                DemoScrollAreaRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticSelect", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSelect,
+                class: class,
+                DemoSelect {}
+            }
+        }
+    });
+    combined_components.add("StaticSelectNativeGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSelectNativeGroup,
+                class: class,
+                DemoSelectNativeGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticSelectRtl", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSelectRtl,
+                class: class,
+                DemoSelectRtl {}
+            }
+        }
+    });
+    combined_components.add("StaticSelectScrollable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSelectScrollable,
+                class: class,
+                DemoSelectScrollable {}
+            }
+        }
+    });
+    combined_components.add("StaticSeparator", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSeparator,
+                class: class,
+                DemoSeparator {}
+            }
+        }
+    });
+    combined_components.add("StaticSheet", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSheet,
+                class: class,
+                DemoSheet {}
+            }
+        }
+    });
+    combined_components.add("StaticShimmer", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoShimmer,
+                class: class,
+                DemoShimmer {}
+            }
+        }
+    });
+    combined_components.add("StaticSkeleton", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSkeleton,
+                class: class,
+                DemoSkeleton {}
+            }
+        }
+    });
+    combined_components.add("StaticSkeletonAvatar", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSkeletonAvatar,
+                class: class,
+                DemoSkeletonAvatar {}
+            }
+        }
+    });
+    combined_components.add("StaticSkeletonForm", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSkeletonForm,
+                class: class,
+                DemoSkeletonForm {}
+            }
+        }
+    });
+    combined_components.add("StaticSkeletonImage", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSkeletonImage,
+                class: class,
+                DemoSkeletonImage {}
+            }
+        }
+    });
+    combined_components.add("StaticSkeletonTable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSkeletonTable,
+                class: class,
+                DemoSkeletonTable {}
+            }
+        }
+    });
+    combined_components.add("StaticSkeletonText", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSkeletonText,
+                class: class,
+                DemoSkeletonText {}
+            }
+        }
+    });
+    combined_components.add("StaticSlider", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSlider,
+                class: class,
+                DemoSlider {}
+            }
+        }
+    });
+    combined_components.add("StaticSonner", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSonner,
+                class: class,
+                DemoSonner {}
+            }
+        }
+    });
+    combined_components.add("StaticSonnerPositions", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSonnerPositions,
+                class: class,
+                DemoSonnerPositions {}
+            }
+        }
+    });
+    combined_components.add("StaticSonnerVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSonnerVariants,
+                class: class,
+                DemoSonnerVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticSpinner", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSpinner,
+                class: class,
+                DemoSpinner {}
+            }
+        }
+    });
+    combined_components.add("StaticSpinnerButton", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSpinnerButton,
+                class: class,
+                DemoSpinnerButton {}
+            }
+        }
+    });
+    combined_components.add("StaticStatus", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoStatus,
+                class: class,
+                DemoStatus {}
+            }
+        }
+    });
+    combined_components.add("StaticStatusVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoStatusVariants,
+                class: class,
+                DemoStatusVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticStepper", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoStepper,
+                class: class,
+                DemoStepper {}
+            }
+        }
+    });
+    combined_components.add("StaticStepperControlled", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoStepperControlled,
+                class: class,
+                DemoStepperControlled {}
+            }
+        }
+    });
+    combined_components.add("StaticStepperVertical", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoStepperVertical,
+                class: class,
+                DemoStepperVertical {}
+            }
+        }
+    });
+    combined_components.add("StaticSwitch", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoSwitch,
+                class: class,
+                DemoSwitch {}
+            }
+        }
+    });
+    combined_components.add("StaticTable", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoTable,
+                class: class,
+                DemoTable {}
+            }
+        }
+    });
+    combined_components.add("StaticTabs", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoTabs,
+                class: class,
+                DemoTabs {}
+            }
+        }
+    });
+    combined_components.add("StaticTextarea", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoTextarea,
+                class: class,
+                DemoTextarea {}
+            }
+        }
+    });
+    combined_components.add("StaticThemeToggle", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoThemeToggle,
+                class: class,
+                DemoThemeToggle {}
+            }
+        }
+    });
+    combined_components.add("StaticToast", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoToast,
+                class: class,
+                DemoToast {}
+            }
+        }
+    });
+    combined_components.add("StaticToastVariants", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoToastVariants,
+                class: class,
+                DemoToastVariants {}
+            }
+        }
+    });
+    combined_components.add("StaticToggle", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoToggle,
+                class: class,
+                DemoToggle {}
+            }
+        }
+    });
+    combined_components.add("StaticToggleGroup", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoToggleGroup,
+                class: class,
+                DemoToggleGroup {}
+            }
+        }
+    });
+    combined_components.add("StaticToolbar", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoToolbar,
+                class: class,
+                DemoToolbar {}
+            }
+        }
+    });
+    combined_components.add("StaticTooltip", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoTooltip,
+                class: class,
+                DemoTooltip {}
+            }
+        }
+    });
+    combined_components.add("StaticInstallAccordion", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAccordion,
+        }
+    });
+    combined_components.add("StaticInstallAlert", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAlert,
+        }
+    });
+    combined_components.add("StaticInstallAlertDialog", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAlertDialog,
+        }
+    });
+    combined_components.add("StaticInstallAnimate", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAnimate,
+        }
+    });
+    combined_components.add("StaticInstallAnimateGroup", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAnimateGroup,
+        }
+    });
+    combined_components.add("StaticInstallAspectRatio", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAspectRatio,
+        }
+    });
+    combined_components.add("StaticInstallAttachment", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAttachment,
+        }
+    });
+    combined_components.add("StaticInstallAutoForm", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAutoForm,
+        }
+    });
+    combined_components.add("StaticInstallAvatar", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallAvatar,
+        }
+    });
+    combined_components.add("StaticInstallBadge", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallBadge,
+        }
+    });
+    combined_components.add("StaticInstallBentoGrid", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallBentoGrid,
+        }
+    });
+    combined_components.add("StaticInstallBottomNav", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallBottomNav,
+        }
+    });
+    combined_components.add("StaticInstallBreadcrumb", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallBreadcrumb,
+        }
+    });
+    combined_components.add("StaticInstallBubble", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallBubble,
+        }
+    });
+    combined_components.add("StaticInstallButton", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallButton,
+        }
+    });
+    combined_components.add("StaticInstallButtonAction", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallButtonAction,
+        }
+    });
+    combined_components.add("StaticInstallButtonGroup", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallButtonGroup,
+        }
+    });
+    combined_components.add("StaticInstallCallout", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCallout,
+        }
+    });
+    combined_components.add("StaticInstallCard", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCard,
+        }
+    });
+    combined_components.add("StaticInstallCardCarousel", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCardCarousel,
+        }
+    });
+    combined_components.add("StaticInstallCarousel", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCarousel,
+        }
+    });
+    combined_components.add("StaticInstallChat", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallChat,
+        }
+    });
+    combined_components.add("StaticInstallCheckbox", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCheckbox,
+        }
+    });
+    combined_components.add("StaticInstallChips", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallChips,
+        }
+    });
+    combined_components.add("StaticInstallCollapsible", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCollapsible,
+        }
+    });
+    combined_components.add("StaticInstallCombobox", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCombobox,
+        }
+    });
+    combined_components.add("StaticInstallCommand", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallCommand,
+        }
+    });
+    combined_components.add("StaticInstallContextMenu", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallContextMenu,
+        }
+    });
+    combined_components.add("StaticInstallDataGrid", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDataGrid,
+        }
+    });
+    combined_components.add("StaticInstallDataTable", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDataTable,
+        }
+    });
+    combined_components.add("StaticInstallDatePicker", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDatePicker,
+        }
+    });
+    combined_components.add("StaticInstallDialog", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDialog,
+        }
+    });
+    combined_components.add("StaticInstallDirectionProvider", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDirectionProvider,
+        }
+    });
+    combined_components.add("StaticInstallDragAndDrop", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDragAndDrop,
+        }
+    });
+    combined_components.add("StaticInstallDrawer", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDrawer,
+        }
+    });
+    combined_components.add("StaticInstallDropdownMenu", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallDropdownMenu,
+        }
+    });
+    combined_components.add("StaticInstallDropzone", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "drag-and-drop",
-            demo_name: "demo_drag_and_drop",
-            raw_code: include_str!("../../app_crates/registry/src/ui/drag_and_drop.rs"),
+            install_type: MarkdownType::StaticInstallDropzone,
         }
     });
-    combined_components.add("InstallDrawer", |_| rsx! {
+    combined_components.add("StaticInstallEmpty", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "drawer",
-            demo_name: "demo_drawer",
-            raw_code: include_str!("../../app_crates/registry/src/ui/drawer.rs"),
+            install_type: MarkdownType::StaticInstallEmpty,
         }
     });
-    combined_components.add("InstallDropdownMenu", |_| rsx! {
+    combined_components.add("StaticInstallExpandable", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "dropdown-menu",
-            demo_name: "demo_dropdown_menu",
-            raw_code: include_str!("../../app_crates/registry/src/ui/dropdown_menu.rs"),
+            install_type: MarkdownType::StaticInstallExpandable,
         }
     });
-    combined_components.add("InstallDropzone", |_| rsx! {
+    combined_components.add("StaticInstallFaqTransition", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "dropzone",
-            demo_name: "demo_dropzone",
-            raw_code: include_str!("../../app_crates/registry/src/ui/dropzone.rs"),
+            install_type: MarkdownType::StaticInstallFaqTransition,
         }
     });
-    combined_components.add("InstallEmpty", |_| rsx! {
+    combined_components.add("StaticInstallField", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "empty",
-            demo_name: "demo_empty",
-            raw_code: include_str!("../../app_crates/registry/src/ui/empty.rs"),
+            install_type: MarkdownType::StaticInstallField,
         }
     });
-    combined_components.add("InstallExpandable", |_| rsx! {
+    combined_components.add("StaticInstallForm", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "expandable",
-            demo_name: "demo_expandable",
-            raw_code: include_str!("../../app_crates/registry/src/ui/expandable.rs"),
+            install_type: MarkdownType::StaticInstallForm,
         }
     });
-    combined_components.add("InstallFaqTransition", |_| rsx! {
+    combined_components.add("StaticInstallHoverCard", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "faq-transition",
-            demo_name: "demo_faq_transition",
-            raw_code: include_str!("../../app_crates/registry/src/ui/faq_transition.rs"),
+            install_type: MarkdownType::StaticInstallHoverCard,
         }
     });
-    combined_components.add("InstallField", |_| rsx! {
+    combined_components.add("StaticInstallImage", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "field",
-            demo_name: "demo_field",
-            raw_code: include_str!("../../app_crates/registry/src/ui/field.rs"),
+            install_type: MarkdownType::StaticInstallImage,
         }
     });
-    combined_components.add("InstallForm", |_| rsx! {
+    combined_components.add("StaticInstallInput", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "form",
-            demo_name: "demo_form",
-            raw_code: include_str!("../../app_crates/registry/src/ui/form.rs"),
+            install_type: MarkdownType::StaticInstallInput,
         }
     });
-    combined_components.add("InstallHoverCard", |_| rsx! {
+    combined_components.add("StaticInstallInputGroup", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "hover-card",
-            demo_name: "demo_hover_card",
-            raw_code: include_str!("../../app_crates/registry/src/ui/hover_card.rs"),
+            install_type: MarkdownType::StaticInstallInputGroup,
         }
     });
-    combined_components.add("InstallImage", |_| rsx! {
+    combined_components.add("StaticInstallInputOtp", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "image",
-            demo_name: "demo_image",
-            raw_code: include_str!("../../app_crates/registry/src/ui/image.rs"),
+            install_type: MarkdownType::StaticInstallInputOtp,
         }
     });
-    combined_components.add("InstallInput", |_| rsx! {
+    combined_components.add("StaticInstallInputPhone", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "input",
-            demo_name: "demo_input",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input.rs"),
+            install_type: MarkdownType::StaticInstallInputPhone,
         }
     });
-    combined_components.add("InstallInputGroup", |_| rsx! {
+    combined_components.add("StaticInstallInputPrompt", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "input-group",
-            demo_name: "demo_input_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_group.rs"),
+            install_type: MarkdownType::StaticInstallInputPrompt,
         }
     });
-    combined_components.add("InstallInputOtp", |_| rsx! {
+    combined_components.add("StaticInstallItem", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "input-otp",
-            demo_name: "demo_input_otp",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_otp.rs"),
+            install_type: MarkdownType::StaticInstallItem,
         }
     });
-    combined_components.add("InstallInputPhone", |_| rsx! {
+    combined_components.add("StaticInstallKbd", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "input-phone",
-            demo_name: "demo_input_phone",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_phone.rs"),
+            install_type: MarkdownType::StaticInstallKbd,
         }
     });
-    combined_components.add("InstallInputPrompt", |_| rsx! {
+    combined_components.add("StaticInstallLabel", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "input-prompt",
-            demo_name: "demo_input_prompt",
-            raw_code: include_str!("../../app_crates/registry/src/ui/input_prompt.rs"),
+            install_type: MarkdownType::StaticInstallLabel,
         }
     });
-    combined_components.add("InstallItem", |_| rsx! {
+    combined_components.add("StaticInstallMarker", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "item",
-            demo_name: "demo_item",
-            raw_code: include_str!("../../app_crates/registry/src/ui/item.rs"),
+            install_type: MarkdownType::StaticInstallMarker,
         }
     });
-    combined_components.add("InstallKbd", |_| rsx! {
+    combined_components.add("StaticInstallMarquee", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "kbd",
-            demo_name: "demo_kbd",
-            raw_code: include_str!("../../app_crates/registry/src/ui/kbd.rs"),
+            install_type: MarkdownType::StaticInstallMarquee,
         }
     });
-    combined_components.add("InstallLabel", |_| rsx! {
+    combined_components.add("StaticInstallMask", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "label",
-            demo_name: "demo_label",
-            raw_code: include_str!("../../app_crates/registry/src/ui/label.rs"),
+            install_type: MarkdownType::StaticInstallMask,
         }
     });
-    combined_components.add("InstallMarker", |_| rsx! {
+    combined_components.add("StaticInstallMenubar", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "marker",
-            demo_name: "demo_marker",
-            raw_code: include_str!("../../app_crates/registry/src/ui/marker.rs"),
+            install_type: MarkdownType::StaticInstallMenubar,
         }
     });
-    combined_components.add("InstallMarquee", |_| rsx! {
+    combined_components.add("StaticInstallMessage", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "marquee",
-            demo_name: "demo_marquee",
-            raw_code: include_str!("../../app_crates/registry/src/ui/marquee.rs"),
+            install_type: MarkdownType::StaticInstallMessage,
         }
     });
-    combined_components.add("InstallMask", |_| rsx! {
+    combined_components.add("StaticInstallMultiSelect", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "mask",
-            demo_name: "demo_mask",
-            raw_code: include_str!("../../app_crates/registry/src/ui/mask.rs"),
+            install_type: MarkdownType::StaticInstallMultiSelect,
         }
     });
-    combined_components.add("InstallMenubar", |_| rsx! {
+    combined_components.add("StaticInstallNavigationMenu", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "menubar",
-            demo_name: "demo_menubar",
-            raw_code: include_str!("../../app_crates/registry/src/ui/menubar.rs"),
+            install_type: MarkdownType::StaticInstallNavigationMenu,
         }
     });
-    combined_components.add("InstallMessage", |_| rsx! {
+    combined_components.add("StaticInstallPagination", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "message",
-            demo_name: "demo_message",
-            raw_code: include_str!("../../app_crates/registry/src/ui/message.rs"),
+            install_type: MarkdownType::StaticInstallPagination,
         }
     });
-    combined_components.add("InstallMultiSelect", |_| rsx! {
+    combined_components.add("StaticInstallPopover", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "multi-select",
-            demo_name: "demo_multi_select",
-            raw_code: include_str!("../../app_crates/registry/src/ui/multi_select.rs"),
+            install_type: MarkdownType::StaticInstallPopover,
         }
     });
-    combined_components.add("InstallNavigationMenu", |_| rsx! {
+    combined_components.add("StaticInstallPressable", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "navigation-menu",
-            demo_name: "demo_navigation_menu",
-            raw_code: include_str!("../../app_crates/registry/src/ui/navigation_menu.rs"),
+            install_type: MarkdownType::StaticInstallPressable,
         }
     });
-    combined_components.add("InstallPagination", |_| rsx! {
+    combined_components.add("StaticInstallProgress", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "pagination",
-            demo_name: "demo_pagination",
-            raw_code: include_str!("../../app_crates/registry/src/ui/pagination.rs"),
+            install_type: MarkdownType::StaticInstallProgress,
         }
     });
-    combined_components.add("InstallPopover", |_| rsx! {
+    combined_components.add("StaticInstallRadioButton", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "popover",
-            demo_name: "demo_popover",
-            raw_code: include_str!("../../app_crates/registry/src/ui/popover.rs"),
+            install_type: MarkdownType::StaticInstallRadioButton,
         }
     });
-    combined_components.add("InstallPressable", |_| rsx! {
+    combined_components.add("StaticInstallRadioButtonGroup", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "pressable",
-            demo_name: "demo_pressable",
-            raw_code: include_str!("../../app_crates/registry/src/ui/pressable.rs"),
+            install_type: MarkdownType::StaticInstallRadioButtonGroup,
         }
     });
-    combined_components.add("InstallProgress", |_| rsx! {
+    combined_components.add("StaticInstallRadioGroup", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "progress",
-            demo_name: "demo_progress",
-            raw_code: include_str!("../../app_crates/registry/src/ui/progress.rs"),
+            install_type: MarkdownType::StaticInstallRadioGroup,
         }
     });
-    combined_components.add("InstallRadioButton", |_| rsx! {
+    combined_components.add("StaticInstallScrollArea", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "radio-button",
-            demo_name: "demo_radio_button",
-            raw_code: include_str!("../../app_crates/registry/src/ui/radio_button.rs"),
+            install_type: MarkdownType::StaticInstallScrollArea,
         }
     });
-    combined_components.add("InstallRadioButtonGroup", |_| rsx! {
+    combined_components.add("StaticInstallSelect", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "radio-button-group",
-            demo_name: "demo_radio_button_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/radio_button_group.rs"),
+            install_type: MarkdownType::StaticInstallSelect,
         }
     });
-    combined_components.add("InstallRadioGroup", |_| rsx! {
+    combined_components.add("StaticInstallSelectNative", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "radio-group",
-            demo_name: "demo_radio_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/radio_group.rs"),
+            install_type: MarkdownType::StaticInstallSelectNative,
         }
     });
-    combined_components.add("InstallScrollArea", |_| rsx! {
+    combined_components.add("StaticInstallSeparator", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "scroll-area",
-            demo_name: "demo_scroll_area",
-            raw_code: include_str!("../../app_crates/registry/src/ui/scroll_area.rs"),
+            install_type: MarkdownType::StaticInstallSeparator,
         }
     });
-    combined_components.add("InstallSelect", |_| rsx! {
+    combined_components.add("StaticInstallSheet", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "select",
-            demo_name: "demo_select",
-            raw_code: include_str!("../../app_crates/registry/src/ui/select.rs"),
+            install_type: MarkdownType::StaticInstallSheet,
         }
     });
-    combined_components.add("InstallSelectNative", |_| rsx! {
+    combined_components.add("StaticInstallShimmer", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "select-native",
-            demo_name: "demo_select_native",
-            raw_code: include_str!("../../app_crates/registry/src/ui/select_native.rs"),
+            install_type: MarkdownType::StaticInstallShimmer,
         }
     });
-    combined_components.add("InstallSeparator", |_| rsx! {
+    combined_components.add("StaticInstallSkeleton", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "separator",
-            demo_name: "demo_separator",
-            raw_code: include_str!("../../app_crates/registry/src/ui/separator.rs"),
+            install_type: MarkdownType::StaticInstallSkeleton,
         }
     });
-    combined_components.add("InstallSheet", |_| rsx! {
+    combined_components.add("StaticInstallSlider", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "sheet",
-            demo_name: "demo_sheet",
-            raw_code: include_str!("../../app_crates/registry/src/ui/sheet.rs"),
+            install_type: MarkdownType::StaticInstallSlider,
         }
     });
-    combined_components.add("InstallShimmer", |_| rsx! {
+    combined_components.add("StaticInstallSonner", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "shimmer",
-            demo_name: "demo_shimmer",
-            raw_code: include_str!("../../app_crates/registry/src/ui/shimmer.rs"),
+            install_type: MarkdownType::StaticInstallSonner,
         }
     });
-    combined_components.add("InstallSkeleton", |_| rsx! {
+    combined_components.add("StaticInstallSpinner", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "skeleton",
-            demo_name: "demo_skeleton",
-            raw_code: include_str!("../../app_crates/registry/src/ui/skeleton.rs"),
+            install_type: MarkdownType::StaticInstallSpinner,
         }
     });
-    combined_components.add("InstallSlider", |_| rsx! {
+    combined_components.add("StaticInstallStatus", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "slider",
-            demo_name: "demo_slider",
-            raw_code: include_str!("../../app_crates/registry/src/ui/slider.rs"),
+            install_type: MarkdownType::StaticInstallStatus,
         }
     });
-    combined_components.add("InstallSonner", |_| rsx! {
+    combined_components.add("StaticInstallStepper", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "sonner",
-            demo_name: "demo_sonner",
-            raw_code: include_str!("../../app_crates/registry/src/ui/sonner.rs"),
+            install_type: MarkdownType::StaticInstallStepper,
         }
     });
-    combined_components.add("InstallSpinner", |_| rsx! {
+    combined_components.add("StaticInstallSwitch", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "spinner",
-            demo_name: "demo_spinner",
-            raw_code: include_str!("../../app_crates/registry/src/ui/spinner.rs"),
+            install_type: MarkdownType::StaticInstallSwitch,
         }
     });
-    combined_components.add("InstallStatus", |_| rsx! {
+    combined_components.add("StaticInstallTable", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "status",
-            demo_name: "demo_status",
-            raw_code: include_str!("../../app_crates/registry/src/ui/status.rs"),
+            install_type: MarkdownType::StaticInstallTable,
         }
     });
-    combined_components.add("InstallStepper", |_| rsx! {
+    combined_components.add("StaticInstallTabs", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "stepper",
-            demo_name: "demo_stepper",
-            raw_code: include_str!("../../app_crates/registry/src/ui/stepper.rs"),
+            install_type: MarkdownType::StaticInstallTabs,
         }
     });
-    combined_components.add("InstallSwitch", |_| rsx! {
+    combined_components.add("StaticInstallTextarea", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "switch",
-            demo_name: "demo_switch",
-            raw_code: include_str!("../../app_crates/registry/src/ui/switch.rs"),
+            install_type: MarkdownType::StaticInstallTextarea,
         }
     });
-    combined_components.add("InstallTable", |_| rsx! {
+    combined_components.add("StaticInstallThemeToggle", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "table",
-            demo_name: "demo_table",
-            raw_code: include_str!("../../app_crates/registry/src/ui/table.rs"),
+            install_type: MarkdownType::StaticInstallThemeToggle,
         }
     });
-    combined_components.add("InstallTabs", |_| rsx! {
+    combined_components.add("StaticInstallToast", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "tabs",
-            demo_name: "demo_tabs",
-            raw_code: include_str!("../../app_crates/registry/src/ui/tabs.rs"),
+            install_type: MarkdownType::StaticInstallToast,
         }
     });
-    combined_components.add("InstallTextarea", |_| rsx! {
+    combined_components.add("StaticInstallToggle", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "textarea",
-            demo_name: "demo_textarea",
-            raw_code: include_str!("../../app_crates/registry/src/ui/textarea.rs"),
+            install_type: MarkdownType::StaticInstallToggle,
         }
     });
-    combined_components.add("InstallThemeToggle", |_| rsx! {
+    combined_components.add("StaticInstallToggleGroup", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "theme-toggle",
-            demo_name: "demo_theme_toggle",
-            raw_code: include_str!("../../app_crates/registry/src/ui/theme_toggle.rs"),
+            install_type: MarkdownType::StaticInstallToggleGroup,
         }
     });
-    combined_components.add("InstallToast", |_| rsx! {
+    combined_components.add("StaticInstallToolbar", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "toast",
-            demo_name: "demo_toast",
-            raw_code: include_str!("../../app_crates/registry/src/ui/toast_custom/mod.rs"),
+            install_type: MarkdownType::StaticInstallToolbar,
         }
     });
-    combined_components.add("InstallToggle", |_| rsx! {
+    combined_components.add("StaticInstallTooltip", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "toggle",
-            demo_name: "demo_toggle",
-            raw_code: include_str!("../../app_crates/registry/src/ui/toggle.rs"),
+            install_type: MarkdownType::StaticInstallTooltip,
         }
     });
-    combined_components.add("InstallToggleGroup", |_| rsx! {
+    combined_components.add("StaticInstallUseCopyClipboard", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "toggle-group",
-            demo_name: "demo_toggle_group",
-            raw_code: include_str!("../../app_crates/registry/src/ui/toggle_group.rs"),
+            install_type: MarkdownType::StaticInstallUseCopyClipboard,
         }
     });
-    combined_components.add("InstallToolbar", |_| rsx! {
+    combined_components.add("StaticInstallUseLockBodyScroll", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "toolbar",
-            demo_name: "demo_toolbar",
-            raw_code: include_str!("../../app_crates/registry/src/ui/toolbar.rs"),
+            install_type: MarkdownType::StaticInstallUseLockBodyScroll,
         }
     });
-    combined_components.add("InstallTooltip", |_| rsx! {
+    combined_components.add("StaticInstallUseRandom", |_| rsx! {
         StaticInstallWrapper {
-            install_name: "tooltip",
-            demo_name: "demo_tooltip",
-            raw_code: include_str!("../../app_crates/registry/src/ui/tooltip.rs"),
+            install_type: MarkdownType::StaticInstallUseRandom,
         }
     });
     combined_components
@@ -2081,127 +4832,127 @@ fn build_md_components() -> MdComponents {
 
 pub static ACCORDION: RegistryEntry = RegistryEntry {
     slug: "accordion",
-    raw: include_str!("../../public/docs/accordion.md"),
+    raw: include_str!("../../public/docs/components/accordion.md"),
     tags: &[],
 };
 
 pub static ALERT: RegistryEntry = RegistryEntry {
     slug: "alert",
-    raw: include_str!("../../public/docs/alert.md"),
+    raw: include_str!("../../public/docs/components/alert.md"),
     tags: &[],
 };
 
 pub static ALERT_DIALOG: RegistryEntry = RegistryEntry {
     slug: "alert-dialog",
-    raw: include_str!("../../public/docs/alert_dialog.md"),
+    raw: include_str!("../../public/docs/components/alert-dialog.md"),
     tags: &[],
 };
 
 pub static ANIMATE: RegistryEntry = RegistryEntry {
     slug: "animate",
-    raw: include_str!("../../public/docs/animate.md"),
+    raw: include_str!("../../public/docs/components/animate.md"),
     tags: &[],
 };
 
 pub static ANIMATE_GROUP: RegistryEntry = RegistryEntry {
     slug: "animate-group",
-    raw: include_str!("../../public/docs/animate_group.md"),
+    raw: include_str!("../../public/docs/components/animate-group.md"),
     tags: &[],
 };
 
 pub static ASPECT_RATIO: RegistryEntry = RegistryEntry {
     slug: "aspect-ratio",
-    raw: include_str!("../../public/docs/aspect_ratio.md"),
+    raw: include_str!("../../public/docs/components/aspect_ratio.md"),
     tags: &[],
 };
 
 pub static ATTACHMENT: RegistryEntry = RegistryEntry {
     slug: "attachment",
-    raw: include_str!("../../public/docs/attachment.md"),
+    raw: include_str!("../../public/docs/components/attachment.md"),
     tags: &[],
 };
 
 pub static AUTO_FORM: RegistryEntry = RegistryEntry {
     slug: "auto-form",
-    raw: include_str!("../../public/docs/auto_form.md"),
+    raw: include_str!("../../public/docs/components/auto-form.md"),
     tags: &[],
 };
 
 pub static AVATAR: RegistryEntry = RegistryEntry {
     slug: "avatar",
-    raw: include_str!("../../public/docs/avatar.md"),
+    raw: include_str!("../../public/docs/components/avatar.md"),
     tags: &[],
 };
 
 pub static BADGE: RegistryEntry = RegistryEntry {
     slug: "badge",
-    raw: include_str!("../../public/docs/badge.md"),
+    raw: include_str!("../../public/docs/components/badge.md"),
     tags: &[],
 };
 
 pub static BENTO_GRID: RegistryEntry = RegistryEntry {
     slug: "bento-grid",
-    raw: include_str!("../../public/docs/bento_grid.md"),
+    raw: include_str!("../../public/docs/components/bento_grid.md"),
     tags: &[],
 };
 
 pub static BOTTOM_NAV: RegistryEntry = RegistryEntry {
     slug: "bottom-nav",
-    raw: include_str!("../../public/docs/bottom_nav.md"),
+    raw: include_str!("../../public/docs/components/bottom-nav.md"),
     tags: &[],
 };
 
 pub static BREADCRUMB: RegistryEntry = RegistryEntry {
     slug: "breadcrumb",
-    raw: include_str!("../../public/docs/breadcrumb.md"),
+    raw: include_str!("../../public/docs/components/breadcrumb.md"),
     tags: &[],
 };
 
 pub static BUBBLE: RegistryEntry = RegistryEntry {
     slug: "bubble",
-    raw: include_str!("../../public/docs/bubble.md"),
+    raw: include_str!("../../public/docs/components/bubble.md"),
     tags: &[],
 };
 
 pub static BUTTON: RegistryEntry = RegistryEntry {
     slug: "button",
-    raw: include_str!("../../public/docs/button.md"),
+    raw: include_str!("../../public/docs/components/button.md"),
     tags: &[],
 };
 
 pub static BUTTON_ACTION: RegistryEntry = RegistryEntry {
     slug: "button-action",
-    raw: include_str!("../../public/docs/button_action.md"),
+    raw: include_str!("../../public/docs/components/button-action.md"),
     tags: &[],
 };
 
 pub static BUTTON_GROUP: RegistryEntry = RegistryEntry {
     slug: "button-group",
-    raw: include_str!("../../public/docs/button_group.md"),
+    raw: include_str!("../../public/docs/components/button-group.md"),
     tags: &[],
 };
 
 pub static CALLOUT: RegistryEntry = RegistryEntry {
     slug: "callout",
-    raw: include_str!("../../public/docs/callout.md"),
+    raw: include_str!("../../public/docs/components/callout.md"),
     tags: &[],
 };
 
 pub static CARD: RegistryEntry = RegistryEntry {
     slug: "card",
-    raw: include_str!("../../public/docs/card.md"),
+    raw: include_str!("../../public/docs/components/card.md"),
     tags: &[],
 };
 
 pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
     slug: "card-carousel",
-    raw: include_str!("../../public/docs/card_carousel.md"),
+    raw: include_str!("../../public/docs/components/card-carousel.md"),
     tags: &[],
 };
 
 pub static CAROUSEL: RegistryEntry = RegistryEntry {
     slug: "carousel",
-    raw: include_str!("../../public/docs/carousel.md"),
+    raw: include_str!("../../public/docs/components/carousel.md"),
     tags: &[],
 };
 
@@ -2213,121 +4964,121 @@ pub static CHANGELOG: RegistryEntry = RegistryEntry {
 
 pub static CHAT: RegistryEntry = RegistryEntry {
     slug: "chat",
-    raw: include_str!("../../public/docs/chat.md"),
+    raw: include_str!("../../public/docs/components/chat.md"),
     tags: &[],
 };
 
 pub static CHECKBOX: RegistryEntry = RegistryEntry {
     slug: "checkbox",
-    raw: include_str!("../../public/docs/checkbox.md"),
+    raw: include_str!("../../public/docs/components/checkbox.md"),
     tags: &[],
 };
 
 pub static CHIPS: RegistryEntry = RegistryEntry {
     slug: "chips",
-    raw: include_str!("../../public/docs/chips.md"),
+    raw: include_str!("../../public/docs/components/chips.md"),
     tags: &[],
 };
 
 pub static COLLAPSIBLE: RegistryEntry = RegistryEntry {
     slug: "collapsible",
-    raw: include_str!("../../public/docs/collapsible.md"),
+    raw: include_str!("../../public/docs/components/collapsible.md"),
     tags: &[],
 };
 
 pub static COMBOBOX: RegistryEntry = RegistryEntry {
     slug: "combobox",
-    raw: include_str!("../../public/docs/combobox.md"),
+    raw: include_str!("../../public/docs/components/combobox.md"),
     tags: &[],
 };
 
 pub static COMMAND: RegistryEntry = RegistryEntry {
     slug: "command",
-    raw: include_str!("../../public/docs/command.md"),
+    raw: include_str!("../../public/docs/components/command.md"),
     tags: &[],
 };
 
 pub static CONTEXT_MENU: RegistryEntry = RegistryEntry {
     slug: "context-menu",
-    raw: include_str!("../../public/docs/context_menu.md"),
+    raw: include_str!("../../public/docs/components/context-menu.md"),
     tags: &[],
 };
 
 pub static DATA_GRID: RegistryEntry = RegistryEntry {
     slug: "data-grid",
-    raw: include_str!("../../public/docs/data_grid.md"),
+    raw: include_str!("../../public/docs/components/data-grid.md"),
     tags: &[],
 };
 
 pub static DATA_TABLE: RegistryEntry = RegistryEntry {
     slug: "data-table",
-    raw: include_str!("../../public/docs/data_table.md"),
+    raw: include_str!("../../public/docs/components/data-table.md"),
     tags: &[],
 };
 
 pub static DATE_PICKER: RegistryEntry = RegistryEntry {
     slug: "date-picker",
-    raw: include_str!("../../public/docs/date_picker.md"),
+    raw: include_str!("../../public/docs/components/date-picker.md"),
     tags: &[],
 };
 
 pub static DIALOG: RegistryEntry = RegistryEntry {
     slug: "dialog",
-    raw: include_str!("../../public/docs/dialog.md"),
+    raw: include_str!("../../public/docs/components/dialog.md"),
     tags: &[],
 };
 
 pub static DIRECTION_PROVIDER: RegistryEntry = RegistryEntry {
     slug: "direction-provider",
-    raw: include_str!("../../public/docs/direction_provider.md"),
+    raw: include_str!("../../public/docs/components/direction-provider.md"),
     tags: &[],
 };
 
 pub static DRAG_AND_DROP: RegistryEntry = RegistryEntry {
     slug: "drag-and-drop",
-    raw: include_str!("../../public/docs/drag_and_drop.md"),
+    raw: include_str!("../../public/docs/components/drag-and-drop.md"),
     tags: &[],
 };
 
 pub static DRAWER: RegistryEntry = RegistryEntry {
     slug: "drawer",
-    raw: include_str!("../../public/docs/drawer.md"),
+    raw: include_str!("../../public/docs/components/drawer.md"),
     tags: &[],
 };
 
 pub static DROPDOWN_MENU: RegistryEntry = RegistryEntry {
     slug: "dropdown-menu",
-    raw: include_str!("../../public/docs/dropdown_menu.md"),
+    raw: include_str!("../../public/docs/components/dropdown-menu.md"),
     tags: &[],
 };
 
 pub static DROPZONE: RegistryEntry = RegistryEntry {
     slug: "dropzone",
-    raw: include_str!("../../public/docs/dropzone.md"),
+    raw: include_str!("../../public/docs/components/dropzone.md"),
     tags: &[],
 };
 
 pub static EMPTY: RegistryEntry = RegistryEntry {
     slug: "empty",
-    raw: include_str!("../../public/docs/empty.md"),
+    raw: include_str!("../../public/docs/components/empty.md"),
     tags: &[],
 };
 
 pub static EXPANDABLE: RegistryEntry = RegistryEntry {
     slug: "expandable",
-    raw: include_str!("../../public/docs/expandable.md"),
+    raw: include_str!("../../public/docs/components/expandable.md"),
     tags: &[],
 };
 
 pub static FAQ_TRANSITION: RegistryEntry = RegistryEntry {
     slug: "faq-transition",
-    raw: include_str!("../../public/docs/faq_transition.md"),
+    raw: include_str!("../../public/docs/components/faq_transition.md"),
     tags: &[],
 };
 
 pub static FIELD: RegistryEntry = RegistryEntry {
     slug: "field",
-    raw: include_str!("../../public/docs/field.md"),
+    raw: include_str!("../../public/docs/components/field.md"),
     tags: &[],
 };
 
@@ -2339,49 +5090,49 @@ pub static FIGMA: RegistryEntry = RegistryEntry {
 
 pub static FORM: RegistryEntry = RegistryEntry {
     slug: "form",
-    raw: include_str!("../../public/docs/form.md"),
+    raw: include_str!("../../public/docs/components/form.md"),
     tags: &[],
 };
 
 pub static HOVER_CARD: RegistryEntry = RegistryEntry {
     slug: "hover-card",
-    raw: include_str!("../../public/docs/hover_card.md"),
+    raw: include_str!("../../public/docs/components/hover-card.md"),
     tags: &[],
 };
 
 pub static IMAGE: RegistryEntry = RegistryEntry {
     slug: "image",
-    raw: include_str!("../../public/docs/image.md"),
+    raw: include_str!("../../public/docs/components/image.md"),
     tags: &[],
 };
 
 pub static INPUT: RegistryEntry = RegistryEntry {
     slug: "input",
-    raw: include_str!("../../public/docs/input.md"),
+    raw: include_str!("../../public/docs/components/input.md"),
     tags: &[],
 };
 
 pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
     slug: "input-group",
-    raw: include_str!("../../public/docs/input_group.md"),
+    raw: include_str!("../../public/docs/components/input-group.md"),
     tags: &[],
 };
 
 pub static INPUT_OTP: RegistryEntry = RegistryEntry {
     slug: "input-otp",
-    raw: include_str!("../../public/docs/input_otp.md"),
+    raw: include_str!("../../public/docs/components/input-otp.md"),
     tags: &[],
 };
 
 pub static INPUT_PHONE: RegistryEntry = RegistryEntry {
     slug: "input-phone",
-    raw: include_str!("../../public/docs/input_phone.md"),
+    raw: include_str!("../../public/docs/components/input-phone.md"),
     tags: &[],
 };
 
 pub static INPUT_PROMPT: RegistryEntry = RegistryEntry {
     slug: "input-prompt",
-    raw: include_str!("../../public/docs/input_prompt.md"),
+    raw: include_str!("../../public/docs/components/input-prompt.md"),
     tags: &[],
 };
 
@@ -2399,85 +5150,85 @@ pub static INTRODUCTION: RegistryEntry = RegistryEntry {
 
 pub static ITEM: RegistryEntry = RegistryEntry {
     slug: "item",
-    raw: include_str!("../../public/docs/item.md"),
+    raw: include_str!("../../public/docs/components/item.md"),
     tags: &[],
 };
 
 pub static KBD: RegistryEntry = RegistryEntry {
     slug: "kbd",
-    raw: include_str!("../../public/docs/kbd.md"),
+    raw: include_str!("../../public/docs/components/kbd.md"),
     tags: &[],
 };
 
 pub static LABEL: RegistryEntry = RegistryEntry {
     slug: "label",
-    raw: include_str!("../../public/docs/label.md"),
+    raw: include_str!("../../public/docs/components/label.md"),
     tags: &[],
 };
 
 pub static MARKER: RegistryEntry = RegistryEntry {
     slug: "marker",
-    raw: include_str!("../../public/docs/marker.md"),
+    raw: include_str!("../../public/docs/components/marker.md"),
     tags: &[],
 };
 
 pub static MARQUEE: RegistryEntry = RegistryEntry {
     slug: "marquee",
-    raw: include_str!("../../public/docs/marquee.md"),
+    raw: include_str!("../../public/docs/components/marquee.md"),
     tags: &[],
 };
 
 pub static MASK: RegistryEntry = RegistryEntry {
     slug: "mask",
-    raw: include_str!("../../public/docs/mask.md"),
+    raw: include_str!("../../public/docs/components/mask.md"),
     tags: &[],
 };
 
 pub static MENUBAR: RegistryEntry = RegistryEntry {
     slug: "menubar",
-    raw: include_str!("../../public/docs/menubar.md"),
+    raw: include_str!("../../public/docs/components/menubar.md"),
     tags: &[],
 };
 
 pub static MESSAGE: RegistryEntry = RegistryEntry {
     slug: "message",
-    raw: include_str!("../../public/docs/message.md"),
+    raw: include_str!("../../public/docs/components/message.md"),
     tags: &[],
 };
 
 pub static MULTI_SELECT: RegistryEntry = RegistryEntry {
     slug: "multi-select",
-    raw: include_str!("../../public/docs/multi_select.md"),
+    raw: include_str!("../../public/docs/components/multi-select.md"),
     tags: &[],
 };
 
 pub static NAVIGATION_MENU: RegistryEntry = RegistryEntry {
     slug: "navigation-menu",
-    raw: include_str!("../../public/docs/navigation_menu.md"),
+    raw: include_str!("../../public/docs/components/navigation_menu.md"),
     tags: &[],
 };
 
 pub static PAGINATION: RegistryEntry = RegistryEntry {
     slug: "pagination",
-    raw: include_str!("../../public/docs/pagination.md"),
+    raw: include_str!("../../public/docs/components/pagination.md"),
     tags: &[],
 };
 
 pub static POPOVER: RegistryEntry = RegistryEntry {
     slug: "popover",
-    raw: include_str!("../../public/docs/popover.md"),
+    raw: include_str!("../../public/docs/components/popover.md"),
     tags: &[],
 };
 
 pub static PRESSABLE: RegistryEntry = RegistryEntry {
     slug: "pressable",
-    raw: include_str!("../../public/docs/pressable.md"),
+    raw: include_str!("../../public/docs/components/pressable.md"),
     tags: &[],
 };
 
 pub static PROGRESS: RegistryEntry = RegistryEntry {
     slug: "progress",
-    raw: include_str!("../../public/docs/progress.md"),
+    raw: include_str!("../../public/docs/components/progress.md"),
     tags: &[],
 };
 
@@ -2489,169 +5240,169 @@ pub static RTL: RegistryEntry = RegistryEntry {
 
 pub static RADIO_BUTTON: RegistryEntry = RegistryEntry {
     slug: "radio-button",
-    raw: include_str!("../../public/docs/radio_button.md"),
+    raw: include_str!("../../public/docs/components/radio-button.md"),
     tags: &[],
 };
 
 pub static RADIO_BUTTON_GROUP: RegistryEntry = RegistryEntry {
     slug: "radio-button-group",
-    raw: include_str!("../../public/docs/radio_button_group.md"),
+    raw: include_str!("../../public/docs/components/radio-button-group.md"),
     tags: &[],
 };
 
 pub static RADIO_GROUP: RegistryEntry = RegistryEntry {
     slug: "radio-group",
-    raw: include_str!("../../public/docs/radio-group.md"),
+    raw: include_str!("../../public/docs/components/radio-group.md"),
     tags: &[],
 };
 
 pub static SCROLL_AREA: RegistryEntry = RegistryEntry {
     slug: "scroll-area",
-    raw: include_str!("../../public/docs/scroll_area.md"),
+    raw: include_str!("../../public/docs/components/scroll-area.md"),
     tags: &[],
 };
 
 pub static SELECT: RegistryEntry = RegistryEntry {
     slug: "select",
-    raw: include_str!("../../public/docs/select.md"),
+    raw: include_str!("../../public/docs/components/select.md"),
     tags: &[],
 };
 
 pub static SELECT_NATIVE: RegistryEntry = RegistryEntry {
     slug: "select-native",
-    raw: include_str!("../../public/docs/select_native.md"),
+    raw: include_str!("../../public/docs/components/select_native.md"),
     tags: &[],
 };
 
 pub static SEPARATOR: RegistryEntry = RegistryEntry {
     slug: "separator",
-    raw: include_str!("../../public/docs/separator.md"),
+    raw: include_str!("../../public/docs/components/separator.md"),
     tags: &[],
 };
 
 pub static SHEET: RegistryEntry = RegistryEntry {
     slug: "sheet",
-    raw: include_str!("../../public/docs/sheet.md"),
+    raw: include_str!("../../public/docs/components/sheet.md"),
     tags: &[],
 };
 
 pub static SHIMMER: RegistryEntry = RegistryEntry {
     slug: "shimmer",
-    raw: include_str!("../../public/docs/shimmer.md"),
+    raw: include_str!("../../public/docs/components/shimmer.md"),
     tags: &[],
 };
 
 pub static SKELETON: RegistryEntry = RegistryEntry {
     slug: "skeleton",
-    raw: include_str!("../../public/docs/skeleton.md"),
+    raw: include_str!("../../public/docs/components/skeleton.md"),
     tags: &[],
 };
 
 pub static SLIDER: RegistryEntry = RegistryEntry {
     slug: "slider",
-    raw: include_str!("../../public/docs/slider.md"),
+    raw: include_str!("../../public/docs/components/slider.md"),
     tags: &[],
 };
 
 pub static SONNER: RegistryEntry = RegistryEntry {
     slug: "sonner",
-    raw: include_str!("../../public/docs/sonner.md"),
+    raw: include_str!("../../public/docs/components/sonner.md"),
     tags: &[],
 };
 
 pub static SPINNER: RegistryEntry = RegistryEntry {
     slug: "spinner",
-    raw: include_str!("../../public/docs/spinner.md"),
+    raw: include_str!("../../public/docs/components/spinner.md"),
     tags: &[],
 };
 
 pub static STATUS: RegistryEntry = RegistryEntry {
     slug: "status",
-    raw: include_str!("../../public/docs/status.md"),
+    raw: include_str!("../../public/docs/components/status.md"),
     tags: &[],
 };
 
 pub static STEPPER: RegistryEntry = RegistryEntry {
     slug: "stepper",
-    raw: include_str!("../../public/docs/stepper.md"),
+    raw: include_str!("../../public/docs/components/stepper.md"),
     tags: &[],
 };
 
 pub static SWITCH: RegistryEntry = RegistryEntry {
     slug: "switch",
-    raw: include_str!("../../public/docs/switch.md"),
+    raw: include_str!("../../public/docs/components/switch.md"),
     tags: &[],
 };
 
 pub static TABLE: RegistryEntry = RegistryEntry {
     slug: "table",
-    raw: include_str!("../../public/docs/table.md"),
+    raw: include_str!("../../public/docs/components/table.md"),
     tags: &[],
 };
 
 pub static TABS: RegistryEntry = RegistryEntry {
     slug: "tabs",
-    raw: include_str!("../../public/docs/tabs.md"),
+    raw: include_str!("../../public/docs/components/tabs.md"),
     tags: &[],
 };
 
 pub static TEXTAREA: RegistryEntry = RegistryEntry {
     slug: "textarea",
-    raw: include_str!("../../public/docs/textarea.md"),
+    raw: include_str!("../../public/docs/components/textarea.md"),
     tags: &[],
 };
 
 pub static THEME_TOGGLE: RegistryEntry = RegistryEntry {
     slug: "theme-toggle",
-    raw: include_str!("../../public/docs/theme_toggle.md"),
+    raw: include_str!("../../public/docs/components/theme-toggle.md"),
     tags: &[],
 };
 
 pub static TOAST: RegistryEntry = RegistryEntry {
     slug: "toast",
-    raw: include_str!("../../public/docs/toast.md"),
+    raw: include_str!("../../public/docs/components/toast.md"),
     tags: &[],
 };
 
 pub static TOGGLE: RegistryEntry = RegistryEntry {
     slug: "toggle",
-    raw: include_str!("../../public/docs/toggle.md"),
+    raw: include_str!("../../public/docs/components/toggle.md"),
     tags: &[],
 };
 
 pub static TOGGLE_GROUP: RegistryEntry = RegistryEntry {
     slug: "toggle-group",
-    raw: include_str!("../../public/docs/toggle_group.md"),
+    raw: include_str!("../../public/docs/components/toggle-group.md"),
     tags: &[],
 };
 
 pub static TOOLBAR: RegistryEntry = RegistryEntry {
     slug: "toolbar",
-    raw: include_str!("../../public/docs/toolbar.md"),
+    raw: include_str!("../../public/docs/components/toolbar.md"),
     tags: &[],
 };
 
 pub static TOOLTIP: RegistryEntry = RegistryEntry {
     slug: "tooltip",
-    raw: include_str!("../../public/docs/tooltip.md"),
+    raw: include_str!("../../public/docs/components/tooltip.md"),
     tags: &[],
 };
 
 pub static USE_COPY_CLIPBOARD: RegistryEntry = RegistryEntry {
     slug: "use-copy-clipboard",
-    raw: include_str!("../../public/docs/hooks/use_copy_clipboard.md"),
+    raw: include_str!("../../public/docs/hooks/use-copy-clipboard.md"),
     tags: &[],
 };
 
 pub static USE_LOCK_BODY_SCROLL: RegistryEntry = RegistryEntry {
     slug: "use-lock-body-scroll",
-    raw: include_str!("../../public/docs/hooks/use_lock_body_scroll.md"),
+    raw: include_str!("../../public/docs/hooks/use-lock-body-scroll.md"),
     tags: &[],
 };
 
 pub static USE_RANDOM: RegistryEntry = RegistryEntry {
     slug: "use-random",
-    raw: include_str!("../../public/docs/hooks/use_random.md"),
+    raw: include_str!("../../public/docs/hooks/use-random.md"),
     tags: &[],
 };
 

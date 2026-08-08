@@ -3,7 +3,6 @@ use std::collections::HashMap;
 use dioxus::prelude::*;
 use html_parser::{Dom, Element as HtmlElement, Node};
 
-use crate::components::demo_wrapper::DemoWrapper;
 use crate::components::toc::{TocItem, slugify};
 use crate::markdown::markdown_to_html;
 
@@ -123,7 +122,7 @@ fn extract_code_block(pre: &HtmlElement) -> Option<(Option<String>, String)> {
 fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
     let children: Vec<Element> = el.children.iter().map(|n| process_node(n, components)).collect();
 
-    // Check custom registry first — wrap in DemoWrapper for Preview/Code tabs
+    // Check custom registry first.
     if let Some(component) = components.0.get(&el.name.to_lowercase()) {
         let node_props = MdNodeProps {
             id: el.id.clone(),
@@ -132,17 +131,7 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
             children,
             text_content: extract_text(&el.children),
         };
-
-        // `Install*` tags (e.g. `<InstallAlert />`) render standalone — they're not
-        // live demos, so they skip the Preview/Code demo chrome.
-        if el.name.to_lowercase().starts_with("install") {
-            return component(node_props);
-        }
-
-        let demo_name = el.name.clone();
-        let class = (!el.classes.is_empty()).then(|| el.classes.join(" "));
-        let inner = component(node_props);
-        return rsx! { DemoWrapper { demo_name: demo_name, class: class, {inner} } };
+        return component(node_props);
     }
 
     // Default element rendering with Tailwind classes
