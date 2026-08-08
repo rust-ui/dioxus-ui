@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_table::DemoTable;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static TABLE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static TABLE: RegistryEntry = RegistryEntry {
 fn table_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTable", |_| rsx! { DemoTable {} });
+    c.add("InstallTable", |_| rsx! {
+        InstallCommand {
+            name: "table",
+            demo_name: "demo_table",
+            raw_code: include_str!("../../app_crates/registry/src/ui/table.rs"),
+        }
+    });
     c
 }

@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a chip or a component that looks 
 
 ## Installation
 
-Coming soon.
+<InstallChips />
 
 ## Usage
 

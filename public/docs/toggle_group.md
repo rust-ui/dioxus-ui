@@ -6,7 +6,7 @@ title = "Toggle Group"
 
 ## Installation
 
-Coming soon.
+<InstallToggleGroup />
 
 ## Usage
 

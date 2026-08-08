@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_combobox::DemoCombobox;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static COMBOBOX: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static COMBOBOX: RegistryEntry = RegistryEntry {
 fn combobox_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCombobox", |_| rsx! { DemoCombobox {} });
+    c.add("InstallCombobox", |_| rsx! {
+        InstallCommand {
+            name: "combobox",
+            demo_name: "demo_combobox",
+            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+        }
+    });
     c
 }

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_animate::DemoAnimate;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static ANIMATE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static ANIMATE: RegistryEntry = RegistryEntry {
 fn animate_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAnimate", |_| rsx! { DemoAnimate {} });
+    c.add("InstallAnimate", |_| rsx! {
+        InstallCommand {
+            name: "animate",
+            demo_name: "demo_animate",
+            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+        }
+    });
     c
 }

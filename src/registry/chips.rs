@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_chips::DemoChips;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static CHIPS: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static CHIPS: RegistryEntry = RegistryEntry {
 fn chips_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoChips", |_| rsx! { DemoChips {} });
+    c.add("InstallChips", |_| rsx! {
+        InstallCommand {
+            name: "chips",
+            demo_name: "demo_chips",
+            raw_code: include_str!("../../app_crates/registry/src/ui/chips.rs"),
+        }
+    });
     c
 }

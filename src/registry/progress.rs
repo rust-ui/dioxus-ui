@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_progress::DemoProgress;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static PROGRESS: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static PROGRESS: RegistryEntry = RegistryEntry {
 fn progress_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoProgress", |_| rsx! { DemoProgress {} });
+    c.add("InstallProgress", |_| rsx! {
+        InstallCommand {
+            name: "progress",
+            demo_name: "demo_progress",
+            raw_code: include_str!("../../app_crates/registry/src/ui/progress.rs"),
+        }
+    });
     c
 }

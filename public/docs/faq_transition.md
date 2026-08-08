@@ -7,7 +7,7 @@ description = "Accordion-style FAQ sections using CSS checkbox peer transitions.
 
 ## Installation
 
-Coming soon.
+<InstallFaqTransition />
 
 ## Usage
 

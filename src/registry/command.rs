@@ -6,6 +6,7 @@ use registry::demos::demo_command::DemoCommand;
 use registry::demos::demo_command_dialog::DemoCommandDialog;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static COMMAND: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn command_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCommand", |_| rsx! { DemoCommand {} });
     c.add("DemoCommandDialog", |_| rsx! { DemoCommandDialog {} });
+    c.add("InstallCommand", |_| rsx! {
+        InstallCommand {
+            name: "command",
+            demo_name: "demo_command",
+            raw_code: include_str!("../../app_crates/registry/src/ui/command.rs"),
+        }
+    });
     c
 }

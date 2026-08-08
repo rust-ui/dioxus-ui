@@ -7,7 +7,7 @@ description = "A floating card that appears on hover using CSS anchor positionin
 
 ## Installation
 
-Coming soon.
+<InstallHoverCard />
 
 ## Usage
 

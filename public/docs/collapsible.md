@@ -7,7 +7,7 @@ description = "An interactive component which expands/collapses a panel with smo
 
 ## Installation
 
-Coming soon.
+<InstallCollapsible />
 
 ## Usage
 

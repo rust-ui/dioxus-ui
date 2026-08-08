@@ -171,6 +171,8 @@ Each dependency level is shown with progressive bullet points: * for components,
   ** cargo: tw_merge
 * label (ui)
   ** cargo: tw_merge
+* marker (ui)
+  ** cargo: tw_merge
 * marquee (ui)
   ** cargo: tw_merge
   ** mask (ui)
@@ -232,6 +234,10 @@ Each dependency level is shown with progressive bullet points: * for components,
   ** cargo: tw_merge
 * status (ui)
   ** cargo: tw_merge
+* stepper (ui)
+  ** cargo: icons/dioxus
+  ** cargo: tw_merge
+  ** use_stepper (hooks)
 * switch (ui)
   ** cargo: tw_merge
 * table (ui)
@@ -400,6 +406,7 @@ Each dependency level is shown with progressive bullet points: * for components,
 * use_random (hooks)
 * use_scroll_lock (hooks)
   ** cargo: wasm_bindgen
+* use_stepper (hooks)
 * use_theme_mode (hooks)
 * use_virtual_scroll (hooks)
   ** cargo: wasm_bindgen

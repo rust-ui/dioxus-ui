@@ -7,6 +7,7 @@ use registry::demos::demo_sonner_variants::DemoSonnerVariants;
 use registry::demos::demo_sonner_positions::DemoSonnerPositions;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SONNER: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn sonner_components() -> MdComponents {
     c.add("DemoSonner", |_| rsx! { DemoSonner {} });
     c.add("DemoSonnerVariants", |_| rsx! { DemoSonnerVariants {} });
     c.add("DemoSonnerPositions", |_| rsx! { DemoSonnerPositions {} });
+    c.add("InstallSonner", |_| rsx! {
+        InstallCommand {
+            name: "sonner",
+            demo_name: "demo_sonner",
+            raw_code: include_str!("../../app_crates/registry/src/ui/sonner.rs"),
+        }
+    });
     c
 }

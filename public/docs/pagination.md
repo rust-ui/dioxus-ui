@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a pagination component."
 
 ## Installation
 
-Coming soon.
+<InstallPagination />
 
 ## Usage
 

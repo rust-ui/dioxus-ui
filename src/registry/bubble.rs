@@ -13,6 +13,7 @@ use registry::demos::demo_bubble_tooltip::DemoBubbleTooltip;
 use registry::demos::demo_bubble_popover::DemoBubblePopover;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static BUBBLE: RegistryEntry = RegistryEntry {
@@ -33,5 +34,12 @@ fn bubble_components() -> MdComponents {
     c.add("DemoBubbleCollapsible", |_| rsx! { DemoBubbleCollapsible {} });
     c.add("DemoBubbleTooltip", |_| rsx! { DemoBubbleTooltip {} });
     c.add("DemoBubblePopover", |_| rsx! { DemoBubblePopover {} });
+    c.add("InstallBubble", |_| rsx! {
+        InstallCommand {
+            name: "bubble",
+            demo_name: "demo_bubble",
+            raw_code: include_str!("../../app_crates/registry/src/ui/bubble.rs"),
+        }
+    });
     c
 }

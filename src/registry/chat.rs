@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_chat::DemoChat;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static CHAT: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static CHAT: RegistryEntry = RegistryEntry {
 fn chat_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoChat", |_| rsx! { DemoChat {} });
+    c.add("InstallChat", |_| rsx! {
+        InstallCommand {
+            name: "chat",
+            demo_name: "demo_chat",
+            raw_code: include_str!("../../app_crates/registry/src/ui/chat.rs"),
+        }
+    });
     c
 }

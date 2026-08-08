@@ -7,7 +7,7 @@ description = "A wrapper that adds press feedback (scale effect) to any children
 
 ## Installation
 
-Coming soon.
+<InstallPressable />
 
 ## Usage
 

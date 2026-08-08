@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a two-state button that can be ei
 
 ## Installation
 
-Coming soon.
+<InstallToggle />
 
 ## Usage
 

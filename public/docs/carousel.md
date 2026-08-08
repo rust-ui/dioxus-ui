@@ -7,7 +7,7 @@ description = "A scrollable carousel with keyboard navigation, looping, and orie
 
 ## Installation
 
-Coming soon.
+<InstallCarousel />
 
 ## Usage
 

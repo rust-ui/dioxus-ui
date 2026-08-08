@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_expandable::DemoExpandable;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static EXPANDABLE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static EXPANDABLE: RegistryEntry = RegistryEntry {
 fn expandable_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoExpandable", |_| rsx! { DemoExpandable {} });
+    c.add("InstallExpandable", |_| rsx! {
+        InstallCommand {
+            name: "expandable",
+            demo_name: "demo_expandable",
+            raw_code: include_str!("../../app_crates/registry/src/ui/expandable.rs"),
+        }
+    });
     c
 }

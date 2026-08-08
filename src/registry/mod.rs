@@ -22,6 +22,7 @@ pub mod callout;
 pub mod card;
 pub mod card_carousel;
 pub mod carousel;
+pub mod changelog;
 pub mod chat;
 pub mod checkbox;
 pub mod chips;
@@ -42,8 +43,8 @@ pub mod empty;
 pub mod expandable;
 pub mod faq_transition;
 pub mod field;
+pub mod figma;
 pub mod form;
-pub mod get_started;
 pub mod hover_card;
 pub mod image;
 pub mod input;
@@ -51,6 +52,8 @@ pub mod input_group;
 pub mod input_otp;
 pub mod input_phone;
 pub mod input_prompt;
+pub mod installation;
+pub mod introduction;
 pub mod item;
 pub mod kbd;
 pub mod label;
@@ -65,6 +68,7 @@ pub mod pagination;
 pub mod popover;
 pub mod pressable;
 pub mod progress;
+pub mod rtl;
 pub mod radio_button;
 pub mod radio_button_group;
 pub mod radio_group;
@@ -114,6 +118,7 @@ use callout::CALLOUT;
 use card::CARD;
 use card_carousel::CARD_CAROUSEL;
 use carousel::CAROUSEL;
+use changelog::CHANGELOG;
 use chat::CHAT;
 use checkbox::CHECKBOX;
 use chips::CHIPS;
@@ -134,6 +139,7 @@ use empty::EMPTY;
 use expandable::EXPANDABLE;
 use faq_transition::FAQ_TRANSITION;
 use field::FIELD;
+use figma::FIGMA;
 use form::FORM;
 use hover_card::HOVER_CARD;
 use image::IMAGE;
@@ -142,6 +148,8 @@ use input_group::INPUT_GROUP;
 use input_otp::INPUT_OTP;
 use input_phone::INPUT_PHONE;
 use input_prompt::INPUT_PROMPT;
+use installation::INSTALLATION;
+use introduction::INTRODUCTION;
 use item::ITEM;
 use kbd::KBD;
 use label::LABEL;
@@ -156,6 +164,7 @@ use pagination::PAGINATION;
 use popover::POPOVER;
 use pressable::PRESSABLE;
 use progress::PROGRESS;
+use rtl::RTL;
 use radio_button::RADIO_BUTTON;
 use radio_button_group::RADIO_BUTTON_GROUP;
 use radio_group::RADIO_GROUP;
@@ -205,6 +214,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &CARD,
     &CARD_CAROUSEL,
     &CAROUSEL,
+    &CHANGELOG,
     &CHAT,
     &CHECKBOX,
     &CHIPS,
@@ -225,6 +235,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &EXPANDABLE,
     &FAQ_TRANSITION,
     &FIELD,
+    &FIGMA,
     &FORM,
     &HOVER_CARD,
     &IMAGE,
@@ -233,6 +244,8 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &INPUT_OTP,
     &INPUT_PHONE,
     &INPUT_PROMPT,
+    &INSTALLATION,
+    &INTRODUCTION,
     &ITEM,
     &KBD,
     &LABEL,
@@ -247,6 +260,7 @@ pub static REGISTRY: &[&RegistryEntry] = &[
     &POPOVER,
     &PRESSABLE,
     &PROGRESS,
+    &RTL,
     &RADIO_BUTTON,
     &RADIO_BUTTON_GROUP,
     &RADIO_GROUP,

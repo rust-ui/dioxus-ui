@@ -7,7 +7,7 @@ description = "Rust/UI component that displays the path to the current resource 
 
 ## Installation
 
-Coming soon.
+<InstallBreadcrumb />
 
 ## Usage
 

@@ -6,6 +6,7 @@ use registry::demos::demo_input_prompt::DemoInputPrompt;
 use registry::demos::demo_input_prompt_with_tools::DemoInputPromptWithTools;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static INPUT_PROMPT: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn input_prompt_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoInputPrompt", |_| rsx! { DemoInputPrompt {} });
     c.add("DemoInputPromptWithTools", |_| rsx! { DemoInputPromptWithTools {} });
+    c.add("InstallInputPrompt", |_| rsx! {
+        InstallCommand {
+            name: "input-prompt",
+            demo_name: "demo_input_prompt",
+            raw_code: include_str!("../../app_crates/registry/src/ui/input_prompt.rs"),
+        }
+    });
     c
 }

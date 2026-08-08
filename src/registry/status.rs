@@ -6,6 +6,7 @@ use registry::demos::demo_status::DemoStatus;
 use registry::demos::demo_status_variants::DemoStatusVariants;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static STATUS: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn status_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoStatus", |_| rsx! { DemoStatus {} });
     c.add("DemoStatusVariants", |_| rsx! { DemoStatusVariants {} });
+    c.add("InstallStatus", |_| rsx! {
+        InstallCommand {
+            name: "status",
+            demo_name: "demo_status",
+            raw_code: include_str!("../../app_crates/registry/src/ui/status.rs"),
+        }
+    });
     c
 }

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_separator::DemoSeparator;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SEPARATOR: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static SEPARATOR: RegistryEntry = RegistryEntry {
 fn separator_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSeparator", |_| rsx! { DemoSeparator {} });
+    c.add("InstallSeparator", |_| rsx! {
+        InstallCommand {
+            name: "separator",
+            demo_name: "demo_separator",
+            raw_code: include_str!("../../app_crates/registry/src/ui/separator.rs"),
+        }
+    });
     c
 }

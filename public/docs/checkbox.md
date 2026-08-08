@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a control that allows the user to
 
 ## Installation
 
-Coming soon.
+<InstallCheckbox />
 
 ## Usage
 

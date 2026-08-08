@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_toolbar::DemoToolbar;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static TOOLBAR: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static TOOLBAR: RegistryEntry = RegistryEntry {
 fn toolbar_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoToolbar", |_| rsx! { DemoToolbar {} });
+    c.add("InstallToolbar", |_| rsx! {
+        InstallCommand {
+            name: "toolbar",
+            demo_name: "demo_toolbar",
+            raw_code: include_str!("../../app_crates/registry/src/ui/toolbar.rs"),
+        }
+    });
     c
 }

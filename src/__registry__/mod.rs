@@ -4,7 +4,7 @@
 pub mod all_blocks;
 pub mod command_bar;
 pub mod sidenav;
-pub mod sidenav_get_started;
 pub mod sidenav_hooks;
 pub mod source_map;
 pub mod all_workflows;
+pub mod sidenav_get_started;

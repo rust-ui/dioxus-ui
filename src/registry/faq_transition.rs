@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_faq_transition::DemoFaqTransition;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static FAQ_TRANSITION: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static FAQ_TRANSITION: RegistryEntry = RegistryEntry {
 fn faq_transition_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoFaqTransition", |_| rsx! { DemoFaqTransition {} });
+    c.add("InstallFaqTransition", |_| rsx! {
+        InstallCommand {
+            name: "faq-transition",
+            demo_name: "demo_faq_transition",
+            raw_code: include_str!("../../app_crates/registry/src/ui/faq_transition.rs"),
+        }
+    });
     c
 }

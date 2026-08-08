@@ -7,7 +7,7 @@ description = "A compact image carousel with overlay nav and indicators."
 
 ## Installation
 
-Coming soon.
+<InstallCardCarousel />
 
 ## Usage
 

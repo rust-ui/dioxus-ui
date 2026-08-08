@@ -8,6 +8,7 @@ use registry::demos::demo_badge_colors::DemoBadgeColors;
 use registry::demos::demo_badge_custom::DemoBadgeCustom;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static BADGE: RegistryEntry = RegistryEntry {
@@ -23,5 +24,12 @@ fn badge_components() -> MdComponents {
     c.add("DemoBadgeVariants", |_| rsx! { DemoBadgeVariants {} });
     c.add("DemoBadgeColors", |_| rsx! { DemoBadgeColors {} });
     c.add("DemoBadgeCustom", |_| rsx! { DemoBadgeCustom {} });
+    c.add("InstallBadge", |_| rsx! {
+        InstallCommand {
+            name: "badge",
+            demo_name: "demo_badge",
+            raw_code: include_str!("../../app_crates/registry/src/ui/badge.rs"),
+        }
+    });
     c
 }

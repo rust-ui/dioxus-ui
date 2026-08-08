@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_select_native_group::DemoSelectNativeGroup;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SELECT_NATIVE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static SELECT_NATIVE: RegistryEntry = RegistryEntry {
 fn select_native_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSelectNativeGroup", |_| rsx! { DemoSelectNativeGroup {} });
+    c.add("InstallSelectNative", |_| rsx! {
+        InstallCommand {
+            name: "select-native",
+            demo_name: "demo_select_native",
+            raw_code: include_str!("../../app_crates/registry/src/ui/select_native.rs"),
+        }
+    });
     c
 }

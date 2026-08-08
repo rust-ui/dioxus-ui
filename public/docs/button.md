@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a button or a component that look
 
 ## Installation
 
-Coming soon.
+<InstallButton />
 
 ## Usage
 

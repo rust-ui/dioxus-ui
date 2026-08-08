@@ -7,7 +7,7 @@ description = "Form field layout components for labels, descriptions, and error 
 
 ## Installation
 
-Coming soon.
+<InstallField />
 
 ## Usage
 

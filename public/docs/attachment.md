@@ -8,7 +8,7 @@ is_new = true
 
 ## Installation
 
-Coming soon.
+<InstallAttachment />
 
 ## Usage
 

@@ -7,7 +7,7 @@ description = "A scrollable container with a custom scrollbar."
 
 ## Installation
 
-Coming soon.
+<InstallScrollArea />
 
 ## Usage
 

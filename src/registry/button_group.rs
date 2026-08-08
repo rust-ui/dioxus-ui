@@ -9,6 +9,7 @@ use registry::demos::demo_button_group_input::DemoButtonGroupInput;
 use registry::demos::demo_button_group_rtl::DemoButtonGroupRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static BUTTON_GROUP: RegistryEntry = RegistryEntry {
@@ -25,5 +26,12 @@ fn button_group_components() -> MdComponents {
     c.add("DemoButtonGroupSizes", |_| rsx! { DemoButtonGroupSizes {} });
     c.add("DemoButtonGroupInput", |_| rsx! { DemoButtonGroupInput {} });
     c.add("DemoButtonGroupRtl", |_| rsx! { DemoButtonGroupRtl {} });
+    c.add("InstallButtonGroup", |_| rsx! {
+        InstallCommand {
+            name: "button-group",
+            demo_name: "demo_button_group",
+            raw_code: include_str!("../../app_crates/registry/src/ui/button_group.rs"),
+        }
+    });
     c
 }

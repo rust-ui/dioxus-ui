@@ -7,7 +7,7 @@ description = "A one-time password input with individual digit slots."
 
 ## Installation
 
-Coming soon.
+<InstallInputOtp />
 
 ## Usage
 

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_slider::DemoSlider;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SLIDER: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static SLIDER: RegistryEntry = RegistryEntry {
 fn slider_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSlider", |_| rsx! { DemoSlider {} });
+    c.add("InstallSlider", |_| rsx! {
+        InstallCommand {
+            name: "slider",
+            demo_name: "demo_slider",
+            raw_code: include_str!("../../app_crates/registry/src/ui/slider.rs"),
+        }
+    });
     c
 }

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_marquee::DemoMarquee;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static MARQUEE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static MARQUEE: RegistryEntry = RegistryEntry {
 fn marquee_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoMarquee", |_| rsx! { DemoMarquee {} });
+    c.add("InstallMarquee", |_| rsx! {
+        InstallCommand {
+            name: "marquee",
+            demo_name: "demo_marquee",
+            raw_code: include_str!("../../app_crates/registry/src/ui/marquee.rs"),
+        }
+    });
     c
 }

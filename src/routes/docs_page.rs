@@ -7,12 +7,33 @@ use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
 use crate::markdown::converter::{convert_md, extract_toc};
-use crate::registry::get_started::{self, prev_next};
+use crate::registry::changelog::CHANGELOG;
+use crate::registry::figma::FIGMA;
+use crate::registry::installation::INSTALLATION;
+use crate::registry::introduction::INTRODUCTION;
+use crate::registry::rtl::RTL;
 use crate::registry::types::RegistryEntry;
+
+static GET_STARTED: &[&RegistryEntry] = &[&INTRODUCTION, &INSTALLATION, &CHANGELOG, &FIGMA, &RTL];
+
+fn find(slug: &str) -> Option<&'static RegistryEntry> {
+    GET_STARTED.iter().copied().find(|e| e.slug == slug)
+}
+
+fn prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'static RegistryEntry>) {
+    let pos = GET_STARTED.iter().position(|e| e.slug == slug);
+    match pos {
+        None => (None, None),
+        Some(i) => (
+            if i > 0 { Some(GET_STARTED[i - 1]) } else { None },
+            if i + 1 < GET_STARTED.len() { Some(GET_STARTED[i + 1]) } else { None },
+        ),
+    }
+}
 
 #[component]
 pub fn DocsPage(name: String) -> Element {
-    let entry = get_started::find(&name);
+    let entry = find(&name);
     let (prev, next) = prev_next(&name);
 
     let mut toc: Signal<Vec<TocItem>> = use_context();

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_tooltip::DemoTooltip;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static TOOLTIP: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static TOOLTIP: RegistryEntry = RegistryEntry {
 fn tooltip_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTooltip", |_| rsx! { DemoTooltip {} });
+    c.add("InstallTooltip", |_| rsx! {
+        InstallCommand {
+            name: "tooltip",
+            demo_name: "demo_tooltip",
+            raw_code: include_str!("../../app_crates/registry/src/ui/tooltip.rs"),
+        }
+    });
     c
 }

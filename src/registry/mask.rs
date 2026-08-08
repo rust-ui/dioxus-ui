@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_mask::DemoMask;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static MASK: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static MASK: RegistryEntry = RegistryEntry {
 fn mask_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoMask", |_| rsx! { DemoMask {} });
+    c.add("InstallMask", |_| rsx! {
+        InstallCommand {
+            name: "mask",
+            demo_name: "demo_mask",
+            raw_code: include_str!("../../app_crates/registry/src/ui/mask.rs"),
+        }
+    });
     c
 }

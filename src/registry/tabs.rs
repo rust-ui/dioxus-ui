@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_tabs::DemoTabs;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static TABS: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static TABS: RegistryEntry = RegistryEntry {
 fn tabs_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTabs", |_| rsx! { DemoTabs {} });
+    c.add("InstallTabs", |_| rsx! {
+        InstallCommand {
+            name: "tabs",
+            demo_name: "demo_tabs",
+            raw_code: include_str!("../../app_crates/registry/src/ui/tabs.rs"),
+        }
+    });
     c
 }

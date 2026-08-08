@@ -7,7 +7,7 @@ description = "Rust/UI component that allows users to select a value from a rang
 
 ## Installation
 
-Coming soon.
+<InstallSlider />
 
 ## Usage
 

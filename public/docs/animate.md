@@ -7,7 +7,7 @@ description = "A wrapper that applies entrance animations and hover animations v
 
 ## Installation
 
-Coming soon.
+<InstallAnimate />
 
 ## Usage
 

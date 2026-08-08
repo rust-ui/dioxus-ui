@@ -10,6 +10,7 @@ use registry::demos::demo_skeleton_form::DemoSkeletonForm;
 use registry::demos::demo_skeleton_table::DemoSkeletonTable;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SKELETON: RegistryEntry = RegistryEntry {
@@ -27,5 +28,12 @@ fn skeleton_components() -> MdComponents {
     c.add("DemoSkeletonText", |_| rsx! { DemoSkeletonText {} });
     c.add("DemoSkeletonForm", |_| rsx! { DemoSkeletonForm {} });
     c.add("DemoSkeletonTable", |_| rsx! { DemoSkeletonTable {} });
+    c.add("InstallSkeleton", |_| rsx! {
+        InstallCommand {
+            name: "skeleton",
+            demo_name: "demo_skeleton",
+            raw_code: include_str!("../../app_crates/registry/src/ui/skeleton.rs"),
+        }
+    });
     c
 }

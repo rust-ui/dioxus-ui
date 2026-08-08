@@ -6,6 +6,7 @@ use registry::demos::demo_menubar::DemoMenubar;
 use registry::demos::demo_menubar_rtl::DemoMenubarRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static MENUBAR: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn menubar_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoMenubar", |_| rsx! { DemoMenubar {} });
     c.add("DemoMenubarRtl", |_| rsx! { DemoMenubarRtl {} });
+    c.add("InstallMenubar", |_| rsx! {
+        InstallCommand {
+            name: "menubar",
+            demo_name: "demo_menubar",
+            raw_code: include_str!("../../app_crates/registry/src/ui/menubar.rs"),
+        }
+    });
     c
 }

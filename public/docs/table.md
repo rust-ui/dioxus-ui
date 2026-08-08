@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a table with header, body and foo
 
 ## Installation
 
-Coming soon.
+<InstallTable />
 
 ## Usage
 

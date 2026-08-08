@@ -7,7 +7,7 @@ description = "A signal-driven radio group for selecting a single option from a 
 
 ## Installation
 
-Coming soon.
+<InstallRadioButton />
 
 ## Usage
 

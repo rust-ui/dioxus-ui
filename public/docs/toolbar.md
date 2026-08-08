@@ -7,7 +7,7 @@ description = "A composable toolbar with toggle groups, buttons, separators, and
 
 ## Installation
 
-Coming soon.
+<InstallToolbar />
 
 ## Usage
 

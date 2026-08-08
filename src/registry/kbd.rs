@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_kbd::DemoKbd;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static KBD: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static KBD: RegistryEntry = RegistryEntry {
 fn kbd_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoKbd", |_| rsx! { DemoKbd {} });
+    c.add("InstallKbd", |_| rsx! {
+        InstallCommand {
+            name: "kbd",
+            demo_name: "demo_kbd",
+            raw_code: include_str!("../../app_crates/registry/src/ui/kbd.rs"),
+        }
+    });
     c
 }

@@ -11,6 +11,7 @@ use registry::demos::demo_form_select::DemoFormSelect;
 use registry::demos::demo_auto_form::DemoAutoForm;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static FORM: RegistryEntry = RegistryEntry {
@@ -29,5 +30,12 @@ fn form_components() -> MdComponents {
     c.add("DemoFormError", |_| rsx! { DemoFormError {} });
     c.add("DemoFormSelect", |_| rsx! { DemoFormSelect {} });
     c.add("DemoAutoForm", |_| rsx! { DemoAutoForm {} });
+    c.add("InstallForm", |_| rsx! {
+        InstallCommand {
+            name: "form",
+            demo_name: "demo_form",
+            raw_code: include_str!("../../app_crates/registry/src/ui/form.rs"),
+        }
+    });
     c
 }

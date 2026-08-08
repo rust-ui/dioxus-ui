@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a textarea."
 
 ## Installation
 
-Coming soon.
+<InstallTextarea />
 
 ## Usage
 

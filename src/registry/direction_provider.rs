@@ -7,6 +7,7 @@ use registry::demos::demo_direction_provider::DemoDirectionProvider;
 use registry::demos::demo_direction_provider_rtl::DemoDirectionProviderRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DIRECTION_PROVIDER: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn direction_provider_components() -> MdComponents {
     c.add("DemoDirectionProviderDefault", |_| rsx! { DemoDirectionProviderDefault {} });
     c.add("DemoDirectionProvider", |_| rsx! { DemoDirectionProvider {} });
     c.add("DemoDirectionProviderRtl", |_| rsx! { DemoDirectionProviderRtl {} });
+    c.add("InstallDirectionProvider", |_| rsx! {
+        InstallCommand {
+            name: "direction-provider",
+            demo_name: "demo_direction_provider",
+            raw_code: include_str!("../../app_crates/registry/src/ui/direction_provider.rs"),
+        }
+    });
     c
 }

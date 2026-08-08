@@ -7,7 +7,7 @@ description = "A panel that slides in from any edge of the screen, built on top 
 
 ## Installation
 
-Coming soon.
+<InstallSheet />
 
 ## Usage
 

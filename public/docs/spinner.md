@@ -7,7 +7,7 @@ description = "A loading spinner component with animation for indicating process
 
 ## Installation
 
-Coming soon.
+<InstallSpinner />
 
 ## Usage
 

@@ -13,6 +13,35 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ## Getting Started
 
+### [Introduction](https://dioxus.rust-ui.com/docs/introduction)
+
+> The idea behind Rust/UI is to provide developers with the right tools to build Rust fullstack applications.
+
+* Composition
+* Distribution
+* Beautiful Defaults
+* AI-Ready
+
+### [Installation](https://dioxus.rust-ui.com/docs/installation)
+
+> Get started with Rust/UI by installing the CLI tool and setting up your project with minimal dependencies and framework support.
+
+* Minimal Dependencies
+* Framework Support
+* Installation
+
+### [Figma](https://dioxus.rust-ui.com/docs/figma)
+
+> Coming soon.
+
+* Figma Design System
+
+### [Changelog](https://dioxus.rust-ui.com/docs/changelog)
+
+> Latest updates and improvements to the Dioxus edition of Rust/UI.
+
+* 2026-08-08
+
 ### [Accordion](https://dioxus.rust-ui.com/docs/accordion)
 
 > Rust/UI component that displays an Accordion.
@@ -566,6 +595,22 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * With Input
 * See Also
 
+### [Marker](https://dioxus.rust-ui.com/docs/marker)
+
+> Rust/UI component for inline status markers, timeline separators, and event indicators.
+
+* Installation
+* Usage
+* Examples
+  * Variants
+  * Border
+  * Separator
+  * Icon
+  * Status
+  * Shimmer
+  * Link / Button
+* See Also
+
 ### [Marquee](https://dioxus.rust-ui.com/docs/marquee)
 
 > An infinite scrolling marquee with pause-on-hover support.
@@ -694,6 +739,18 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * Custom Style
 * See Also
 
+### [RTL Support](https://dioxus.rust-ui.com/docs/rtl)
+
+> Enable right-to-left layout support in your Rust/UI project. Physical Tailwind CSS classes are automatically transformed to logical equivalents when installing components.
+
+* RTL Support
+* Enabling RTL
+  * During `ui init`
+  * Manually in `ui_config.toml`
+* What Gets Transformed
+* Example
+* Verifying RTL is Enabled
+
 ### [Scroll Area](https://dioxus.rust-ui.com/docs/scroll_area)
 
 > A scrollable container with a custom scrollbar.
@@ -793,6 +850,17 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Installation
 * Usage
 * Variants
+* See Also
+
+### [Stepper](https://dioxus.rust-ui.com/docs/stepper)
+
+> Rust/UI component for multi-step flows with a shared, navigable step index.
+
+* Installation
+* Usage
+* Examples
+  * Vertical
+  * Controlled
 * See Also
 
 ### [Switch](https://dioxus.rust-ui.com/docs/switch)

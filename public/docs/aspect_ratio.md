@@ -7,7 +7,7 @@ description = "A container that maintains a given aspect ratio for its content."
 
 ## Installation
 
-Coming soon.
+<InstallAspectRatio />
 
 ## Usage
 

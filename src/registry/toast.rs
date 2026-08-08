@@ -6,6 +6,7 @@ use registry::demos::demo_toast::DemoToast;
 use registry::demos::demo_toast_variants::DemoToastVariants;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static TOAST: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn toast_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoToast", |_| rsx! { DemoToast {} });
     c.add("DemoToastVariants", |_| rsx! { DemoToastVariants {} });
+    c.add("InstallToast", |_| rsx! {
+        InstallCommand {
+            name: "toast",
+            demo_name: "demo_toast",
+            raw_code: include_str!("../../app_crates/registry/src/ui/toast_custom/mod.rs"),
+        }
+    });
     c
 }

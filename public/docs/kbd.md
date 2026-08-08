@@ -7,7 +7,7 @@ description = "Display keyboard shortcuts and key combinations with proper styli
 
 ## Installation
 
-Coming soon.
+<InstallKbd />
 
 ## Usage
 

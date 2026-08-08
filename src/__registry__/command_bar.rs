@@ -37,11 +37,9 @@ pub struct CommandItemData {
 /// PAGES_ITEMS
 pub const PAGES_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Home", href: "/", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "Introduction", href: "/docs/introduction", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "Installation", href: "/docs/installation", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "Changelog", href: "/docs/changelog", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "Figma", href: "/docs/figma", category: CommandCategory::Pages, add_cmd: None },
-    CommandItemData { label: "RTL Support", href: "/docs/rtl", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "Components", href: "/components/accordion", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "CLI", href: "/components/accordion", category: CommandCategory::Pages, add_cmd: None },
+    CommandItemData { label: "Installation", href: "/components/accordion", category: CommandCategory::Pages, add_cmd: None },
 ];
 
 /// COMPONENTS_ITEMS
@@ -67,6 +65,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Card", href: "/components/card", category: CommandCategory::Components, add_cmd: Some("card") },
     CommandItemData { label: "Card Carousel", href: "/components/card-carousel", category: CommandCategory::Components, add_cmd: Some("card_carousel") },
     CommandItemData { label: "Carousel", href: "/components/carousel", category: CommandCategory::Components, add_cmd: Some("carousel") },
+    CommandItemData { label: "Changelog", href: "/components/changelog", category: CommandCategory::Components, add_cmd: Some("changelog") },
     CommandItemData { label: "Chat", href: "/components/chat", category: CommandCategory::Components, add_cmd: Some("chat") },
     CommandItemData { label: "Checkbox", href: "/components/checkbox", category: CommandCategory::Components, add_cmd: Some("checkbox") },
     CommandItemData { label: "Chips", href: "/components/chips", category: CommandCategory::Components, add_cmd: Some("chips") },
@@ -87,6 +86,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Expandable", href: "/components/expandable", category: CommandCategory::Components, add_cmd: Some("expandable") },
     CommandItemData { label: "FAQ Transition", href: "/components/faq-transition", category: CommandCategory::Components, add_cmd: Some("faq_transition") },
     CommandItemData { label: "Field", href: "/components/field", category: CommandCategory::Components, add_cmd: Some("field") },
+    CommandItemData { label: "Figma", href: "/components/figma", category: CommandCategory::Components, add_cmd: Some("figma") },
     CommandItemData { label: "Form", href: "/components/form", category: CommandCategory::Components, add_cmd: Some("form") },
     CommandItemData { label: "Hover Card", href: "/components/hover-card", category: CommandCategory::Components, add_cmd: Some("hover_card") },
     CommandItemData { label: "Image", href: "/components/image", category: CommandCategory::Components, add_cmd: Some("image") },
@@ -95,6 +95,8 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Input OTP", href: "/components/input-otp", category: CommandCategory::Components, add_cmd: Some("input_otp") },
     CommandItemData { label: "Input Phone", href: "/components/input-phone", category: CommandCategory::Components, add_cmd: Some("input_phone") },
     CommandItemData { label: "Input Prompt", href: "/components/input-prompt", category: CommandCategory::Components, add_cmd: Some("input_prompt") },
+    CommandItemData { label: "Installation", href: "/components/installation", category: CommandCategory::Components, add_cmd: Some("installation") },
+    CommandItemData { label: "Introduction", href: "/components/introduction", category: CommandCategory::Components, add_cmd: Some("introduction") },
     CommandItemData { label: "Item", href: "/components/item", category: CommandCategory::Components, add_cmd: Some("item") },
     CommandItemData { label: "Kbd", href: "/components/kbd", category: CommandCategory::Components, add_cmd: Some("kbd") },
     CommandItemData { label: "Label", href: "/components/label", category: CommandCategory::Components, add_cmd: Some("label") },
@@ -109,6 +111,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Popover", href: "/components/popover", category: CommandCategory::Components, add_cmd: Some("popover") },
     CommandItemData { label: "Pressable", href: "/components/pressable", category: CommandCategory::Components, add_cmd: Some("pressable") },
     CommandItemData { label: "Progress", href: "/components/progress", category: CommandCategory::Components, add_cmd: Some("progress") },
+    CommandItemData { label: "RTL Support", href: "/components/rtl", category: CommandCategory::Components, add_cmd: Some("rtl") },
     CommandItemData { label: "Radio Button", href: "/components/radio-button", category: CommandCategory::Components, add_cmd: Some("radio_button") },
     CommandItemData { label: "Radio Button Group", href: "/components/radio-button-group", category: CommandCategory::Components, add_cmd: Some("radio_button_group") },
     CommandItemData { label: "Radio Group", href: "/components/radio-group", category: CommandCategory::Components, add_cmd: Some("radio_group") },

@@ -6,6 +6,7 @@ use registry::demos::demo_radio_button_group::DemoRadioButtonGroup;
 use registry::demos::demo_radio_button_group_rtl::DemoRadioButtonGroupRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static RADIO_BUTTON_GROUP: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn radio_button_group_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoRadioButtonGroup", |_| rsx! { DemoRadioButtonGroup {} });
     c.add("DemoRadioButtonGroupRtl", |_| rsx! { DemoRadioButtonGroupRtl {} });
+    c.add("InstallRadioButtonGroup", |_| rsx! {
+        InstallCommand {
+            name: "radio-button-group",
+            demo_name: "demo_radio_button_group",
+            raw_code: include_str!("../../app_crates/registry/src/ui/radio_button_group.rs"),
+        }
+    });
     c
 }

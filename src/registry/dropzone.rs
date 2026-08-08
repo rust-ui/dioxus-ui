@@ -7,6 +7,7 @@ use registry::demos::demo_dropzone::DemoDropzone;
 use registry::demos::demo_dropzone_grid::DemoDropzoneGrid;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DROPZONE: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn dropzone_components() -> MdComponents {
     c.add("DemoDropzoneToggle", |_| rsx! { DemoDropzoneToggle {} });
     c.add("DemoDropzone", |_| rsx! { DemoDropzone {} });
     c.add("DemoDropzoneGrid", |_| rsx! { DemoDropzoneGrid {} });
+    c.add("InstallDropzone", |_| rsx! {
+        InstallCommand {
+            name: "dropzone",
+            demo_name: "demo_dropzone",
+            raw_code: include_str!("../../app_crates/registry/src/ui/dropzone.rs"),
+        }
+    });
     c
 }

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_card_carousel::DemoCardCarousel;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
 fn card_carousel_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCardCarousel", |_| rsx! { DemoCardCarousel {} });
+    c.add("InstallCardCarousel", |_| rsx! {
+        InstallCommand {
+            name: "card-carousel",
+            demo_name: "demo_card_carousel",
+            raw_code: include_str!("../../app_crates/registry/src/ui/card_carousel.rs"),
+        }
+    });
     c
 }

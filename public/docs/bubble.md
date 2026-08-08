@@ -7,7 +7,7 @@ description = "Displays a chat message bubble with multiple style variants and a
 
 ## Installation
 
-Coming soon.
+<InstallBubble />
 
 ## Usage
 

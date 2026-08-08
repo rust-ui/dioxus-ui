@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a set of layered sections of cont
 
 ## Installation
 
-Coming soon.
+<InstallTabs />
 
 ## Usage
 

@@ -7,7 +7,7 @@ description = "Gradient fade masks for left, right, top, or bottom edges."
 
 ## Installation
 
-Coming soon.
+<InstallMask />
 
 ## Usage
 

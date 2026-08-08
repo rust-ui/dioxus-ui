@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a modal dialog that the user can 
 
 ## Installation
 
-Coming soon.
+<InstallDialog />
 
 ## Usage
 

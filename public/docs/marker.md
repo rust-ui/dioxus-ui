@@ -7,7 +7,7 @@ description = "Rust/UI component for inline status markers, timeline separators,
 
 ## Installation
 
-Coming soon.
+<InstallMarker />
 
 ## Usage
 

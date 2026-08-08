@@ -15,7 +15,7 @@ image_dark = "/images/thumbnails/toast-dark.webp"
 
 ## Installation
 
-Coming soon.
+<InstallToast />
 
 ## Usage
 

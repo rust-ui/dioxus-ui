@@ -7,7 +7,7 @@ description = "Use the Empty component to display a empty state."
 
 ## Installation
 
-Coming soon.
+<InstallEmpty />
 
 ## Usage
 

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_drawer::DemoDrawer;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DRAWER: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static DRAWER: RegistryEntry = RegistryEntry {
 fn drawer_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDrawer", |_| rsx! { DemoDrawer {} });
+    c.add("InstallDrawer", |_| rsx! {
+        InstallCommand {
+            name: "drawer",
+            demo_name: "demo_drawer",
+            raw_code: include_str!("../../app_crates/registry/src/ui/drawer.rs"),
+        }
+    });
     c
 }

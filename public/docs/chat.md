@@ -7,7 +7,7 @@ description = "Chat UI layout components for building messaging interfaces."
 
 ## Installation
 
-Coming soon.
+<InstallChat />
 
 ## Usage
 

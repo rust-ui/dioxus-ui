@@ -11,7 +11,7 @@ image_dark = "/images/thumbnails/_placeholder-dark.webp"
 
 ## Installation
 
-Coming soon.
+<InstallNavigationMenu />
 
 ## Usage
 

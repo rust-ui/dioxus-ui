@@ -15,6 +15,7 @@ use registry::demos::demo_dropdown_menu_select::DemoDropdownMenuSelect;
 use registry::demos::demo_dropdown_menu_rtl::DemoDropdownMenuRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DROPDOWN_MENU: RegistryEntry = RegistryEntry {
@@ -37,5 +38,12 @@ fn dropdown_menu_components() -> MdComponents {
     c.add("DemoDropdownMenuRadio", |_| rsx! { DemoDropdownMenuRadio {} });
     c.add("DemoDropdownMenuSelect", |_| rsx! { DemoDropdownMenuSelect {} });
     c.add("DemoDropdownMenuRtl", |_| rsx! { DemoDropdownMenuRtl {} });
+    c.add("InstallDropdownMenu", |_| rsx! {
+        InstallCommand {
+            name: "dropdown-menu",
+            demo_name: "demo_dropdown_menu",
+            raw_code: include_str!("../../app_crates/registry/src/ui/dropdown_menu.rs"),
+        }
+    });
     c
 }

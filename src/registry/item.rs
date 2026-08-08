@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_item::DemoItem;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static ITEM: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static ITEM: RegistryEntry = RegistryEntry {
 fn item_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoItem", |_| rsx! { DemoItem {} });
+    c.add("InstallItem", |_| rsx! {
+        InstallCommand {
+            name: "item",
+            demo_name: "demo_item",
+            raw_code: include_str!("../../app_crates/registry/src/ui/item.rs"),
+        }
+    });
     c
 }

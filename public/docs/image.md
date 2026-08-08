@@ -7,7 +7,7 @@ description = "An image component with lazy loading and responsive support."
 
 ## Installation
 
-Coming soon.
+<InstallImage />
 
 ## Usage
 

@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a label for an input field."
 
 ## Installation
 
-Coming soon.
+<InstallLabel />
 
 ## Usage
 

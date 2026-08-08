@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a card with header, content and f
 
 ## Installation
 
-Coming soon.
+<InstallCard />
 
 ## Components
 

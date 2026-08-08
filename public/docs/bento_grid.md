@@ -7,7 +7,7 @@ description = "A CSS grid layout for bento-style card arrangements."
 
 ## Installation
 
-Coming soon.
+<InstallBentoGrid />
 
 ## Usage
 

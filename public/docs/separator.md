@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a separator line."
 
 ## Installation
 
-Coming soon.
+<InstallSeparator />
 
 ## Usage
 

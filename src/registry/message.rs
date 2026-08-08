@@ -10,6 +10,7 @@ use registry::demos::demo_message_actions::DemoMessageActions;
 use registry::demos::demo_message_attachment::DemoMessageAttachment;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static MESSAGE: RegistryEntry = RegistryEntry {
@@ -27,5 +28,12 @@ fn message_components() -> MdComponents {
     c.add("DemoMessageHeaderFooter", |_| rsx! { DemoMessageHeaderFooter {} });
     c.add("DemoMessageActions", |_| rsx! { DemoMessageActions {} });
     c.add("DemoMessageAttachment", |_| rsx! { DemoMessageAttachment {} });
+    c.add("InstallMessage", |_| rsx! {
+        InstallCommand {
+            name: "message",
+            demo_name: "demo_message",
+            raw_code: include_str!("../../app_crates/registry/src/ui/message.rs"),
+        }
+    });
     c
 }

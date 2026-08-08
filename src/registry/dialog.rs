@@ -6,6 +6,7 @@ use registry::demos::demo_dialog::DemoDialog;
 use registry::demos::demo_dialog_scrollable::DemoDialogScrollable;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DIALOG: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn dialog_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDialog", |_| rsx! { DemoDialog {} });
     c.add("DemoDialogScrollable", |_| rsx! { DemoDialogScrollable {} });
+    c.add("InstallDialog", |_| rsx! {
+        InstallCommand {
+            name: "dialog",
+            demo_name: "demo_dialog",
+            raw_code: include_str!("../../app_crates/registry/src/ui/dialog.rs"),
+        }
+    });
     c
 }

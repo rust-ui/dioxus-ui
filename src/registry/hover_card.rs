@@ -6,6 +6,7 @@ use registry::demos::demo_hover_card::DemoHoverCard;
 use registry::demos::demo_hover_card_rtl::DemoHoverCardRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static HOVER_CARD: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn hover_card_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoHoverCard", |_| rsx! { DemoHoverCard {} });
     c.add("DemoHoverCardRtl", |_| rsx! { DemoHoverCardRtl {} });
+    c.add("InstallHoverCard", |_| rsx! {
+        InstallCommand {
+            name: "hover-card",
+            demo_name: "demo_hover_card",
+            raw_code: include_str!("../../app_crates/registry/src/ui/hover_card.rs"),
+        }
+    });
     c
 }

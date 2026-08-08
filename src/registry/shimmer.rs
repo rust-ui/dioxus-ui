@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_shimmer::DemoShimmer;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SHIMMER: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static SHIMMER: RegistryEntry = RegistryEntry {
 fn shimmer_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoShimmer", |_| rsx! { DemoShimmer {} });
+    c.add("InstallShimmer", |_| rsx! {
+        InstallCommand {
+            name: "shimmer",
+            demo_name: "demo_shimmer",
+            raw_code: include_str!("../../app_crates/registry/src/ui/shimmer.rs"),
+        }
+    });
     c
 }

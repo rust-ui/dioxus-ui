@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_sheet::DemoSheet;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SHEET: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static SHEET: RegistryEntry = RegistryEntry {
 fn sheet_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoSheet", |_| rsx! { DemoSheet {} });
+    c.add("InstallSheet", |_| rsx! {
+        InstallCommand {
+            name: "sheet",
+            demo_name: "demo_sheet",
+            raw_code: include_str!("../../app_crates/registry/src/ui/sheet.rs"),
+        }
+    });
     c
 }

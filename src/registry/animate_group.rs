@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_animate_group::DemoAnimateGroup;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static ANIMATE_GROUP: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static ANIMATE_GROUP: RegistryEntry = RegistryEntry {
 fn animate_group_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAnimateGroup", |_| rsx! { DemoAnimateGroup {} });
+    c.add("InstallAnimateGroup", |_| rsx! {
+        InstallCommand {
+            name: "animate-group",
+            demo_name: "demo_animate_group",
+            raw_code: include_str!("../../app_crates/registry/src/ui/animate.rs"),
+        }
+    });
     c
 }

@@ -7,7 +7,7 @@ description = "A bottom sheet that slides up from the bottom of the screen."
 
 ## Installation
 
-Coming soon.
+<InstallDrawer />
 
 ## Usage
 

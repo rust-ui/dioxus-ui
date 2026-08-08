@@ -7,7 +7,7 @@ description = "An input with inline prefix/suffix addons such as icons or button
 
 ## Installation
 
-Coming soon.
+<InstallInputGroup />
 
 ## Usage
 

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_drag_and_drop::DemoDragAndDrop;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DRAG_AND_DROP: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static DRAG_AND_DROP: RegistryEntry = RegistryEntry {
 fn drag_and_drop_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDragAndDrop", |_| rsx! { DemoDragAndDrop {} });
+    c.add("InstallDragAndDrop", |_| rsx! {
+        InstallCommand {
+            name: "drag-and-drop",
+            demo_name: "demo_drag_and_drop",
+            raw_code: include_str!("../../app_crates/registry/src/ui/drag_and_drop.rs"),
+        }
+    });
     c
 }

@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a progress bar indicating task co
 
 ## Installation
 
-Coming soon.
+<InstallProgress />
 
 ## Usage
 

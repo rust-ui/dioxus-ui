@@ -7,7 +7,7 @@ description = "A CSS-styled radio button group with custom visual selection."
 
 ## Installation
 
-Coming soon.
+<InstallRadioButtonGroup />
 
 ## Usage
 

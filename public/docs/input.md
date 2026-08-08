@@ -29,7 +29,7 @@ Input field with integrated copy-to-clipboard functionality for easy text sharin
 
 ## Installation
 
-Coming soon.
+<InstallInput />
 
 ## See Also
 

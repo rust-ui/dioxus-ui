@@ -6,6 +6,7 @@ use registry::demos::demo_breadcrumb::DemoBreadcrumb;
 use registry::demos::demo_breadcrumb_rtl::DemoBreadcrumbRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static BREADCRUMB: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn breadcrumb_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoBreadcrumb", |_| rsx! { DemoBreadcrumb {} });
     c.add("DemoBreadcrumbRtl", |_| rsx! { DemoBreadcrumbRtl {} });
+    c.add("InstallBreadcrumb", |_| rsx! {
+        InstallCommand {
+            name: "breadcrumb",
+            demo_name: "demo_breadcrumb",
+            raw_code: include_str!("../../app_crates/registry/src/ui/breadcrumb.rs"),
+        }
+    });
     c
 }

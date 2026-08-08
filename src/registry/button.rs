@@ -14,6 +14,7 @@ use registry::demos::demo_button_group::DemoButtonGroup;
 use registry::demos::demo_button_group_icon::DemoButtonGroupIcon;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static BUTTON: RegistryEntry = RegistryEntry {
@@ -35,5 +36,12 @@ fn button_components() -> MdComponents {
     c.add("DemoButtonHref", |_| rsx! { DemoButtonHref {} });
     c.add("DemoButtonGroup", |_| rsx! { DemoButtonGroup {} });
     c.add("DemoButtonGroupIcon", |_| rsx! { DemoButtonGroupIcon {} });
+    c.add("InstallButton", |_| rsx! {
+        InstallCommand {
+            name: "button",
+            demo_name: "demo_button",
+            raw_code: include_str!("../../app_crates/registry/src/ui/button.rs"),
+        }
+    });
     c
 }

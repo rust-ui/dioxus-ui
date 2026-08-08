@@ -12,6 +12,7 @@ use registry::demos::demo_date_picker_booked::DemoDatePickerBooked;
 use registry::demos::demo_date_picker_week_numbers::DemoDatePickerWeekNumbers;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DATE_PICKER: RegistryEntry = RegistryEntry {
@@ -31,5 +32,12 @@ fn date_picker_components() -> MdComponents {
     c.add("DemoDatePickerTime", |_| rsx! { DemoDatePickerTime {} });
     c.add("DemoDatePickerBooked", |_| rsx! { DemoDatePickerBooked {} });
     c.add("DemoDatePickerWeekNumbers", |_| rsx! { DemoDatePickerWeekNumbers {} });
+    c.add("InstallDatePicker", |_| rsx! {
+        InstallCommand {
+            name: "date-picker",
+            demo_name: "demo_date_picker",
+            raw_code: include_str!("../../app_crates/registry/src/ui/date_picker.rs"),
+        }
+    });
     c
 }

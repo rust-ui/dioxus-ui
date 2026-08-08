@@ -6,7 +6,7 @@ title = "Theme Toggle"
 
 ## Installation
 
-Coming soon.
+<InstallThemeToggle />
 
 ## Usage
 

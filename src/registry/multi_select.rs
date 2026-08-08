@@ -7,6 +7,7 @@ use registry::demos::demo_multi_select_align::DemoMultiSelectAlign;
 use registry::demos::demo_multi_select_scrollable::DemoMultiSelectScrollable;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static MULTI_SELECT: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn multi_select_components() -> MdComponents {
     c.add("DemoMultiSelect", |_| rsx! { DemoMultiSelect {} });
     c.add("DemoMultiSelectAlign", |_| rsx! { DemoMultiSelectAlign {} });
     c.add("DemoMultiSelectScrollable", |_| rsx! { DemoMultiSelectScrollable {} });
+    c.add("InstallMultiSelect", |_| rsx! {
+        InstallCommand {
+            name: "multi-select",
+            demo_name: "demo_multi_select",
+            raw_code: include_str!("../../app_crates/registry/src/ui/multi_select.rs"),
+        }
+    });
     c
 }

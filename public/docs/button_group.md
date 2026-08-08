@@ -7,7 +7,7 @@ description = "Rust/UI component that groups buttons together into a cohesive un
 
 ## Installation
 
-Coming soon.
+<InstallButtonGroup />
 
 ## Usage
 

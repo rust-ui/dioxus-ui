@@ -7,7 +7,7 @@ description = "A trigger that expands to reveal additional content with a close 
 
 ## Installation
 
-Coming soon.
+<InstallExpandable />
 
 ## Usage
 

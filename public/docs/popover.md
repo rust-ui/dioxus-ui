@@ -7,7 +7,7 @@ description = "A floating panel that opens on click, anchored to a trigger eleme
 
 ## Installation
 
-Coming soon.
+<InstallPopover />
 
 ## Usage
 

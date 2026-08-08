@@ -7,7 +7,7 @@ description = "A mobile bottom navigation bar with touch-optimized buttons."
 
 ## Installation
 
-Coming soon.
+<InstallBottomNav />
 
 ## Usage
 

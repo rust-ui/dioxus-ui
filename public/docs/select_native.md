@@ -4,7 +4,7 @@ title = "Select Native"
 
 ## Installation
 
-Coming soon.
+<InstallSelectNative />
 
 ## Usage
 

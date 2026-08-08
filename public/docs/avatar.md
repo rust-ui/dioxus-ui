@@ -7,7 +7,7 @@ description = "Rust/UI component that displays an avatar with image and fallback
 
 ## Installation
 
-Coming soon.
+<InstallAvatar />
 
 ## Usage
 

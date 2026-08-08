@@ -6,6 +6,7 @@ use registry::demos::demo_accordion::DemoAccordion;
 use registry::demos::demo_accordion_bordered::DemoAccordionBordered;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static ACCORDION: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn accordion_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAccordion", |_| rsx! { DemoAccordion {} });
     c.add("DemoAccordionBordered", |_| rsx! { DemoAccordionBordered {} });
+    c.add("InstallAccordion", |_| rsx! {
+        InstallCommand {
+            name: "accordion",
+            demo_name: "demo_accordion",
+            raw_code: include_str!("../../app_crates/registry/src/ui/accordion.rs"),
+        }
+    });
     c
 }

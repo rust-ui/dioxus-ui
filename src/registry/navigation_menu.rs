@@ -7,6 +7,7 @@ use registry::demos::demo_navigation_menu_complex::DemoNavigationMenuComplex;
 use registry::demos::demo_navigation_menu_rtl::DemoNavigationMenuRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static NAVIGATION_MENU: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn navigation_menu_components() -> MdComponents {
     c.add("DemoNavigationMenu", |_| rsx! { DemoNavigationMenu {} });
     c.add("DemoNavigationMenuComplex", |_| rsx! { DemoNavigationMenuComplex {} });
     c.add("DemoNavigationMenuRtl", |_| rsx! { DemoNavigationMenuRtl {} });
+    c.add("InstallNavigationMenu", |_| rsx! {
+        InstallCommand {
+            name: "navigation-menu",
+            demo_name: "demo_navigation_menu",
+            raw_code: include_str!("../../app_crates/registry/src/ui/navigation_menu.rs"),
+        }
+    });
     c
 }

@@ -6,6 +6,7 @@ use registry::demos::demo_collapsible::DemoCollapsible;
 use registry::demos::demo_collapsible_settings::DemoCollapsibleSettings;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static COLLAPSIBLE: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn collapsible_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCollapsible", |_| rsx! { DemoCollapsible {} });
     c.add("DemoCollapsibleSettings", |_| rsx! { DemoCollapsibleSettings {} });
+    c.add("InstallCollapsible", |_| rsx! {
+        InstallCommand {
+            name: "collapsible",
+            demo_name: "demo_collapsible",
+            raw_code: include_str!("../../app_crates/registry/src/ui/collapsible.rs"),
+        }
+    });
     c
 }

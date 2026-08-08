@@ -6,6 +6,7 @@ use registry::demos::demo_avatar::DemoAvatar;
 use registry::demos::demo_avatar_group_count_icon::DemoAvatarGroupCountIcon;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static AVATAR: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn avatar_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAvatar", |_| rsx! { DemoAvatar {} });
     c.add("DemoAvatarGroupCountIcon", |_| rsx! { DemoAvatarGroupCountIcon {} });
+    c.add("InstallAvatar", |_| rsx! {
+        InstallCommand {
+            name: "avatar",
+            demo_name: "demo_avatar",
+            raw_code: include_str!("../../app_crates/registry/src/ui/avatar.rs"),
+        }
+    });
     c
 }

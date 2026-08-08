@@ -7,7 +7,7 @@ description = "Rust/UI component that displays an Accordion."
 
 ## Installation
 
-Coming soon.
+<InstallAccordion />
 
 ## Usage
 

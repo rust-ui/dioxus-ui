@@ -25,6 +25,11 @@ ui add use_data_scrolled
 ## Component Code
 
 ```rust
+#[cfg(target_arch = "wasm32")]
+use std::sync::Arc;
+#[cfg(target_arch = "wasm32")]
+use std::sync::atomic::{AtomicBool, Ordering};
+
 use dioxus::prelude::*;
 #[cfg(target_arch = "wasm32")]
 use wasm_bindgen::JsCast;
@@ -34,9 +39,17 @@ pub const DATA_SCROLL_TARGET: &str = "data-scroll-target";
 pub fn use_data_scrolled(threshold_px: u32) -> Signal<bool> {
     let is_data_scrolled_signal = use_signal(|| false);
 
-    use_effect(move || {
-        #[cfg(target_arch = "wasm32")]
-        {
+    #[cfg(target_arch = "wasm32")]
+    {
+        // Closure is `forget()`-ed (kept alive for the page's lifetime), so it can
+        // outlive this component's scope — guard signal writes with a mounted flag.
+        let is_mounted = Arc::new(AtomicBool::new(true));
+        let is_mounted_for_cleanup = Arc::clone(&is_mounted);
+        use_drop(move || {
+            is_mounted_for_cleanup.store(false, Ordering::SeqCst);
+        });
+
+        use_effect(move || {
             let threshold = f64::from(threshold_px);
             let scroll_container =
                 web_sys::window().and_then(|w| w.document()).and_then(|d| d.get_element_by_id(DATA_SCROLL_TARGET));
@@ -48,11 +61,17 @@ pub fn use_data_scrolled(threshold_px: u32) -> Signal<bool> {
                 }
             };
 
-            *is_data_scrolled_signal.write_unchecked() = get_scroll_pos() > threshold;
+            if is_mounted.load(Ordering::SeqCst) {
+                *is_data_scrolled_signal.write_unchecked() = get_scroll_pos() > threshold;
+            }
 
+            let is_mounted_for_handler = Arc::clone(&is_mounted);
             let closure = wasm_bindgen::closure::Closure::<dyn FnMut(web_sys::Event)>::new({
                 let is_data_scrolled_signal = is_data_scrolled_signal;
                 move |_: web_sys::Event| {
+                    if !is_mounted_for_handler.load(Ordering::SeqCst) {
+                        return;
+                    }
                     *is_data_scrolled_signal.write_unchecked() = get_scroll_pos() > threshold;
                 }
             });
@@ -64,8 +83,8 @@ pub fn use_data_scrolled(threshold_px: u32) -> Signal<bool> {
             }
 
             closure.forget();
-        }
-    });
+        });
+    }
 
     is_data_scrolled_signal
 }

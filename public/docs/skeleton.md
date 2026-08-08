@@ -7,7 +7,7 @@ description = "Rust/UI component that show a placeholder while content is loadin
 
 ## Installation
 
-Coming soon.
+<InstallSkeleton />
 
 ## Usage
 

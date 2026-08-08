@@ -9,6 +9,7 @@ use registry::demos::demo_card_reverse::DemoCardReverse;
 use registry::demos::demo_card_sm::DemoCardSm;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static CARD: RegistryEntry = RegistryEntry {
@@ -25,5 +26,12 @@ fn card_components() -> MdComponents {
     c.add("DemoCardGroup", |_| rsx! { DemoCardGroup {} });
     c.add("DemoCardReverse", |_| rsx! { DemoCardReverse {} });
     c.add("DemoCardSm", |_| rsx! { DemoCardSm {} });
+    c.add("InstallCard", |_| rsx! {
+        InstallCommand {
+            name: "card",
+            demo_name: "demo_card",
+            raw_code: include_str!("../../app_crates/registry/src/ui/card.rs"),
+        }
+    });
     c
 }

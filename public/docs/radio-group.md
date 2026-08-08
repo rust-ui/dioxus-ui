@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a set of radio buttons where only
 
 ## Installation
 
-Coming soon.
+<InstallRadioGroup />
 
 ## Usage
 

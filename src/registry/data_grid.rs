@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_data_grid::DemoDataGrid;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static DATA_GRID: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static DATA_GRID: RegistryEntry = RegistryEntry {
 fn data_grid_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoDataGrid", |_| rsx! { DemoDataGrid {} });
+    c.add("InstallDataGrid", |_| rsx! {
+        InstallCommand {
+            name: "data-grid",
+            demo_name: "demo_data_grid",
+            raw_code: include_str!("../../app_crates/registry/src/ui/data_grid.rs"),
+        }
+    });
     c
 }

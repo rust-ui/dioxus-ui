@@ -7,7 +7,7 @@ description = "Displays a message in a conversation, with optional avatar, heade
 
 ## Installation
 
-Coming soon.
+<InstallMessage />
 
 ## Usage
 

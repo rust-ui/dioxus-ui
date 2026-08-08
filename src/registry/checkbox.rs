@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_checkbox::DemoCheckbox;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static CHECKBOX: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static CHECKBOX: RegistryEntry = RegistryEntry {
 fn checkbox_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoCheckbox", |_| rsx! { DemoCheckbox {} });
+    c.add("InstallCheckbox", |_| rsx! {
+        InstallCommand {
+            name: "checkbox",
+            demo_name: "demo_checkbox",
+            raw_code: include_str!("../../app_crates/registry/src/ui/checkbox.rs"),
+        }
+    });
     c
 }

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_image::DemoImage;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static IMAGE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static IMAGE: RegistryEntry = RegistryEntry {
 fn image_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoImage", |_| rsx! { DemoImage {} });
+    c.add("InstallImage", |_| rsx! {
+        InstallCommand {
+            name: "image",
+            demo_name: "demo_image",
+            raw_code: include_str!("../../app_crates/registry/src/ui/image.rs"),
+        }
+    });
     c
 }

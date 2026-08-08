@@ -7,7 +7,7 @@ description = "Rust/UI component for displaying statuses."
 
 ## Installation
 
-Coming soon.
+<InstallStatus />
 
 ## Usage
 

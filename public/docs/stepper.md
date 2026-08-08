@@ -7,7 +7,7 @@ description = "Rust/UI component for multi-step flows with a shared, navigable s
 
 ## Installation
 
-Coming soon.
+<InstallStepper />
 
 ## Usage
 

@@ -6,6 +6,7 @@ use registry::demos::demo_input::DemoInput;
 use registry::demos::demo_input_copy::DemoInputCopy;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static INPUT: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn input_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoInput", |_| rsx! { DemoInput {} });
     c.add("DemoInputCopy", |_| rsx! { DemoInputCopy {} });
+    c.add("InstallInput", |_| rsx! {
+        InstallCommand {
+            name: "input",
+            demo_name: "demo_input",
+            raw_code: include_str!("../../app_crates/registry/src/ui/input.rs"),
+        }
+    });
     c
 }

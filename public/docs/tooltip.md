@@ -7,7 +7,7 @@ description = "A popup component that displays informative text when users hover
 
 ## Installation
 
-Coming soon.
+<InstallTooltip />
 
 ## Usage
 

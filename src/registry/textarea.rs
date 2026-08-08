@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_textarea::DemoTextarea;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static TEXTAREA: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static TEXTAREA: RegistryEntry = RegistryEntry {
 fn textarea_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoTextarea", |_| rsx! { DemoTextarea {} });
+    c.add("InstallTextarea", |_| rsx! {
+        InstallCommand {
+            name: "textarea",
+            demo_name: "demo_textarea",
+            raw_code: include_str!("../../app_crates/registry/src/ui/textarea.rs"),
+        }
+    });
     c
 }

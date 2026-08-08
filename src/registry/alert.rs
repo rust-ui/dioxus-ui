@@ -18,13 +18,11 @@ pub static ALERT: RegistryEntry = RegistryEntry {
 fn alert_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAlert", |_| rsx! { DemoAlert {} });
-    c.add("InstallAlert", |_| {
-        rsx! {
-            InstallCommand {
-                name: "alert",
-                demo_name: "demo_alert",
-                raw_code: include_str!("../../app_crates/registry/src/ui/alert.rs"),
-            }
+    c.add("InstallAlert", |_| rsx! {
+        InstallCommand {
+            name: "alert",
+            demo_name: "demo_alert",
+            raw_code: include_str!("../../app_crates/registry/src/ui/alert.rs"),
         }
     });
     c

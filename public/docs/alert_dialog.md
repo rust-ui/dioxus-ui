@@ -6,7 +6,7 @@ title = "Alert Dialog"
 
 ## Installation
 
-Coming soon.
+<InstallAlertDialog />
 
 ## Usage
 

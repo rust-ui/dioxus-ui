@@ -7,7 +7,7 @@ description = "A callout component for displaying notes, info, and warnings."
 
 ## Installation
 
-Coming soon.
+<InstallCallout />
 
 ## Usage
 

@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_auto_form::DemoAutoForm;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static AUTO_FORM: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static AUTO_FORM: RegistryEntry = RegistryEntry {
 fn auto_form_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoAutoForm", |_| rsx! { DemoAutoForm {} });
+    c.add("InstallAutoForm", |_| rsx! {
+        InstallCommand {
+            name: "auto-form",
+            demo_name: "demo_auto_form",
+            raw_code: include_str!("../../app_crates/registry/src/ui/auto_form.rs"),
+        }
+    });
     c
 }

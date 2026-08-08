@@ -3,10 +3,11 @@
 
 use dioxus::prelude::*;
 use registry::demos::demo_stepper::DemoStepper;
-use registry::demos::demo_stepper_controlled::DemoStepperControlled;
 use registry::demos::demo_stepper_vertical::DemoStepperVertical;
+use registry::demos::demo_stepper_controlled::DemoStepperControlled;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static STEPPER: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn stepper_components() -> MdComponents {
     c.add("DemoStepper", |_| rsx! { DemoStepper {} });
     c.add("DemoStepperVertical", |_| rsx! { DemoStepperVertical {} });
     c.add("DemoStepperControlled", |_| rsx! { DemoStepperControlled {} });
+    c.add("InstallStepper", |_| rsx! {
+        InstallCommand {
+            name: "stepper",
+            demo_name: "demo_stepper",
+            raw_code: include_str!("../../app_crates/registry/src/ui/stepper.rs"),
+        }
+    });
     c
 }

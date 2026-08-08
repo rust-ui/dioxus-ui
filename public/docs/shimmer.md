@@ -7,7 +7,7 @@ description = "A loading shimmer effect overlay driven by a signal."
 
 ## Installation
 
-Coming soon.
+<InstallShimmer />
 
 ## Usage
 

@@ -7,7 +7,7 @@ description = "A flexible list item component with media, content, and action sl
 
 ## Installation
 
-Coming soon.
+<InstallItem />
 
 ## Usage
 

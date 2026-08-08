@@ -7,7 +7,7 @@ description = "An infinite scrolling marquee with pause-on-hover support."
 
 ## Installation
 
-Coming soon.
+<InstallMarquee />
 
 ## Usage
 

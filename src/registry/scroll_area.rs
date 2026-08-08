@@ -7,6 +7,7 @@ use registry::demos::demo_scroll_area_horizontal::DemoScrollAreaHorizontal;
 use registry::demos::demo_scroll_area_rtl::DemoScrollAreaRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static SCROLL_AREA: RegistryEntry = RegistryEntry {
@@ -21,5 +22,12 @@ fn scroll_area_components() -> MdComponents {
     c.add("DemoScrollArea", |_| rsx! { DemoScrollArea {} });
     c.add("DemoScrollAreaHorizontal", |_| rsx! { DemoScrollAreaHorizontal {} });
     c.add("DemoScrollAreaRtl", |_| rsx! { DemoScrollAreaRtl {} });
+    c.add("InstallScrollArea", |_| rsx! {
+        InstallCommand {
+            name: "scroll-area",
+            demo_name: "demo_scroll_area",
+            raw_code: include_str!("../../app_crates/registry/src/ui/scroll_area.rs"),
+        }
+    });
     c
 }

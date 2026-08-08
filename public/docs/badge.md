@@ -7,7 +7,7 @@ description = "Rust/UI component that displays a badge or a component that looks
 
 ## Installation
 
-Coming soon.
+<InstallBadge />
 
 ## Usage
 

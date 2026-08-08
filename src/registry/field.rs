@@ -6,6 +6,7 @@ use registry::demos::demo_field::DemoField;
 use registry::demos::demo_field_rtl::DemoFieldRtl;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static FIELD: RegistryEntry = RegistryEntry {
@@ -19,5 +20,12 @@ fn field_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoField", |_| rsx! { DemoField {} });
     c.add("DemoFieldRtl", |_| rsx! { DemoFieldRtl {} });
+    c.add("InstallField", |_| rsx! {
+        InstallCommand {
+            name: "field",
+            demo_name: "demo_field",
+            raw_code: include_str!("../../app_crates/registry/src/ui/field.rs"),
+        }
+    });
     c
 }

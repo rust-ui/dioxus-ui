@@ -51,6 +51,7 @@ input_prompt
 item
 kbd
 label
+marker
 marquee
 mask
 menubar
@@ -74,6 +75,7 @@ slider
 sonner
 spinner
 status
+stepper
 switch
 table
 tabs

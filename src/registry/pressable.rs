@@ -5,6 +5,7 @@ use dioxus::prelude::*;
 use registry::demos::demo_pressable::DemoPressable;
 
 use super::RegistryEntry;
+use crate::components::install_command::InstallCommand;
 use crate::markdown::converter::MdComponents;
 
 pub static PRESSABLE: RegistryEntry = RegistryEntry {
@@ -17,5 +18,12 @@ pub static PRESSABLE: RegistryEntry = RegistryEntry {
 fn pressable_components() -> MdComponents {
     let mut c = MdComponents::new();
     c.add("DemoPressable", |_| rsx! { DemoPressable {} });
+    c.add("InstallPressable", |_| rsx! {
+        InstallCommand {
+            name: "pressable",
+            demo_name: "demo_pressable",
+            raw_code: include_str!("../../app_crates/registry/src/ui/pressable.rs"),
+        }
+    });
     c
 }
