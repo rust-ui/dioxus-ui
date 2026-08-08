@@ -2,7 +2,7 @@ use app_config::SeoMeta;
 use dioxus::prelude::*;
 use icons::{ChevronLeft, ChevronRight};
 
-use crate::__registry__::static_md_registry::{find_get_started_entry, get_started_prev_next, MyMd};
+use crate::__registry__::static_md_registry::{MyMd, find_get_started_entry, get_started_prev_next};
 use crate::components::doc_header::DocHeader;
 use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;

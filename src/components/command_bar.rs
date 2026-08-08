@@ -4,7 +4,9 @@ use icons::{Anchor, ArrowDown, ArrowRight, ArrowUp, CircleDashed, CornerDownLeft
 use registry::ui::input_group::{InputGroup, InputGroupAddon};
 use registry::ui::kbd::Kbd;
 
-use crate::__registry__::my_command_bar_constants::{COMPONENTS_ITEMS, CommandCategory, CommandItemData, HOOKS_ITEMS, PAGES_ITEMS};
+use crate::__registry__::my_command_bar_constants::{
+    COMPONENTS_ITEMS, CommandCategory, CommandItemData, HOOKS_ITEMS, PAGES_ITEMS,
+};
 
 #[derive(Clone, Copy)]
 pub struct CommandBarState {

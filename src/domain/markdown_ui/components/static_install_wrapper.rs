@@ -1,7 +1,7 @@
 use dioxus::prelude::*;
 use registry::ui::button::{Button, ButtonVariant};
 
-use crate::__registry__::static_md_registry::{get_static_registry_entry, MarkdownType};
+use crate::__registry__::static_md_registry::{MarkdownType, get_static_registry_entry};
 use crate::components::steps::{Step, Steps};
 use crate::markdown::highlight_code::highlight_code;
 
