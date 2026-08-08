@@ -5,9 +5,7 @@ use crate::ui::button::{Button, ButtonVariant};
 use crate::ui::card::{Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle};
 use crate::ui::field::{Field, FieldGroup, FieldLabel};
 use crate::ui::input::InputType;
-use crate::ui::input_group::{
-    InputGroup, InputGroupAddon, InputGroupAddonAlign, InputGroupInput, InputGroupText,
-};
+use crate::ui::input_group::{InputGroup, InputGroupAddon, InputGroupAddonAlign, InputGroupInput, InputGroupText};
 
 #[component]
 pub fn DemoInputGroupInCard() -> Element {

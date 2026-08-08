@@ -5,8 +5,7 @@ use crate::ui::field::{Field, FieldGroup, FieldLabel};
 use crate::ui::input_group::{
     InputGroup, InputGroupAddon, InputGroupAddonAlign, InputGroupButton, InputGroupButtonSize, InputGroupInput,
 };
-use crate::ui::tooltip::Tooltip;
-use crate::ui::tooltip::TooltipContent;
+use crate::ui::tooltip::{Tooltip, TooltipContent};
 
 #[component]
 pub fn DemoInputGroupTooltip() -> Element {
