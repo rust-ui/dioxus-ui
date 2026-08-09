@@ -40,7 +40,6 @@ const FAVICON_32: Asset = asset!("/public/icons/favicon-32x32.png");
 const APPLE_TOUCH_ICON: Asset = asset!("/public/icons/apple-touch-icon.png");
 const MANIFEST: Asset = asset!("/public/manifest.json");
 const TAILWIND_CSS: Asset = asset!("/assets/tailwind.css");
-const LOCK_SCROLL_JS: Asset = asset!("/public/hooks/lock_scroll.js");
 const CHART_INIT_JS: Asset = asset!("/public/app_components/chart_init.js");
 const RESIZABLE_JS: Asset = asset!("/public/app_components/resizable.js");
 
@@ -117,6 +116,9 @@ fn main() {
 
 #[component]
 fn App() -> Element {
+    #[cfg(target_arch = "wasm32")]
+    ::registry::hooks::use_scroll_lock::init();
+
     let theme_mode = ThemeMode::init();
     provide_toaster();
 
@@ -148,7 +150,6 @@ fn App() -> Element {
         document::Link { rel: "apple-touch-icon", href: APPLE_TOUCH_ICON }
         document::Link { rel: "manifest", href: MANIFEST }
         document::Stylesheet { href: TAILWIND_CSS }
-        document::Script { src: LOCK_SCROLL_JS }
         document::Script { src: CHART_INIT_JS }
         document::Script { src: RESIZABLE_JS }
         Toaster {}

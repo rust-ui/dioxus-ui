@@ -7,38 +7,49 @@ image = "/images/thumbnails/_placeholder.webp"
 image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
+
 <StaticUseIsMobile />
+
+
 
 ## Installation
 
 <StaticInstallUseIsMobile />
 
+
+
 ## Usage
 
 ```rust
-use registry::hooks::use_is_mobile::use_is_mobile;
+use crate::components::hooks::use_is_mobile::use_is_mobile;
 ```
 
 ```rust
 let is_mobile = use_is_mobile();
 
-rsx! {
-    if is_mobile() {
-        div { "Mobile layout" }
+view! {
+    {move || if is_mobile.get() {
+        view! { <Drawer>...</Drawer> }.into_any()
     } else {
-        div { "Desktop layout" }
-    }
+        view! { <Dialog>...</Dialog> }.into_any()
+    }}
 }
 ```
+
+
 
 ## Examples
 
 ### Default
 
+Shows a `Mobile` or `Desktop` indicator that updates as you resize the window below/above 768px.
+
 <StaticUseIsMobile />
+
+
 
 ## See Also
 
-- [Use Media Query](/hooks/use-media-query)
-- [Drawer](/components/drawer)
-- [Dialog](/components/dialog)
+- [Use Media Query](/docs/hooks/use-media-query)
+- [Drawer](/docs/components/drawer)
+- [Dialog](/docs/components/dialog)

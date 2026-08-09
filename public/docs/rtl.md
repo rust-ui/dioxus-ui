@@ -82,25 +82,6 @@ In addition, these classes get an `rtl:` variant appended:
 
 ---
 
-## Example
-
-Wrap any subtree in `DirectionProvider` to force right-to-left rendering, regardless of the page's global direction:
-
-```rust
-use crate::ui::button::Button;
-use crate::ui::direction_provider::{Direction, DirectionProvider};
-
-rsx! {
-    DirectionProvider { dir: Direction::Rtl,
-        Button { "زر" }
-    }
-}
-```
-
-<StaticButtonRtl />
-
----
-
 ## Verifying RTL is Enabled
 
 ```bash

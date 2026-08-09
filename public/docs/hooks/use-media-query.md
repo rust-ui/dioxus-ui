@@ -7,32 +7,43 @@ image = "/images/thumbnails/_placeholder.webp"
 image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
+
 <StaticUseMediaQuery />
+
+
 
 ## Installation
 
 <StaticInstallUseMediaQuery />
 
+
+
 ## Usage
 
 ```rust
-use registry::hooks::use_media_query::use_media_query;
+use crate::components::hooks::use_media_query::use_media_query;
 ```
 
 ```rust
 let is_wide = use_media_query("(min-width: 1024px)");
 
-rsx! {
-    if is_wide() { "Wide layout" } else { "Narrow layout" }
+view! {
+    {move || if is_wide.get() { "Wide layout" } else { "Narrow layout" }}
 }
 ```
+
+
 
 ## Examples
 
 ### Default
 
+Track multiple breakpoints simultaneously — signals update reactively as the viewport resizes.
+
 <StaticUseMediaQuery />
+
+
 
 ## See Also
 
-- [Use Is Mobile](/hooks/use-is-mobile)
+- [Use Is Mobile](/docs/hooks/use-is-mobile)

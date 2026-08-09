@@ -23,18 +23,22 @@ _Unlike other UI libraries that bundle heavyweight dependencies, Rust/UI compone
 
 ## Framework Support
 
-**This is the Dioxus edition of Rust/UI** — built on [Dioxus](https://dioxuslabs.com/), a Rust framework with a React-like component model that renders to web, desktop, and mobile from a single codebase.
+**Currently, we support Leptos** - a modern, reactive web framework for Rust that provides excellent performance and developer experience.
 
-Our Dioxus integration offers:
+Our Leptos integration offers:
 
-- **Cross-Platform:** The same components work on web, desktop, and mobile targets.
-- **Signals:** Built-in support for Dioxus signals and reactive primitives.
-- **Server Functions:** Full fullstack support via `dioxus::fullstack` for SSR and server functions.
-- **Type Safety:** Full Rust type safety throughout your component tree.
+- **Reactive Components:** Built-in support for Leptos signals and reactive primitives
+- **Server-Side Rendering:** Full SSR support for better SEO and performance
+- **Hydration:** Seamless client-side hydration for interactive components
+- **Type Safety:** Full Rust type safety throughout your component tree
 
-**Also Available For Leptos:**
+**Future Framework Support:**
 
-Rust/UI is also available for [Leptos](https://leptos.dev/), another modern, reactive Rust web framework with excellent SSR and hydration support.
+We have plans to expand support to **Dioxus** in the near future. Dioxus is another excellent Rust web framework that focuses on:
+
+- Cross-platform development (web, desktop, mobile)
+- Virtual DOM with excellent performance
+- React-like component model familiar to web developers
 
 _Our goal is to provide the same high-quality component experience across multiple Rust web frameworks, giving you the flexibility to choose the right tool for your project._
 

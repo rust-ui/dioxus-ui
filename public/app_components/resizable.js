@@ -1,64 +1,62 @@
-(function () {
-    if (window.__resizableInit) return;
-    window.__resizableInit = true;
+(() => {
+  const initResize = (e) => {
+    e.preventDefault();
 
-    const SIZES = {
-        Desktop: null,   // full width
-        Tablet: 768,
-        Phone: 375,
+    const handle = e.target;
+    const rightPanel = handle.nextElementSibling;
+    const container = handle.parentElement;
+    const startPos = e.clientX;
+    const startSize = Number.parseInt(getComputedStyle(rightPanel).width, 10);
+    const containerWidth = container.getBoundingClientRect().width;
+
+    document.documentElement.style.cursor = "col-resize";
+    document.body.classList.add("pointer-events-none", "select-none");
+
+    const doResize = (e) => {
+      const delta = startPos - e.clientX;
+      const newSize = Math.max(0, Math.min(containerWidth * 0.8, startSize + delta));
+      rightPanel.style.width = `${newSize}px`;
     };
 
-    function setSizeByScreenType(instanceId, screenType) {
-        let containers;
-        if (instanceId) {
-            const root = document.querySelector(`[data-resizable="${instanceId}"]`);
-            if (!root) return;
-            containers = root.querySelectorAll('[data-resizable-container]');
-        } else {
-            containers = document.querySelectorAll('[data-resizable-container]');
-        }
+    const stopResize = () => {
+      document.documentElement.style.cursor = "";
+      document.body.classList.remove("pointer-events-none", "select-none");
+      document.removeEventListener("pointermove", doResize);
+      document.removeEventListener("pointerup", stopResize);
+    };
 
-        const maxWidth = SIZES[screenType] ?? null;
-        containers.forEach(c => {
-            if (maxWidth) {
-                c.style.maxWidth = maxWidth + 'px';
-            } else {
-                c.style.maxWidth = '';
-            }
-        });
-    }
+    document.addEventListener("pointermove", doResize);
+    document.addEventListener("pointerup", stopResize);
+  };
 
-    document.addEventListener('resizable:resize_by_screen__interop', function (e) {
-        const { instanceId, screenType } = e.detail || {};
-        setSizeByScreenType(instanceId, screenType);
+  function initializeResizable() {
+    const handles = document.querySelectorAll('[data-name="ResizableHandle"]');
+
+    handles.forEach((handle) => {
+      // Skip if already initialized
+      if (handle.hasAttribute("data-resizable-initialized")) {
+        return;
+      }
+      handle.setAttribute("data-resizable-initialized", "true");
+
+      handle.addEventListener("pointerdown", initResize);
     });
+  }
 
-    // Drag handle support
-    document.addEventListener('mousedown', function (e) {
-        const handle = e.target.closest('[data-resizable-handle]');
-        if (!handle) return;
+  // Initialize on load
+  initializeResizable();
 
-        const resizable = handle.closest('[data-resizable]');
-        if (!resizable) return;
-        const container = resizable.querySelector('[data-resizable-container]');
-        if (!container) return;
-
-        e.preventDefault();
-        const startX = e.clientX;
-        const startWidth = container.getBoundingClientRect().width;
-
-        function onMove(e) {
-            const delta = e.clientX - startX;
-            const newWidth = Math.max(150, startWidth + delta);
-            container.style.maxWidth = newWidth + 'px';
-        }
-
-        function onUp() {
-            document.removeEventListener('mousemove', onMove);
-            document.removeEventListener('mouseup', onUp);
-        }
-
-        document.addEventListener('mousemove', onMove);
-        document.addEventListener('mouseup', onUp);
+  // Initialize when new elements are added
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === "childList" && mutation.addedNodes.length > 0) {
+        initializeResizable();
+      }
     });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
 })();
