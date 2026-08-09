@@ -213,7 +213,7 @@ Required work:
 
 ### 9. Keep the public docs IA literally Leptos-like
 
-Dioxus still exposes docs pages that do not exist in the Leptos public docs surface:
+Confirmed: these docs pages exist in Dioxus but do not exist in Leptos:
 
 - `components/bento_grid.md`
 - `components/chat.md`
@@ -226,10 +226,23 @@ Dioxus still exposes docs pages that do not exist in the Leptos public docs surf
 - `components/toggle.md`
 - `components/toolbar.md`
 
+Decision:
+
+- remove the non-Leptos docs pages from the Leptos-parity docs surface
+- keep `toolbar` as an intentional Dioxus-only exception because we want to keep it
+
 Required work:
 
-- [ ] decide whether these pages move out of the Leptos-parity docs surface
-- [ ] or add an explicit separation so the Leptos-matching IA stays literal
+- [ ] remove `components/bento_grid.md` from the Leptos-parity public docs surface
+- [ ] remove `components/chat.md` from the Leptos-parity public docs surface
+- [ ] remove `components/expandable.md` from the Leptos-parity public docs surface
+- [ ] remove `components/faq_transition.md` from the Leptos-parity public docs surface
+- [ ] remove `components/image.md` from the Leptos-parity public docs surface
+- [ ] remove `components/mask.md` from the Leptos-parity public docs surface
+- [ ] remove `components/radio-group.md` from the Leptos-parity public docs surface
+- [ ] remove `components/select_native.md` from the Leptos-parity public docs surface
+- [ ] remove `components/toggle.md` from the Leptos-parity public docs surface
+- [ ] keep `components/toolbar.md`, but mark it as an explicit Dioxus-only exception outside the Leptos-parity target
 
 ### 10. Restore app-components ownership more literally
 
