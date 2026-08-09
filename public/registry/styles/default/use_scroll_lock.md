@@ -29,6 +29,12 @@ ui add use_scroll_lock
 use std::cell::RefCell;
 
 #[cfg(target_arch = "wasm32")]
+use wasm_bindgen::JsCast;
+
+#[cfg(target_arch = "wasm32")]
+use wasm_bindgen::closure::Closure;
+
+#[cfg(target_arch = "wasm32")]
 use wasm_bindgen::prelude::*;
 
 #[cfg(target_arch = "wasm32")]
@@ -106,6 +112,44 @@ fn set_style(style: &web_sys::CssStyleDeclaration, prop: &str, val: &str) {
 #[cfg(target_arch = "wasm32")]
 fn parse_px(s: &str) -> f64 {
     s.trim_end_matches("px").parse::<f64>().unwrap_or(0.0)
+}
+
+/// Register `window.ScrollLock` for JS interop.
+///
+/// Call once at app startup. Subsequent calls are no-ops.
+pub fn init() {
+    #[cfg(target_arch = "wasm32")]
+    {
+        let Some(window) = web_sys::window() else { return };
+        let window_js: &JsValue = window.as_ref();
+
+        if js_sys::Reflect::get(window_js, &"ScrollLock".into())
+            .ok()
+            .filter(|v| !v.is_undefined() && !v.is_null())
+            .is_some()
+        {
+            return;
+        }
+
+        let obj = js_sys::Object::new();
+        let obj_js: &JsValue = obj.as_ref();
+
+        let lock_closure = Closure::wrap(Box::new(lock) as Box<dyn Fn()>);
+        let _ = js_sys::Reflect::set(obj_js, &"lock".into(), lock_closure.as_ref());
+        lock_closure.forget();
+
+        let unlock_closure = Closure::wrap(Box::new(|delay: JsValue| {
+            unlock(delay.as_f64().unwrap_or(0.0) as u32);
+        }) as Box<dyn Fn(JsValue)>);
+        let _ = js_sys::Reflect::set(obj_js, &"unlock".into(), unlock_closure.as_ref());
+        unlock_closure.forget();
+
+        let is_locked_closure = Closure::wrap(Box::new(is_locked) as Box<dyn Fn() -> bool>);
+        let _ = js_sys::Reflect::set(obj_js, &"isLocked".into(), is_locked_closure.as_ref());
+        is_locked_closure.forget();
+
+        let _ = js_sys::Reflect::set(window_js, &"ScrollLock".into(), obj_js);
+    }
 }
 
 #[cfg(target_arch = "wasm32")]

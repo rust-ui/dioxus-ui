@@ -48,7 +48,6 @@ use registry::demos::demo_button_group_sizes::DemoButtonGroupSizes;
 use registry::demos::demo_button_href::DemoButtonHref;
 use registry::demos::demo_button_override::DemoButtonOverride;
 use registry::demos::demo_button_reactive::DemoButtonReactive;
-use registry::demos::demo_button_rtl::DemoButtonRtl;
 use registry::demos::demo_button_sizes::DemoButtonSizes;
 use registry::demos::demo_button_stateful::DemoButtonStateful;
 use registry::demos::demo_button_variants::DemoButtonVariants;
@@ -293,7 +292,6 @@ pub enum MarkdownType {
     StaticDemoButtonHref,
     StaticDemoButtonOverride,
     StaticDemoButtonReactive,
-    StaticDemoButtonRtl,
     StaticDemoButtonSizes,
     StaticDemoButtonStateful,
     StaticDemoButtonVariants,
@@ -831,12 +829,6 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             demo_name: "demo_button_reactive",
             file_path: "public/docs/components/button.md",
             install_name: "button",
-        }),
-        MarkdownType::StaticDemoButtonRtl => Some(&StaticRegistryEntry {
-            raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_rtl.rs"),
-            demo_name: "demo_button_rtl",
-            file_path: "public/docs/rtl.md",
-            install_name: "rtl",
         }),
         MarkdownType::StaticDemoButtonSizes => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_button_sizes.rs"),
@@ -2874,16 +2866,6 @@ fn build_md_components() -> MdComponents {
                 demo_type: MarkdownType::StaticDemoButtonReactive,
                 class: class,
                 DemoButtonReactive {}
-            }
-        }
-    });
-    combined_components.add("StaticButtonRtl", |props| {
-        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
-        rsx! {
-            StaticDemoWrapper {
-                demo_type: MarkdownType::StaticDemoButtonRtl,
-                class: class,
-                DemoButtonRtl {}
             }
         }
     });
@@ -5643,7 +5625,7 @@ pub static USE_MEDIA_QUERY: RegistryEntry = RegistryEntry {
 pub static USE_PRESS_HOLD: RegistryEntry = RegistryEntry {
     slug: "use-press-hold",
     raw: include_str!("../../public/docs/hooks/use-press-hold.md"),
-    tags: &["utils"],
+    tags: &[],
 };
 
 pub static USE_RANDOM: RegistryEntry = RegistryEntry {
