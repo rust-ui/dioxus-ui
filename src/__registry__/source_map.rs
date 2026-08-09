@@ -172,6 +172,7 @@ pub fn get_demo_source(name: &str) -> Option<&'static str> {
         "DemoFormValidation" => Some(include_str!("../../app_crates/registry/src/demos/demo_form_validation.rs")),
         "DemoHoverCard" => Some(include_str!("../../app_crates/registry/src/demos/demo_hover_card.rs")),
         "DemoHoverCardRtl" => Some(include_str!("../../app_crates/registry/src/demos/demo_hover_card_rtl.rs")),
+        "DemoImage" => Some(include_str!("../../app_crates/registry/src/demos/demo_image.rs")),
         "DemoInput" => Some(include_str!("../../app_crates/registry/src/demos/demo_input.rs")),
         "DemoInputCopy" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_copy.rs")),
         "DemoInputGroup" => Some(include_str!("../../app_crates/registry/src/demos/demo_input_group.rs")),

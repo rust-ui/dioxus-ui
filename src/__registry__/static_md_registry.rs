@@ -117,6 +117,7 @@ use registry::demos::demo_form_select::DemoFormSelect;
 use registry::demos::demo_form_validation::DemoFormValidation;
 use registry::demos::demo_hover_card::DemoHoverCard;
 use registry::demos::demo_hover_card_rtl::DemoHoverCardRtl;
+use registry::demos::demo_image::DemoImage;
 use registry::demos::demo_input::DemoInput;
 use registry::demos::demo_input_copy::DemoInputCopy;
 use registry::demos::demo_input_group::DemoInputGroup;
@@ -361,6 +362,7 @@ pub enum MarkdownType {
     StaticDemoFormValidation,
     StaticDemoHoverCard,
     StaticDemoHoverCardRtl,
+    StaticDemoImage,
     StaticDemoInput,
     StaticDemoInputCopy,
     StaticDemoInputGroup,
@@ -505,6 +507,7 @@ pub enum MarkdownType {
     StaticInstallField,
     StaticInstallForm,
     StaticInstallHoverCard,
+    StaticInstallImage,
     StaticInstallInput,
     StaticInstallInputGroup,
     StaticInstallInputOtp,
@@ -1242,6 +1245,12 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             demo_name: "demo_hover_card_rtl",
             file_path: "public/docs/components/hover-card.md",
             install_name: "hover_card",
+        }),
+        MarkdownType::StaticDemoImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/demos/demo_image.rs"),
+            demo_name: "demo_image",
+            file_path: "public/docs/components/image.md",
+            install_name: "image",
         }),
         MarkdownType::StaticDemoInput => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/demos/demo_input.rs"),
@@ -2101,6 +2110,12 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
             demo_name: "demo_hover_card",
             file_path: "app_crates/registry/src/ui/hover_card.rs",
             install_name: "hover-card",
+        }),
+        MarkdownType::StaticInstallImage => Some(&StaticRegistryEntry {
+            raw_code: include_str!("../../app_crates/registry/src/ui/image.rs"),
+            demo_name: "demo_image",
+            file_path: "app_crates/registry/src/ui/image.rs",
+            install_name: "image",
         }),
         MarkdownType::StaticInstallInput => Some(&StaticRegistryEntry {
             raw_code: include_str!("../../app_crates/registry/src/ui/input.rs"),
@@ -3552,6 +3567,16 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
+    combined_components.add("StaticImage", |props| {
+        let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
+        rsx! {
+            StaticDemoWrapper {
+                demo_type: MarkdownType::StaticDemoImage,
+                class: class,
+                DemoImage {}
+            }
+        }
+    });
     combined_components.add("StaticInput", |props| {
         let class = if props.classes.is_empty() { None } else { Some(props.classes.join(" ")) };
         rsx! {
@@ -4787,6 +4812,11 @@ fn build_md_components() -> MdComponents {
             install_type: MarkdownType::StaticInstallHoverCard,
         }
     });
+    combined_components.add("StaticInstallImage", |_| rsx! {
+        StaticInstallWrapper {
+            install_type: MarkdownType::StaticInstallImage,
+        }
+    });
     combined_components.add("StaticInstallInput", |_| rsx! {
         StaticInstallWrapper {
             install_type: MarkdownType::StaticInstallInput,
@@ -5298,6 +5328,12 @@ pub static ICONS: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
+pub static IMAGE: RegistryEntry = RegistryEntry {
+    slug: "image",
+    raw: include_str!("../../public/docs/components/image.md"),
+    tags: &[],
+};
+
 pub static INPUT: RegistryEntry = RegistryEntry {
     slug: "input",
     raw: include_str!("../../public/docs/components/input.md"),
@@ -5656,6 +5692,7 @@ pub static COMPONENT_REGISTRY: &[&RegistryEntry] = &[
     &FIELD,
     &FORM,
     &HOVER_CARD,
+    &IMAGE,
     &INPUT,
     &INPUT_GROUP,
     &INPUT_OTP,

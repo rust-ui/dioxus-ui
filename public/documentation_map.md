@@ -442,6 +442,14 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * RTL
 * See Also
 
+### [Image](https://dioxus.rust-ui.com/docs/components/image)
+
+> An image component with lazy loading and responsive support.
+
+* Installation
+* Usage
+* See Also
+
 ### [Input](https://dioxus.rust-ui.com/docs/components/input)
 
 > Rust/UI component that displays an input field that allows the user to enter text.

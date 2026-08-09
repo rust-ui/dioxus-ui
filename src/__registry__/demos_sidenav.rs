@@ -47,6 +47,7 @@ pub static SIDENAV_ITEMS: &[SidenavItem] = &[
     SidenavItem { label: "Field", slug: "field", is_new: false },
     SidenavItem { label: "Form", slug: "form", is_new: false },
     SidenavItem { label: "Hover Card", slug: "hover-card", is_new: false },
+    SidenavItem { label: "Image", slug: "image", is_new: false },
     SidenavItem { label: "Input", slug: "input", is_new: false },
     SidenavItem { label: "Input Group", slug: "input-group", is_new: false },
     SidenavItem { label: "Input OTP", slug: "input-otp", is_new: false },

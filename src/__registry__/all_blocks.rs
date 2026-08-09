@@ -409,12 +409,20 @@ impl BlockIdKebab {
                     language: "rust",
                 },
             ],
-            Self::Integration01 => &[BlockFile {
-                name: "integration01.rs",
-                target: "blocks/integration01.rs",
-                content: include_str!("../../app_crates/registry/src/blocks/integration01.rs"),
-                language: "rust",
-            }],
+            Self::Integration01 => &[
+                BlockFile {
+                    name: "integration01.rs",
+                    target: "blocks/integration01.rs",
+                    content: include_str!("../../app_crates/registry/src/blocks/integration01.rs"),
+                    language: "rust",
+                },
+                BlockFile {
+                    name: "image.rs",
+                    target: "ui/image.rs",
+                    content: include_str!("../../app_crates/registry/src/ui/image.rs"),
+                    language: "rust",
+                },
+            ],
             Self::Integration02 => &[
                 BlockFile {
                     name: "integration02.rs",
@@ -909,10 +917,16 @@ impl BlockIdKebab {
                     ],
                 },
             ],
-            Self::Integration01 => vec![BlockFileTreeItem::Folder {
-                name: "blocks",
-                items: vec![BlockFileTreeItem::File { name: "integration01.rs", index: 0 }],
-            }],
+            Self::Integration01 => vec![
+                BlockFileTreeItem::Folder {
+                    name: "blocks",
+                    items: vec![BlockFileTreeItem::File { name: "integration01.rs", index: 0 }],
+                },
+                BlockFileTreeItem::Folder {
+                    name: "ui",
+                    items: vec![BlockFileTreeItem::File { name: "image.rs", index: 1 }],
+                },
+            ],
             Self::Integration02 => vec![
                 BlockFileTreeItem::Folder {
                     name: "blocks",

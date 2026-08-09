@@ -5,6 +5,8 @@
 use dioxus::prelude::*;
 use icons::{Boxes, Circle, Component, Cuboid, Grid3X3, Network, Package, Square};
 
+use crate::components::ui::image::Image;
+
 #[component]
 fn Integration01IconWrapper(children: Element) -> Element {
     rsx! {
@@ -38,14 +40,14 @@ pub fn Integration01() -> Element {
                     Integration01IconWrapper { Component {} }
                     Integration01IconWrapper { Network {} }
                     div { class: "flex justify-center items-center mx-4",
-                        img {
+                        Image {
                             src: "/icons/logo-light-square-88.png",
                             alt: "Rust/UI logo",
                             width: 88,
                             height: 88,
                             class: "rounded-lg shadow-lg dark:hidden",
                         }
-                        img {
+                        Image {
                             src: "/icons/logo-dark-square-88.png",
                             alt: "Rust/UI logo",
                             width: 88,

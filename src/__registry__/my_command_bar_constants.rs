@@ -84,6 +84,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
     CommandItemData { label: "Field", href: "/components/field", category: CommandCategory::Components, add_cmd: Some("field") },
     CommandItemData { label: "Form", href: "/components/form", category: CommandCategory::Components, add_cmd: Some("form") },
     CommandItemData { label: "Hover Card", href: "/components/hover-card", category: CommandCategory::Components, add_cmd: Some("hover_card") },
+    CommandItemData { label: "Image", href: "/components/image", category: CommandCategory::Components, add_cmd: Some("image") },
     CommandItemData { label: "Input", href: "/components/input", category: CommandCategory::Components, add_cmd: Some("input") },
     CommandItemData { label: "Input Group", href: "/components/input-group", category: CommandCategory::Components, add_cmd: Some("input_group") },
     CommandItemData { label: "Input OTP", href: "/components/input-otp", category: CommandCategory::Components, add_cmd: Some("input_otp") },

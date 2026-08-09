@@ -165,6 +165,7 @@ pub mod demo_form_select;
 pub mod demo_form_validation;
 pub mod demo_hover_card;
 pub mod demo_hover_card_rtl;
+pub mod demo_image;
 pub mod demo_input;
 pub mod demo_input_copy;
 pub mod demo_input_group;
