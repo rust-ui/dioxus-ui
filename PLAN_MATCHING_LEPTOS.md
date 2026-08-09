@@ -9,7 +9,13 @@ Constraint:
 - Dioxus should copy the Leptos architecture, module split, naming, and ownership boundaries as literally as possible
 - a difference is acceptable only when Dioxus creates a real technical constraint
 
-This file intentionally keeps only the remaining mismatches. Completed work is removed to keep the plan readable.
+This file intentionally keeps only the remaining mismatches.
+
+Rule for maintaining this file:
+
+- remove completed items immediately as work lands
+- do not keep "done" cleanup tasks in the plan
+- if a mismatch is resolved, delete it from this file instead of marking it done
 
 Decision already made:
 
@@ -213,35 +219,15 @@ Required work:
 
 ### 9. Keep the public docs IA literally Leptos-like
 
-Confirmed: these docs pages exist in Dioxus but do not exist in Leptos:
+Decision already made:
 
-- `components/bento_grid.md`
-- `components/chat.md`
-- `components/expandable.md`
-- `components/faq_transition.md`
-- `components/image.md`
-- `components/mask.md`
-- `components/radio-group.md`
-- `components/select_native.md`
-- `components/toggle.md`
-- `components/toolbar.md`
-
-Decision:
-
-- remove the non-Leptos docs pages from the Leptos-parity docs surface
+- cleanup items already removed should stay out of this plan
+- keep `mask` as an intentional retained Dioxus surface
+- keep `image` as an intentional retained Dioxus surface
 - keep `toolbar` as an intentional Dioxus-only exception because we want to keep it
 
 Required work:
 
-- [ ] remove `components/bento_grid.md` from the Leptos-parity public docs surface
-- [ ] remove `components/chat.md` from the Leptos-parity public docs surface
-- [ ] remove `components/expandable.md` from the Leptos-parity public docs surface
-- [ ] remove `components/faq_transition.md` from the Leptos-parity public docs surface
-- [ ] remove `components/image.md` from the Leptos-parity public docs surface
-- [ ] remove `components/mask.md` from the Leptos-parity public docs surface
-- [ ] remove `components/radio-group.md` from the Leptos-parity public docs surface
-- [ ] remove `components/select_native.md` from the Leptos-parity public docs surface
-- [ ] remove `components/toggle.md` from the Leptos-parity public docs surface
 - [ ] keep `components/toolbar.md`, but mark it as an explicit Dioxus-only exception outside the Leptos-parity target
 
 ### 10. Restore app-components ownership more literally
