@@ -1,8 +1,6 @@
 use dioxus::prelude::*;
 use tw_merge::tw_merge;
 
-use crate::ui::mask::{Mask, MaskSide};
-
 const MARQUEE_CSS: &str = "\
 @keyframes marquee_horizontal {
   from { transform: translateX(0); }
@@ -55,8 +53,8 @@ pub fn MarqueeWrapper(#[props(into, optional)] class: Option<String>, children: 
     rsx! {
         div { "data-name": "MarqueeWrapper", class: "{c}",
             {children}
-            Mask { side: MaskSide::Left }
-            Mask { side: MaskSide::Right }
+            div { class: "pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-background to-transparent" }
+            div { class: "pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-background to-transparent" }
         }
     }
 }

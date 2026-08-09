@@ -6,7 +6,6 @@ use registry::ui::card::{Card, CardContent, CardHeader, CardTitle};
 use registry::ui::drawer::{Drawer, DrawerBody, DrawerClose, DrawerContent, DrawerHandle, DrawerTitle, DrawerTrigger};
 use registry::ui::input::{Input, InputType};
 use registry::ui::scroll_area::ScrollArea;
-use registry::ui::select_native::{LabelNative, SelectNative};
 
 use crate::components::navigation::header_docs::HeaderDocs;
 
@@ -73,9 +72,12 @@ pub fn PageIcons() -> Element {
                             }
                         }
                         div { class: "flex flex-col gap-2 min-w-[150px]",
-                            LabelNative { html_for: SIZE_ID, "Size" }
-                            SelectNative {
+                            label { r#for: SIZE_ID, class: "text-sm font-medium leading-none",
+                                "Size"
+                            }
+                            select {
                                 id: SIZE_ID,
+                                class: "flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-xs transition-[color,box-shadow] outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]",
                                 value: display_size(),
                                 onchange: move |e: FormEvent| display_size.set(e.value()),
                                 option { value: "size-4", "Size 4" }

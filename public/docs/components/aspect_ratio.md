@@ -25,5 +25,4 @@ rsx! {
 
 ## See Also
 
-- [Image](/components/image)
 - [Card](/components/card)

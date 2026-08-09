@@ -28,5 +28,4 @@ rsx! {
 ## See Also
 
 - [Badge](/components/badge)
-- [Toggle](/components/toggle)
 - [Toggle Group](/components/toggle-group)

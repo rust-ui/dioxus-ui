@@ -409,20 +409,12 @@ impl BlockIdKebab {
                     language: "rust",
                 },
             ],
-            Self::Integration01 => &[
-                BlockFile {
-                    name: "integration01.rs",
-                    target: "blocks/integration01.rs",
-                    content: include_str!("../../app_crates/registry/src/blocks/integration01.rs"),
-                    language: "rust",
-                },
-                BlockFile {
-                    name: "image.rs",
-                    target: "ui/image.rs",
-                    content: include_str!("../../app_crates/registry/src/ui/image.rs"),
-                    language: "rust",
-                },
-            ],
+            Self::Integration01 => &[BlockFile {
+                name: "integration01.rs",
+                target: "blocks/integration01.rs",
+                content: include_str!("../../app_crates/registry/src/blocks/integration01.rs"),
+                language: "rust",
+            }],
             Self::Integration02 => &[
                 BlockFile {
                     name: "integration02.rs",
@@ -917,16 +909,10 @@ impl BlockIdKebab {
                     ],
                 },
             ],
-            Self::Integration01 => vec![
-                BlockFileTreeItem::Folder {
-                    name: "blocks",
-                    items: vec![BlockFileTreeItem::File { name: "integration01.rs", index: 0 }],
-                },
-                BlockFileTreeItem::Folder {
-                    name: "ui",
-                    items: vec![BlockFileTreeItem::File { name: "image.rs", index: 1 }],
-                },
-            ],
+            Self::Integration01 => vec![BlockFileTreeItem::Folder {
+                name: "blocks",
+                items: vec![BlockFileTreeItem::File { name: "integration01.rs", index: 0 }],
+            }],
             Self::Integration02 => vec![
                 BlockFileTreeItem::Folder {
                     name: "blocks",
@@ -1234,12 +1220,14 @@ pub const ALL_FOOTER_BLOCKS: &[BlockEntry] = &[
     },
 ];
 
-pub const ALL_HEADER_BLOCKS: &[BlockEntry] = &[BlockEntry {
-    block_id_str: "header-01",
-    block_title: "Header with animation on scroll",
-    block_id_kebab: BlockIdKebab::Header01,
-    category: "headers",
-}];
+pub const ALL_HEADER_BLOCKS: &[BlockEntry] = &[
+    BlockEntry {
+        block_id_str: "header-01",
+        block_title: "Header with animation on scroll",
+        block_id_kebab: BlockIdKebab::Header01,
+        category: "headers",
+    },
+];
 
 pub const ALL_INTEGRATION_BLOCKS: &[BlockEntry] = &[
     BlockEntry {
@@ -1381,3 +1369,4 @@ pub const ALL_SIDENAV_BLOCKS: &[BlockEntry] = &[
         category: "sidenav",
     },
 ];
+

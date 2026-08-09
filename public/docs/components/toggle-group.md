@@ -43,5 +43,4 @@ rsx! {
 
 ## See Also
 
-- [Toggle](/components/toggle)
 - [Tabs](/components/tabs)

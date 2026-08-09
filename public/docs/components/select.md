@@ -48,4 +48,3 @@ Select menu in a right-to-left layout.
 ## See Also
 
 - [Multi Select](/components/multi_select)
-- [Select Native](/components/select_native)

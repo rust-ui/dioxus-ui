@@ -1,19 +1,17 @@
 use dioxus::prelude::*;
 
-use crate::ui::image::Image;
-
 #[component]
 pub fn BrandFooter() -> Element {
     rsx! {
         div { class: "flex gap-3 justify-center items-center",
-            Image {
+            img {
                 src: "/icons/logo-light-square-48.webp",
                 alt: "Logo Rust/UI",
                 width: 48,
                 height: 48,
                 class: "hidden dark:block size-6",
             }
-            Image {
+            img {
                 src: "/icons/logo-dark-square-48.webp",
                 alt: "Logo Rust/UI",
                 width: 48,

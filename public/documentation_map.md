@@ -109,16 +109,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * Custom
 * See Also
 
-### [Bento Grid](https://dioxus.rust-ui.com/docs/components/bento_grid)
-
-> A CSS grid layout for bento-style card arrangements.
-
-* Installation
-* Usage
-* Examples
-  * 6-Column
-* See Also
-
 ### [Bottom Nav](https://dioxus.rust-ui.com/docs/components/bottom-nav)
 
 > A mobile bottom navigation bar with touch-optimized buttons.
@@ -232,14 +222,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 ### [Carousel](https://dioxus.rust-ui.com/docs/components/carousel)
 
 > A scrollable carousel with keyboard navigation, looping, and orientation support.
-
-* Installation
-* Usage
-* See Also
-
-### [Chat](https://dioxus.rust-ui.com/docs/components/chat)
-
-> Chat UI layout components for building messaging interfaces.
 
 * Installation
 * Usage
@@ -424,22 +406,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Muted
 * See Also
 
-### [Expandable](https://dioxus.rust-ui.com/docs/components/expandable)
-
-> A trigger that expands to reveal additional content with a close button.
-
-* Installation
-* Usage
-* See Also
-
-### [FAQ Transition](https://dioxus.rust-ui.com/docs/components/faq_transition)
-
-> Accordion-style FAQ sections using CSS checkbox peer transitions.
-
-* Installation
-* Usage
-* See Also
-
 ### [Field](https://dioxus.rust-ui.com/docs/components/field)
 
 > Form field layout components for labels, descriptions, and error messages.
@@ -474,14 +440,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Usage
 * Examples
   * RTL
-* See Also
-
-### [Image](https://dioxus.rust-ui.com/docs/components/image)
-
-> An image component with lazy loading and responsive support.
-
-* Installation
-* Usage
 * See Also
 
 ### [Input](https://dioxus.rust-ui.com/docs/components/input)
@@ -717,16 +675,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * RTL
 * See Also
 
-### [Radio Group](https://dioxus.rust-ui.com/docs/components/radio-group)
-
-> Rust/UI component that displays a set of radio buttons where only one can be selected at a time.
-
-* Installation
-* Usage
-* Examples
-  * Custom Style
-* See Also
-
 ### [Scroll Area](https://dioxus.rust-ui.com/docs/components/scroll-area)
 
 > A scrollable container with a custom scrollbar.
@@ -885,14 +833,6 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Examples
   * Basic Toast
   * Variants
-* See Also
-
-### [Toggle](https://dioxus.rust-ui.com/docs/components/toggle)
-
-> Rust/UI component that displays a two-state button that can be either on or off.
-
-* Installation
-* Usage
 * See Also
 
 ### [Toolbar](https://dioxus.rust-ui.com/docs/components/toolbar)

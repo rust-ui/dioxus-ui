@@ -1,6 +1,5 @@
 use dioxus::prelude::*;
 
-use crate::ui::image::Image;
 use crate::ui::marquee::{Marquee, MarqueeRow, MarqueeWrapper};
 
 #[component]
@@ -40,7 +39,13 @@ fn CardFigureExample(blockquote: &'static str) -> Element {
     rsx! {
         figure { class: "overflow-hidden relative p-4 w-64 rounded-xl border cursor-pointer border-gray-950/[.1] bg-gray-950/[.01] dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15] hover:bg-gray-950/[.05]",
             div { class: "flex gap-2 items-center",
-                Image { src: "https://avatar.vercel.sh/jack", alt: "", width: 32, height: 32, class: "rounded-full" }
+                img {
+                    src: "https://avatar.vercel.sh/jack",
+                    alt: "",
+                    width: 32,
+                    height: 32,
+                    class: "rounded-full",
+                }
                 div { class: "flex flex-col",
                     figcaption { class: "text-sm font-medium dark:text-white", "Jack" }
                     p { class: "text-xs font-medium dark:text-white/40", "@jack" }
