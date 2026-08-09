@@ -47,6 +47,7 @@ pub mod input_otp;
 pub mod input_phone;
 pub mod input_prompt;
 pub mod item;
+pub mod image;
 pub mod kbd;
 pub mod label;
 pub mod link;
