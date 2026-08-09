@@ -6,7 +6,7 @@ use crate::ui::button::{Button, ButtonSize, ButtonVariant};
 
 #[component]
 pub fn DemoUseHorizontalScroll() -> Element {
-    let scroll_container_element = use_signal(|| None::<web_sys::Element>);
+    let mut scroll_container_element = use_signal(|| None::<web_sys::Element>);
     let scroll_ctx = use_horizontal_scroll(scroll_container_element.into(), None, None);
     let scroll_state = (scroll_ctx.scroll_state)();
 
