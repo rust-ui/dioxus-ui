@@ -20,13 +20,13 @@ pub fn Navbar() -> Element {
                     Link {
                         class: "text-sm text-muted-foreground hover:text-foreground transition-colors",
                         active_class: "text-foreground font-medium",
-                        to: Route::ComponentPage { name: "button".to_string() },
+                        to: Route::DocsComponentsIndexPage {},
                         "Components"
                     }
                     Link {
                         class: "text-sm text-muted-foreground hover:text-foreground transition-colors",
                         active_class: "text-foreground font-medium",
-                        to: Route::HookPage { name: "use-copy-clipboard".to_string() },
+                        to: Route::DocsHooksIndexPage {},
                         "Hooks"
                     }
                     Link {

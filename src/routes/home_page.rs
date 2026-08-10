@@ -4,7 +4,6 @@ use app_domain::themes::components::color_theme_picker::{ColorTheme, ColorThemeP
 use app_domain::themes::components::theme_selector::CopyCodeDialog;
 use app_domain::themes::theme_name::ThemeName;
 use app_domain::themes::themes_blocks::ThemesBlocks;
-use app_routes::ComponentsRoutes;
 use dioxus::prelude::*;
 use icons::Download;
 use registry::hooks::use_theme_mode::use_theme_mode;
@@ -99,7 +98,7 @@ fn SectionHeader() -> Element {
 
                 div { class: "flex flex-wrap gap-4 justify-center mt-4",
                     Button {
-                        href: "/components/button",
+                        href: "/docs/components",
                         variant: ButtonVariant::Outline,
                         "Browse Components"
                     }

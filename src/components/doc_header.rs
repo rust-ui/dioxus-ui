@@ -24,7 +24,8 @@ pub fn DocHeader(
     tags: Vec<&'static str>,
     raw: &'static str,
     slug: &'static str,
-    section: String,
+    section_label: String,
+    base_path: String,
     prev: Option<&'static RegistryEntry>,
     next: Option<&'static RegistryEntry>,
 ) -> Element {
@@ -34,21 +35,15 @@ pub fn DocHeader(
         copy_to_clipboard(raw);
     };
 
-    let (breadcrumb_text, breadcrumb_href) = match section.as_str() {
-        "components" => ("Components", "/docs/components"),
-        "hooks" => ("Hooks", "/docs/hooks"),
-        "docs" => ("Get Started", "/docs/introduction"),
-        _ => ("Components", "/docs/components"),
-    };
-
-    let view_md_url = format!("https://dioxus-ui.com/{}/{}.md", section, slug);
+    let breadcrumb_href = base_path.clone();
+    let view_md_url = format!("https://dioxus-ui.com{}/{}.md", base_path, slug);
     let chatgpt_url = format!(
-        "https://chatgpt.com/?q=I'm looking at this rust/ui documentation: https://dioxus-ui.com/{}/{}. Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.",
-        section, slug
+        "https://chatgpt.com/?q=I'm looking at this rust/ui documentation: https://dioxus-ui.com{}/{}.md. Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.",
+        base_path, slug
     );
     let claude_url = format!(
-        "https://claude.ai/new?q=I'm looking at this rust/ui documentation: https://dioxus-ui.com/{}/{}. Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.",
-        section, slug
+        "https://claude.ai/new?q=I'm looking at this rust/ui documentation: https://dioxus-ui.com{}/{}.md. Help me understand how to use it. Be ready to explain concepts, give examples, or help debug based on it.",
+        base_path, slug
     );
 
     rsx! {
@@ -59,7 +54,7 @@ pub fn DocHeader(
                     BreadcrumbItem { "Home" }
                     BreadcrumbSeparator {}
                     BreadcrumbItem { class: "hover:underline",
-                        BreadcrumbLink { href: breadcrumb_href, "{breadcrumb_text}" }
+                        BreadcrumbLink { href: &breadcrumb_href, "{section_label}" }
                     }
                     BreadcrumbSeparator {}
                     BreadcrumbItem {
@@ -129,14 +124,14 @@ pub fn DocHeader(
                     // Prev / Next compact
                     div { class: "flex gap-1",
                         if let Some(p) = prev {
-                            a { href: "/{section}/{p.slug}",
+                            a { href: format!("{}/{}", base_path, p.slug),
                                 Button { variant: ButtonVariant::Ghost, size: ButtonSize::Sm,
                                     ChevronLeft { class: "size-3.5" }
                                 }
                             }
                         }
                         if let Some(n) = next {
-                            a { href: "/{section}/{n.slug}",
+                            a { href: format!("{}/{}", base_path, n.slug),
                                 Button { variant: ButtonVariant::Ghost, size: ButtonSize::Sm,
                                     ChevronRight { class: "size-3.5" }
                                 }

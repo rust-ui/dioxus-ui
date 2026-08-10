@@ -64,14 +64,14 @@ pub fn HeaderHome() -> Element {
 fn FirstNavMenu() -> Element {
     rsx! {
         NavMenuItem {
-            NavMenuTrigger { href: "/components/button", "Registry" }
+            NavMenuTrigger { href: "/docs/components", "Registry" }
             NavMenuContent { class: "min-w-lg",
                 NavMenuContentInset { class: "grid gap-2 grid-cols-[auto_1fr]",
                     InsetCard {
                         NavMenuTitle { "Content" }
                         ul { class: "mt-1 space-y-2",
                             li {
-                                NavMenuLinkGrid { href: "/components/button",
+                                NavMenuLinkGrid { href: "/docs/components",
                                     IconWrapper { BlocksAnimate { class: "text-foreground" } }
                                     div { class: "space-y-0.5",
                                         NavMenuLinkTitle { "Components" }
@@ -89,7 +89,7 @@ fn FirstNavMenu() -> Element {
                                 }
                             }
                             li {
-                                NavMenuLinkGrid { href: "/hooks/use-copy-clipboard",
+                                NavMenuLinkGrid { href: "/docs/hooks",
                                     IconWrapper { CompassAnimate { class: "text-foreground" } }
                                     div { class: "space-y-0.5",
                                         NavMenuLinkTitle { "Hooks" }
@@ -103,19 +103,19 @@ fn FirstNavMenu() -> Element {
                         NavMenuTitle { "Get Started" }
                         ul { class: "mt-1",
                             li {
-                                NavMenuLinkGrid { class: "items-center", href: "/components/introduction",
+                                NavMenuLinkGrid { class: "items-center", href: "/docs/components/introduction",
                                     IconWrapper { FrameAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Introduction" }
                                 }
                             }
                             li {
-                                NavMenuLinkGrid { class: "items-center", href: "/components/installation",
+                                NavMenuLinkGrid { class: "items-center", href: "/docs/components/installation",
                                     IconWrapper { WindAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Installation" }
                                 }
                             }
                             li {
-                                NavMenuLinkGrid { class: "items-center", href: "/components/changelog",
+                                NavMenuLinkGrid { class: "items-center", href: "/docs/components/changelog",
                                     IconWrapper { CalendarDaysAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Changelog" }
                                 }

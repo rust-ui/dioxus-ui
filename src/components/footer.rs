@@ -16,10 +16,10 @@ pub fn Footer() -> Element {
                 div { class: "grid grid-cols-2 gap-8 text-sm",
                     div { class: "flex flex-col gap-2",
                         p { class: "font-medium", "Components" }
-                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/components/button", "Button" }
-                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/components/card", "Card" }
-                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/components/input", "Input" }
-                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/components/badge", "Badge" }
+                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/docs/components/button", "Button" }
+                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/docs/components/card", "Card" }
+                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/docs/components/input", "Input" }
+                        a { class: "text-muted-foreground hover:text-foreground transition-colors", href: "/docs/components/badge", "Badge" }
                     }
                     div { class: "flex flex-col gap-2",
                         p { class: "font-medium", "Links" }

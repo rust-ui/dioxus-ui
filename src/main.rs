@@ -26,8 +26,8 @@ use domain::workflows::routing::workflows_layout::WorkflowsLayout;
 use domain::workflows::routing::workflows_pages::WorkflowsPage;
 use routes::app_layout::AppLayout;
 use routes::component_page::ComponentPage;
+use routes::docs_index_page::{DocsComponentsIndexPage, DocsHooksIndexPage};
 use routes::docs_layout::DocsLayout;
-use routes::docs_page::DocsPage;
 use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
@@ -52,12 +52,19 @@ enum Route {
             Home {},
         #[end_layout]
         #[layout(DocsLayout)]
-            #[route("/components/:name")]
+            #[redirect("/docs", || Route::DocsComponentsIndexPage {})]
+            #[redirect("/components", || Route::DocsComponentsIndexPage {})]
+            #[redirect("/components/:name", |name: String| Route::ComponentPage { name })]
+            #[redirect("/hooks", || Route::DocsHooksIndexPage {})]
+            #[redirect("/hooks/:name", |name: String| Route::HookPage { name })]
+            #[route("/docs/components")]
+            DocsComponentsIndexPage {},
+            #[route("/docs/components/:name")]
             ComponentPage { name: String },
-            #[route("/hooks/:name")]
+            #[route("/docs/hooks")]
+            DocsHooksIndexPage {},
+            #[route("/docs/hooks/:name")]
             HookPage { name: String },
-            #[route("/docs/:name")]
-            DocsPage { name: String },
         #[end_layout]
         #[layout(BlocksLayout)]
             #[redirect("/blocks", || Route::LoginBlocks {})]

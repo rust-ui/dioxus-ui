@@ -30,7 +30,7 @@ pub fn PageNotFound(segments: Vec<String>) -> Element {
                             "Return Home"
                         }
                     }
-                    a { href: "/components/button",
+                    a { href: "/docs/components/button",
                         Button { variant: ButtonVariant::Outline, size: ButtonSize::Lg, "Browse Components" }
                     }
                 }
@@ -39,7 +39,7 @@ pub fn PageNotFound(segments: Vec<String>) -> Element {
                 div { class: "pt-8 w-full",
                     h3 { class: "mb-6 text-xl font-semibold", "Explore Our Registry" }
                     div { class: "grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3",
-                        a { href: "/components/accordion",
+                        a { href: "/docs/components/accordion",
                             Card { class: "transition-all hover:shadow-lg hover:scale-[1.02]",
                                 CardHeader {
                                     div { class: "flex gap-3 items-center",
@@ -55,7 +55,7 @@ pub fn PageNotFound(segments: Vec<String>) -> Element {
                             }
                         }
 
-                        a { href: "/hooks/use-copy-clipboard",
+                        a { href: "/docs/hooks/use-copy-clipboard",
                             Card { class: "transition-all hover:shadow-lg hover:scale-[1.02]",
                                 CardHeader {
                                     div { class: "flex gap-3 items-center",

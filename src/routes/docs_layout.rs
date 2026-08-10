@@ -14,7 +14,9 @@ pub fn DocsLayout() -> Element {
         div { class: "flex-1",
             div { class: "container mx-auto flex items-start",
                 Sidenav {}
-                Outlet::<Route> {}
+                div { class: "flex-1 min-w-0 page__fade",
+                    Outlet::<Route> {}
+                }
                 TableOfContents { items: toc() }
             }
         }

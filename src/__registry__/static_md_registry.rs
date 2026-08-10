@@ -5148,12 +5148,6 @@ pub static BUTTON_GROUP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static CLI: RegistryEntry = RegistryEntry {
-    slug: "cli",
-    raw: include_str!("../../public/docs/cli.md"),
-    tags: &[],
-};
-
 pub static CALLOUT: RegistryEntry = RegistryEntry {
     slug: "callout",
     raw: include_str!("../../public/docs/components/callout.md"),
@@ -5175,12 +5169,6 @@ pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
 pub static CAROUSEL: RegistryEntry = RegistryEntry {
     slug: "carousel",
     raw: include_str!("../../public/docs/components/carousel.md"),
-    tags: &[],
-};
-
-pub static CHANGELOG: RegistryEntry = RegistryEntry {
-    slug: "changelog",
-    raw: include_str!("../../public/docs/changelog.md"),
     tags: &[],
 };
 
@@ -5286,12 +5274,6 @@ pub static FIELD: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static FIGMA: RegistryEntry = RegistryEntry {
-    slug: "figma",
-    raw: include_str!("../../public/docs/figma.md"),
-    tags: &[],
-};
-
 pub static FORM: RegistryEntry = RegistryEntry {
     slug: "form",
     raw: include_str!("../../public/docs/components/form.md"),
@@ -5301,12 +5283,6 @@ pub static FORM: RegistryEntry = RegistryEntry {
 pub static HOVER_CARD: RegistryEntry = RegistryEntry {
     slug: "hover-card",
     raw: include_str!("../../public/docs/components/hover-card.md"),
-    tags: &[],
-};
-
-pub static ICONS: RegistryEntry = RegistryEntry {
-    slug: "icons",
-    raw: include_str!("../../public/docs/icons.md"),
     tags: &[],
 };
 
@@ -5343,18 +5319,6 @@ pub static INPUT_PHONE: RegistryEntry = RegistryEntry {
 pub static INPUT_PROMPT: RegistryEntry = RegistryEntry {
     slug: "input-prompt",
     raw: include_str!("../../public/docs/components/input-prompt.md"),
-    tags: &[],
-};
-
-pub static INSTALLATION: RegistryEntry = RegistryEntry {
-    slug: "installation",
-    raw: include_str!("../../public/docs/installation.md"),
-    tags: &[],
-};
-
-pub static INTRODUCTION: RegistryEntry = RegistryEntry {
-    slug: "introduction",
-    raw: include_str!("../../public/docs/introduction.md"),
     tags: &[],
 };
 
@@ -5580,6 +5544,42 @@ pub static TOOLTIP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
+pub static INTRODUCTION: RegistryEntry = RegistryEntry {
+    slug: "introduction",
+    raw: include_str!("../../public/docs/introduction.md"),
+    tags: &[],
+};
+
+pub static INSTALLATION: RegistryEntry = RegistryEntry {
+    slug: "installation",
+    raw: include_str!("../../public/docs/installation.md"),
+    tags: &[],
+};
+
+pub static CLI: RegistryEntry = RegistryEntry {
+    slug: "cli",
+    raw: include_str!("../../public/docs/cli.md"),
+    tags: &[],
+};
+
+pub static ICONS: RegistryEntry = RegistryEntry {
+    slug: "icons",
+    raw: include_str!("../../public/docs/icons.md"),
+    tags: &[],
+};
+
+pub static FIGMA: RegistryEntry = RegistryEntry {
+    slug: "figma",
+    raw: include_str!("../../public/docs/figma.md"),
+    tags: &[],
+};
+
+pub static CHANGELOG: RegistryEntry = RegistryEntry {
+    slug: "changelog",
+    raw: include_str!("../../public/docs/changelog.md"),
+    tags: &[],
+};
+
 pub static USE_COPY_CLIPBOARD: RegistryEntry = RegistryEntry {
     slug: "use-copy-clipboard",
     raw: include_str!("../../public/docs/hooks/use-copy-clipboard.md"),
@@ -5634,7 +5634,14 @@ pub static USE_RANDOM: RegistryEntry = RegistryEntry {
     tags: &["utils", "animation", "css"],
 };
 
-pub static COMPONENT_REGISTRY: &[&RegistryEntry] = &[
+pub static DOCS_COMPONENTS_REGISTRY: &[&RegistryEntry] = &[
+    &RTL,
+    &INTRODUCTION,
+    &INSTALLATION,
+    &CLI,
+    &ICONS,
+    &FIGMA,
+    &CHANGELOG,
     &ACCORDION,
     &ALERT,
     &ALERT_DIALOG,
@@ -5731,13 +5738,13 @@ pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[
 ];
 
 pub static GET_STARTED_REGISTRY: &[&RegistryEntry] = &[
-    &CLI,
-    &CHANGELOG,
-    &FIGMA,
-    &ICONS,
-    &INSTALLATION,
-    &INTRODUCTION,
     &RTL,
+    &INTRODUCTION,
+    &INSTALLATION,
+    &CLI,
+    &ICONS,
+    &FIGMA,
+    &CHANGELOG,
 ];
 
 fn find_in(registry: &[&'static RegistryEntry], slug: &str) -> Option<&'static RegistryEntry> {
@@ -5758,12 +5765,12 @@ fn prev_next_in(
     }
 }
 
-pub fn find_component_entry(slug: &str) -> Option<&'static RegistryEntry> {
-    find_in(COMPONENT_REGISTRY, slug)
+pub fn find_docs_component_entry(slug: &str) -> Option<&'static RegistryEntry> {
+    find_in(DOCS_COMPONENTS_REGISTRY, slug)
 }
 
-pub fn component_prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'static RegistryEntry>) {
-    prev_next_in(COMPONENT_REGISTRY, slug)
+pub fn docs_component_prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'static RegistryEntry>) {
+    prev_next_in(DOCS_COMPONENTS_REGISTRY, slug)
 }
 
 pub fn find_hook_entry(slug: &str) -> Option<&'static RegistryEntry> {
@@ -5776,8 +5783,4 @@ pub fn hook_prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'s
 
 pub fn find_get_started_entry(slug: &str) -> Option<&'static RegistryEntry> {
     find_in(GET_STARTED_REGISTRY, slug)
-}
-
-pub fn get_started_prev_next(slug: &str) -> (Option<&'static RegistryEntry>, Option<&'static RegistryEntry>) {
-    prev_next_in(GET_STARTED_REGISTRY, slug)
 }

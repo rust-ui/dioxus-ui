@@ -9,6 +9,7 @@ use crate::components::newsletter_signup::NewsletterSignup;
 use crate::components::toc::TocItem;
 use crate::markdown::converter::extract_toc;
 use crate::registry::types::RegistryEntry;
+use crate::routes::page_not_found::PageNotFound;
 
 #[component]
 pub fn HookPage(name: String) -> Element {
@@ -23,13 +24,13 @@ pub fn HookPage(name: String) -> Element {
         div { class: "flex flex-col pt-4 mx-auto w-full min-h-screen px-3 md:px-4 max-w-[730px]",
             match entry {
                 None => rsx! {
-                    p { class: "text-muted-foreground", "Hook not found: {name}" }
+                    PageNotFound { segments: vec!["docs".into(), "hooks".into(), name.clone()] }
                 },
                 Some(e) => rsx! {
                     SeoMeta {
                         title: format!("{} · Dioxus UI", e.title()),
                         description: e.description(),
-                        canonical_url: format!("https://dioxus-ui.com/hooks/{}", e.slug),
+                        canonical_url: format!("https://dioxus-ui.com/docs/hooks/{}", e.slug),
                         og_type: "article".to_string(),
                     }
                     DocHeader {
@@ -38,7 +39,8 @@ pub fn HookPage(name: String) -> Element {
                         tags: e.tags.to_vec(),
                         raw: e.raw,
                         slug: e.slug,
-                        section: "hooks".to_string(),
+                        section_label: "Hooks".to_string(),
+                        base_path: "/docs/hooks".to_string(),
                         prev,
                         next,
                     }
@@ -60,7 +62,7 @@ fn HookBottomNav(prev: Option<&'static RegistryEntry>, next: Option<&'static Reg
         div { class: "flex justify-between items-center mt-8",
             if let Some(p) = prev {
                 a {
-                    href: "/hooks/{p.slug}",
+                    href: "/docs/hooks/{p.slug}",
                     class: "py-0 px-2 h-8 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground z-50",
                     ChevronLeft {}
                     span { "{p.title()}" }
@@ -70,7 +72,7 @@ fn HookBottomNav(prev: Option<&'static RegistryEntry>, next: Option<&'static Reg
             }
             if let Some(n) = next {
                 a {
-                    href: "/hooks/{n.slug}",
+                    href: "/docs/hooks/{n.slug}",
                     class: "py-0 px-2 h-8 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring border bg-background border-input hover:bg-accent hover:text-accent-foreground z-50",
                     span { "{n.title()}" }
                     ChevronRight {}

@@ -7,14 +7,14 @@ use registry::ui::footer::{
     FooterGrid, FooterLink, FooterLinks, FooterLinksSection, FooterSection, FooterSectionsGrid, FooterTitle,
 };
 
-const ROUTE_ACCORDION: &str = "/components/accordion";
-const ROUTE_BUTTON: &str = "/components/button";
-const ROUTE_CARD: &str = "/components/card";
-const ROUTE_INSTALLATION: &str = "/components/installation";
+const ROUTE_ACCORDION: &str = "/docs/components/accordion";
+const ROUTE_BUTTON: &str = "/docs/components/button";
+const ROUTE_CARD: &str = "/docs/components/card";
+const ROUTE_INSTALLATION: &str = "/docs/components/installation";
 
-const ROUTE_USE_COPY_CLIPBOARD: &str = "/hooks/use-copy-clipboard";
-const ROUTE_USE_LOCK_BODY_SCROLL: &str = "/hooks/use-lock-body-scroll";
-const ROUTE_USE_HORIZONTAL_SCROLL: &str = "/hooks/use-horizontal-scroll";
+const ROUTE_USE_COPY_CLIPBOARD: &str = "/docs/hooks/use-copy-clipboard";
+const ROUTE_USE_LOCK_BODY_SCROLL: &str = "/docs/hooks/use-lock-body-scroll";
+const ROUTE_USE_HORIZONTAL_SCROLL: &str = "/docs/hooks/use-horizontal-scroll";
 
 const ROUTE_HOME: &str = "/";
 const URL_RUSTIFY: &str = "https://rustify.rs/";
