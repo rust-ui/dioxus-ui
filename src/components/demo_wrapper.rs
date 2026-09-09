@@ -32,6 +32,14 @@ pub fn DemoWrapper(
 
     let mut tab = use_signal(|| DemoTab::Preview);
 
+    // Client-side nav reuses this component instance, so `tab` survives route
+    // changes. Reset to Preview during render when the demo changes (no effect).
+    let mut prev_demo = use_signal(|| demo_name.clone());
+    if prev_demo() != demo_name {
+        prev_demo.set(demo_name.clone());
+        tab.set(DemoTab::Preview);
+    }
+
     // Drag handle: grows the bg div (starts at w-0) leftward, content shrinks naturally (flex-[1_1_auto])
     let hid = handle_id.clone();
     let bgid = bg_id.clone();
