@@ -1,6 +1,10 @@
 +++
 title = "Radio Button Group"
-description = "A CSS-styled radio button group with custom visual selection."
+description = "Rust/UI component that displays a group of radio buttons."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticRadioButtonGroup />

@@ -1,6 +1,8 @@
 +++
 title = "Table"
 description = "Rust/UI component that displays a table with header, body and footer."
+tags = ["table"]
+is_new = false
 image = "/images/thumbnails/table.webp"
 image_dark = "/images/thumbnails/table-dark.webp"
 +++

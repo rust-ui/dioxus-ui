@@ -1,6 +1,10 @@
 +++
 title = "Carousel"
-description = "A scrollable carousel with keyboard navigation, looping, and orientation support."
+description = "Rust/UI component for cycling through elements — slides, images, or cards — with prev/next navigation."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticCarousel />

@@ -1,7 +1,7 @@
 +++
 title = "Animate Group"
-description = "Animated group container for staggered enter transitions in Dioxus."
-tags = []
+description = "A wrapper for animations, made with Tailwind CSS. Works seamlessly with any children component."
+tags = ["animation"]
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"
 image_dark = "/images/thumbnails/_placeholder-dark.webp"

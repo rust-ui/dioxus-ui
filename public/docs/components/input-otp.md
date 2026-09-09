@@ -1,6 +1,10 @@
 +++
 title = "Input OTP"
-description = "A one-time password input with individual digit slots."
+description = "Rust/UI component that displays an OTP input."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticInputOtp />

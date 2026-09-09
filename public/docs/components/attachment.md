@@ -1,7 +1,10 @@
 +++
 title = "Attachment"
 description = "Displays a file or image attachment with media, name, metadata, and optional actions. Use it for files and images in chat composers, message threads, and upload lists."
+tags = []
 is_new = true
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticAttachment class="bg-accent" />

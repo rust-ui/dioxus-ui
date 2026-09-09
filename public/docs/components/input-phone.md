@@ -1,7 +1,7 @@
 +++
 title = "Input Phone"
-description = "Phone number input with country selection and formatting for Dioxus."
-tags = []
+description = "Rust/UI component that displays a phone number input with country code selector and automatic formatting."
+tags = ["input"]
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"
 image_dark = "/images/thumbnails/_placeholder-dark.webp"

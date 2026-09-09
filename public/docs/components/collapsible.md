@@ -1,6 +1,10 @@
 +++
 title = "Collapsible"
 description = "An interactive component which expands/collapses a panel with smooth animation."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticCollapsible />

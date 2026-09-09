@@ -1,6 +1,10 @@
 +++
 title = "Skeleton"
 description = "Rust/UI component that show a placeholder while content is loading."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticSkeleton />

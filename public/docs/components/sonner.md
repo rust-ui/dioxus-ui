@@ -1,10 +1,10 @@
 +++
 title = "Sonner"
-description = "Toast-style notification API and demos inspired by Sonner for Dioxus."
+description = "Rust/UI Toast, inspired by Sonner."
 tags = []
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/toast.webp"
+image_dark = "/images/thumbnails/toast-dark.webp"
 +++
 
 <StaticSonner />

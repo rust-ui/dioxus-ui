@@ -1,6 +1,9 @@
 +++
 title = "Radio Button"
-description = "A signal-driven radio group for selecting a single option from a list."
+description = "Rust/UI component that displays a set of checkable buttons where only one can be selected at a time."
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticRadioButton />

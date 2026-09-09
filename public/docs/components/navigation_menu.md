@@ -1,6 +1,6 @@
 +++
 title = "Navigation Menu"
-description = "Composable navigation menu layouts for Dioxus."
+description = "Rust/UI component for site-level horizontal navigation with animated dropdown panels and hover-activated content."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

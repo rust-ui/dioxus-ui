@@ -1,6 +1,8 @@
 +++
 title = "Popover"
-description = "A floating panel that opens on click, anchored to a trigger element."
+description = "Rust/UI component that displays rich content in a portal, triggered by a button."
+tags = ["popover"]
+is_new = false
 image = "/images/thumbnails/popover.webp"
 image_dark = "/images/thumbnails/popover-dark.webp"
 +++

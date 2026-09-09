@@ -1,6 +1,6 @@
 +++
 title = "Direction Provider"
-description = "RTL and LTR direction context for Dioxus components."
+description = "Rust/UI wrapper component that sets text direction (LTR or RTL) for all children, enabling right-to-left layout support."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

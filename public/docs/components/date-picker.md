@@ -1,6 +1,6 @@
 +++
 title = "Date Picker"
-description = "Calendar and date selection components for Dioxus."
+description = "Rust/UI component that displays a date picker."
 tags = []
 is_new = false
 image = "/images/thumbnails/date-picker.webp"

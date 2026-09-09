@@ -1,6 +1,10 @@
 +++
 title = "Avatar"
 description = "Rust/UI component that displays an avatar with image and fallback support."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticAvatar />

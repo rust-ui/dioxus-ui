@@ -94,7 +94,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
         add_cmd: Some("attachment"),
     },
     CommandItemData {
-        label: "Auto Form",
+        label: "AutoForm",
         href: "/docs/components/auto-form",
         category: CommandCategory::Components,
         add_cmd: Some("auto_form"),
@@ -238,7 +238,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
         add_cmd: Some("direction_provider"),
     },
     CommandItemData {
-        label: "Drag And Drop",
+        label: "Drag and Drop",
         href: "/docs/components/drag-and-drop",
         category: CommandCategory::Components,
         add_cmd: Some("drag_and_drop"),
@@ -370,7 +370,7 @@ pub const COMPONENTS_ITEMS: &[CommandItemData] = &[
         add_cmd: Some("message"),
     },
     CommandItemData {
-        label: "Multi Select",
+        label: "MultiSelect",
         href: "/docs/components/multi-select",
         category: CommandCategory::Components,
         add_cmd: Some("multi_select"),

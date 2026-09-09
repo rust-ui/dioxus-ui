@@ -1,6 +1,6 @@
 +++
 title = "Combobox"
-description = "Searchable selection UI built with command-style filtering in Dioxus."
+description = "Autocomplete input and command palette with a list of suggestions."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

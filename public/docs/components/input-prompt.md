@@ -1,10 +1,10 @@
 +++
 title = "Input Prompt"
-description = "Prompt-style input surface for asking questions and submitting contextual actions in Dioxus."
-tags = []
+description = "A compound input component for AI chat interfaces — combines an auto-growing textarea with a footer toolbar and a submit button."
+tags = ["input"]
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/input.webp"
+image_dark = "/images/thumbnails/input-dark.webp"
 +++
 
 <StaticInputPrompt />

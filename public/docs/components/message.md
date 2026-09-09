@@ -1,6 +1,10 @@
 +++
 title = "Message"
 description = "Displays a message in a conversation, with optional avatar, header, footer, and alignment."
+tags = []
+is_new = true
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticMessage />

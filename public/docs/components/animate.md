@@ -1,6 +1,10 @@
 +++
 title = "Animate"
-description = "A wrapper that applies entrance animations and hover animations via CSS."
+description = "A wrapper for animations, made with Tailwind CSS. Works seamlessly with any children component."
+tags = ["animation"]
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticAnimate />

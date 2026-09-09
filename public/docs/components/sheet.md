@@ -1,6 +1,10 @@
 +++
 title = "Sheet"
-description = "A panel that slides in from any edge of the screen, built on top of Dialog."
+description = "Rust/UI component that displays a sheet."
+tags = ["navigation"]
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticSheet />

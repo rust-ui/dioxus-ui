@@ -1,7 +1,7 @@
 +++
 title = "Form"
-description = "Typed form composition primitives for Dioxus with field context and validation helpers."
-tags = []
+description = "Rust/UI components for building accessible forms with labels, descriptions, and error messages."
+tags = ["input"]
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"
 image_dark = "/images/thumbnails/_placeholder-dark.webp"

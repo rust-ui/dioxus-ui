@@ -1,6 +1,8 @@
 +++
 title = "Input"
 description = "Rust/UI component that displays an input field that allows the user to enter text."
+tags = ["input"]
+is_new = false
 image = "/images/thumbnails/input.webp"
 image_dark = "/images/thumbnails/input-dark.webp"
 +++

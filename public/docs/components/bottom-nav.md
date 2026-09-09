@@ -1,6 +1,10 @@
 +++
 title = "Bottom Nav"
-description = "A mobile bottom navigation bar with touch-optimized buttons."
+description = "Rust/UI component that displays a mobile-friendly bottom navigation bar."
+tags = ["navigation"]
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticBottomNav />

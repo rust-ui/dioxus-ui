@@ -1,6 +1,8 @@
 +++
 title = "Badge"
 description = "Rust/UI component that displays a badge or a component that looks like a badge."
+tags = []
+is_new = false
 image = "/images/thumbnails/badge.webp"
 image_dark = "/images/thumbnails/badge-dark.webp"
 +++

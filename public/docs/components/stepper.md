@@ -1,6 +1,10 @@
 +++
 title = "Stepper"
-description = "Rust/UI component for multi-step flows with a shared, navigable step index."
+description = "Rust/UI component that displays a set of steps for multi-step workflows like onboarding, checkout, and setup wizards."
+tags = ["navigation"]
+is_new = true
+image = "/images/thumbnails/stepper.webp"
+image_dark = "/images/thumbnails/stepper-dark.webp"
 +++
 
 <StaticStepper />

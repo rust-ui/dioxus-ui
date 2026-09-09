@@ -1,6 +1,10 @@
 +++
 title = "Spinner"
 description = "A loading spinner component with animation for indicating processing states."
+tags = ["animation", "utils"]
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticSpinner />

@@ -1,6 +1,10 @@
 +++
 title = "Slider"
 description = "Rust/UI component that allows users to select a value from a range."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticSlider />

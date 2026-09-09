@@ -1,6 +1,10 @@
 +++
 title = "Field"
-description = "Form field layout components for labels, descriptions, and error messages."
+description = "Rust/UI components for composing accessible form fields with labels, descriptions, and error messages."
+tags = ["input"]
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticField />

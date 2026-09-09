@@ -1,6 +1,8 @@
 +++
 title = "Accordion"
 description = "Rust/UI component that displays an Accordion."
+tags = ["accordion"]
+is_new = false
 image = "/images/thumbnails/accordion.webp"
 image_dark = "/images/thumbnails/accordion-dark.webp"
 +++

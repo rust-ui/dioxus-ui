@@ -1,6 +1,8 @@
 +++
 title = "Alert"
 description = "Rust/UI component that displays a callout to the user."
+tags = []
+is_new = false
 image = "/images/thumbnails/alert.webp"
 image_dark = "/images/thumbnails/alert-dark.webp"
 +++

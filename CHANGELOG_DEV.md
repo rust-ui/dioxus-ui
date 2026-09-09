@@ -6,6 +6,20 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **Component doc metadata**: Synced the TOML frontmatter of every
+  `public/docs/components/*.md` to match the leptos site exactly (same keys,
+  same values): `title`, `description`, `tags`, `is_new`, `image`,
+  `image_dark`. 75 files updated. Many cards on `/docs/components` had an empty
+  `description` or `tags`, ad-hoc dioxus-only wording, or a missing
+  `image` / `image_dark` (falling back to nothing or `_placeholder.webp`);
+  they now carry the same copy and thumbnails as leptos. Labels also
+  normalise (`Auto Form` -> `AutoForm`, `Multi Select` -> `MultiSelect`,
+  `Drag And Drop` -> `Drag and Drop`). 3 dioxus-only docs with no leptos
+  counterpart (`image`, `mask`, `toolbar`) left untouched. Doc bodies are
+  unchanged. Regenerated `src/__registry__/{demos_sidenav,static_md_registry,
+  my_command_bar_constants}.rs` and `public/documentation_map.md`.
+  `public/docs/components/*.md`
+
 - **Page transitions**: Ported the leptos `page_transition` util.
   `src/utils/page_transition.rs` adds `retrigger_page_fade()` (replays the
   `page__fade` intro on `#page__outlet` on every route change) and a

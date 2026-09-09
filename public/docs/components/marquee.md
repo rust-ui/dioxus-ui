@@ -1,6 +1,10 @@
 +++
 title = "Marquee"
-description = "An infinite scrolling marquee with pause-on-hover support."
+description = "Rust/UI component that displays an infinite scrolling component that can be used to display text, images, or videos."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticMarquee />

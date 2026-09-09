@@ -1,6 +1,10 @@
 +++
 title = "Marker"
-description = "Rust/UI component for inline status markers, timeline separators, and event indicators."
+description = "Displays an inline status, system note, bordered row, or labeled separator in a conversation."
+tags = []
+is_new = true
+image = "/images/thumbnails/marker.webp"
+image_dark = "/images/thumbnails/marker-dark.webp"
 +++
 
 <StaticMarker />

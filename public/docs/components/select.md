@@ -1,7 +1,7 @@
 +++
 title = "Select"
-description = "Composable select component for choosing a single value in Dioxus."
-tags = []
+description = "Rust/UI component that displays a dropdown menu that allows the user to select an option."
+tags = ["select"]
 is_new = false
 image = "/images/thumbnails/select.webp"
 image_dark = "/images/thumbnails/select-dark.webp"

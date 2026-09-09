@@ -1,6 +1,6 @@
 +++
 title = "Context Menu"
-description = "Right-click context menu patterns for Dioxus applications."
+description = "Rust/UI component that displays a context menu on right-click."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

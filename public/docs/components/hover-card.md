@@ -1,6 +1,10 @@
 +++
 title = "Hover Card"
-description = "A floating card that appears on hover using CSS anchor positioning."
+description = "Rust/UI component that displays rich content in a floating card when hovering over a trigger element."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticHoverCard />

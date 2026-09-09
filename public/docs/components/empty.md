@@ -1,6 +1,10 @@
 +++
 title = "Empty"
 description = "Use the Empty component to display a empty state."
+tags = []
+is_new = false
+image = "/images/thumbnails/button.webp"
+image_dark = "/images/thumbnails/button-dark.webp"
 +++
 
 <StaticEmpty />

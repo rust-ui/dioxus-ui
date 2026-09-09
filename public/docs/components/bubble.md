@@ -1,6 +1,10 @@
 +++
 title = "Bubble"
 description = "Displays a chat message bubble with multiple style variants and an optional reactions overlay."
+tags = []
+is_new = true
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticBubble />

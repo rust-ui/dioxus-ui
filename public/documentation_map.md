@@ -32,9 +32,18 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * Destructive
 * See Also
 
+### [Alert Dialog](https://dioxus.rust-ui.com/docs/components/alert-dialog)
+
+> Rust/UI component that displays a modal dialog that interrupts the user with important content and expects a response.
+
+* Installation
+* Usage
+  * Small (Media)
+* See Also
+
 ### [Animate](https://dioxus.rust-ui.com/docs/components/animate)
 
-> A wrapper that applies entrance animations and hover animations via CSS.
+> A wrapper for animations, made with Tailwind CSS. Works seamlessly with any children component.
 
 * Installation
 * Usage
@@ -44,7 +53,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Animate Group](https://dioxus.rust-ui.com/docs/components/animate-group)
 
-> Animated group container for staggered enter transitions in Dioxus.
+> A wrapper for animations, made with Tailwind CSS. Works seamlessly with any children component.
 
 * Installation
 * Usage
@@ -54,7 +63,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Aspect Ratio](https://dioxus.rust-ui.com/docs/components/aspect_ratio)
 
-> A container that maintains a given aspect ratio for its content.
+> Displays content within a desired ratio.
 
 * Installation
 * Usage
@@ -75,9 +84,9 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * Trigger
 * See Also
 
-### [Auto Form](https://dioxus.rust-ui.com/docs/components/auto-form)
+### [AutoForm](https://dioxus.rust-ui.com/docs/components/auto-form)
 
-> Generate Dioxus forms automatically from typed Rust data structures.
+> Automatically generate form UI from Rust structs using a derive macro with built-in validation support.
 
 * Installation
 * Usage
@@ -111,7 +120,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Bottom Nav](https://dioxus.rust-ui.com/docs/components/bottom-nav)
 
-> A mobile bottom navigation bar with touch-optimized buttons.
+> Rust/UI component that displays a mobile-friendly bottom navigation bar.
 
 * Installation
 * Usage
@@ -164,7 +173,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Button Action](https://dioxus.rust-ui.com/docs/components/button-action)
 
-> Press-and-hold action button for destructive or sensitive interactions in Dioxus.
+> A button that requires press-and-hold to activate, showing a progress indicator.
 
 * Installation
 * Usage
@@ -174,7 +183,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Button Group](https://dioxus.rust-ui.com/docs/components/button-group)
 
-> Rust/UI component that groups buttons together into a cohesive unit.
+> A component that groups multiple buttons together with shared borders and styling.
 
 * Installation
 * Usage
@@ -188,7 +197,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Callout](https://dioxus.rust-ui.com/docs/components/callout)
 
-> A callout component for displaying notes, info, and warnings.
+> A styled alert block for docs and rich content, with Default, Info, and Warning variants.
 
 * Installation
 * Usage
@@ -213,7 +222,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Card Carousel](https://dioxus.rust-ui.com/docs/components/card-carousel)
 
-> A compact image carousel with overlay nav and indicators.
+> Rust/UI component that displays a card similar as Airbnb Card.
 
 * Installation
 * Usage
@@ -221,7 +230,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Carousel](https://dioxus.rust-ui.com/docs/components/carousel)
 
-> A scrollable carousel with keyboard navigation, looping, and orientation support.
+> Rust/UI component for cycling through elements — slides, images, or cards — with prev/next navigation.
 
 * Installation
 * Usage
@@ -257,7 +266,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Combobox](https://dioxus.rust-ui.com/docs/components/combobox)
 
-> Searchable selection UI built with command-style filtering in Dioxus.
+> Autocomplete input and command palette with a list of suggestions.
 
 * Installation
 * Usage
@@ -267,7 +276,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Command](https://dioxus.rust-ui.com/docs/components/command)
 
-> Fast, composable, unstyled command menu for Dioxus.
+> Fast, composable, unstyled command menu for Leptos.
 
 * Installation
 * Components
@@ -279,7 +288,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Context Menu](https://dioxus.rust-ui.com/docs/components/context-menu)
 
-> Right-click context menu patterns for Dioxus applications.
+> Rust/UI component that displays a context menu on right-click.
 
 * Installation
 * Usage
@@ -291,7 +300,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Data Grid](https://dioxus.rust-ui.com/docs/components/data-grid)
 
-> High-performance data grid with virtual scrolling, column pinning, cell selection, drag selection, and copy-to-clipboard.
+> High-performance data grid with virtual scrolling, column pinning, cell selection, inline editing, and drag selection.
 
 * Installation
 * Components
@@ -304,7 +313,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Data Table](https://dioxus.rust-ui.com/docs/components/data-table)
 
-> Structured data table demos for sorting, filtering, and tabular presentation in Dioxus.
+> Powerful data table with advanced features including filtering, sorting, column visibility, and row selection.
 
 * Installation
 * Usage
@@ -315,7 +324,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Date Picker](https://dioxus.rust-ui.com/docs/components/date-picker)
 
-> Calendar and date selection components for Dioxus.
+> Rust/UI component that displays a date picker.
 
 * Installation
 * Usage
@@ -341,7 +350,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Direction Provider](https://dioxus.rust-ui.com/docs/components/direction-provider)
 
-> RTL and LTR direction context for Dioxus components.
+> Rust/UI wrapper component that sets text direction (LTR or RTL) for all children, enabling right-to-left layout support.
 
 * Installation
 * Usage
@@ -351,9 +360,9 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * RTL
 * See Also
 
-### [Drag And Drop](https://dioxus.rust-ui.com/docs/components/drag-and-drop)
+### [Drag and Drop](https://dioxus.rust-ui.com/docs/components/drag-and-drop)
 
-> Drag and drop sortable interface patterns in Dioxus.
+> Rust/UI component that allows users to drag and drop elements.
 
 * Installation
 * Usage
@@ -363,7 +372,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Drawer](https://dioxus.rust-ui.com/docs/components/drawer)
 
-> A bottom sheet that slides up from the bottom of the screen.
+> A Drawer for Rust. Inspired by the amazing work of Emil Kowalski.
 
 * Installation
 * Usage
@@ -371,7 +380,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Dropdown Menu](https://dioxus.rust-ui.com/docs/components/dropdown-menu)
 
-> Composable dropdown menu primitives for Dioxus.
+> Rust/UI component that displays a dropdown menu.
 
 * Installation
 * Usage
@@ -387,7 +396,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Dropzone](https://dioxus.rust-ui.com/docs/components/dropzone)
 
-> Rust/UI component for drag-and-drop file uploads with list and grid views.
+> Rust/UI component that allows you to drop files onto it.
 
 * Installation
 * Usage
@@ -408,7 +417,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Field](https://dioxus.rust-ui.com/docs/components/field)
 
-> Form field layout components for labels, descriptions, and error messages.
+> Rust/UI components for composing accessible form fields with labels, descriptions, and error messages.
 
 * Installation
 * Usage
@@ -418,7 +427,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Form](https://dioxus.rust-ui.com/docs/components/form)
 
-> Typed form composition primitives for Dioxus with field context and validation helpers.
+> Rust/UI components for building accessible forms with labels, descriptions, and error messages.
 
 * Installation
 * Usage
@@ -434,7 +443,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Hover Card](https://dioxus.rust-ui.com/docs/components/hover-card)
 
-> A floating card that appears on hover using CSS anchor positioning.
+> Rust/UI component that displays rich content in a floating card when hovering over a trigger element.
 
 * Installation
 * Usage
@@ -483,7 +492,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Input OTP](https://dioxus.rust-ui.com/docs/components/input-otp)
 
-> A one-time password input with individual digit slots.
+> Rust/UI component that displays an OTP input.
 
 * Installation
 * Usage
@@ -493,7 +502,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Input Phone](https://dioxus.rust-ui.com/docs/components/input-phone)
 
-> Phone number input with country selection and formatting for Dioxus.
+> Rust/UI component that displays a phone number input with country code selector and automatic formatting.
 
 * Installation
 * Usage
@@ -504,7 +513,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Input Prompt](https://dioxus.rust-ui.com/docs/components/input-prompt)
 
-> Prompt-style input surface for asking questions and submitting contextual actions in Dioxus.
+> A compound input component for AI chat interfaces — combines an auto-growing textarea with a footer toolbar and a submit button.
 
 * Installation
 * Usage
@@ -551,7 +560,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Marker](https://dioxus.rust-ui.com/docs/components/marker)
 
-> Rust/UI component for inline status markers, timeline separators, and event indicators.
+> Displays an inline status, system note, bordered row, or labeled separator in a conversation.
 
 * Installation
 * Usage
@@ -567,7 +576,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Marquee](https://dioxus.rust-ui.com/docs/components/marquee)
 
-> An infinite scrolling marquee with pause-on-hover support.
+> Rust/UI component that displays an infinite scrolling component that can be used to display text, images, or videos.
 
 * Installation
 * Usage
@@ -583,7 +592,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Menubar](https://dioxus.rust-ui.com/docs/components/menubar)
 
-> Desktop-style menubar interactions for Dioxus applications.
+> Rust/UI component that displays a horizontal menu bar with dropdown menus, submenus, checkboxes, and radio items.
 
 * Installation
 * Usage
@@ -607,9 +616,9 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * Attachment
 * See Also
 
-### [Multi Select](https://dioxus.rust-ui.com/docs/components/multi-select)
+### [MultiSelect](https://dioxus.rust-ui.com/docs/components/multi-select)
 
-> Multi-value selection component for Dioxus.
+> Rust/UI component that displays a dropdown menu that allows the user to select several options.
 
 * Installation
 * Usage
@@ -621,7 +630,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Navigation Menu](https://dioxus.rust-ui.com/docs/components/navigation_menu)
 
-> Composable navigation menu layouts for Dioxus.
+> Rust/UI component for site-level horizontal navigation with animated dropdown panels and hover-activated content.
 
 * Installation
 * Usage
@@ -641,7 +650,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Popover](https://dioxus.rust-ui.com/docs/components/popover)
 
-> A floating panel that opens on click, anchored to a trigger element.
+> Rust/UI component that displays rich content in a portal, triggered by a button.
 
 * Installation
 * Usage
@@ -649,7 +658,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Pressable](https://dioxus.rust-ui.com/docs/components/pressable)
 
-> A wrapper that adds press feedback (scale effect) to any children.
+> Wrapper component that adds press feedback (scale effect) to any children.
 
 * Installation
 * Usage
@@ -667,7 +676,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Radio Button](https://dioxus.rust-ui.com/docs/components/radio-button)
 
-> A signal-driven radio group for selecting a single option from a list.
+> Rust/UI component that displays a set of checkable buttons where only one can be selected at a time.
 
 * Installation
 * Usage
@@ -675,7 +684,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Radio Button Group](https://dioxus.rust-ui.com/docs/components/radio-button-group)
 
-> A CSS-styled radio button group with custom visual selection.
+> Rust/UI component that displays a group of radio buttons.
 
 * Installation
 * Usage
@@ -685,7 +694,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Scroll Area](https://dioxus.rust-ui.com/docs/components/scroll-area)
 
-> A scrollable container with a custom scrollbar.
+> Rust/UI component that provides custom scrolling functionality with cross-browser styling.
 
 * Installation
 * Usage
@@ -696,7 +705,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Select](https://dioxus.rust-ui.com/docs/components/select)
 
-> Composable select component for choosing a single value in Dioxus.
+> Rust/UI component that displays a dropdown menu that allows the user to select an option.
 
 * Installation
 * Usage
@@ -716,7 +725,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Sheet](https://dioxus.rust-ui.com/docs/components/sheet)
 
-> A panel that slides in from any edge of the screen, built on top of Dialog.
+> Rust/UI component that displays a sheet.
 
 * Installation
 * Usage
@@ -724,7 +733,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Shimmer](https://dioxus.rust-ui.com/docs/components/shimmer)
 
-> A loading shimmer effect overlay driven by a signal.
+> Auto-adapting skeleton loader that mirrors your DOM structure.
 
 * Installation
 * Usage
@@ -755,7 +764,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Sonner](https://dioxus.rust-ui.com/docs/components/sonner)
 
-> Toast-style notification API and demos inspired by Sonner for Dioxus.
+> Rust/UI Toast, inspired by Sonner.
 
 * Installation
 * Usage
@@ -786,7 +795,7 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 
 ### [Stepper](https://dioxus.rust-ui.com/docs/components/stepper)
 
-> Rust/UI component for multi-step flows with a shared, navigable step index.
+> Rust/UI component that displays a set of steps for multi-step workflows like onboarding, checkout, and setup wizards.
 
 * Installation
 * Usage
@@ -831,6 +840,15 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
   * Disabled
 * See Also
 
+### [Theme Toggle](https://dioxus.rust-ui.com/docs/components/theme-toggle)
+
+> A sleek theme toggle component that smoothly transitions between light and dark modes with animated sun and moon icons.
+
+* Installation
+* Usage
+* How it works
+* See Also
+
 ### [Toast](https://dioxus.rust-ui.com/docs/components/toast)
 
 > Rust/UI component that displays toast notifications.
@@ -841,6 +859,14 @@ This is a comprehensive map of all Rust/UI documentation pages with their headin
 * Examples
   * Basic Toast
   * Variants
+* See Also
+
+### [Toggle Group](https://dioxus.rust-ui.com/docs/components/toggle-group)
+
+> A set of toggle buttons that can be used to group related options.
+
+* Installation
+* Usage
 * See Also
 
 ### [Toolbar](https://dioxus.rust-ui.com/docs/components/toolbar)

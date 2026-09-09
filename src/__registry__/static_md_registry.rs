@@ -5234,8 +5234,11 @@ fn build_md_components() -> MdComponents {
     combined_components
 }
 
-pub static ACCORDION: RegistryEntry =
-    RegistryEntry { slug: "accordion", raw: include_str!("../../public/docs/components/accordion.md"), tags: &[] };
+pub static ACCORDION: RegistryEntry = RegistryEntry {
+    slug: "accordion",
+    raw: include_str!("../../public/docs/components/accordion.md"),
+    tags: &["accordion"],
+};
 
 pub static ALERT: RegistryEntry =
     RegistryEntry { slug: "alert", raw: include_str!("../../public/docs/components/alert.md"), tags: &[] };
@@ -5243,16 +5246,19 @@ pub static ALERT: RegistryEntry =
 pub static ALERT_DIALOG: RegistryEntry = RegistryEntry {
     slug: "alert-dialog",
     raw: include_str!("../../public/docs/components/alert-dialog.md"),
-    tags: &[],
+    tags: &["dialog"],
 };
 
-pub static ANIMATE: RegistryEntry =
-    RegistryEntry { slug: "animate", raw: include_str!("../../public/docs/components/animate.md"), tags: &[] };
+pub static ANIMATE: RegistryEntry = RegistryEntry {
+    slug: "animate",
+    raw: include_str!("../../public/docs/components/animate.md"),
+    tags: &["animation"],
+};
 
 pub static ANIMATE_GROUP: RegistryEntry = RegistryEntry {
     slug: "animate-group",
     raw: include_str!("../../public/docs/components/animate-group.md"),
-    tags: &[],
+    tags: &["animation"],
 };
 
 pub static ASPECT_RATIO: RegistryEntry = RegistryEntry {
@@ -5264,8 +5270,11 @@ pub static ASPECT_RATIO: RegistryEntry = RegistryEntry {
 pub static ATTACHMENT: RegistryEntry =
     RegistryEntry { slug: "attachment", raw: include_str!("../../public/docs/components/attachment.md"), tags: &[] };
 
-pub static AUTO_FORM: RegistryEntry =
-    RegistryEntry { slug: "auto-form", raw: include_str!("../../public/docs/components/auto-form.md"), tags: &[] };
+pub static AUTO_FORM: RegistryEntry = RegistryEntry {
+    slug: "auto-form",
+    raw: include_str!("../../public/docs/components/auto-form.md"),
+    tags: &["input"],
+};
 
 pub static AVATAR: RegistryEntry =
     RegistryEntry { slug: "avatar", raw: include_str!("../../public/docs/components/avatar.md"), tags: &[] };
@@ -5273,17 +5282,23 @@ pub static AVATAR: RegistryEntry =
 pub static BADGE: RegistryEntry =
     RegistryEntry { slug: "badge", raw: include_str!("../../public/docs/components/badge.md"), tags: &[] };
 
-pub static BOTTOM_NAV: RegistryEntry =
-    RegistryEntry { slug: "bottom-nav", raw: include_str!("../../public/docs/components/bottom-nav.md"), tags: &[] };
+pub static BOTTOM_NAV: RegistryEntry = RegistryEntry {
+    slug: "bottom-nav",
+    raw: include_str!("../../public/docs/components/bottom-nav.md"),
+    tags: &["navigation"],
+};
 
-pub static BREADCRUMB: RegistryEntry =
-    RegistryEntry { slug: "breadcrumb", raw: include_str!("../../public/docs/components/breadcrumb.md"), tags: &[] };
+pub static BREADCRUMB: RegistryEntry = RegistryEntry {
+    slug: "breadcrumb",
+    raw: include_str!("../../public/docs/components/breadcrumb.md"),
+    tags: &["navigation"],
+};
 
 pub static BUBBLE: RegistryEntry =
     RegistryEntry { slug: "bubble", raw: include_str!("../../public/docs/components/bubble.md"), tags: &[] };
 
 pub static BUTTON: RegistryEntry =
-    RegistryEntry { slug: "button", raw: include_str!("../../public/docs/components/button.md"), tags: &[] };
+    RegistryEntry { slug: "button", raw: include_str!("../../public/docs/components/button.md"), tags: &["button"] };
 
 pub static BUTTON_ACTION: RegistryEntry = RegistryEntry {
     slug: "button-action",
@@ -5294,26 +5309,26 @@ pub static BUTTON_ACTION: RegistryEntry = RegistryEntry {
 pub static BUTTON_GROUP: RegistryEntry = RegistryEntry {
     slug: "button-group",
     raw: include_str!("../../public/docs/components/button-group.md"),
-    tags: &[],
+    tags: &["button"],
 };
 
 pub static CALLOUT: RegistryEntry =
-    RegistryEntry { slug: "callout", raw: include_str!("../../public/docs/components/callout.md"), tags: &[] };
+    RegistryEntry { slug: "callout", raw: include_str!("../../public/docs/components/callout.md"), tags: &["utils"] };
 
 pub static CARD: RegistryEntry =
-    RegistryEntry { slug: "card", raw: include_str!("../../public/docs/components/card.md"), tags: &[] };
+    RegistryEntry { slug: "card", raw: include_str!("../../public/docs/components/card.md"), tags: &["card"] };
 
 pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
     slug: "card-carousel",
     raw: include_str!("../../public/docs/components/card-carousel.md"),
-    tags: &[],
+    tags: &["card"],
 };
 
 pub static CAROUSEL: RegistryEntry =
     RegistryEntry { slug: "carousel", raw: include_str!("../../public/docs/components/carousel.md"), tags: &[] };
 
 pub static CHECKBOX: RegistryEntry =
-    RegistryEntry { slug: "checkbox", raw: include_str!("../../public/docs/components/checkbox.md"), tags: &[] };
+    RegistryEntry { slug: "checkbox", raw: include_str!("../../public/docs/components/checkbox.md"), tags: &["utils"] };
 
 pub static CHIPS: RegistryEntry =
     RegistryEntry { slug: "chips", raw: include_str!("../../public/docs/components/chips.md"), tags: &[] };
@@ -5333,17 +5348,23 @@ pub static CONTEXT_MENU: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static DATA_GRID: RegistryEntry =
-    RegistryEntry { slug: "data-grid", raw: include_str!("../../public/docs/components/data-grid.md"), tags: &[] };
+pub static DATA_GRID: RegistryEntry = RegistryEntry {
+    slug: "data-grid",
+    raw: include_str!("../../public/docs/components/data-grid.md"),
+    tags: &["table"],
+};
 
-pub static DATA_TABLE: RegistryEntry =
-    RegistryEntry { slug: "data-table", raw: include_str!("../../public/docs/components/data-table.md"), tags: &[] };
+pub static DATA_TABLE: RegistryEntry = RegistryEntry {
+    slug: "data-table",
+    raw: include_str!("../../public/docs/components/data-table.md"),
+    tags: &["table"],
+};
 
 pub static DATE_PICKER: RegistryEntry =
     RegistryEntry { slug: "date-picker", raw: include_str!("../../public/docs/components/date-picker.md"), tags: &[] };
 
 pub static DIALOG: RegistryEntry =
-    RegistryEntry { slug: "dialog", raw: include_str!("../../public/docs/components/dialog.md"), tags: &[] };
+    RegistryEntry { slug: "dialog", raw: include_str!("../../public/docs/components/dialog.md"), tags: &["dialog"] };
 
 pub static DIRECTION_PROVIDER: RegistryEntry = RegistryEntry {
     slug: "direction-provider",
@@ -5363,20 +5384,20 @@ pub static DRAWER: RegistryEntry =
 pub static DROPDOWN_MENU: RegistryEntry = RegistryEntry {
     slug: "dropdown-menu",
     raw: include_str!("../../public/docs/components/dropdown-menu.md"),
-    tags: &[],
+    tags: &["dropdown"],
 };
 
 pub static DROPZONE: RegistryEntry =
-    RegistryEntry { slug: "dropzone", raw: include_str!("../../public/docs/components/dropzone.md"), tags: &[] };
+    RegistryEntry { slug: "dropzone", raw: include_str!("../../public/docs/components/dropzone.md"), tags: &["utils"] };
 
 pub static EMPTY: RegistryEntry =
     RegistryEntry { slug: "empty", raw: include_str!("../../public/docs/components/empty.md"), tags: &[] };
 
 pub static FIELD: RegistryEntry =
-    RegistryEntry { slug: "field", raw: include_str!("../../public/docs/components/field.md"), tags: &[] };
+    RegistryEntry { slug: "field", raw: include_str!("../../public/docs/components/field.md"), tags: &["input"] };
 
 pub static FORM: RegistryEntry =
-    RegistryEntry { slug: "form", raw: include_str!("../../public/docs/components/form.md"), tags: &[] };
+    RegistryEntry { slug: "form", raw: include_str!("../../public/docs/components/form.md"), tags: &["input"] };
 
 pub static HOVER_CARD: RegistryEntry =
     RegistryEntry { slug: "hover-card", raw: include_str!("../../public/docs/components/hover-card.md"), tags: &[] };
@@ -5385,7 +5406,7 @@ pub static IMAGE: RegistryEntry =
     RegistryEntry { slug: "image", raw: include_str!("../../public/docs/components/image.md"), tags: &[] };
 
 pub static INPUT: RegistryEntry =
-    RegistryEntry { slug: "input", raw: include_str!("../../public/docs/components/input.md"), tags: &[] };
+    RegistryEntry { slug: "input", raw: include_str!("../../public/docs/components/input.md"), tags: &["input"] };
 
 pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
     slug: "input-group",
@@ -5396,20 +5417,23 @@ pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
 pub static INPUT_OTP: RegistryEntry =
     RegistryEntry { slug: "input-otp", raw: include_str!("../../public/docs/components/input-otp.md"), tags: &[] };
 
-pub static INPUT_PHONE: RegistryEntry =
-    RegistryEntry { slug: "input-phone", raw: include_str!("../../public/docs/components/input-phone.md"), tags: &[] };
+pub static INPUT_PHONE: RegistryEntry = RegistryEntry {
+    slug: "input-phone",
+    raw: include_str!("../../public/docs/components/input-phone.md"),
+    tags: &["input"],
+};
 
 pub static INPUT_PROMPT: RegistryEntry = RegistryEntry {
     slug: "input-prompt",
     raw: include_str!("../../public/docs/components/input-prompt.md"),
-    tags: &[],
+    tags: &["input"],
 };
 
 pub static ITEM: RegistryEntry =
     RegistryEntry { slug: "item", raw: include_str!("../../public/docs/components/item.md"), tags: &[] };
 
 pub static KBD: RegistryEntry =
-    RegistryEntry { slug: "kbd", raw: include_str!("../../public/docs/components/kbd.md"), tags: &[] };
+    RegistryEntry { slug: "kbd", raw: include_str!("../../public/docs/components/kbd.md"), tags: &["utils"] };
 
 pub static LABEL: RegistryEntry =
     RegistryEntry { slug: "label", raw: include_str!("../../public/docs/components/label.md"), tags: &[] };
@@ -5432,7 +5456,7 @@ pub static MESSAGE: RegistryEntry =
 pub static MULTI_SELECT: RegistryEntry = RegistryEntry {
     slug: "multi-select",
     raw: include_str!("../../public/docs/components/multi-select.md"),
-    tags: &[],
+    tags: &["select"],
 };
 
 pub static NAVIGATION_MENU: RegistryEntry = RegistryEntry {
@@ -5441,11 +5465,14 @@ pub static NAVIGATION_MENU: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static PAGINATION: RegistryEntry =
-    RegistryEntry { slug: "pagination", raw: include_str!("../../public/docs/components/pagination.md"), tags: &[] };
+pub static PAGINATION: RegistryEntry = RegistryEntry {
+    slug: "pagination",
+    raw: include_str!("../../public/docs/components/pagination.md"),
+    tags: &["navigation"],
+};
 
 pub static POPOVER: RegistryEntry =
-    RegistryEntry { slug: "popover", raw: include_str!("../../public/docs/components/popover.md"), tags: &[] };
+    RegistryEntry { slug: "popover", raw: include_str!("../../public/docs/components/popover.md"), tags: &["popover"] };
 
 pub static PRESSABLE: RegistryEntry =
     RegistryEntry { slug: "pressable", raw: include_str!("../../public/docs/components/pressable.md"), tags: &[] };
@@ -5467,17 +5494,20 @@ pub static RADIO_BUTTON_GROUP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static SCROLL_AREA: RegistryEntry =
-    RegistryEntry { slug: "scroll-area", raw: include_str!("../../public/docs/components/scroll-area.md"), tags: &[] };
+pub static SCROLL_AREA: RegistryEntry = RegistryEntry {
+    slug: "scroll-area",
+    raw: include_str!("../../public/docs/components/scroll-area.md"),
+    tags: &["utils"],
+};
 
 pub static SELECT: RegistryEntry =
-    RegistryEntry { slug: "select", raw: include_str!("../../public/docs/components/select.md"), tags: &[] };
+    RegistryEntry { slug: "select", raw: include_str!("../../public/docs/components/select.md"), tags: &["select"] };
 
 pub static SEPARATOR: RegistryEntry =
     RegistryEntry { slug: "separator", raw: include_str!("../../public/docs/components/separator.md"), tags: &[] };
 
 pub static SHEET: RegistryEntry =
-    RegistryEntry { slug: "sheet", raw: include_str!("../../public/docs/components/sheet.md"), tags: &[] };
+    RegistryEntry { slug: "sheet", raw: include_str!("../../public/docs/components/sheet.md"), tags: &["navigation"] };
 
 pub static SHIMMER: RegistryEntry =
     RegistryEntry { slug: "shimmer", raw: include_str!("../../public/docs/components/shimmer.md"), tags: &[] };
@@ -5491,31 +5521,37 @@ pub static SLIDER: RegistryEntry =
 pub static SONNER: RegistryEntry =
     RegistryEntry { slug: "sonner", raw: include_str!("../../public/docs/components/sonner.md"), tags: &[] };
 
-pub static SPINNER: RegistryEntry =
-    RegistryEntry { slug: "spinner", raw: include_str!("../../public/docs/components/spinner.md"), tags: &[] };
+pub static SPINNER: RegistryEntry = RegistryEntry {
+    slug: "spinner",
+    raw: include_str!("../../public/docs/components/spinner.md"),
+    tags: &["animation", "utils"],
+};
 
 pub static STATUS: RegistryEntry =
     RegistryEntry { slug: "status", raw: include_str!("../../public/docs/components/status.md"), tags: &[] };
 
-pub static STEPPER: RegistryEntry =
-    RegistryEntry { slug: "stepper", raw: include_str!("../../public/docs/components/stepper.md"), tags: &[] };
+pub static STEPPER: RegistryEntry = RegistryEntry {
+    slug: "stepper",
+    raw: include_str!("../../public/docs/components/stepper.md"),
+    tags: &["navigation"],
+};
 
 pub static SWITCH: RegistryEntry =
-    RegistryEntry { slug: "switch", raw: include_str!("../../public/docs/components/switch.md"), tags: &[] };
+    RegistryEntry { slug: "switch", raw: include_str!("../../public/docs/components/switch.md"), tags: &["utils"] };
 
 pub static TABLE: RegistryEntry =
-    RegistryEntry { slug: "table", raw: include_str!("../../public/docs/components/table.md"), tags: &[] };
+    RegistryEntry { slug: "table", raw: include_str!("../../public/docs/components/table.md"), tags: &["table"] };
 
 pub static TABS: RegistryEntry =
-    RegistryEntry { slug: "tabs", raw: include_str!("../../public/docs/components/tabs.md"), tags: &[] };
+    RegistryEntry { slug: "tabs", raw: include_str!("../../public/docs/components/tabs.md"), tags: &["utils"] };
 
 pub static TEXTAREA: RegistryEntry =
-    RegistryEntry { slug: "textarea", raw: include_str!("../../public/docs/components/textarea.md"), tags: &[] };
+    RegistryEntry { slug: "textarea", raw: include_str!("../../public/docs/components/textarea.md"), tags: &["input"] };
 
 pub static THEME_TOGGLE: RegistryEntry = RegistryEntry {
     slug: "theme-toggle",
     raw: include_str!("../../public/docs/components/theme-toggle.md"),
-    tags: &[],
+    tags: &["button", "animation"],
 };
 
 pub static TOAST: RegistryEntry =
@@ -5531,7 +5567,7 @@ pub static TOOLBAR: RegistryEntry =
     RegistryEntry { slug: "toolbar", raw: include_str!("../../public/docs/components/toolbar.md"), tags: &[] };
 
 pub static TOOLTIP: RegistryEntry =
-    RegistryEntry { slug: "tooltip", raw: include_str!("../../public/docs/components/tooltip.md"), tags: &[] };
+    RegistryEntry { slug: "tooltip", raw: include_str!("../../public/docs/components/tooltip.md"), tags: &["dialog"] };
 
 pub static INTRODUCTION: RegistryEntry =
     RegistryEntry { slug: "introduction", raw: include_str!("../../public/docs/introduction.md"), tags: &[] };

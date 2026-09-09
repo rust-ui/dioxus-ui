@@ -1,6 +1,10 @@
 +++
 title = "Status"
 description = "Rust/UI component for displaying statuses."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticStatus />

@@ -1,6 +1,10 @@
 +++
 title = "Shimmer"
-description = "A loading shimmer effect overlay driven by a signal."
+description = "Auto-adapting skeleton loader that mirrors your DOM structure."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticShimmer />

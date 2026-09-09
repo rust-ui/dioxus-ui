@@ -1,6 +1,10 @@
 +++
 title = "Button Group"
-description = "Rust/UI component that groups buttons together into a cohesive unit."
+description = "A component that groups multiple buttons together with shared borders and styling."
+tags = ["button"]
+is_new = false
+image = "/images/thumbnails/button.webp"
+image_dark = "/images/thumbnails/button-dark.webp"
 +++
 
 # Button Group

@@ -1,6 +1,10 @@
 +++
 title = "Drawer"
-description = "A bottom sheet that slides up from the bottom of the screen."
+description = "A Drawer for Rust. Inspired by the amazing work of Emil Kowalski."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticDrawer />

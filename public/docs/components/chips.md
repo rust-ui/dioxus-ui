@@ -1,6 +1,10 @@
 +++
 title = "Chips"
 description = "Rust/UI component that displays a chip or a component that looks like a chip."
+tags = []
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticChips />

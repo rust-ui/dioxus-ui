@@ -1,6 +1,8 @@
 +++
 title = "Checkbox"
 description = "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
+tags = ["utils"]
+is_new = false
 image = "/images/thumbnails/checkbox.webp"
 image_dark = "/images/thumbnails/checkbox-dark.webp"
 +++

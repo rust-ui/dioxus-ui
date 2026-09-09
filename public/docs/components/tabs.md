@@ -1,6 +1,8 @@
 +++
 title = "Tabs"
 description = "Rust/UI component that displays a set of layered sections of content, known as tab pages, that are displayed one at a time."
+tags = ["utils"]
+is_new = false
 image = "/images/thumbnails/tabs.webp"
 image_dark = "/images/thumbnails/tabs-dark.webp"
 +++

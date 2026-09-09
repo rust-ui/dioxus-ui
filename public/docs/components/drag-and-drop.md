@@ -1,6 +1,6 @@
 +++
-title = "Drag And Drop"
-description = "Drag and drop sortable interface patterns in Dioxus."
+title = "Drag and Drop"
+description = "Rust/UI component that allows users to drag and drop elements."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

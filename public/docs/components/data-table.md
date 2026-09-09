@@ -1,10 +1,10 @@
 +++
 title = "Data Table"
-description = "Structured data table demos for sorting, filtering, and tabular presentation in Dioxus."
-tags = []
+description = "Powerful data table with advanced features including filtering, sorting, column visibility, and row selection."
+tags = ["table"]
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/table.webp"
+image_dark = "/images/thumbnails/table-dark.webp"
 +++
 
 <StaticDataTable />

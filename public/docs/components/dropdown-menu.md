@@ -1,7 +1,7 @@
 +++
 title = "Dropdown Menu"
-description = "Composable dropdown menu primitives for Dioxus."
-tags = []
+description = "Rust/UI component that displays a dropdown menu."
+tags = ["dropdown"]
 is_new = false
 image = "/images/thumbnails/dropdown.webp"
 image_dark = "/images/thumbnails/dropdown-dark.webp"

@@ -1,6 +1,8 @@
 +++
 title = "Tooltip"
 description = "A popup component that displays informative text when users hover over, focus on, or click an element."
+tags = ["dialog"]
+is_new = false
 image = "/images/thumbnails/tooltip.webp"
 image_dark = "/images/thumbnails/tooltip-dark.webp"
 +++

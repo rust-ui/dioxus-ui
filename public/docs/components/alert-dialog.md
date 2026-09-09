@@ -1,5 +1,10 @@
 +++
 title = "Alert Dialog"
+description = "Rust/UI component that displays a modal dialog that interrupts the user with important content and expects a response."
+tags = ["dialog"]
+is_new = false
+image = "/images/thumbnails/dialog.webp"
+image_dark = "/images/thumbnails/dialog-dark.webp"
 +++
 
 <StaticAlertDialog />

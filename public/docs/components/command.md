@@ -1,6 +1,6 @@
 +++
 title = "Command"
-description = "Fast, composable, unstyled command menu for Dioxus."
+description = "Fast, composable, unstyled command menu for Leptos."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

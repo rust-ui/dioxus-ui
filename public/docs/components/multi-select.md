@@ -1,10 +1,10 @@
 +++
-title = "Multi Select"
-description = "Multi-value selection component for Dioxus."
-tags = []
+title = "MultiSelect"
+description = "Rust/UI component that displays a dropdown menu that allows the user to select several options."
+tags = ["select"]
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/select.webp"
+image_dark = "/images/thumbnails/select-dark.webp"
 +++
 
 <StaticMultiSelect />

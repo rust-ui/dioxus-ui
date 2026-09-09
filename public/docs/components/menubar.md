@@ -1,6 +1,6 @@
 +++
 title = "Menubar"
-description = "Desktop-style menubar interactions for Dioxus applications."
+description = "Rust/UI component that displays a horizontal menu bar with dropdown menus, submenus, checkboxes, and radio items."
 tags = []
 is_new = false
 image = "/images/thumbnails/_placeholder.webp"

@@ -1,10 +1,9 @@
 +++
 title = "Button Action"
-description = "Press-and-hold action button for destructive or sensitive interactions in Dioxus."
-tags = []
+description = "A button that requires press-and-hold to activate, showing a progress indicator."
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/button.webp"
+image_dark = "/images/thumbnails/button-dark.webp"
 +++
 
 <StaticButtonAction />

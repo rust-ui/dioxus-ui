@@ -1,6 +1,10 @@
 +++
 title = "Card"
 description = "Rust/UI component that displays a card with header, content and footer."
+tags = ["card"]
+is_new = false
+image = "/images/thumbnails/_placeholder.webp"
+image_dark = "/images/thumbnails/_placeholder-dark.webp"
 +++
 
 <StaticCard />
