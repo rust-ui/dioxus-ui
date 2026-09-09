@@ -1,6 +1,7 @@
 use dioxus::prelude::*;
 use dioxus::router::use_route;
 use icons::ExternalLink;
+use registry::ui::button::Button;
 
 use crate::Route;
 
@@ -129,8 +130,7 @@ fn TocCTACard() -> Element {
             span { class: "text-muted-foreground",
                 "Rustify.rs provides a 9-Week Bootcamp to learn how to build Fullstack cross-platform apps."
             }
-            span {
-                class: "mt-2 inline-flex pointer-events-auto group/btn items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 border bg-background shadow-sm hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2",
+            Button { class: "mt-2 pointer-events-auto group/btn",
                 span { "Learn more" }
                 ExternalLink { class: Some("transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5".to_string()) }
             }
