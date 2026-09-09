@@ -6,6 +6,17 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **Animate demo**: Brought `/docs/components/animate` to parity with the leptos
+  site. `AnimateHoverVariant` gained the 8 variants leptos carries but dioxus was
+  missing (`BounceCustom`, `FadeOutDownV2`, `FlashV0`, `JiggleV0`, `PulseCustom`,
+  `RubberBandV0`, `ShakeV0`, `SwingV0`) plus a `strum::Display` derive, and the
+  demo now renders the full `HOVER_ANIMATIONS` list (85 swatches) in the same
+  `Grid3` of `Card` + `Animate` + `AnimatedChildren` + `CardDescription` layout
+  as leptos, with a heading that shows the count. Known gap, shared with leptos:
+  Tailwind v4 does not emit `hover:animate-<Name>` for names ending in `V0`/`V2`,
+  so those 6 swatches are present but inert until the keyframes are renamed.
+  `app_crates/registry/src/ui/animate.rs`,
+  `app_crates/registry/src/demos/demo_animate.rs`
 - **DemoWrapper**: Brought the demo block to parity with the leptos site. The
   Preview/Code tab row now carries a right-side action column: a `ui add <demo>`
   outline button that copies the CLI command, and a kebab menu with "Copy Demo"
