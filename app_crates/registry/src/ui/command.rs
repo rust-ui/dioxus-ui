@@ -69,6 +69,7 @@ pub fn CommandList(
 pub fn CommandGroup(
     #[props(into, optional)] class: Option<String>,
     #[props(into, optional)] role: Option<String>,
+    #[props(into, optional)] data_category: Option<String>,
     children: Element,
 ) -> Element {
     let merged = tw_merge!("overflow-hidden p-1 text-foreground", class.as_deref().unwrap_or(""));
@@ -77,6 +78,7 @@ pub fn CommandGroup(
             "data-name": "CommandGroup",
             class: "{merged}",
             role: role.as_deref(),
+            "data-category": data_category.as_deref(),
             {children}
         }
     }
@@ -88,6 +90,7 @@ pub fn CommandItemLink(
     #[props(into, optional)] href: Option<String>,
     #[props(into, optional)] target: Option<String>,
     #[props(into, optional)] rel: Option<String>,
+    #[props(into, optional)] data_add_cmd: Option<String>,
     children: Element,
 ) -> Element {
     let merged = tw_merge!(
@@ -101,6 +104,7 @@ pub fn CommandItemLink(
             href: href.as_deref(),
             target: target.as_deref(),
             rel: rel.as_deref(),
+            "data-add-cmd": data_add_cmd.as_deref(),
             {children}
         }
     }
@@ -560,6 +564,7 @@ pub fn Command(
 #[component]
 pub fn CommandInput(
     #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] placeholder: Option<String>,
     /// Callback fired when search input changes. Use for server-side search.
     #[props(optional)]
     on_search_change: Option<EventHandler<String>>,
@@ -574,6 +579,7 @@ pub fn CommandInput(
         input {
             "data-name": "CommandInput",
             class: "{merged_class}",
+            placeholder: placeholder.as_deref(),
             autocomplete: "off",
             spellcheck: false,
             "aria-autocomplete": "list",

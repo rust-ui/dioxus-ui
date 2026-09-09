@@ -3,7 +3,7 @@ use registry::ui::separator::{Separator, SeparatorOrientation};
 use registry::ui::theme_toggle::ThemeToggle;
 
 use crate::Route;
-use crate::components::command_bar::CommandBarTrigger;
+use crate::components::command_search_docs::CommandSearchDocs;
 use crate::components::github_stars::GithubStars;
 
 #[component]
@@ -37,7 +37,7 @@ pub fn Navbar() -> Element {
                     }
                 }
                 div { class: "flex items-center gap-2",
-                    CommandBarTrigger {}
+                    CommandSearchDocs {}
                     Separator {
                         orientation: SeparatorOrientation::Vertical,
                         class: "hidden h-4 lg:block ml-2"

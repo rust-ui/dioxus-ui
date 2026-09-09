@@ -10,7 +10,7 @@ use registry::ui::header::{
 };
 use registry::ui::theme_toggle::ThemeToggle;
 
-use crate::components::command_bar::CommandBarTrigger;
+use crate::components::command_search_docs::CommandSearchDocs;
 use crate::components::github_stars::GithubStars;
 
 #[component]
@@ -193,7 +193,7 @@ fn NavMenuRight() -> Element {
     rsx! {
         div { class: "hidden md:flex md:gap-6 md:p-0 md:m-0 md:bg-transparent md:border-transparent md:shadow-none dark:shadow-none md:w-fit dark:md:bg-transparent",
             div { class: "flex flex-row gap-3 items-center",
-                CommandBarTrigger {}
+                CommandSearchDocs {}
                 GithubStars {}
                 div { class: "flex justify-center items-center mr-1",
                     ThemeToggle {}
@@ -231,7 +231,7 @@ fn MobileMenu(is_open: Signal<bool>) -> Element {
     rsx! {
         div { class: "flex-col gap-4 mt-6 w-full md:hidden mb-4 {display_class()}",
             div { class: "flex flex-row gap-3 items-center w-full",
-                CommandBarTrigger {}
+                CommandSearchDocs {}
                 GithubStars {}
                 div { class: "flex justify-center items-center mr-1",
                     ThemeToggle {}
