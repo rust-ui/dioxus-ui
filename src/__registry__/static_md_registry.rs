@@ -2,7 +2,6 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 use dioxus::prelude::*;
-use strum::{AsRefStr, EnumString};
 use registry::demos::demo_accordion::DemoAccordion;
 use registry::demos::demo_accordion_bordered::DemoAccordionBordered;
 use registry::demos::demo_alert::DemoAlert;
@@ -221,11 +220,12 @@ use registry::demos::demo_use_locks::DemoUseLocks;
 use registry::demos::demo_use_media_query::DemoUseMediaQuery;
 use registry::demos::demo_use_press_hold::DemoUsePressHold;
 use registry::demos::demo_use_random::DemoUseRandom;
+use strum::{AsRefStr, EnumString};
 
 use crate::domain::markdown_ui::components::static_demo_wrapper::StaticDemoWrapper;
 use crate::domain::markdown_ui::components::static_install_wrapper::StaticInstallWrapper;
 use crate::domain::markdown_ui::components::static_md_docs_wrapper::StaticMdDocsWrapper;
-use crate::markdown::converter::{convert_md, MdComponents};
+use crate::markdown::converter::{MdComponents, convert_md};
 use crate::markdown::parse_md;
 use crate::registry::md_docs::docs_installation_cli_tree_view::DocsInstallationCliTreeView;
 use crate::registry::types::RegistryEntry;
@@ -2414,9 +2414,11 @@ pub fn get_static_registry_entry(markdown_type: MarkdownType) -> Option<&'static
 
 fn build_md_components() -> MdComponents {
     let mut combined_components = MdComponents::new();
-    combined_components.add("StaticDocsInstallationCliTreeView", |_| rsx! {
-        StaticMdDocsWrapper {
-            DocsInstallationCliTreeView {}
+    combined_components.add("StaticDocsInstallationCliTreeView", |_| {
+        rsx! {
+            StaticMdDocsWrapper {
+                DocsInstallationCliTreeView {}
+            }
         }
     });
     combined_components.add("StaticAccordion", |props| {
@@ -4599,470 +4601,644 @@ fn build_md_components() -> MdComponents {
             }
         }
     });
-    combined_components.add("StaticInstallAccordion", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAccordion,
+    combined_components.add("StaticInstallAccordion", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAccordion,
+            }
         }
     });
-    combined_components.add("StaticInstallAlert", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAlert,
+    combined_components.add("StaticInstallAlert", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAlert,
+            }
         }
     });
-    combined_components.add("StaticInstallAlertDialog", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAlertDialog,
+    combined_components.add("StaticInstallAlertDialog", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAlertDialog,
+            }
         }
     });
-    combined_components.add("StaticInstallAnimate", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAnimate,
+    combined_components.add("StaticInstallAnimate", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAnimate,
+            }
         }
     });
-    combined_components.add("StaticInstallAnimateGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAnimateGroup,
+    combined_components.add("StaticInstallAnimateGroup", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAnimateGroup,
+            }
         }
     });
-    combined_components.add("StaticInstallAspectRatio", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAspectRatio,
+    combined_components.add("StaticInstallAspectRatio", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAspectRatio,
+            }
         }
     });
-    combined_components.add("StaticInstallAttachment", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAttachment,
+    combined_components.add("StaticInstallAttachment", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAttachment,
+            }
         }
     });
-    combined_components.add("StaticInstallAutoForm", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAutoForm,
+    combined_components.add("StaticInstallAutoForm", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAutoForm,
+            }
         }
     });
-    combined_components.add("StaticInstallAvatar", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallAvatar,
+    combined_components.add("StaticInstallAvatar", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallAvatar,
+            }
         }
     });
-    combined_components.add("StaticInstallBadge", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallBadge,
+    combined_components.add("StaticInstallBadge", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallBadge,
+            }
         }
     });
-    combined_components.add("StaticInstallBottomNav", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallBottomNav,
+    combined_components.add("StaticInstallBottomNav", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallBottomNav,
+            }
         }
     });
-    combined_components.add("StaticInstallBreadcrumb", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallBreadcrumb,
+    combined_components.add("StaticInstallBreadcrumb", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallBreadcrumb,
+            }
         }
     });
-    combined_components.add("StaticInstallBubble", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallBubble,
+    combined_components.add("StaticInstallBubble", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallBubble,
+            }
         }
     });
-    combined_components.add("StaticInstallButton", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallButton,
+    combined_components.add("StaticInstallButton", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallButton,
+            }
         }
     });
-    combined_components.add("StaticInstallButtonAction", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallButtonAction,
+    combined_components.add("StaticInstallButtonAction", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallButtonAction,
+            }
         }
     });
-    combined_components.add("StaticInstallButtonGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallButtonGroup,
+    combined_components.add("StaticInstallButtonGroup", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallButtonGroup,
+            }
         }
     });
-    combined_components.add("StaticInstallCallout", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCallout,
+    combined_components.add("StaticInstallCallout", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCallout,
+            }
         }
     });
-    combined_components.add("StaticInstallCard", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCard,
+    combined_components.add("StaticInstallCard", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCard,
+            }
         }
     });
-    combined_components.add("StaticInstallCardCarousel", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCardCarousel,
+    combined_components.add("StaticInstallCardCarousel", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCardCarousel,
+            }
         }
     });
-    combined_components.add("StaticInstallCarousel", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCarousel,
+    combined_components.add("StaticInstallCarousel", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCarousel,
+            }
         }
     });
-    combined_components.add("StaticInstallCheckbox", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCheckbox,
+    combined_components.add("StaticInstallCheckbox", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCheckbox,
+            }
         }
     });
-    combined_components.add("StaticInstallChips", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallChips,
+    combined_components.add("StaticInstallChips", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallChips,
+            }
         }
     });
-    combined_components.add("StaticInstallCollapsible", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCollapsible,
+    combined_components.add("StaticInstallCollapsible", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCollapsible,
+            }
         }
     });
-    combined_components.add("StaticInstallCombobox", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCombobox,
+    combined_components.add("StaticInstallCombobox", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCombobox,
+            }
         }
     });
-    combined_components.add("StaticInstallCommand", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallCommand,
+    combined_components.add("StaticInstallCommand", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallCommand,
+            }
         }
     });
-    combined_components.add("StaticInstallContextMenu", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallContextMenu,
+    combined_components.add("StaticInstallContextMenu", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallContextMenu,
+            }
         }
     });
-    combined_components.add("StaticInstallDataGrid", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDataGrid,
+    combined_components.add("StaticInstallDataGrid", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDataGrid,
+            }
         }
     });
-    combined_components.add("StaticInstallDataTable", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDataTable,
+    combined_components.add("StaticInstallDataTable", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDataTable,
+            }
         }
     });
-    combined_components.add("StaticInstallDatePicker", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDatePicker,
+    combined_components.add("StaticInstallDatePicker", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDatePicker,
+            }
         }
     });
-    combined_components.add("StaticInstallDialog", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDialog,
+    combined_components.add("StaticInstallDialog", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDialog,
+            }
         }
     });
-    combined_components.add("StaticInstallDirectionProvider", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDirectionProvider,
+    combined_components.add("StaticInstallDirectionProvider", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDirectionProvider,
+            }
         }
     });
-    combined_components.add("StaticInstallDragAndDrop", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDragAndDrop,
+    combined_components.add("StaticInstallDragAndDrop", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDragAndDrop,
+            }
         }
     });
-    combined_components.add("StaticInstallDrawer", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDrawer,
+    combined_components.add("StaticInstallDrawer", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDrawer,
+            }
         }
     });
-    combined_components.add("StaticInstallDropdownMenu", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDropdownMenu,
+    combined_components.add("StaticInstallDropdownMenu", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDropdownMenu,
+            }
         }
     });
-    combined_components.add("StaticInstallDropzone", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallDropzone,
+    combined_components.add("StaticInstallDropzone", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallDropzone,
+            }
         }
     });
-    combined_components.add("StaticInstallEmpty", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallEmpty,
+    combined_components.add("StaticInstallEmpty", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallEmpty,
+            }
         }
     });
-    combined_components.add("StaticInstallField", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallField,
+    combined_components.add("StaticInstallField", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallField,
+            }
         }
     });
-    combined_components.add("StaticInstallForm", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallForm,
+    combined_components.add("StaticInstallForm", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallForm,
+            }
         }
     });
-    combined_components.add("StaticInstallHoverCard", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallHoverCard,
+    combined_components.add("StaticInstallHoverCard", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallHoverCard,
+            }
         }
     });
-    combined_components.add("StaticInstallImage", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallImage,
+    combined_components.add("StaticInstallImage", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallImage,
+            }
         }
     });
-    combined_components.add("StaticInstallInput", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallInput,
+    combined_components.add("StaticInstallInput", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallInput,
+            }
         }
     });
-    combined_components.add("StaticInstallInputGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallInputGroup,
+    combined_components.add("StaticInstallInputGroup", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallInputGroup,
+            }
         }
     });
-    combined_components.add("StaticInstallInputOtp", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallInputOtp,
+    combined_components.add("StaticInstallInputOtp", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallInputOtp,
+            }
         }
     });
-    combined_components.add("StaticInstallInputPhone", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallInputPhone,
+    combined_components.add("StaticInstallInputPhone", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallInputPhone,
+            }
         }
     });
-    combined_components.add("StaticInstallInputPrompt", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallInputPrompt,
+    combined_components.add("StaticInstallInputPrompt", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallInputPrompt,
+            }
         }
     });
-    combined_components.add("StaticInstallItem", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallItem,
+    combined_components.add("StaticInstallItem", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallItem,
+            }
         }
     });
-    combined_components.add("StaticInstallKbd", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallKbd,
+    combined_components.add("StaticInstallKbd", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallKbd,
+            }
         }
     });
-    combined_components.add("StaticInstallLabel", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallLabel,
+    combined_components.add("StaticInstallLabel", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallLabel,
+            }
         }
     });
-    combined_components.add("StaticInstallMarker", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallMarker,
+    combined_components.add("StaticInstallMarker", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallMarker,
+            }
         }
     });
-    combined_components.add("StaticInstallMarquee", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallMarquee,
+    combined_components.add("StaticInstallMarquee", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallMarquee,
+            }
         }
     });
-    combined_components.add("StaticInstallMask", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallMask,
+    combined_components.add("StaticInstallMask", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallMask,
+            }
         }
     });
-    combined_components.add("StaticInstallMenubar", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallMenubar,
+    combined_components.add("StaticInstallMenubar", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallMenubar,
+            }
         }
     });
-    combined_components.add("StaticInstallMessage", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallMessage,
+    combined_components.add("StaticInstallMessage", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallMessage,
+            }
         }
     });
-    combined_components.add("StaticInstallMultiSelect", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallMultiSelect,
+    combined_components.add("StaticInstallMultiSelect", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallMultiSelect,
+            }
         }
     });
-    combined_components.add("StaticInstallNavigationMenu", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallNavigationMenu,
+    combined_components.add("StaticInstallNavigationMenu", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallNavigationMenu,
+            }
         }
     });
-    combined_components.add("StaticInstallPagination", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallPagination,
+    combined_components.add("StaticInstallPagination", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallPagination,
+            }
         }
     });
-    combined_components.add("StaticInstallPopover", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallPopover,
+    combined_components.add("StaticInstallPopover", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallPopover,
+            }
         }
     });
-    combined_components.add("StaticInstallPressable", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallPressable,
+    combined_components.add("StaticInstallPressable", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallPressable,
+            }
         }
     });
-    combined_components.add("StaticInstallProgress", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallProgress,
+    combined_components.add("StaticInstallProgress", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallProgress,
+            }
         }
     });
-    combined_components.add("StaticInstallRadioButton", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallRadioButton,
+    combined_components.add("StaticInstallRadioButton", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallRadioButton,
+            }
         }
     });
-    combined_components.add("StaticInstallRadioButtonGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallRadioButtonGroup,
+    combined_components.add("StaticInstallRadioButtonGroup", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallRadioButtonGroup,
+            }
         }
     });
-    combined_components.add("StaticInstallScrollArea", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallScrollArea,
+    combined_components.add("StaticInstallScrollArea", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallScrollArea,
+            }
         }
     });
-    combined_components.add("StaticInstallSelect", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSelect,
+    combined_components.add("StaticInstallSelect", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSelect,
+            }
         }
     });
-    combined_components.add("StaticInstallSeparator", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSeparator,
+    combined_components.add("StaticInstallSeparator", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSeparator,
+            }
         }
     });
-    combined_components.add("StaticInstallSheet", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSheet,
+    combined_components.add("StaticInstallSheet", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSheet,
+            }
         }
     });
-    combined_components.add("StaticInstallShimmer", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallShimmer,
+    combined_components.add("StaticInstallShimmer", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallShimmer,
+            }
         }
     });
-    combined_components.add("StaticInstallSkeleton", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSkeleton,
+    combined_components.add("StaticInstallSkeleton", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSkeleton,
+            }
         }
     });
-    combined_components.add("StaticInstallSlider", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSlider,
+    combined_components.add("StaticInstallSlider", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSlider,
+            }
         }
     });
-    combined_components.add("StaticInstallSonner", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSonner,
+    combined_components.add("StaticInstallSonner", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSonner,
+            }
         }
     });
-    combined_components.add("StaticInstallSpinner", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSpinner,
+    combined_components.add("StaticInstallSpinner", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSpinner,
+            }
         }
     });
-    combined_components.add("StaticInstallStatus", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallStatus,
+    combined_components.add("StaticInstallStatus", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallStatus,
+            }
         }
     });
-    combined_components.add("StaticInstallStepper", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallStepper,
+    combined_components.add("StaticInstallStepper", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallStepper,
+            }
         }
     });
-    combined_components.add("StaticInstallSwitch", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallSwitch,
+    combined_components.add("StaticInstallSwitch", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallSwitch,
+            }
         }
     });
-    combined_components.add("StaticInstallTable", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallTable,
+    combined_components.add("StaticInstallTable", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallTable,
+            }
         }
     });
-    combined_components.add("StaticInstallTabs", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallTabs,
+    combined_components.add("StaticInstallTabs", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallTabs,
+            }
         }
     });
-    combined_components.add("StaticInstallTextarea", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallTextarea,
+    combined_components.add("StaticInstallTextarea", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallTextarea,
+            }
         }
     });
-    combined_components.add("StaticInstallThemeToggle", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallThemeToggle,
+    combined_components.add("StaticInstallThemeToggle", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallThemeToggle,
+            }
         }
     });
-    combined_components.add("StaticInstallToast", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallToast,
+    combined_components.add("StaticInstallToast", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallToast,
+            }
         }
     });
-    combined_components.add("StaticInstallToggleGroup", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallToggleGroup,
+    combined_components.add("StaticInstallToggleGroup", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallToggleGroup,
+            }
         }
     });
-    combined_components.add("StaticInstallToolbar", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallToolbar,
+    combined_components.add("StaticInstallToolbar", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallToolbar,
+            }
         }
     });
-    combined_components.add("StaticInstallTooltip", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallTooltip,
+    combined_components.add("StaticInstallTooltip", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallTooltip,
+            }
         }
     });
-    combined_components.add("StaticInstallUseCopyClipboard", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseCopyClipboard,
+    combined_components.add("StaticInstallUseCopyClipboard", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseCopyClipboard,
+            }
         }
     });
-    combined_components.add("StaticInstallUseHistory", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseHistory,
+    combined_components.add("StaticInstallUseHistory", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseHistory,
+            }
         }
     });
-    combined_components.add("StaticInstallUseHorizontalScroll", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseHorizontalScroll,
+    combined_components.add("StaticInstallUseHorizontalScroll", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseHorizontalScroll,
+            }
         }
     });
-    combined_components.add("StaticInstallUseIsMobile", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseIsMobile,
+    combined_components.add("StaticInstallUseIsMobile", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseIsMobile,
+            }
         }
     });
-    combined_components.add("StaticInstallUseLockBodyScroll", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseLockBodyScroll,
+    combined_components.add("StaticInstallUseLockBodyScroll", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseLockBodyScroll,
+            }
         }
     });
-    combined_components.add("StaticInstallUseLocks", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseLocks,
+    combined_components.add("StaticInstallUseLocks", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseLocks,
+            }
         }
     });
-    combined_components.add("StaticInstallUseMediaQuery", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseMediaQuery,
+    combined_components.add("StaticInstallUseMediaQuery", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseMediaQuery,
+            }
         }
     });
-    combined_components.add("StaticInstallUsePressHold", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUsePressHold,
+    combined_components.add("StaticInstallUsePressHold", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUsePressHold,
+            }
         }
     });
-    combined_components.add("StaticInstallUseRandom", |_| rsx! {
-        StaticInstallWrapper {
-            install_type: MarkdownType::StaticInstallUseRandom,
+    combined_components.add("StaticInstallUseRandom", |_| {
+        rsx! {
+            StaticInstallWrapper {
+                install_type: MarkdownType::StaticInstallUseRandom,
+            }
         }
     });
     combined_components
 }
 
-pub static ACCORDION: RegistryEntry = RegistryEntry {
-    slug: "accordion",
-    raw: include_str!("../../public/docs/components/accordion.md"),
-    tags: &[],
-};
+pub static ACCORDION: RegistryEntry =
+    RegistryEntry { slug: "accordion", raw: include_str!("../../public/docs/components/accordion.md"), tags: &[] };
 
-pub static ALERT: RegistryEntry = RegistryEntry {
-    slug: "alert",
-    raw: include_str!("../../public/docs/components/alert.md"),
-    tags: &[],
-};
+pub static ALERT: RegistryEntry =
+    RegistryEntry { slug: "alert", raw: include_str!("../../public/docs/components/alert.md"), tags: &[] };
 
 pub static ALERT_DIALOG: RegistryEntry = RegistryEntry {
     slug: "alert-dialog",
@@ -5070,11 +5246,8 @@ pub static ALERT_DIALOG: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static ANIMATE: RegistryEntry = RegistryEntry {
-    slug: "animate",
-    raw: include_str!("../../public/docs/components/animate.md"),
-    tags: &[],
-};
+pub static ANIMATE: RegistryEntry =
+    RegistryEntry { slug: "animate", raw: include_str!("../../public/docs/components/animate.md"), tags: &[] };
 
 pub static ANIMATE_GROUP: RegistryEntry = RegistryEntry {
     slug: "animate-group",
@@ -5088,53 +5261,29 @@ pub static ASPECT_RATIO: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static ATTACHMENT: RegistryEntry = RegistryEntry {
-    slug: "attachment",
-    raw: include_str!("../../public/docs/components/attachment.md"),
-    tags: &[],
-};
+pub static ATTACHMENT: RegistryEntry =
+    RegistryEntry { slug: "attachment", raw: include_str!("../../public/docs/components/attachment.md"), tags: &[] };
 
-pub static AUTO_FORM: RegistryEntry = RegistryEntry {
-    slug: "auto-form",
-    raw: include_str!("../../public/docs/components/auto-form.md"),
-    tags: &[],
-};
+pub static AUTO_FORM: RegistryEntry =
+    RegistryEntry { slug: "auto-form", raw: include_str!("../../public/docs/components/auto-form.md"), tags: &[] };
 
-pub static AVATAR: RegistryEntry = RegistryEntry {
-    slug: "avatar",
-    raw: include_str!("../../public/docs/components/avatar.md"),
-    tags: &[],
-};
+pub static AVATAR: RegistryEntry =
+    RegistryEntry { slug: "avatar", raw: include_str!("../../public/docs/components/avatar.md"), tags: &[] };
 
-pub static BADGE: RegistryEntry = RegistryEntry {
-    slug: "badge",
-    raw: include_str!("../../public/docs/components/badge.md"),
-    tags: &[],
-};
+pub static BADGE: RegistryEntry =
+    RegistryEntry { slug: "badge", raw: include_str!("../../public/docs/components/badge.md"), tags: &[] };
 
-pub static BOTTOM_NAV: RegistryEntry = RegistryEntry {
-    slug: "bottom-nav",
-    raw: include_str!("../../public/docs/components/bottom-nav.md"),
-    tags: &[],
-};
+pub static BOTTOM_NAV: RegistryEntry =
+    RegistryEntry { slug: "bottom-nav", raw: include_str!("../../public/docs/components/bottom-nav.md"), tags: &[] };
 
-pub static BREADCRUMB: RegistryEntry = RegistryEntry {
-    slug: "breadcrumb",
-    raw: include_str!("../../public/docs/components/breadcrumb.md"),
-    tags: &[],
-};
+pub static BREADCRUMB: RegistryEntry =
+    RegistryEntry { slug: "breadcrumb", raw: include_str!("../../public/docs/components/breadcrumb.md"), tags: &[] };
 
-pub static BUBBLE: RegistryEntry = RegistryEntry {
-    slug: "bubble",
-    raw: include_str!("../../public/docs/components/bubble.md"),
-    tags: &[],
-};
+pub static BUBBLE: RegistryEntry =
+    RegistryEntry { slug: "bubble", raw: include_str!("../../public/docs/components/bubble.md"), tags: &[] };
 
-pub static BUTTON: RegistryEntry = RegistryEntry {
-    slug: "button",
-    raw: include_str!("../../public/docs/components/button.md"),
-    tags: &[],
-};
+pub static BUTTON: RegistryEntry =
+    RegistryEntry { slug: "button", raw: include_str!("../../public/docs/components/button.md"), tags: &[] };
 
 pub static BUTTON_ACTION: RegistryEntry = RegistryEntry {
     slug: "button-action",
@@ -5148,17 +5297,11 @@ pub static BUTTON_GROUP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static CALLOUT: RegistryEntry = RegistryEntry {
-    slug: "callout",
-    raw: include_str!("../../public/docs/components/callout.md"),
-    tags: &[],
-};
+pub static CALLOUT: RegistryEntry =
+    RegistryEntry { slug: "callout", raw: include_str!("../../public/docs/components/callout.md"), tags: &[] };
 
-pub static CARD: RegistryEntry = RegistryEntry {
-    slug: "card",
-    raw: include_str!("../../public/docs/components/card.md"),
-    tags: &[],
-};
+pub static CARD: RegistryEntry =
+    RegistryEntry { slug: "card", raw: include_str!("../../public/docs/components/card.md"), tags: &[] };
 
 pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
     slug: "card-carousel",
@@ -5166,41 +5309,23 @@ pub static CARD_CAROUSEL: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static CAROUSEL: RegistryEntry = RegistryEntry {
-    slug: "carousel",
-    raw: include_str!("../../public/docs/components/carousel.md"),
-    tags: &[],
-};
+pub static CAROUSEL: RegistryEntry =
+    RegistryEntry { slug: "carousel", raw: include_str!("../../public/docs/components/carousel.md"), tags: &[] };
 
-pub static CHECKBOX: RegistryEntry = RegistryEntry {
-    slug: "checkbox",
-    raw: include_str!("../../public/docs/components/checkbox.md"),
-    tags: &[],
-};
+pub static CHECKBOX: RegistryEntry =
+    RegistryEntry { slug: "checkbox", raw: include_str!("../../public/docs/components/checkbox.md"), tags: &[] };
 
-pub static CHIPS: RegistryEntry = RegistryEntry {
-    slug: "chips",
-    raw: include_str!("../../public/docs/components/chips.md"),
-    tags: &[],
-};
+pub static CHIPS: RegistryEntry =
+    RegistryEntry { slug: "chips", raw: include_str!("../../public/docs/components/chips.md"), tags: &[] };
 
-pub static COLLAPSIBLE: RegistryEntry = RegistryEntry {
-    slug: "collapsible",
-    raw: include_str!("../../public/docs/components/collapsible.md"),
-    tags: &[],
-};
+pub static COLLAPSIBLE: RegistryEntry =
+    RegistryEntry { slug: "collapsible", raw: include_str!("../../public/docs/components/collapsible.md"), tags: &[] };
 
-pub static COMBOBOX: RegistryEntry = RegistryEntry {
-    slug: "combobox",
-    raw: include_str!("../../public/docs/components/combobox.md"),
-    tags: &[],
-};
+pub static COMBOBOX: RegistryEntry =
+    RegistryEntry { slug: "combobox", raw: include_str!("../../public/docs/components/combobox.md"), tags: &[] };
 
-pub static COMMAND: RegistryEntry = RegistryEntry {
-    slug: "command",
-    raw: include_str!("../../public/docs/components/command.md"),
-    tags: &[],
-};
+pub static COMMAND: RegistryEntry =
+    RegistryEntry { slug: "command", raw: include_str!("../../public/docs/components/command.md"), tags: &[] };
 
 pub static CONTEXT_MENU: RegistryEntry = RegistryEntry {
     slug: "context-menu",
@@ -5208,29 +5333,17 @@ pub static CONTEXT_MENU: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static DATA_GRID: RegistryEntry = RegistryEntry {
-    slug: "data-grid",
-    raw: include_str!("../../public/docs/components/data-grid.md"),
-    tags: &[],
-};
+pub static DATA_GRID: RegistryEntry =
+    RegistryEntry { slug: "data-grid", raw: include_str!("../../public/docs/components/data-grid.md"), tags: &[] };
 
-pub static DATA_TABLE: RegistryEntry = RegistryEntry {
-    slug: "data-table",
-    raw: include_str!("../../public/docs/components/data-table.md"),
-    tags: &[],
-};
+pub static DATA_TABLE: RegistryEntry =
+    RegistryEntry { slug: "data-table", raw: include_str!("../../public/docs/components/data-table.md"), tags: &[] };
 
-pub static DATE_PICKER: RegistryEntry = RegistryEntry {
-    slug: "date-picker",
-    raw: include_str!("../../public/docs/components/date-picker.md"),
-    tags: &[],
-};
+pub static DATE_PICKER: RegistryEntry =
+    RegistryEntry { slug: "date-picker", raw: include_str!("../../public/docs/components/date-picker.md"), tags: &[] };
 
-pub static DIALOG: RegistryEntry = RegistryEntry {
-    slug: "dialog",
-    raw: include_str!("../../public/docs/components/dialog.md"),
-    tags: &[],
-};
+pub static DIALOG: RegistryEntry =
+    RegistryEntry { slug: "dialog", raw: include_str!("../../public/docs/components/dialog.md"), tags: &[] };
 
 pub static DIRECTION_PROVIDER: RegistryEntry = RegistryEntry {
     slug: "direction-provider",
@@ -5244,11 +5357,8 @@ pub static DRAG_AND_DROP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static DRAWER: RegistryEntry = RegistryEntry {
-    slug: "drawer",
-    raw: include_str!("../../public/docs/components/drawer.md"),
-    tags: &[],
-};
+pub static DRAWER: RegistryEntry =
+    RegistryEntry { slug: "drawer", raw: include_str!("../../public/docs/components/drawer.md"), tags: &[] };
 
 pub static DROPDOWN_MENU: RegistryEntry = RegistryEntry {
     slug: "dropdown-menu",
@@ -5256,47 +5366,26 @@ pub static DROPDOWN_MENU: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static DROPZONE: RegistryEntry = RegistryEntry {
-    slug: "dropzone",
-    raw: include_str!("../../public/docs/components/dropzone.md"),
-    tags: &[],
-};
+pub static DROPZONE: RegistryEntry =
+    RegistryEntry { slug: "dropzone", raw: include_str!("../../public/docs/components/dropzone.md"), tags: &[] };
 
-pub static EMPTY: RegistryEntry = RegistryEntry {
-    slug: "empty",
-    raw: include_str!("../../public/docs/components/empty.md"),
-    tags: &[],
-};
+pub static EMPTY: RegistryEntry =
+    RegistryEntry { slug: "empty", raw: include_str!("../../public/docs/components/empty.md"), tags: &[] };
 
-pub static FIELD: RegistryEntry = RegistryEntry {
-    slug: "field",
-    raw: include_str!("../../public/docs/components/field.md"),
-    tags: &[],
-};
+pub static FIELD: RegistryEntry =
+    RegistryEntry { slug: "field", raw: include_str!("../../public/docs/components/field.md"), tags: &[] };
 
-pub static FORM: RegistryEntry = RegistryEntry {
-    slug: "form",
-    raw: include_str!("../../public/docs/components/form.md"),
-    tags: &[],
-};
+pub static FORM: RegistryEntry =
+    RegistryEntry { slug: "form", raw: include_str!("../../public/docs/components/form.md"), tags: &[] };
 
-pub static HOVER_CARD: RegistryEntry = RegistryEntry {
-    slug: "hover-card",
-    raw: include_str!("../../public/docs/components/hover-card.md"),
-    tags: &[],
-};
+pub static HOVER_CARD: RegistryEntry =
+    RegistryEntry { slug: "hover-card", raw: include_str!("../../public/docs/components/hover-card.md"), tags: &[] };
 
-pub static IMAGE: RegistryEntry = RegistryEntry {
-    slug: "image",
-    raw: include_str!("../../public/docs/components/image.md"),
-    tags: &[],
-};
+pub static IMAGE: RegistryEntry =
+    RegistryEntry { slug: "image", raw: include_str!("../../public/docs/components/image.md"), tags: &[] };
 
-pub static INPUT: RegistryEntry = RegistryEntry {
-    slug: "input",
-    raw: include_str!("../../public/docs/components/input.md"),
-    tags: &[],
-};
+pub static INPUT: RegistryEntry =
+    RegistryEntry { slug: "input", raw: include_str!("../../public/docs/components/input.md"), tags: &[] };
 
 pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
     slug: "input-group",
@@ -5304,17 +5393,11 @@ pub static INPUT_GROUP: RegistryEntry = RegistryEntry {
     tags: &["input"],
 };
 
-pub static INPUT_OTP: RegistryEntry = RegistryEntry {
-    slug: "input-otp",
-    raw: include_str!("../../public/docs/components/input-otp.md"),
-    tags: &[],
-};
+pub static INPUT_OTP: RegistryEntry =
+    RegistryEntry { slug: "input-otp", raw: include_str!("../../public/docs/components/input-otp.md"), tags: &[] };
 
-pub static INPUT_PHONE: RegistryEntry = RegistryEntry {
-    slug: "input-phone",
-    raw: include_str!("../../public/docs/components/input-phone.md"),
-    tags: &[],
-};
+pub static INPUT_PHONE: RegistryEntry =
+    RegistryEntry { slug: "input-phone", raw: include_str!("../../public/docs/components/input-phone.md"), tags: &[] };
 
 pub static INPUT_PROMPT: RegistryEntry = RegistryEntry {
     slug: "input-prompt",
@@ -5322,53 +5405,29 @@ pub static INPUT_PROMPT: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static ITEM: RegistryEntry = RegistryEntry {
-    slug: "item",
-    raw: include_str!("../../public/docs/components/item.md"),
-    tags: &[],
-};
+pub static ITEM: RegistryEntry =
+    RegistryEntry { slug: "item", raw: include_str!("../../public/docs/components/item.md"), tags: &[] };
 
-pub static KBD: RegistryEntry = RegistryEntry {
-    slug: "kbd",
-    raw: include_str!("../../public/docs/components/kbd.md"),
-    tags: &[],
-};
+pub static KBD: RegistryEntry =
+    RegistryEntry { slug: "kbd", raw: include_str!("../../public/docs/components/kbd.md"), tags: &[] };
 
-pub static LABEL: RegistryEntry = RegistryEntry {
-    slug: "label",
-    raw: include_str!("../../public/docs/components/label.md"),
-    tags: &[],
-};
+pub static LABEL: RegistryEntry =
+    RegistryEntry { slug: "label", raw: include_str!("../../public/docs/components/label.md"), tags: &[] };
 
-pub static MARKER: RegistryEntry = RegistryEntry {
-    slug: "marker",
-    raw: include_str!("../../public/docs/components/marker.md"),
-    tags: &[],
-};
+pub static MARKER: RegistryEntry =
+    RegistryEntry { slug: "marker", raw: include_str!("../../public/docs/components/marker.md"), tags: &[] };
 
-pub static MARQUEE: RegistryEntry = RegistryEntry {
-    slug: "marquee",
-    raw: include_str!("../../public/docs/components/marquee.md"),
-    tags: &[],
-};
+pub static MARQUEE: RegistryEntry =
+    RegistryEntry { slug: "marquee", raw: include_str!("../../public/docs/components/marquee.md"), tags: &[] };
 
-pub static MASK: RegistryEntry = RegistryEntry {
-    slug: "mask",
-    raw: include_str!("../../public/docs/components/mask.md"),
-    tags: &[],
-};
+pub static MASK: RegistryEntry =
+    RegistryEntry { slug: "mask", raw: include_str!("../../public/docs/components/mask.md"), tags: &[] };
 
-pub static MENUBAR: RegistryEntry = RegistryEntry {
-    slug: "menubar",
-    raw: include_str!("../../public/docs/components/menubar.md"),
-    tags: &[],
-};
+pub static MENUBAR: RegistryEntry =
+    RegistryEntry { slug: "menubar", raw: include_str!("../../public/docs/components/menubar.md"), tags: &[] };
 
-pub static MESSAGE: RegistryEntry = RegistryEntry {
-    slug: "message",
-    raw: include_str!("../../public/docs/components/message.md"),
-    tags: &[],
-};
+pub static MESSAGE: RegistryEntry =
+    RegistryEntry { slug: "message", raw: include_str!("../../public/docs/components/message.md"), tags: &[] };
 
 pub static MULTI_SELECT: RegistryEntry = RegistryEntry {
     slug: "multi-select",
@@ -5382,35 +5441,19 @@ pub static NAVIGATION_MENU: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static PAGINATION: RegistryEntry = RegistryEntry {
-    slug: "pagination",
-    raw: include_str!("../../public/docs/components/pagination.md"),
-    tags: &[],
-};
+pub static PAGINATION: RegistryEntry =
+    RegistryEntry { slug: "pagination", raw: include_str!("../../public/docs/components/pagination.md"), tags: &[] };
 
-pub static POPOVER: RegistryEntry = RegistryEntry {
-    slug: "popover",
-    raw: include_str!("../../public/docs/components/popover.md"),
-    tags: &[],
-};
+pub static POPOVER: RegistryEntry =
+    RegistryEntry { slug: "popover", raw: include_str!("../../public/docs/components/popover.md"), tags: &[] };
 
-pub static PRESSABLE: RegistryEntry = RegistryEntry {
-    slug: "pressable",
-    raw: include_str!("../../public/docs/components/pressable.md"),
-    tags: &[],
-};
+pub static PRESSABLE: RegistryEntry =
+    RegistryEntry { slug: "pressable", raw: include_str!("../../public/docs/components/pressable.md"), tags: &[] };
 
-pub static PROGRESS: RegistryEntry = RegistryEntry {
-    slug: "progress",
-    raw: include_str!("../../public/docs/components/progress.md"),
-    tags: &[],
-};
+pub static PROGRESS: RegistryEntry =
+    RegistryEntry { slug: "progress", raw: include_str!("../../public/docs/components/progress.md"), tags: &[] };
 
-pub static RTL: RegistryEntry = RegistryEntry {
-    slug: "rtl",
-    raw: include_str!("../../public/docs/rtl.md"),
-    tags: &[],
-};
+pub static RTL: RegistryEntry = RegistryEntry { slug: "rtl", raw: include_str!("../../public/docs/rtl.md"), tags: &[] };
 
 pub static RADIO_BUTTON: RegistryEntry = RegistryEntry {
     slug: "radio-button",
@@ -5424,95 +5467,50 @@ pub static RADIO_BUTTON_GROUP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static SCROLL_AREA: RegistryEntry = RegistryEntry {
-    slug: "scroll-area",
-    raw: include_str!("../../public/docs/components/scroll-area.md"),
-    tags: &[],
-};
+pub static SCROLL_AREA: RegistryEntry =
+    RegistryEntry { slug: "scroll-area", raw: include_str!("../../public/docs/components/scroll-area.md"), tags: &[] };
 
-pub static SELECT: RegistryEntry = RegistryEntry {
-    slug: "select",
-    raw: include_str!("../../public/docs/components/select.md"),
-    tags: &[],
-};
+pub static SELECT: RegistryEntry =
+    RegistryEntry { slug: "select", raw: include_str!("../../public/docs/components/select.md"), tags: &[] };
 
-pub static SEPARATOR: RegistryEntry = RegistryEntry {
-    slug: "separator",
-    raw: include_str!("../../public/docs/components/separator.md"),
-    tags: &[],
-};
+pub static SEPARATOR: RegistryEntry =
+    RegistryEntry { slug: "separator", raw: include_str!("../../public/docs/components/separator.md"), tags: &[] };
 
-pub static SHEET: RegistryEntry = RegistryEntry {
-    slug: "sheet",
-    raw: include_str!("../../public/docs/components/sheet.md"),
-    tags: &[],
-};
+pub static SHEET: RegistryEntry =
+    RegistryEntry { slug: "sheet", raw: include_str!("../../public/docs/components/sheet.md"), tags: &[] };
 
-pub static SHIMMER: RegistryEntry = RegistryEntry {
-    slug: "shimmer",
-    raw: include_str!("../../public/docs/components/shimmer.md"),
-    tags: &[],
-};
+pub static SHIMMER: RegistryEntry =
+    RegistryEntry { slug: "shimmer", raw: include_str!("../../public/docs/components/shimmer.md"), tags: &[] };
 
-pub static SKELETON: RegistryEntry = RegistryEntry {
-    slug: "skeleton",
-    raw: include_str!("../../public/docs/components/skeleton.md"),
-    tags: &[],
-};
+pub static SKELETON: RegistryEntry =
+    RegistryEntry { slug: "skeleton", raw: include_str!("../../public/docs/components/skeleton.md"), tags: &[] };
 
-pub static SLIDER: RegistryEntry = RegistryEntry {
-    slug: "slider",
-    raw: include_str!("../../public/docs/components/slider.md"),
-    tags: &[],
-};
+pub static SLIDER: RegistryEntry =
+    RegistryEntry { slug: "slider", raw: include_str!("../../public/docs/components/slider.md"), tags: &[] };
 
-pub static SONNER: RegistryEntry = RegistryEntry {
-    slug: "sonner",
-    raw: include_str!("../../public/docs/components/sonner.md"),
-    tags: &[],
-};
+pub static SONNER: RegistryEntry =
+    RegistryEntry { slug: "sonner", raw: include_str!("../../public/docs/components/sonner.md"), tags: &[] };
 
-pub static SPINNER: RegistryEntry = RegistryEntry {
-    slug: "spinner",
-    raw: include_str!("../../public/docs/components/spinner.md"),
-    tags: &[],
-};
+pub static SPINNER: RegistryEntry =
+    RegistryEntry { slug: "spinner", raw: include_str!("../../public/docs/components/spinner.md"), tags: &[] };
 
-pub static STATUS: RegistryEntry = RegistryEntry {
-    slug: "status",
-    raw: include_str!("../../public/docs/components/status.md"),
-    tags: &[],
-};
+pub static STATUS: RegistryEntry =
+    RegistryEntry { slug: "status", raw: include_str!("../../public/docs/components/status.md"), tags: &[] };
 
-pub static STEPPER: RegistryEntry = RegistryEntry {
-    slug: "stepper",
-    raw: include_str!("../../public/docs/components/stepper.md"),
-    tags: &[],
-};
+pub static STEPPER: RegistryEntry =
+    RegistryEntry { slug: "stepper", raw: include_str!("../../public/docs/components/stepper.md"), tags: &[] };
 
-pub static SWITCH: RegistryEntry = RegistryEntry {
-    slug: "switch",
-    raw: include_str!("../../public/docs/components/switch.md"),
-    tags: &[],
-};
+pub static SWITCH: RegistryEntry =
+    RegistryEntry { slug: "switch", raw: include_str!("../../public/docs/components/switch.md"), tags: &[] };
 
-pub static TABLE: RegistryEntry = RegistryEntry {
-    slug: "table",
-    raw: include_str!("../../public/docs/components/table.md"),
-    tags: &[],
-};
+pub static TABLE: RegistryEntry =
+    RegistryEntry { slug: "table", raw: include_str!("../../public/docs/components/table.md"), tags: &[] };
 
-pub static TABS: RegistryEntry = RegistryEntry {
-    slug: "tabs",
-    raw: include_str!("../../public/docs/components/tabs.md"),
-    tags: &[],
-};
+pub static TABS: RegistryEntry =
+    RegistryEntry { slug: "tabs", raw: include_str!("../../public/docs/components/tabs.md"), tags: &[] };
 
-pub static TEXTAREA: RegistryEntry = RegistryEntry {
-    slug: "textarea",
-    raw: include_str!("../../public/docs/components/textarea.md"),
-    tags: &[],
-};
+pub static TEXTAREA: RegistryEntry =
+    RegistryEntry { slug: "textarea", raw: include_str!("../../public/docs/components/textarea.md"), tags: &[] };
 
 pub static THEME_TOGGLE: RegistryEntry = RegistryEntry {
     slug: "theme-toggle",
@@ -5520,11 +5518,8 @@ pub static THEME_TOGGLE: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static TOAST: RegistryEntry = RegistryEntry {
-    slug: "toast",
-    raw: include_str!("../../public/docs/components/toast.md"),
-    tags: &[],
-};
+pub static TOAST: RegistryEntry =
+    RegistryEntry { slug: "toast", raw: include_str!("../../public/docs/components/toast.md"), tags: &[] };
 
 pub static TOGGLE_GROUP: RegistryEntry = RegistryEntry {
     slug: "toggle-group",
@@ -5532,53 +5527,28 @@ pub static TOGGLE_GROUP: RegistryEntry = RegistryEntry {
     tags: &[],
 };
 
-pub static TOOLBAR: RegistryEntry = RegistryEntry {
-    slug: "toolbar",
-    raw: include_str!("../../public/docs/components/toolbar.md"),
-    tags: &[],
-};
+pub static TOOLBAR: RegistryEntry =
+    RegistryEntry { slug: "toolbar", raw: include_str!("../../public/docs/components/toolbar.md"), tags: &[] };
 
-pub static TOOLTIP: RegistryEntry = RegistryEntry {
-    slug: "tooltip",
-    raw: include_str!("../../public/docs/components/tooltip.md"),
-    tags: &[],
-};
+pub static TOOLTIP: RegistryEntry =
+    RegistryEntry { slug: "tooltip", raw: include_str!("../../public/docs/components/tooltip.md"), tags: &[] };
 
-pub static INTRODUCTION: RegistryEntry = RegistryEntry {
-    slug: "introduction",
-    raw: include_str!("../../public/docs/introduction.md"),
-    tags: &[],
-};
+pub static INTRODUCTION: RegistryEntry =
+    RegistryEntry { slug: "introduction", raw: include_str!("../../public/docs/introduction.md"), tags: &[] };
 
-pub static INSTALLATION: RegistryEntry = RegistryEntry {
-    slug: "installation",
-    raw: include_str!("../../public/docs/installation.md"),
-    tags: &[],
-};
+pub static INSTALLATION: RegistryEntry =
+    RegistryEntry { slug: "installation", raw: include_str!("../../public/docs/installation.md"), tags: &[] };
 
-pub static CLI: RegistryEntry = RegistryEntry {
-    slug: "cli",
-    raw: include_str!("../../public/docs/cli.md"),
-    tags: &[],
-};
+pub static CLI: RegistryEntry = RegistryEntry { slug: "cli", raw: include_str!("../../public/docs/cli.md"), tags: &[] };
 
-pub static ICONS: RegistryEntry = RegistryEntry {
-    slug: "icons",
-    raw: include_str!("../../public/docs/icons.md"),
-    tags: &[],
-};
+pub static ICONS: RegistryEntry =
+    RegistryEntry { slug: "icons", raw: include_str!("../../public/docs/icons.md"), tags: &[] };
 
-pub static FIGMA: RegistryEntry = RegistryEntry {
-    slug: "figma",
-    raw: include_str!("../../public/docs/figma.md"),
-    tags: &[],
-};
+pub static FIGMA: RegistryEntry =
+    RegistryEntry { slug: "figma", raw: include_str!("../../public/docs/figma.md"), tags: &[] };
 
-pub static CHANGELOG: RegistryEntry = RegistryEntry {
-    slug: "changelog",
-    raw: include_str!("../../public/docs/changelog.md"),
-    tags: &[],
-};
+pub static CHANGELOG: RegistryEntry =
+    RegistryEntry { slug: "changelog", raw: include_str!("../../public/docs/changelog.md"), tags: &[] };
 
 pub static USE_COPY_CLIPBOARD: RegistryEntry = RegistryEntry {
     slug: "use-copy-clipboard",
@@ -5610,11 +5580,8 @@ pub static USE_LOCK_BODY_SCROLL: RegistryEntry = RegistryEntry {
     tags: &["utils", "dialog"],
 };
 
-pub static USE_LOCKS: RegistryEntry = RegistryEntry {
-    slug: "use-locks",
-    raw: include_str!("../../public/docs/hooks/use-locks.md"),
-    tags: &["utils"],
-};
+pub static USE_LOCKS: RegistryEntry =
+    RegistryEntry { slug: "use-locks", raw: include_str!("../../public/docs/hooks/use-locks.md"), tags: &["utils"] };
 
 pub static USE_MEDIA_QUERY: RegistryEntry = RegistryEntry {
     slug: "use-media-query",
@@ -5622,11 +5589,8 @@ pub static USE_MEDIA_QUERY: RegistryEntry = RegistryEntry {
     tags: &["utils"],
 };
 
-pub static USE_PRESS_HOLD: RegistryEntry = RegistryEntry {
-    slug: "use-press-hold",
-    raw: include_str!("../../public/docs/hooks/use-press-hold.md"),
-    tags: &[],
-};
+pub static USE_PRESS_HOLD: RegistryEntry =
+    RegistryEntry { slug: "use-press-hold", raw: include_str!("../../public/docs/hooks/use-press-hold.md"), tags: &[] };
 
 pub static USE_RANDOM: RegistryEntry = RegistryEntry {
     slug: "use-random",
@@ -5737,15 +5701,8 @@ pub static HOOKS_REGISTRY: &[&RegistryEntry] = &[
     &USE_RANDOM,
 ];
 
-pub static GET_STARTED_REGISTRY: &[&RegistryEntry] = &[
-    &RTL,
-    &INTRODUCTION,
-    &INSTALLATION,
-    &CLI,
-    &ICONS,
-    &FIGMA,
-    &CHANGELOG,
-];
+pub static GET_STARTED_REGISTRY: &[&RegistryEntry] =
+    &[&RTL, &INTRODUCTION, &INSTALLATION, &CLI, &ICONS, &FIGMA, &CHANGELOG];
 
 fn find_in(registry: &[&'static RegistryEntry], slug: &str) -> Option<&'static RegistryEntry> {
     registry.iter().copied().find(|entry| entry.slug == slug)

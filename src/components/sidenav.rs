@@ -1,7 +1,6 @@
 use dioxus::prelude::*;
 
-use crate::__registry__::demos_sidenav::SIDENAV_ITEMS;
-use crate::__registry__::demos_sidenav::SidenavItem;
+use crate::__registry__::demos_sidenav::{SIDENAV_ITEMS, SidenavItem};
 use crate::__registry__::sidenav_get_started::SIDENAV_GET_STARTED_ITEMS;
 use crate::__registry__::sidenav_hooks::SIDENAV_HOOKS_ITEMS;
 use crate::Route;

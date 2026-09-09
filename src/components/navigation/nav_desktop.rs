@@ -6,17 +6,17 @@ use crate::Route;
 pub fn NavDesktop() -> Element {
     let route = use_route::<Route>();
     let is_get_started = match &route {
-        Route::ComponentPage { name } => matches!(
-            name.as_str(),
-            "introduction" | "installation" | "cli" | "icons" | "figma" | "changelog" | "rtl"
-        ),
+        Route::ComponentPage { name } => {
+            matches!(name.as_str(), "introduction" | "installation" | "cli" | "icons" | "figma" | "changelog" | "rtl")
+        }
         _ => false,
     };
-    let components_class = if matches!(route, Route::DocsComponentsIndexPage {} | Route::ComponentPage { .. }) && !is_get_started {
-        "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent bg-accent"
-    } else {
-        "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent"
-    };
+    let components_class =
+        if matches!(route, Route::DocsComponentsIndexPage {} | Route::ComponentPage { .. }) && !is_get_started {
+            "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent bg-accent"
+        } else {
+            "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent"
+        };
     let hooks_class = if matches!(route, Route::DocsHooksIndexPage {} | Route::HookPage { .. }) {
         "inline-flex items-center py-1.5 px-2.5 text-sm rounded-md hover:bg-accent bg-accent"
     } else {

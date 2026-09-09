@@ -2,10 +2,10 @@
 // Run `cargo run --manifest-path rust_ui_internals/build_registry_dioxus/Cargo.toml` to regenerate.
 
 pub mod all_blocks;
+pub mod all_workflows;
 pub mod demos_sidenav;
 pub mod my_command_bar_constants;
 pub mod sidenav_get_started;
 pub mod sidenav_hooks;
 pub mod source_map;
 pub mod static_md_registry;
-pub mod all_workflows;
