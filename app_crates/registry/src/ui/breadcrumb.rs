@@ -14,7 +14,7 @@ pub fn Breadcrumb(#[props(into, optional)] class: Option<String>, children: Elem
 #[component]
 pub fn BreadcrumbList(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!(
-        "flex flex-wrap items-center gap-1.5 text-sm text-muted-foreground sm:gap-2",
+        "flex flex-wrap gap-1 items-center text-sm break-words sm:gap-2 text-muted-foreground",
         class.as_deref().unwrap_or("")
     );
     rsx! { ol { class: "{merged}", {children} } }
@@ -77,10 +77,10 @@ pub fn BreadcrumbEllipsis(#[props(into, optional)] class: Option<String>) -> Ele
 
 #[component]
 pub fn BreadcrumbSeparator(#[props(into, optional)] class: Option<String>) -> Element {
-    let merged = tw_merge!("text-muted-foreground/50", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("[&>svg]:size-3.5 [&_svg:not([class*='size-'])]:size-4", class.as_deref().unwrap_or(""));
     rsx! {
         li { class: "{merged}", role: "presentation", "aria-hidden": "true",
-            ChevronRight { class: "size-3.5" }
+            ChevronRight {}
         }
     }
 }

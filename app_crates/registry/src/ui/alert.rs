@@ -27,7 +27,7 @@ pub fn Alert(
     children: Element,
 ) -> Element {
     let class = tw_merge!(
-        "relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg~*]:pl-7",
+        "relative w-full rounded-lg border px-4 py-3 text-sm [&>svg+div]:translate-y-[-3px] [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground [&>svg~*]:pl-7",
         variant.as_str(),
         class.as_deref().unwrap_or("")
     );
@@ -38,9 +38,9 @@ pub fn Alert(
 
 #[component]
 pub fn AlertTitle(#[props(into, default)] class: Option<String>, children: Element) -> Element {
-    let class = tw_merge!("mb-1 font-medium leading-none tracking-tight", class.as_deref().unwrap_or(""));
+    let class = tw_merge!("mb-1 font-medium tracking-tight leading-none", class.as_deref().unwrap_or(""));
     rsx! {
-        div { class: "{class}", {children} }
+        h4 { class: "{class}", {children} }
     }
 }
 
@@ -48,6 +48,6 @@ pub fn AlertTitle(#[props(into, default)] class: Option<String>, children: Eleme
 pub fn AlertDescription(#[props(into, default)] class: Option<String>, children: Element) -> Element {
     let class = tw_merge!("text-sm [&_p]:leading-relaxed", class.as_deref().unwrap_or(""));
     rsx! {
-        div { class: "{class}", {children} }
+        p { class: "{class}", {children} }
     }
 }

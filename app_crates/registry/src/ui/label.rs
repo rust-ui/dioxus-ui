@@ -8,7 +8,7 @@ pub fn Label(
     children: Element,
 ) -> Element {
     let class = tw_merge!(
-        "text-sm font-medium leading-none select-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+        "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
         class.as_deref().unwrap_or("")
     );
     rsx! {

@@ -28,7 +28,7 @@ pub fn PaginationLink(
     let merged = tw_merge!(
         "inline-flex items-center justify-center size-9 rounded-md text-sm font-medium transition-colors cursor-pointer",
         if is_active {
-            "border bg-background shadow-sm text-foreground"
+            "bg-primary text-primary-foreground hover:bg-primary/90"
         } else {
             "hover:bg-accent hover:text-accent-foreground text-muted-foreground"
         },

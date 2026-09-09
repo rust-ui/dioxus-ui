@@ -6,6 +6,52 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **CSS parity sweep**: Audited every shared `ui/*.rs` primitive and both
+  `tailwind.css` files against the leptos site and realigned the class strings
+  that had drifted.
+  - `button.rs`: `ButtonSize::Sm` carried a hardcoded `text-xs` (12px); leptos
+    inherits the base `text-sm` (14px), which made the `ui add <demo>` label and
+    every other `size=Sm` button render visibly smaller. Sizes, variants and the
+    base string now match leptos exactly (Sm gets `gap-1.5 has-[>svg]:px-2.5`,
+    Default/Lg get `has-[>svg]` padding, `shadow-xs` removed from Warning/Success,
+    `dark:` classes added to Destructive/Outline/Ghost, base gains
+    `aria-invalid:*`, `active:scale-[0.98]`, `touch-manipulation`, tap-highlight
+    resets).
+  - `label.rs`: `peer-disabled:opacity-70` -> `opacity-50`; added
+    `flex items-center gap-2` and `group-data-[disabled=true]:*`.
+  - `input.rs`: restored `text-foreground`, `file:*`, `selection:*`,
+    `dark:bg-input/30`, `md:text-sm`, `aria-invalid:*`, `read-only:bg-muted`.
+  - `textarea.rs`: replaced the old shadcn classes (`min-h-[80px]`,
+    `bg-background`, `ring-offset-*`, `focus-visible:ring-ring`, `text-sm`) with
+    the leptos v4 set (`min-h-16`, `field-sizing-content`, `dark:bg-input/30`,
+    `focus-visible:border-ring focus-visible:ring-ring/50`, `aria-invalid:*`,
+    `shadow-xs`, `text-base md:text-sm`, `transition-[color,box-shadow]`).
+  - `card.rs`: `CardHeader` regained `flex flex-col items-start`, the `sm:` grid
+    prefixes and `[[data-size=sm]_&]:px-4`; `CardContent` / `CardFooter` regained
+    the `data-size` padding; `CardAction` regained the `sm:` prefixes; added the
+    `CardSize` prop + `data-size` attribute and the `CardList` / `CardItem`
+    components.
+  - `alert.rs`: base regained `[&>svg]:text-foreground`; `AlertTitle` now renders
+    `<h4>` and `AlertDescription` `<p>` (were `<div>`).
+  - `breadcrumb.rs`: `BreadcrumbList` uses `gap-1 ... break-words`;
+    `BreadcrumbSeparator` matches the leptos `[&>svg]:size-3.5` wrapper instead of
+    a `text-muted-foreground/50` tint.
+  - `button_group.rs`: `ButtonGroup` regained the `[&>input]:flex-1`,
+    `[&>[data-slot=select-trigger]...]` and `has-[>[data-slot=button-group]]:gap-2`
+    selectors; added the `ButtonGroupText` component.
+  - `pagination.rs`: the active page now uses `bg-primary text-primary-foreground
+    hover:bg-primary/90` (was `border bg-background shadow-sm`).
+  - `field.rs`: `FieldDescription` regained `nth-last-2:-mt-1`; `FieldLabel`
+    regained `[&>*]:data-[name=Field]:p-4` and `opacity-70` -> `opacity-50`.
+  - `tailwind.css`: restored the missing "Chat interface utilities" block
+    (`wrap-break-word`, `scroll-fade-b` / `-x`, `scrollbar-thin` /
+    `-gutter-stable` / `-none`, the `--shimmer-angle` `@property`, the
+    `tw-shimmer` keyframes and the `shimmer` / `shimmer-once` / `shimmer-reverse`
+    / `shimmer-none` utilities).
+
+  `app_crates/registry/src/ui/{button,label,input,textarea,card,alert,breadcrumb,button_group,pagination,field}.rs`,
+  `tailwind.css`
+
 - **Download page**: Ported the leptos `/download` page (`routes/page_download.rs`,
   route wired in `main.rs`). Lists the Rust UI Desktop (Tauri) builds for macOS,
   Linux and Windows with per-platform download buttons (real `<a download>` to the
