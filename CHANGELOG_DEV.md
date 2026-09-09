@@ -22,3 +22,10 @@ Internal changelog for the dioxus-ui site (not user-facing).
   signal survived route changes and stayed stuck on Code. Fixed by comparing the
   previous `demo_name` during render (no `use_effect`).
   `src/components/demo_wrapper.rs`
+
+- **Table of contents**: "On This Page" showed the headings of the first doc
+  visited instead of the current one. `ComponentPage` / `HookPage` are reused
+  across client-side nav, and the `use_effect` pushing the TOC into context had
+  no reactive dependency on `name`, so it ran once and never updated. Fixed by
+  comparing the previous `name` during render (no `use_effect`).
+  `src/routes/component_page.rs`, `src/routes/hook_page.rs`
