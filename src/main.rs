@@ -32,6 +32,7 @@ use routes::docs_layout::DocsLayout;
 use routes::home_layout::HomeLayout;
 use routes::home_page::Home;
 use routes::hook_page::HookPage;
+use routes::page_download::PageDownload;
 use routes::page_icons::PageIcons;
 use routes::page_not_found::PageNotFound;
 
@@ -107,6 +108,8 @@ enum Route {
         #[end_layout]
         #[route("/icons")]
         PageIcons {},
+        #[route("/download")]
+        PageDownload {},
         #[route("/create")]
         PageCreate {},
     #[end_layout]

@@ -6,6 +6,13 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **Download page**: Ported the leptos `/download` page (`routes/page_download.rs`,
+  route wired in `main.rs`). Lists the Rust UI Desktop (Tauri) builds for macOS,
+  Linux and Windows with per-platform download buttons (real `<a download>` to the
+  GitHub `rust-ui/releases` latest release) and a requirements grid. The home hero
+  "Download Desktop" button already pointed at `/download`; it 404'd until now.
+  `src/routes/page_download.rs`, `src/routes/mod.rs`, `src/main.rs`
+
 - **Component doc metadata**: Synced the TOML frontmatter of every
   `public/docs/components/*.md` to match the leptos site exactly (same keys,
   same values): `title`, `description`, `tags`, `is_new`, `image`,
