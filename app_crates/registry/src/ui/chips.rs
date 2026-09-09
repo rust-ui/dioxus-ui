@@ -17,7 +17,7 @@ pub fn ChipsContainer(children: Element) -> Element {
         style { dangerous_inner_html: CHIPS_CONTAINER_STYLE }
         div {
             "data-name": "ChipsContainer",
-            class: "flex relative flex-wrap justify-start content-center w-full transition-all max-w-[66vmin] z-[1] bg-card/5 p-[2.8vmin] rounded-[2vmin] shadow-[inset_0_0_1px_1px_theme(colors.border)] duration-[350ms] *:transition-all *:duration-[350ms]",
+            class: "flex relative flex-wrap justify-start content-center w-full transition-all chips__main__container max-w-[66vmin] z-[1] bg-card/5 p-[2.8vmin] rounded-[2vmin] shadow-[inset_0_0_1px_1px_theme(colors.border)] duration-[350ms] ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] *:transition-all *:duration-[350ms] *:ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] *:before:transition-all *:before:duration-[350ms] *:before:ease-[cubic-bezier(0.68,-0.55,0.265,1.55)] *:after:transition-all *:after:duration-[350ms] *:after:ease-[cubic-bezier(0.68,-0.55,0.265,1.55)]",
             {children}
         }
     }

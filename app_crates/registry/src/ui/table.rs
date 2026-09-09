@@ -9,17 +9,15 @@ pub fn TableWrapper(#[props(into, optional)] class: Option<String>, children: El
 
 #[component]
 pub fn Table(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("w-full text-sm caption-bottom", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("w-full max-w-7xl text-sm caption-bottom", class.as_deref().unwrap_or(""));
     rsx! {
-        div { class: "relative w-full overflow-x-auto rounded-xl border",
-            table { class: "{merged}", {children} }
-        }
+        table { class: "{merged}", {children} }
     }
 }
 
 #[component]
 pub fn TableHeader(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("[&_tr]:border-b", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("[&_tr]:border-b sticky top-0 z-10 bg-card", class.as_deref().unwrap_or(""));
     rsx! { thead { class: "{merged}", {children} } }
 }
 
@@ -36,7 +34,7 @@ pub fn TableRow(
     children: Element,
 ) -> Element {
     let merged = tw_merge!(
-        "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+        "border-b transition-colors data-[state=selected]:bg-muted hover:bg-muted/50",
         class.as_deref().unwrap_or("")
     );
     rsx! {
@@ -51,7 +49,7 @@ pub fn TableRow(
 #[component]
 pub fn TableHead(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let merged = tw_merge!(
-        "h-10 px-4 text-left align-middle font-medium text-muted-foreground whitespace-nowrap",
+        "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
         class.as_deref().unwrap_or("")
     );
     rsx! { th { class: "{merged}", {children} } }
@@ -59,7 +57,15 @@ pub fn TableHead(#[props(into, optional)] class: Option<String>, children: Eleme
 
 #[component]
 pub fn TableCell(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("p-4 align-middle", class.as_deref().unwrap_or(""));
+    // TODO(css-parity): leptos source has a malformed second selector here,
+    // `&:has([role=checkbox])]:pl-3` is missing its leading `[`, so Tailwind emits
+    // nothing for it. Kept byte-for-byte identical to leptos so both sites render
+    // the same today. Looks like a bug in leptos: once leptos fixes it to
+    // `[&:has([role=checkbox])]:pl-3`, fix this string too.
+    let merged = tw_merge!(
+        "p-4 align-middle [&:has([role=checkbox])]:pr-0  &:has([role=checkbox])]:pl-3",
+        class.as_deref().unwrap_or("")
+    );
     rsx! { td { class: "{merged}", {children} } }
 }
 

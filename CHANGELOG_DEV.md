@@ -52,6 +52,33 @@ Internal changelog for the dioxus-ui site (not user-facing).
   `app_crates/registry/src/ui/{button,label,input,textarea,card,alert,breadcrumb,button_group,pagination,field}.rs`,
   `tailwind.css`
 
+- **CSS parity sweep (wave 2)**: Second pass over the remaining shared
+  `ui/*.rs` primitives, class strings copied verbatim from the leptos source.
+  - `kbd.rs`: `Kbd` regained the `[[data-slot=tooltip-content]_&]:*` and
+    `dark:[[data-slot=tooltip-content]_&]:*` classes.
+  - `dialog.rs`: `DialogContent` base matches leptos (`sm:max-w-[425px]` and
+    `overflow-y-auto` dropped, `top-1/2 left-1/2 -translate-*` -> `top-[50%]
+    left-[50%] translate-*-[-50%]`); added the close `X` button + `show_close_button`
+    prop and `data-target`.
+  - `input_group.rs`: `InputGroupAddon` regained
+    `[&>kbd]:rounded-[calc(var(--radius)-5px)]`; `BlockStart` / `BlockEnd` aligns
+    regained the `[.border-b]:pb-3` / `[.border-t]:pt-3` and
+    `group-has-[>input]/input-group:*` classes.
+  - `dropdown_menu.rs`: `DropdownMenuLabel` regained `data-inset:pl-8`.
+  - `chips.rs`: `ChipsContainer` regained the `chips__main__container` marker and
+    the bounce-easing transitions on the root and `*` / `*:before` / `*:after`.
+  - `stepper.rs`: `StepperTitle` / `StepperDescription` / `StepperSeparator`
+    switched from Rust runtime state conditionals to the leptos
+    `group-data-[state=*]/stepper-item:*` CSS variants.
+  - `sonner.rs`: `SonnerTrigger` regained the 6-way toast variant colour sets and
+    the leptos base string.
+  - `table.rs`: `<table>` is now bare (inline wrapper `<div>` removed);
+    `TableHeader` gains `sticky top-0 z-10 bg-card`; `TableHead` / `TableCell`
+    regained the `[&:has([role=checkbox])]:*` selectors; `TableRow` class order
+    matches leptos.
+
+  `app_crates/registry/src/ui/{kbd,dialog,input_group,dropdown_menu,chips,stepper,sonner,table}.rs`
+
 - **Download page**: Ported the leptos `/download` page (`routes/page_download.rs`,
   route wired in `main.rs`). Lists the Rust UI Desktop (Tauri) builds for macOS,
   Linux and Windows with per-platform download buttons (real `<a download>` to the

@@ -244,7 +244,7 @@ pub fn DropdownMenuContent(
 
 #[component]
 pub fn DropdownMenuLabel(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("px-2 py-1.5 text-sm font-medium mb-1", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("px-2 py-1.5 text-sm font-medium data-inset:pl-8 mb-1", class.as_deref().unwrap_or(""));
     rsx! { span { "data-name": "DropdownMenuLabel", class: "{merged}", {children} } }
 }
 

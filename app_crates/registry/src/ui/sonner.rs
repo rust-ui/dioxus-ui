@@ -39,8 +39,18 @@ pub fn SonnerTrigger(
     #[props(into)] description: String,
     #[props(into, optional)] position: Option<String>,
 ) -> Element {
+    let variant_classes = match variant {
+        ToastType::Default => "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+        ToastType::Success => "bg-success text-success-foreground hover:bg-success/90",
+        ToastType::Error => "bg-destructive text-white shadow-xs hover:bg-destructive/90 dark:bg-destructive/60",
+        ToastType::Warning => "bg-warning text-warning-foreground hover:bg-warning/90",
+        ToastType::Info => "bg-info text-info-foreground shadow-xs hover:bg-info/90",
+        ToastType::Loading => "bg-secondary text-secondary-foreground shadow-xs hover:bg-secondary/80",
+    };
+
     let merged_class = tw_merge!(
-        "inline-flex gap-2 items-center px-4 py-2 h-9 text-sm font-medium whitespace-nowrap rounded-md transition-colors bg-primary text-primary-foreground hover:bg-primary/90 focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] w-fit cursor-pointer h-9 px-4 py-2",
+        variant_classes,
         class.as_deref().unwrap_or("")
     );
 

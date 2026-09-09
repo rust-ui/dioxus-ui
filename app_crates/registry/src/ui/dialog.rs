@@ -1,6 +1,7 @@
 use std::sync::atomic::{AtomicUsize, Ordering};
 
 use dioxus::prelude::*;
+use icons::X;
 use tw_merge::tw_merge;
 
 static DIALOG_COUNTER: AtomicUsize = AtomicUsize::new(0);
@@ -64,6 +65,7 @@ pub fn DialogTrigger(#[props(into, optional)] class: Option<String>, children: E
 #[component]
 pub fn DialogContent(
     #[props(into, optional)] class: Option<String>,
+    #[props(default = true)] show_close_button: bool,
     #[props(default = true)] close_on_backdrop_click: bool,
     children: Element,
 ) -> Element {
@@ -73,8 +75,13 @@ pub fn DialogContent(
     let backdrop_behavior = if close_on_backdrop_click { "auto" } else { "manual" };
 
     let merged = tw_merge!(
-        "relative bg-background border rounded-2xl shadow-lg p-6 w-full max-w-[calc(100%-2rem)] sm:max-w-[425px] max-h-[85vh] overflow-y-auto fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-100 transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100",
+        "relative bg-background border rounded-2xl shadow-lg p-6 w-full max-w-[calc(100%-2rem)] max-h-[85vh] fixed top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-100 transition-all duration-200 data-[state=closed]:opacity-0 data-[state=closed]:scale-95 data-[state=open]:opacity-100 data-[state=open]:scale-100",
         class.as_deref().unwrap_or("")
+    );
+
+    let close_button_class = format!(
+        "absolute top-4 right-4 p-1 rounded-sm focus:ring-2 focus:ring-offset-2 focus:outline-none [&_svg:not([class*='size-'])]:size-4 focus:ring-ring{}",
+        if show_close_button { "" } else { " hidden" }
     );
 
     let tid = target_id.clone();
@@ -150,9 +157,18 @@ pub fn DialogContent(
             "data-name": "DialogContent",
             class: "{merged}",
             id: "{target_id}",
+            "data-target": "target__dialog",
             "data-state": "closed",
             "data-backdrop": "{backdrop_behavior}",
             style: "pointer-events: none;",
+            button {
+                r#type: "button",
+                class: "{close_button_class}",
+                "data-dialog-close": "{target_id}",
+                aria_label: "Close dialog",
+                span { class: "hidden", "Close Dialog" }
+                X {}
+            }
             {children}
         }
         // Setup script

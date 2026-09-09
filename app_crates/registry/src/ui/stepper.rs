@@ -28,13 +28,8 @@ struct StepperItemCtx {
 
 #[component]
 pub fn StepperTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let item_ctx = use_context::<StepperItemCtx>();
-    let stepper_ctx = use_context::<StepperContext>();
-    let state = if item_ctx.disabled { StepState::Disabled } else { stepper_ctx.step_state(item_ctx.step) };
     let merged = tw_merge!(
-        "text-sm font-medium text-foreground transition-colors",
-        if state == StepState::Pending { "text-muted-foreground" } else { "" },
-        if state == StepState::Disabled { "text-muted-foreground/50" } else { "" },
+        "text-sm font-medium text-foreground transition-colors group-data-[state=Pending]/stepper-item:text-muted-foreground group-data-[state=Disabled]/stepper-item:text-muted-foreground/50",
         class.as_deref().unwrap_or("")
     );
     rsx! { div { "data-name": "StepperTitle", class: "{merged}", {children} } }
@@ -42,10 +37,8 @@ pub fn StepperTitle(#[props(into, optional)] class: Option<String>, children: El
 
 #[component]
 pub fn StepperDescription(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let item_ctx = use_context::<StepperItemCtx>();
     let merged = tw_merge!(
-        "text-sm text-muted-foreground transition-colors",
-        if item_ctx.disabled { "text-muted-foreground/50" } else { "" },
+        "text-sm text-muted-foreground transition-colors group-data-[state=Disabled]/stepper-item:text-muted-foreground/50",
         class.as_deref().unwrap_or("")
     );
     rsx! { div { "data-name": "StepperDescription", class: "{merged}", {children} } }
@@ -53,14 +46,11 @@ pub fn StepperDescription(#[props(into, optional)] class: Option<String>, childr
 
 #[component]
 pub fn StepperSeparator(#[props(into, optional)] class: Option<String>) -> Element {
-    let stepper_ctx = use_context::<StepperContext>();
-    let item_ctx = use_context::<StepperItemCtx>();
-    let state = if item_ctx.disabled { StepState::Disabled } else { stepper_ctx.step_state(item_ctx.step) };
     let merged = tw_merge!(
         "absolute bg-border transition-colors",
         "group-data-[orientation=Horizontal]/stepper:top-4 group-data-[orientation=Horizontal]/stepper:left-[calc(50%+1.5rem)] group-data-[orientation=Horizontal]/stepper:w-[calc(100%-3rem)] group-data-[orientation=Horizontal]/stepper:h-0.5 group-data-[orientation=Horizontal]/stepper:-translate-y-1/2",
         "group-data-[orientation=Vertical]/stepper:top-8 group-data-[orientation=Vertical]/stepper:left-4 group-data-[orientation=Vertical]/stepper:h-full group-data-[orientation=Vertical]/stepper:w-0.5",
-        if state == StepState::Completed { "bg-primary" } else { "" },
+        "group-data-[state=Completed]/stepper-item:bg-primary",
         class.as_deref().unwrap_or("")
     );
     rsx! { div { "data-name": "StepperSeparator", class: "{merged}" } }
