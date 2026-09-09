@@ -24,8 +24,13 @@ Internal changelog for the dioxus-ui site (not user-facing).
   `src/components/demo_wrapper.rs`
 
 - **Table of contents**: "On This Page" showed the headings of the first doc
-  visited instead of the current one. `ComponentPage` / `HookPage` are reused
-  across client-side nav, and the `use_effect` pushing the TOC into context had
-  no reactive dependency on `name`, so it ran once and never updated. Fixed by
-  comparing the previous `name` during render (no `use_effect`).
-  `src/routes/component_page.rs`, `src/routes/hook_page.rs`
+  visited instead of the current one, and briefly listed every entry twice
+  during navigation. `ComponentPage` / `HookPage` are reused across client-side
+  nav and pushed the TOC into a context signal owned by `DocsLayout`; the
+  `use_effect` doing it had no reactive dependency on `name` (ran once, never
+  updated), and writing a parent signal during child render also corrupted the
+  diff and duplicated the list. Removed the context signal entirely: `DocsLayout`
+  now derives the TOC directly from `use_route()`, which is reactive, so it
+  tracks the current page with no effect and no cross-component write.
+  `src/routes/docs_layout.rs`, `src/routes/component_page.rs`,
+  `src/routes/hook_page.rs`

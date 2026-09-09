@@ -6,8 +6,6 @@ use crate::__registry__::static_md_registry::{MyMd, find_hook_entry, hook_prev_n
 use crate::components::doc_header::DocHeader;
 use crate::components::footer_layout::FooterLayout;
 use crate::components::newsletter_signup::NewsletterSignup;
-use crate::components::toc::TocItem;
-use crate::markdown::converter::extract_toc;
 use crate::registry::types::RegistryEntry;
 use crate::routes::page_not_found::PageNotFound;
 
@@ -16,15 +14,6 @@ pub fn HookPage(name: String) -> Element {
     let entry = find_hook_entry(&name);
     let (prev, next) = hook_prev_next(&name);
 
-    let mut toc: Signal<Vec<TocItem>> = use_context();
-    let toc_items: Vec<TocItem> = entry.map(|e| extract_toc(e.body_md())).unwrap_or_default();
-    // This page instance is reused across client-side nav, so push the TOC into
-    // context whenever `name` changes (compared during render, no use_effect).
-    let mut prev_name = use_signal(String::new);
-    if prev_name() != name {
-        prev_name.set(name.clone());
-        toc.set(toc_items.clone());
-    }
 
     rsx! {
         div { class: "flex flex-col pt-4 mx-auto w-full min-h-screen px-3 md:px-4 max-w-[730px]",

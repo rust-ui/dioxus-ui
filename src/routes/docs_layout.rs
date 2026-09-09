@@ -1,13 +1,28 @@
 use dioxus::prelude::*;
+use dioxus::router::use_route;
 
 use crate::Route;
+use crate::__registry__::static_md_registry::{find_docs_component_entry, find_hook_entry};
 use crate::components::navigation::header_docs::HeaderDocs;
 use crate::components::sidenav::Sidenav;
 use crate::components::toc::{TableOfContents, TocItem};
+use crate::markdown::converter::extract_toc;
 
 #[component]
 pub fn DocsLayout() -> Element {
-    let toc = use_context_provider(|| Signal::new(Vec::<TocItem>::new()));
+    // Derive the TOC from the current route so it always tracks the page being
+    // shown. `use_route` is reactive, so this recomputes on client-side nav
+    // without an effect or cross-component signal write.
+    let route = use_route::<Route>();
+    let toc_items: Vec<TocItem> = match &route {
+        Route::ComponentPage { name } => find_docs_component_entry(name)
+            .map(|e| extract_toc(e.body_md()))
+            .unwrap_or_default(),
+        Route::HookPage { name } => find_hook_entry(name)
+            .map(|e| extract_toc(e.body_md()))
+            .unwrap_or_default(),
+        _ => Vec::new(),
+    };
 
     rsx! {
         HeaderDocs {}
@@ -17,7 +32,7 @@ pub fn DocsLayout() -> Element {
                 div { class: "flex-1 min-w-0 page__fade",
                     Outlet::<Route> {}
                 }
-                TableOfContents { items: toc() }
+                TableOfContents { items: toc_items }
             }
         }
     }
