@@ -14,6 +14,13 @@ Internal changelog for the dioxus-ui site (not user-facing).
   button); source is path-rewritten (`use crate::registry::` -> `use
   crate::components::`) before display.
   `src/domain/markdown_ui/components/static_demo_wrapper.rs`
+- **Syntax highlighting**: syntect now runs on the client (WASM) too, not just
+  SSR. Code kept its colours after hydration before only on server-rendered
+  pages; client-rendered code fell back to plain escaped text. `syntect` /
+  `html-escape` are now unconditional deps and `highlight_code` mirrors the
+  leptos `_markdown_crate` shape (shared impl + per-target `SyntaxSet` /
+  `ThemeSet` caches). Grows the WASM bundle (embedded syntax + theme dumps).
+  `src/markdown/highlight_code.rs`, `src/markdown/mod.rs`, `Cargo.toml`
 - **DocHeader**: Aligned spacing/layout classes with the leptos header
   (`mt-2` gaps restored above description and tags, `min-w-0` + `truncate` on the
   title, `z-20` / `shrink-0` on the action cluster). `src/components/doc_header.rs`

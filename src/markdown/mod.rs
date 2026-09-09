@@ -1,7 +1,6 @@
 pub mod converter;
 pub mod highlight_code;
 pub mod highlight_language;
-#[cfg(feature = "server")]
 pub mod toml_highlighter;
 
 use pulldown_cmark::{Options, Parser, html};
