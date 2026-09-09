@@ -9,12 +9,17 @@ use registry::ui::kbd::Kbd;
 
 use crate::__registry__::my_command_bar_constants::{COMPONENTS_ITEMS, CommandCategory, HOOKS_ITEMS, PAGES_ITEMS};
 
+const DIALOG_ID: &str = "command-search-docs";
+
 const TAB_CLASS: &str = "py-1 px-2.5 text-xs font-medium rounded-md transition-colors data-[active=true]:bg-muted data-[active=true]:text-foreground data-[active=false]:text-muted-foreground data-[active=false]:hover:text-foreground";
 
+/// Trigger only. Rendered in every header. Opens the single global dialog
+/// (`CommandSearchDocsDialog`) purely through DOM ids + delegated listeners,
+/// so it needs no shared Dioxus state with the dialog.
 #[component]
 pub fn CommandSearchDocs() -> Element {
     rsx! {
-        CommandDialogProvider { id: "command-search-docs",
+        CommandDialogProvider { id: DIALOG_ID,
             CommandDialogTrigger { class: "flex-1 justify-start pl-3 h-8 text-sm font-normal shadow-none md:flex-none",
                 span { class: "hidden md:inline-flex", "Search..." }
                 span { class: "inline-flex md:hidden", "Search documentation..." }
@@ -24,7 +29,19 @@ pub fn CommandSearchDocs() -> Element {
                     span { "K" }
                 }
             }
+        }
+    }
+}
 
+/// Portal-equivalent for Dioxus 0.7 (which has no `Portal` primitive, unlike
+/// the leptos site's `leptos::portal::Portal`). Mounted once from `AppLayout`,
+/// outside the blurred `<header>` whose `backdrop-filter` would otherwise
+/// become the containing block for the dialog's `position: fixed` and trap it
+/// near the top of the header instead of centering it in the viewport.
+#[component]
+pub fn CommandSearchDocsDialog() -> Element {
+    rsx! {
+        CommandDialogProvider { id: DIALOG_ID,
             CommandDialog {
                 CommandHeader {
                     CommandTitle { "Search documentation..." }
