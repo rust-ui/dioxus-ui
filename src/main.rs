@@ -8,6 +8,7 @@ mod domain;
 pub mod markdown;
 pub mod registry;
 mod routes;
+pub mod utils;
 
 use domain::blocks::routing::blocks_layout::BlocksLayout;
 use domain::blocks::routing::blocks_pages::{
@@ -270,6 +271,11 @@ fn App() -> Element {
         // Ideal fix: find a way to pass h-full to the Dioxus mount div without a style tag.
         // For now we inject it inline so it wins over any stylesheet ordering issues.
         document::Style { "#main {{ height: 100%; }}" }
+        // Page intro fade, replayed on every route change via `retrigger_page_fade`.
+        // `backwards` keeps the from-state applied during the pre-animation delay.
+        document::Style {
+            "@keyframes page__fade_in{{from{{opacity:0;transform:translateY(6px)}}to{{opacity:1}}}} .page__fade{{animation:page__fade_in 200ms ease-out backwards}}"
+        }
         document::Link { rel: "icon", r#type: "image/png", sizes: "32x32", href: FAVICON_32 }
         document::Link { rel: "icon", r#type: "image/png", sizes: "16x16", href: FAVICON_16 }
         document::Link { rel: "icon", href: FAVICON }

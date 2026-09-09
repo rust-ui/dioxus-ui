@@ -6,6 +6,18 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **Page transitions**: Ported the leptos `page_transition` util.
+  `src/utils/page_transition.rs` adds `retrigger_page_fade()` (replays the
+  `page__fade` intro on `#page__outlet` on every route change) and a
+  `ScrollToTop` component (resets `#data-scroll-target` scroll on nav, skips
+  `/blocks/*`). Wired into `AppLayout` plus the docs / blocks / charts /
+  workflows layouts; the `@keyframes page__fade_in` / `.page__fade` rule now
+  ships from `main.rs`. Before, the fade played only on the first hard load and
+  pages kept their previous scroll position after client-side nav.
+  `src/utils/`, `src/main.rs`, `src/routes/app_layout.rs`,
+  `src/routes/docs_layout.rs`,
+  `src/domain/{blocks,charts,workflows}/routing/*_layout.rs`, `Cargo.toml`
+
 - **Animate demo**: Brought `/docs/components/animate` to parity with the leptos
   site. `AnimateHoverVariant` gained the 8 variants leptos carries but dioxus was
   missing (`BounceCustom`, `FadeOutDownV2`, `FlashV0`, `JiggleV0`, `PulseCustom`,

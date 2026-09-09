@@ -7,6 +7,7 @@ use crate::components::navigation::header_docs::HeaderDocs;
 use crate::components::sidenav::Sidenav;
 use crate::components::table_of_contents::{TableOfContents, TocItem};
 use crate::markdown::converter::extract_toc_from_md;
+use crate::utils::page_transition::{PAGE_OUTLET, retrigger_page_fade};
 
 #[component]
 pub fn DocsLayout() -> Element {
@@ -14,6 +15,7 @@ pub fn DocsLayout() -> Element {
     // shown. `use_route` is reactive, so this recomputes on client-side nav
     // without an effect or cross-component signal write.
     let route = use_route::<Route>();
+    retrigger_page_fade();
     let toc_items: Vec<TocItem> = match &route {
         Route::ComponentPage { name } => find_docs_component_entry(name)
             .map(|e| extract_toc_from_md(e.body_md()))
@@ -29,7 +31,7 @@ pub fn DocsLayout() -> Element {
         div { class: "flex-1",
             div { class: "container mx-auto flex items-start",
                 Sidenav {}
-                div { class: "flex-1 min-w-0 page__fade",
+                div { id: PAGE_OUTLET, class: "flex-1 min-w-0 page__fade",
                     Outlet::<Route> {}
                 }
                 TableOfContents { toc_items }
