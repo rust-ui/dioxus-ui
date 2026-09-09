@@ -12,4 +12,4 @@ pub mod navigation;
 pub mod newsletter_signup;
 pub mod sidenav;
 pub mod steps;
-pub mod toc;
+pub mod table_of_contents;

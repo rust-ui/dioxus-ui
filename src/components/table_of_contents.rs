@@ -4,17 +4,20 @@ use icons::ExternalLink;
 
 use crate::Route;
 
-#[derive(Clone, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub struct TocItem {
-    pub id: String,
-    pub text: String,
-    pub depth: u8, // 2 = h2, 3 = h3
+    pub title: String,
+    pub level: u8, // 2 = h2, 3 = h3
+    pub anchor: String,
 }
 
-/// Slugify heading text to a valid HTML id: lowercase, spaces → dashes, strip non-alphanumeric
-pub fn slugify(text: &str) -> String {
-    text.chars()
-        .map(|c| if c.is_alphanumeric() { c.to_ascii_lowercase() } else { '-' })
+/// Build a valid HTML anchor id from heading text: lowercase, non-alphanumeric → dashes, collapse runs.
+pub fn create_anchor_id(title: &str) -> String {
+    title
+        .to_lowercase()
+        .chars()
+        .map(|c| if c.is_alphanumeric() { c } else { '-' })
+        .filter(|&c| c != '\0')
         .collect::<String>()
         .split('-')
         .filter(|s| !s.is_empty())
@@ -23,7 +26,7 @@ pub fn slugify(text: &str) -> String {
 }
 
 #[component]
-pub fn TableOfContents(items: Vec<TocItem>) -> Element {
+pub fn TableOfContents(toc_items: Vec<TocItem>) -> Element {
     rsx! {
         aside {
             "data-name": "TableOfContents",
@@ -38,14 +41,14 @@ pub fn TableOfContents(items: Vec<TocItem>) -> Element {
                         ul {
                             "data-name": "TocList",
                             class: "pb-4 space-y-1.5",
-                            for item in items {
+                            for item in toc_items {
                                 li {
                                     a {
                                         "data-name": "TocLink",
-                                        href: "#{item.id}",
-                                        "data-depth": item.depth.to_string(),
+                                        href: "#{item.anchor}",
+                                        "data-depth": item.level.to_string(),
                                         class: "block text-sm text-muted-foreground hover:text-foreground aria-[current=true]:text-foreground no-underline transition-colors data-[depth=3]:pl-4 data-[depth=4]:pl-6",
-                                        "{item.text}"
+                                        "{item.title}"
                                     }
                                 }
                             }
@@ -53,7 +56,7 @@ pub fn TableOfContents(items: Vec<TocItem>) -> Element {
                     }
                 }
                 SummarizeWithAi {}
-                TocCtaCard {}
+                TocCTACard {}
             }
         }
         script { src: "/app_components/table_of_contents.js" }
@@ -112,7 +115,7 @@ fn SummarizeWithAi() -> Element {
 }
 
 #[component]
-fn TocCtaCard() -> Element {
+fn TocCTACard() -> Element {
     rsx! {
         a {
             href: "https://rustify.rs/bootcamps/fullstack?utm_source=rust-ui&utm_medium=sidebar&utm_campaign=bootcamp-cta",

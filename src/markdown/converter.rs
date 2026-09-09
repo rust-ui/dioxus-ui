@@ -3,7 +3,7 @@ use std::collections::HashMap;
 use dioxus::prelude::*;
 use html_parser::{Dom, Element as HtmlElement, Node};
 
-use crate::components::toc::{TocItem, slugify};
+use crate::components::table_of_contents::{TocItem, create_anchor_id};
 use crate::markdown::markdown_to_html;
 
 // ---------------------------------------------------------------------------
@@ -42,7 +42,7 @@ impl MdComponents {
 // ---------------------------------------------------------------------------
 
 /// Extract H2/H3 headings from markdown for the Table of Contents.
-pub fn extract_toc(md: &str) -> Vec<TocItem> {
+pub fn extract_toc_from_md(md: &str) -> Vec<TocItem> {
     let html = markdown_to_html(md);
     let dom = match Dom::parse(&html) {
         Ok(d) => d,
@@ -58,8 +58,8 @@ pub fn extract_toc(md: &str) -> Vec<TocItem> {
             };
             let text = extract_text(&el.children);
             if !text.is_empty() {
-                let id = slugify(&text);
-                items.push(TocItem { id, text, depth });
+                let anchor = create_anchor_id(&text);
+                items.push(TocItem { title: text, level: depth, anchor });
             }
         }
     }
@@ -141,12 +141,12 @@ fn process_element(el: &HtmlElement, components: &MdComponents) -> Element {
         }
         "h2" => {
             let text = extract_text(&el.children);
-            let id = slugify(&text);
+            let id = create_anchor_id(&text);
             rsx! { h2 { id: "{id}", class: "mt-10 text-xl font-medium tracking-tight lg:mt-12 first:mt-0 scroll-mt-28", {children.into_iter()} } }
         }
         "h3" => {
             let text = extract_text(&el.children);
-            let id = slugify(&text);
+            let id = create_anchor_id(&text);
             rsx! { h3 { id: "{id}", class: "mt-12 text-lg font-medium tracking-tight scroll-mt-28", {children.into_iter()} } }
         }
         "h4" => {

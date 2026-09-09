@@ -5,8 +5,8 @@ use crate::Route;
 use crate::__registry__::static_md_registry::{find_docs_component_entry, find_hook_entry};
 use crate::components::navigation::header_docs::HeaderDocs;
 use crate::components::sidenav::Sidenav;
-use crate::components::toc::{TableOfContents, TocItem};
-use crate::markdown::converter::extract_toc;
+use crate::components::table_of_contents::{TableOfContents, TocItem};
+use crate::markdown::converter::extract_toc_from_md;
 
 #[component]
 pub fn DocsLayout() -> Element {
@@ -16,10 +16,10 @@ pub fn DocsLayout() -> Element {
     let route = use_route::<Route>();
     let toc_items: Vec<TocItem> = match &route {
         Route::ComponentPage { name } => find_docs_component_entry(name)
-            .map(|e| extract_toc(e.body_md()))
+            .map(|e| extract_toc_from_md(e.body_md()))
             .unwrap_or_default(),
         Route::HookPage { name } => find_hook_entry(name)
-            .map(|e| extract_toc(e.body_md()))
+            .map(|e| extract_toc_from_md(e.body_md()))
             .unwrap_or_default(),
         _ => Vec::new(),
     };
@@ -32,7 +32,7 @@ pub fn DocsLayout() -> Element {
                 div { class: "flex-1 min-w-0 page__fade",
                     Outlet::<Route> {}
                 }
-                TableOfContents { items: toc_items }
+                TableOfContents { toc_items }
             }
         }
     }
