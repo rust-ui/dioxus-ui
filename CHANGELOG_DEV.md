@@ -46,7 +46,10 @@ Internal changelog for the dioxus-ui site (not user-facing).
   `src/markdown/highlight_code.rs`, `src/markdown/mod.rs`, `Cargo.toml`
 - **DocHeader**: Aligned spacing/layout classes with the leptos header
   (`mt-2` gaps restored above description and tags, `min-w-0` + `truncate` on the
-  title, `z-20` / `shrink-0` on the action cluster). `src/components/doc_header.rs`
+  title, `z-20` / `shrink-0` on the action cluster). The tags row is now always
+  rendered, matching leptos: it doubles as the `mb-6` spacer below the header, so
+  components with no tags (Avatar, etc.) keep the same gap before the demo block
+  instead of having it collapse. `src/components/doc_header.rs`
 
 - **Components index**: Wired preview thumbnails (light + dark) into the doc
   frontmatter for 20 components that already had screenshots on disk in

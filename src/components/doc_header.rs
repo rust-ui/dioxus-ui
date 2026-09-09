@@ -144,12 +144,10 @@ pub fn DocHeader(
             // 3. Description
             p { class: "mt-2 text-muted-foreground", "{description}" }
 
-            // 4. Tags
-            if !tags.is_empty() {
-                div { class: "flex gap-2 items-center mt-2 mb-6",
-                    for tag in tags.iter() {
-                        Badge { variant: BadgeVariant::Muted, "{tag}" }
-                    }
+            // 4. Tags (always rendered, matching leptos: also acts as the mb-6 spacer)
+            div { class: "flex gap-2 items-center mt-2 mb-6",
+                for tag in tags.iter() {
+                    Badge { variant: BadgeVariant::Muted, "{tag}" }
                 }
             }
         }
