@@ -1,6 +1,8 @@
 +++
 title = "Breadcrumb"
 description = "Rust/UI component that displays the path to the current resource using a hierarchy of links."
+image = "/images/thumbnails/breadcrumb.webp"
+image_dark = "/images/thumbnails/breadcrumb-dark.webp"
 +++
 
 <StaticBreadcrumb />

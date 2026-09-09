@@ -3,8 +3,8 @@ title = "Dropdown Menu"
 description = "Composable dropdown menu primitives for Dioxus."
 tags = []
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/dropdown.webp"
+image_dark = "/images/thumbnails/dropdown-dark.webp"
 +++
 
 <StaticDropdownMenu />

@@ -1,6 +1,8 @@
 +++
 title = "Textarea"
 description = "Rust/UI component that displays a textarea."
+image = "/images/thumbnails/textarea.webp"
+image_dark = "/images/thumbnails/textarea-dark.webp"
 +++
 
 <StaticTextarea />

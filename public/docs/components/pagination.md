@@ -1,6 +1,8 @@
 +++
 title = "Pagination"
 description = "Rust/UI component that displays a pagination component."
+image = "/images/thumbnails/pagination.webp"
+image_dark = "/images/thumbnails/pagination-dark.webp"
 +++
 
 <StaticPagination />

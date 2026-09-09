@@ -3,8 +3,8 @@ title = "Select"
 description = "Composable select component for choosing a single value in Dioxus."
 tags = []
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/select.webp"
+image_dark = "/images/thumbnails/select-dark.webp"
 +++
 
 <StaticSelect />

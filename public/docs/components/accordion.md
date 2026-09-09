@@ -1,6 +1,8 @@
 +++
 title = "Accordion"
 description = "Rust/UI component that displays an Accordion."
+image = "/images/thumbnails/accordion.webp"
+image_dark = "/images/thumbnails/accordion-dark.webp"
 +++
 
 <StaticAccordion />

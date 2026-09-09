@@ -1,6 +1,8 @@
 +++
 title = "Popover"
 description = "A floating panel that opens on click, anchored to a trigger element."
+image = "/images/thumbnails/popover.webp"
+image_dark = "/images/thumbnails/popover-dark.webp"
 +++
 
 <StaticPopover />

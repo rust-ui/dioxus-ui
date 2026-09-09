@@ -3,8 +3,8 @@ title = "Dropzone"
 description = "Rust/UI component for drag-and-drop file uploads with list and grid views."
 tags = []
 is_new = false
-image = "/images/thumbnails/_placeholder.webp"
-image_dark = "/images/thumbnails/_placeholder-dark.webp"
+image = "/images/thumbnails/dropzone.webp"
+image_dark = "/images/thumbnails/dropzone-dark.webp"
 +++
 
 <StaticDropzoneToggle />

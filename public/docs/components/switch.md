@@ -1,6 +1,8 @@
 +++
 title = "Switch"
 description = "Rust/UI component that displays a control that allows the user to toggle between checked and not checked."
+image = "/images/thumbnails/switch.webp"
+image_dark = "/images/thumbnails/switch-dark.webp"
 +++
 
 <StaticSwitch />

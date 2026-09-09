@@ -1,6 +1,8 @@
 +++
 title = "Button"
 description = "Rust/UI component that displays a button or a component that looks like a button."
+image = "/images/thumbnails/button.webp"
+image_dark = "/images/thumbnails/button-dark.webp"
 +++
 
 <StaticButton />
