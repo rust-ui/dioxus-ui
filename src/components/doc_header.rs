@@ -47,7 +47,7 @@ pub fn DocHeader(
     );
 
     rsx! {
-        div { class: "flex flex-col gap-4 mb-2",
+        div { class: "flex flex-col gap-4",
             // 1. Breadcrumb
             Breadcrumb {
                 BreadcrumbList {
@@ -64,11 +64,11 @@ pub fn DocHeader(
             }
 
             // 2. Title row + actions + prev/next
-            div { class: "flex justify-between items-center mt-2",
-                h1 { class: "text-4xl font-semibold", "{title}" }
-                div { class: "flex gap-2 items-center",
+            div { class: "flex gap-3 justify-between items-center mt-2 min-w-0",
+                h1 { class: "flex-1 min-w-0 text-4xl font-semibold truncate", "{title}" }
+                div { class: "flex relative z-20 gap-2 items-center shrink-0",
                     // Copy Page + dropdown
-                    ButtonGroup { class: "hidden md:flex",
+                    ButtonGroup { class: "hidden relative z-20 md:flex shrink-0",
                         Button {
                             variant: ButtonVariant::Outline,
                             size: ButtonSize::Sm,
@@ -142,11 +142,11 @@ pub fn DocHeader(
             }
 
             // 3. Description
-            p { class: "text-muted-foreground", "{description}" }
+            p { class: "mt-2 text-muted-foreground", "{description}" }
 
             // 4. Tags
             if !tags.is_empty() {
-                div { class: "flex gap-2 items-center mb-6",
+                div { class: "flex gap-2 items-center mt-2 mb-6",
                     for tag in tags.iter() {
                         Badge { variant: BadgeVariant::Muted, "{tag}" }
                     }

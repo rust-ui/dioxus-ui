@@ -6,6 +6,18 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **DemoWrapper**: Brought the demo block to parity with the leptos site. The
+  Preview/Code tab row now carries a right-side action column: a `ui add <demo>`
+  outline button that copies the CLI command, and a kebab menu with "Copy Demo"
+  (copies the source) and "View as Markdown". Code panel markup now matches
+  leptos `SyntectHighlighterCode` (same wrapper, classes, no floating copy
+  button); source is path-rewritten (`use crate::registry::` -> `use
+  crate::components::`) before display.
+  `src/domain/markdown_ui/components/static_demo_wrapper.rs`
+- **DocHeader**: Aligned spacing/layout classes with the leptos header
+  (`mt-2` gaps restored above description and tags, `min-w-0` + `truncate` on the
+  title, `z-20` / `shrink-0` on the action cluster). `src/components/doc_header.rs`
+
 - **Components index**: Wired preview thumbnails (light + dark) into the doc
   frontmatter for 20 components that already had screenshots on disk in
   `public/images/thumbnails/`: Accordion, Alert, Badge, Breadcrumb, Button,

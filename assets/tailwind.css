@@ -10349,6 +10349,12 @@
       line-height: var(--leading-relaxed);
     }
   }
+  .\[\&_span\]\:text-xs {
+    & span {
+      font-size: var(--text-xs);
+      line-height: var(--tw-leading, var(--text-xs--line-height));
+    }
+  }
   .\[\&_svg\]\:pointer-events-none {
     & svg {
       pointer-events: none;

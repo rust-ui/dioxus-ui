@@ -2,7 +2,14 @@ use std::sync::atomic::{AtomicUsize, Ordering};
 
 use dioxus::document::eval;
 use dioxus::prelude::*;
-use icons::{Code, Eye};
+use icons::{Check, Code, Copy, EllipsisVertical, Eye, Terminal};
+use registry::hooks::use_copy_clipboard::use_copy_clipboard;
+use registry::ui::button::{Button, ButtonSize, ButtonVariant};
+use registry::ui::dropdown_menu::{
+    DropdownMenu, DropdownMenuAlign, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLink,
+    DropdownMenuTrigger,
+};
+use registry::ui::separator::Separator;
 use tw_merge::tw_merge;
 
 use crate::__registry__::static_md_registry::{MarkdownType, get_static_registry_entry};
@@ -15,12 +22,35 @@ enum DemoTab {
     Code,
 }
 
+/// Transform code for display by replacing internal registry paths with user-facing component paths
+fn transform_code_for_display(code: &str) -> String {
+    code.replace("use crate::registry::", "use crate::components::")
+}
+
 #[component]
 pub fn StaticDemoWrapper(
     demo_type: MarkdownType,
     #[props(into, optional)] class: Option<String>,
     children: Element,
 ) -> Element {
+    let Some(demo_data) = get_static_registry_entry(demo_type) else {
+        return rsx! {
+            p { "Demo not found in static registry" }
+        };
+    };
+
+    let raw_code: &'static str = demo_data.raw_code;
+    let demo_name: &'static str = demo_data.demo_name;
+    let transformed_code = transform_code_for_display(raw_code);
+    let highlighted = crate::markdown::highlight_code::highlight_code(&transformed_code, Some("rust"), None);
+
+    let cli_command = format!("ui add {demo_name}");
+    let view_md_href = format!("/registry/styles/default/{demo_name}.md");
+
+    // Separate copy signals for CLI command and demo code (mirrors leptos)
+    let (copy_cli, copied_cli) = use_copy_clipboard(None);
+    let (copy_demo, copied_demo) = use_copy_clipboard(None);
+
     let preview_classes = tw_merge!(
         "flex items-center justify-center flex-[1_1_auto] min-w-[150px] min-h-[370px] bg-background p-4",
         class.as_deref().unwrap_or("")
@@ -83,20 +113,70 @@ pub fn StaticDemoWrapper(
         if tab() == DemoTab::Code { "display:block" } else { "display:none" }
     };
 
+    let cli_for_click = cli_command.clone();
+
     rsx! {
         div { class: "flex flex-col gap-2 w-full",
-            div { class: "self-start inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground",
-                button {
-                    class: "{preview_cls()}",
-                    onclick: move |_| tab.set(DemoTab::Preview),
-                    Eye { class: "size-3.5" }
-                    "Preview"
+            div { class: "flex justify-between items-center",
+                div { class: "self-start inline-flex h-9 items-center rounded-md bg-muted p-1 text-muted-foreground",
+                    button {
+                        class: "{preview_cls()}",
+                        onclick: move |_| tab.set(DemoTab::Preview),
+                        Eye { class: "size-3.5" }
+                        "Preview"
+                    }
+                    button {
+                        class: "{code_cls()}",
+                        onclick: move |_| tab.set(DemoTab::Code),
+                        Code { class: "size-3.5" }
+                        "Code"
+                    }
                 }
-                button {
-                    class: "{code_cls()}",
-                    onclick: move |_| tab.set(DemoTab::Code),
-                    Code { class: "size-3.5" }
-                    "Code"
+
+                div { class: "flex gap-2 items-center",
+                    Button {
+                        class: "hidden sm:flex",
+                        variant: ButtonVariant::Outline,
+                        size: ButtonSize::Sm,
+                        title: "Copy the command line",
+                        onclick: move |_| copy_cli(&cli_for_click),
+                        if *copied_cli.read() {
+                            Check {}
+                        } else {
+                            Terminal {}
+                        }
+                        span { "{cli_command}" }
+                    }
+
+                    DropdownMenu { align: DropdownMenuAlign::End,
+                        DropdownMenuTrigger { class: "px-2 h-8",
+                            EllipsisVertical {}
+                        }
+                        DropdownMenuContent {
+                            DropdownMenuGroup {
+                                DropdownMenuItem {
+                                    onclick: move |_| copy_demo(raw_code),
+                                    if *copied_demo.read() {
+                                        Check {}
+                                    } else {
+                                        Copy {}
+                                    }
+                                    span { "Copy Demo" }
+                                }
+                            }
+                            Separator { class: "my-1" }
+                            DropdownMenuGroup {
+                                DropdownMenuItem {
+                                    DropdownMenuLink {
+                                        href: view_md_href,
+                                        target: "_blank",
+                                        rel: "noopener noreferrer",
+                                        "View as Markdown"
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
@@ -122,43 +202,11 @@ pub fn StaticDemoWrapper(
             }
 
             div { style: "{code_display()}",
-                {
-                    if let Some(demo_data) = get_static_registry_entry(demo_type) {
-                        let code = demo_data.raw_code.to_string();
-                        let highlighted = crate::markdown::highlight_code::highlight_code(&code, Some("rust"), None);
-                        let copy_id = format!("copy-btn-{id}");
-                        let cid = copy_id.clone();
-                        rsx! {
-                            div { class: "relative rounded-xl border bg-muted overflow-hidden",
-                                button {
-                                    id: "{copy_id}",
-                                    class: "absolute top-3 right-3 z-10 inline-flex items-center gap-1.5 rounded-md border bg-background px-2.5 py-1.5 text-xs font-medium text-foreground shadow-xs hover:bg-muted transition-colors",
-                                    onclick: move |_| {
-                                        let code = code.clone();
-                                        let cid = cid.clone();
-                                        spawn(async move {
-                                            let js = format!(
-                                                r#"navigator.clipboard.writeText({code:?}).then(() => {{
-                                                    const btn = document.getElementById('{cid}');
-                                                    if (btn) {{ btn.textContent = 'Copied!'; setTimeout(() => btn.textContent = 'Copy', 1500); }}
-                                                }})"#,
-                                            );
-                                            let _ = eval(&js).await;
-                                        });
-                                    },
-                                    "Copy"
-                                }
-                                pre { class: "overflow-x-auto py-3.5 px-4 text-xs min-h-[370px] font-mono",
-                                    dangerous_inner_html: "{highlighted}",
-                                }
-                            }
-                        }
-                    } else {
-                        rsx! {
-                            div { class: "rounded-xl border bg-muted flex items-center justify-center min-h-[370px]",
-                                p { class: "text-sm text-muted-foreground", "Source not available." }
-                            }
-                        }
+                div { class: "group/scrollbar-on-hover",
+                    pre {
+                        "data-name": "__SyntectHighlighterCode",
+                        class: "scrollbar__on_hover h-full max-h-[370px] overflow-y-auto whitespace-pre-wrap p-4 [&_span]:text-xs rounded-md bg-muted",
+                        code { dangerous_inner_html: "{highlighted}" }
                     }
                 }
             }
