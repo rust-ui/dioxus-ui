@@ -1329,6 +1329,7 @@ dependencies = [
  "syntect",
  "time",
  "toml",
+ "tower-http",
  "tracing",
  "tw_merge",
  "validator",

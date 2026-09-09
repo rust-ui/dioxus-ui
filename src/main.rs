@@ -118,7 +118,126 @@ enum Route {
 }
 
 fn main() {
+    // Web/wasm build (and any non-server build): the stock launch path. The
+    // client-side `Router::<Route>` handles every URL once the page is loaded,
+    // so the bug documented on `mod server` below never manifests here.
+    #[cfg(not(feature = "server"))]
     dioxus::launch(App);
+
+    // Server build: use our own axum router instead of the one
+    // `dioxus::launch` would build. `dioxus::serve` is the documented 0.7
+    // extension point for this ("Serve a fullstack dioxus application with a
+    // custom axum router"). The closure is called once per (re)build so
+    // hot-patching still swaps the router in dev.
+    #[cfg(feature = "server")]
+    dioxus::serve(|| async { Ok(server::router()) });
+}
+
+/// Server bootstrap. Hand-rolled replacement for `dioxus::launch`'s server
+/// router.
+///
+/// ## The bug this works around
+///
+/// Symptom: in-app SPA navigation to `/docs/components/alert` (or any
+/// `/docs/*` / `/icons` page) works, but a **hard refresh / direct hit** of the
+/// same URL returns HTTP 404. `/components/alert`, `/create`, `/charts/*` etc.
+/// are fine. Dev (`dx serve`) and any served-SSR deployment are affected;
+/// a fully pre-rendered static export is not (each route is a real file on
+/// disk there).
+///
+/// Root cause: `dioxus-server` 0.7.10 `DioxusRouterExt::serve_static_assets`
+/// -> `serve_dir_cached` (see
+/// `~/.cargo/registry/.../dioxus-server-0.7.10/src/server.rs`). For every
+/// top-level entry in `public/` it does, in debug builds:
+///
+/// ```ignore
+/// router = router.nest_service(&route, ServeDir::new(&path));
+/// ```
+///
+/// `nest_service("/docs", ...)` makes axum hand the **entire `/docs/*`
+/// subtree** to that `ServeDir`, and `ServeDir` has no not-found service, so a
+/// path with no matching file (`public/docs/components/alert` does not exist,
+/// only `alert.md` does) terminates with 404. The request never reaches
+/// `.fallback(render_handler)`, i.e. the SSR renderer. Our routes
+/// `/docs/components/*`, `/docs/hooks/*` and `/icons` collide with the
+/// real directories `public/docs/` and `public/icons/` and are therefore
+/// unreachable on a cold request.
+///
+/// Why the client router still works: it never issues these HTTP requests, it
+/// resolves `Route` in-memory.
+///
+/// Why not just move the directories: `public/docs/*.md` is intentionally
+/// served as raw markdown (LLM/tooling consumers, parity with `leptos-ui`),
+/// and `public/icons/*` holds real favicons/logos referenced by URL. Renaming
+/// them only relocates the same collision and diverges from `leptos-ui`.
+///
+/// ## The fix
+///
+/// Build the router so `ServeDir` is the **fallback**, not a set of nested
+/// services: a real file under `public/` still wins, everything else falls
+/// through to the Dioxus SSR handler. This is the exact shape `leptos_axum`
+/// uses (`ServeDir::new(dir).fallback(handler)`), which is why the Leptos site
+/// with the identical `public/` layout does not have this bug.
+///
+/// Trade-off: we duplicate the small amount of glue
+/// `serve_dioxus_application` normally does (server-fn registration + SSR
+/// fallback + state) and skip `apply_base_path` (this deployment configures no
+/// base path). Revisit / delete this module if `dioxus-server` gains a
+/// not-found fallback on its static handler upstream.
+///
+/// See `BUGFIX_docs_routes_404_on_refresh.md` for the full write-up.
+#[cfg(feature = "server")]
+mod server {
+    use super::App;
+    use dioxus::server::axum::{routing::get, Router};
+    use dioxus::server::{DioxusRouterExt, FullstackState, ServeConfig};
+    use tower_http::services::ServeDir;
+
+    /// Directory the CLI bundles static assets into. Mirrors the private
+    /// `dioxus_server::public_path()`: honour `DIOXUS_PUBLIC_PATH` if set,
+    /// otherwise `<exe dir>/public` (what `dx serve` and the prod binary use).
+    fn public_path() -> std::path::PathBuf {
+        if let Ok(path) = std::env::var("DIOXUS_PUBLIC_PATH") {
+            return path.into();
+        }
+        std::env::current_exe()
+            .expect("current_exe")
+            .parent()
+            .expect("exe has a parent directory")
+            .join("public")
+    }
+
+    /// Equivalent of `Router::new().serve_dioxus_application(cfg, App)` but with
+    /// static-file serving as a fallback instead of per-directory
+    /// `nest_service`s. Order matters:
+    ///   1. `register_server_functions()`: POST `/api/*` handlers.
+    ///   2. `fallback_service(ServeDir.fallback(ssr))`: try a real file under
+    ///      `public/`, and on miss render the route server-side. This is the
+    ///      line that fixes the `/docs/*` and `/icons` 404-on-refresh.
+    ///   3. `with_state(state)`: supply `FullstackState` to the server fns.
+    pub fn router() -> Router {
+        let cfg = ServeConfig::new();
+        let state = FullstackState::new(cfg, App);
+
+        // SSR renderer as a leaf service, with its own state applied so it can
+        // stand alone as `ServeDir`'s not-found target.
+        let ssr = get(dioxus::server::render_handler).with_state(state.clone());
+
+        // `append_index_html_on_directories(false)`: without it, a request whose
+        // path maps to a real directory under `public/` (`/docs`, `/docs/components`,
+        // `/docs/hooks`, `/icons` all have a matching dir) gets a 307 to the
+        // trailing-slash form before falling through. Disabling it makes `ServeDir`
+        // return "not found" for a bare directory hit, so those paths fall straight
+        // to the SSR handler and render at their canonical (no trailing slash) URL.
+        let static_files = ServeDir::new(public_path())
+            .append_index_html_on_directories(false)
+            .fallback(ssr);
+
+        Router::new()
+            .register_server_functions()
+            .fallback_service(static_files)
+            .with_state(state)
+    }
 }
 
 #[component]
