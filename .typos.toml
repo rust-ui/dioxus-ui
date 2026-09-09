@@ -2,6 +2,7 @@
 extend-exclude = ["public/cdn/*"]
 
 [default.extend-words]
+Ratatui = "Ratatui"
 BA = "BA"
 CAF = "CAF"
 LSO = "LSO"
