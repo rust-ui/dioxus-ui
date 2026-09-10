@@ -21,7 +21,14 @@ pub fn ComponentPage(name: String) -> Element {
                     PageNotFound { segments: vec!["docs".into(), "components".into(), name.clone()] }
                 },
                 Some(e) => rsx! {
+                    // Key the whole arm on the slug: dioxus reuses `ComponentPage`
+                    // across `/docs/components/:name` navigations (same slot, new
+                    // prop), so without this the `document::*` nodes inside
+                    // `SeoMeta` get diffed in place and log "Changing the props of
+                    // `Meta {}` is not supported". Keying remounts the subtree on
+                    // navigation, matching how leptos recreates the route view.
                     SeoMeta {
+                        key: "{e.slug}",
                         title: format!("{} · Rust UI", e.title()),
                         description: e.description(),
                         canonical_url: format!("https://dioxus-ui.com/docs/components/{}", e.slug),
@@ -39,9 +46,7 @@ pub fn ComponentPage(name: String) -> Element {
                         next,
                     }
                     MyMd { raw: e.raw }
-                    div { class: "mt-14 mb-6",
-                        NewsletterSignup {}
-                    }
+                    div { class: "mt-14 mb-6", NewsletterSignup {} }
                     DocBottomNav { prev, next }
                     FooterLayout {}
                 },
