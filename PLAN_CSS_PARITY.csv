@@ -1,0 +1,33 @@
+component,status,wave,remaining_divergence,blocker
+button,✅ done,1,none,"sizes/variants/base string verbatim leptos"
+label,🟡 partial,1,"plain peer-disabled: vs leptos peer-disabled/{id}: (random-id scoped)","needs id plumbing; identical rendered effect"
+input,✅ done,1,none,
+textarea,✅ done,1,none,"swapped shadcn classes for leptos v4 set"
+card,✅ done,1,none,"added CardSize prop + CardList/CardItem"
+alert,✅ done,1,none,"AlertTitle <h4>, AlertDescription <p>"
+breadcrumb,✅ done,1,none,
+button_group,✅ done,1,none,"added ButtonGroupText"
+field,✅ done,1,none,
+pagination,🟡 partial,1,"renders <button> not router <a>; no use_pagination; missing PaginationNav/EllipsisRoot exports; [&_li:nth-last-child(2)...] selectors omitted; active state via bool not aria-[current=page]:*","no leptos_router (use_navigate / <A>)"
+tailwind.css,✅ done,1,none,"restored chat interface utilities block + shimmer"
+kbd,✅ done,2,none,"regained [[data-slot=tooltip-content]_&]:* classes"
+dialog,✅ done,2,none,"added close X + show_close_button prop + data-target"
+input_group,✅ done,2,none,
+dropdown_menu,✅ done,2,none,"DropdownMenuLabel data-inset:pl-8"
+chips,✅ done,2,none,"regained chips__main__container marker + bounce easing"
+stepper,✅ done,2,none,"switched runtime conditionals to group-data-[state=*]/stepper-item:* CSS"
+sonner,✅ done,2,none,"regained 6-way toast variant colour sets"
+table,🟡 partial,2,"TableCell keeps leptos malformed selector `  &:has([role=checkbox])]:pl-3` (missing leading [)","TODO(css-parity): leptos bug, kept byte-for-byte; fix both when leptos fixes"
+popover,✅ done,3,"native popover=auto attr vs data-state JS toggle (kept, functionally equal)","dioxus has no native popover wiring; class strings verbatim"
+select,✅ done,3,"leptos unused SelectItem clx not re-added (dead code in leptos)","SelectPosition + above/below detection ported into inline script"
+sheet,✅ done,3,"leptos toggles translate-* via JS classList vs dioxus data-[state=*] variants (both render same)","class strings + close X button now verbatim"
+drawer,🟡 partial,3,"DrawerContent base string; DrawerPosition::Top extra; DrawerVariant::Default vs leptos Inset","leptos uses external /app_components/vaul_drawer.{css,js}; dioxus bespoke JS + translate classes"
+theme_toggle,🔴 blocked,-,"icon-swap (Sun/Moon components) + eval localStorage vs single SvgIcon path-morph via CSS transforms + use_theme_mode hook + switch class","different rendering model; no use_theme_mode hook"
+link,🔴 blocked,-,"plain <a>, no inner active <span>, no font-semibold active state on non-force-reload branch","no leptos_router use_location / match_type; force_reload branches already match"
+sidenav,🟡 partial,-,"SidenavMenuButton is leptos variants! macro vs dioxus manual enum (equivalent output); leptos SidenavToggleRail has typo -left-0eft-2","base clx strings (Inset/Inner/Header/Menu/MenuSub/MenuItem) already verbatim"
+hover_card,✅ done,-,"minor <style>/<script> whitespace only","HoverCardTrigger/Content class strings already identical (inline-block / overflow-visible relative z-50 p-4 rounded-lg border bg-card shadow-md w-64)"
+command,✅ done,-,none,"JS behaviour differs; no visual class drift (per audit)"
+mask,✅ done,-,none,"demo-only; no visual class drift"
+header,✅ done,-,none,"no visual class drift"
+auto_form,⚪ n/a,-,"dioxus stub only","full component not ported"
+navbar,⚪ n/a,-,"no leptos counterpart (navbar.rs does not exist in leptos)",
