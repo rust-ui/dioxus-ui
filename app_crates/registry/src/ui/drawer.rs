@@ -150,7 +150,7 @@ pub fn DrawerContent(
 #[component]
 pub fn DrawerHandle() -> Element {
     rsx! {
-        div { class: "block relative mx-auto mb-6 w-8 rounded-2xl opacity-70 hover:opacity-100 shrink-0 bg-muted-foreground/30 h-[5px]" }
+        div { class: "block relative mx-auto mb-8 w-8 rounded-2xl opacity-70 hover:opacity-100 active:opacity-100 shrink-0 bg-[#e2e2e4] h-[5px]" }
     }
 }
 
@@ -186,7 +186,7 @@ pub fn DrawerHeader(#[props(into, optional)] class: Option<String>, children: El
 #[component]
 pub fn DrawerTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let c = tw_merge!("text-lg leading-none font-semibold", class.as_deref().unwrap_or(""));
-    rsx! { h2 { "data-name": "DrawerTitle", class: "{c}", {children} } }
+    rsx! { h3 { "data-name": "DrawerTitle", class: "{c}", {children} } }
 }
 
 #[component]
@@ -197,15 +197,12 @@ pub fn DrawerDescription(#[props(into, optional)] class: Option<String>, childre
 
 #[component]
 pub fn DrawerBody(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let c = tw_merge!("flex flex-col gap-4 py-4 mx-auto w-full max-w-[500px]", class.as_deref().unwrap_or(""));
+    let c = tw_merge!("flex flex-col gap-4 mx-auto max-w-[500px]", class.as_deref().unwrap_or(""));
     rsx! { div { "data-name": "DrawerBody", class: "{c}", {children} } }
 }
 
 #[component]
 pub fn DrawerFooter(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let c = tw_merge!(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end mx-auto w-full max-w-[500px]",
-        class.as_deref().unwrap_or("")
-    );
+    let c = tw_merge!("flex flex-col-reverse gap-2 sm:flex-row sm:justify-end", class.as_deref().unwrap_or(""));
     rsx! { footer { "data-name": "DrawerFooter", class: "{c}", {children} } }
 }

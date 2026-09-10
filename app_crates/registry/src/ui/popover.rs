@@ -111,7 +111,7 @@ pub fn PopoverTrigger(
             "data-name": "PopoverTrigger",
             id: "{ctx.trigger_id}",
             class: tw_merge!(
-                "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground h-9 px-4 py-2 cursor-pointer",
+                "px-4 py-2 h-9 inline-flex justify-center items-center text-sm font-medium whitespace-nowrap rounded-md transition-colors w-fit focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&_svg:not(:last-child)]:mr-2 [&_svg:not(:first-child)]:ml-2  border bg-background border-input hover:bg-accent hover:text-accent-foreground",
                 class.as_deref().unwrap_or("")
             ),
             disabled,
@@ -125,8 +125,12 @@ pub fn PopoverTrigger(
 #[component]
 pub fn PopoverContent(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
     let ctx = use_context::<PopoverContext>();
+    // Visual base copied verbatim from leptos PopoverContent. The trailing
+    // pointer-events / opacity / data-[state=open] classes are dioxus's JS-state
+    // equivalent of leptos's `&:popover-open` CSS (dioxus toggles data-state
+    // instead of using the native popover attribute).
     let c = tw_merge!(
-        "z-50 min-w-[8rem] overflow-hidden rounded-md border bg-popover p-4 text-popover-foreground shadow-md outline-none pointer-events-none opacity-0 transition-all duration-150 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
+        "overflow-visible relative z-50 p-4 rounded-md border bg-card shadow-md my-[1ch] w-[250px] min-h-[150px] pointer-events-none opacity-0 transition-all duration-150 data-[state=open]:opacity-100 data-[state=open]:pointer-events-auto",
         class.as_deref().unwrap_or("")
     );
     rsx! {
@@ -143,12 +147,12 @@ pub fn PopoverContent(#[props(into, optional)] class: Option<String>, children: 
 
 #[component]
 pub fn PopoverTitle(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("font-medium leading-none", class.as_deref().unwrap_or(""));
-    rsx! { p { "data-name": "PopoverTitle", class: "{merged}", {children} } }
+    let merged = tw_merge!("leading-none font-medium mb-3", class.as_deref().unwrap_or(""));
+    rsx! { h3 { "data-name": "PopoverTitle", class: "{merged}", {children} } }
 }
 
 #[component]
 pub fn PopoverDescription(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
-    let merged = tw_merge!("text-sm text-muted-foreground mt-1", class.as_deref().unwrap_or(""));
+    let merged = tw_merge!("text-muted-foreground text-sm", class.as_deref().unwrap_or(""));
     rsx! { p { "data-name": "PopoverDescription", class: "{merged}", {children} } }
 }

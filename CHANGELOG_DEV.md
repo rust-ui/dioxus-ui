@@ -92,6 +92,39 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
   `app_crates/registry/src/ui/{kbd,dialog,input_group,dropdown_menu,chips,stepper,sonner,table}.rs`
 
+- **CSS parity sweep (wave 3)**: Third pass over the overlay primitives that
+  had been left as "architectural divergence". The vanilla-JS open/close
+  wiring (`data-state` attributes) stays, only the class strings and rendered
+  markup were realigned verbatim to leptos.
+  - `popover.rs`: `PopoverContent` base copied from leptos (`bg-card`,
+    `overflow-visible relative`, `my-[1ch] w-[250px] min-h-[150px]`) with the
+    dioxus `data-[state=open]:*` animation classes kept; `PopoverTitle` renders
+    `<h3>` with `mb-3` (was `<p>`); `PopoverDescription` drops `mt-1` and
+    reorders to `text-muted-foreground text-sm`.
+  - `select.rs`: `SelectLabel` regained `data-inset:pl-8`; `Select` root
+    `w-full` -> `w-fit`; `SelectTrigger` `px-3` -> `p-2` and regained the
+    `focus-visible:*`, `disabled:*` and `[&_svg:not(:last-child)]:mr-2` /
+    `:not(:first-child)]:ml-2` classes, trigger chevron drops `shrink-0 ml-2`;
+    `SelectOption` regained `no-underline`; `SelectContent` regained
+    `w-[150px]` and the full `data-[position=Above]:*` / origin variant set,
+    with a new `SelectPosition` prop + `data-position` attribute and an
+    above/below detection port in the inline script (leptos `updatePosition`),
+    pointer-events now toggled via inline style like leptos.
+  - `sheet.rs`: `SheetContent` base -> leptos (`bg-card`, `overflow-y-auto
+    overscroll-y-contain`, no `flex flex-col` / `ease-in-out`), per-direction
+    sizing -> `w-[400px]` / `h-[400px]` with no border; renders the close `X`
+    button gated by the existing `show_close_button` prop; `SheetHeader`
+    `gap-0.5 p-4`, `SheetTitle` `font-bold text-2xl`, `SheetDescription` drops
+    `text-sm`, `SheetBody` `flex flex-col gap-4`, `SheetFooter`
+    `mt-auto flex flex-col gap-2 p-4`.
+  - `drawer.rs`: `DrawerTitle` renders `<h3>` (was `<h2>`); `DrawerBody` drops
+    `py-4 w-full`; `DrawerFooter` drops `mx-auto w-full max-w-[500px]`;
+    `DrawerHandle` `mb-6` -> `mb-8`, regained `active:opacity-100`, bg
+    `bg-muted-foreground/30` -> `bg-[#e2e2e4]`. `DrawerContent` base + the
+    vaul-vs-bespoke position enums stay divergent (different animation engine).
+
+  `app_crates/registry/src/ui/{popover,select,sheet,drawer}.rs`
+
 - **Download page**: Ported the leptos `/download` page (`routes/page_download.rs`,
   route wired in `main.rs`). Lists the Rust UI Desktop (Tauri) builds for macOS,
   Linux and Windows with per-platform download buttons (real `<a download>` to the
