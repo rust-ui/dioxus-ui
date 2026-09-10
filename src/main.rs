@@ -14,6 +14,10 @@ use domain::blocks::routing::blocks_layout::BlocksLayout;
 use domain::blocks::routing::blocks_pages::{
     FaqBlocks, FootersBlocks, HeadersBlocks, IntegrationsBlocks, LoginBlocks, SidenavBlocks,
 };
+use domain::blocks::routing::sidenav_demo_layout::{SidenavDemoLayout, SidenavInsetRightLayout};
+use domain::blocks::routing::sidenav_demo_pages::{
+    SidenavDemoComponentPage, SidenavDemoComponents, SidenavDemoDocs, SidenavDemoHookPage, SidenavDemoHooks,
+};
 use domain::bug_report::page_bug_reports::PageBugReports;
 use domain::charts::routing::charts_layout::ChartsLayout;
 use domain::charts::routing::charts_pages::{
@@ -115,6 +119,20 @@ enum Route {
         PageCreate {},
         #[route("/bug-reports/d7f3a9c2e1b5")]
         PageBugReports {},
+    #[end_layout]
+    #[layout(SidenavDemoLayout)]
+        #[layout(SidenavInsetRightLayout)]
+            #[route("/view/:sidenav/docs")]
+            SidenavDemoDocs { sidenav: String },
+            #[route("/view/:sidenav/docs/components")]
+            SidenavDemoComponents { sidenav: String },
+            #[route("/view/:sidenav/docs/components/:name")]
+            SidenavDemoComponentPage { sidenav: String, name: String },
+            #[route("/view/:sidenav/docs/hooks")]
+            SidenavDemoHooks { sidenav: String },
+            #[route("/view/:sidenav/docs/hooks/:name")]
+            SidenavDemoHookPage { sidenav: String, name: String },
+        #[end_layout]
     #[end_layout]
     #[route("/view/:id")]
     WorkflowViewPage { id: String },

@@ -99,12 +99,16 @@ pub enum SidenavMenuButtonSize {
 }
 
 #[component]
-pub fn SidenavInset(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn SidenavInset(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] data_variant: Option<String>,
+    children: Element,
+) -> Element {
     let merged_class = tw_merge!(
         "bg-background relative flex w-full flex-1 flex-col data-[variant=Inset]:rounded-lg data-[variant=Inset]:border data-[variant=Inset]:border-sidenav-border data-[variant=Inset]:shadow-sm data-[variant=Inset]:m-2",
         class.as_deref().unwrap_or("")
     );
-    rsx! { div { "data-name": "SidenavInset", class: "{merged_class}", {children} } }
+    rsx! { div { "data-name": "SidenavInset", "data-variant": data_variant, class: "{merged_class}", {children} } }
 }
 
 #[component]
@@ -163,15 +167,23 @@ pub fn SidenavContent(#[props(into, optional)] class: Option<String>, children: 
 }
 
 #[component]
-pub fn SidenavGroup(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn SidenavGroup(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] data_sidenav: Option<String>,
+    children: Element,
+) -> Element {
     let merged_class = tw_merge!("flex relative flex-col p-2 w-full min-w-0", class.as_deref().unwrap_or(""));
-    rsx! { div { "data-name": "SidenavGroup", class: "{merged_class}", {children} } }
+    rsx! { div { "data-name": "SidenavGroup", "data-sidenav": data_sidenav, class: "{merged_class}", {children} } }
 }
 
 #[component]
-pub fn SidenavGroupContent(#[props(into, optional)] class: Option<String>, children: Element) -> Element {
+pub fn SidenavGroupContent(
+    #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] data_sidenav: Option<String>,
+    children: Element,
+) -> Element {
     let merged_class = tw_merge!("w-full text-sm", class.as_deref().unwrap_or(""));
-    rsx! { div { "data-name": "SidenavGroupContent", class: "{merged_class}", {children} } }
+    rsx! { div { "data-name": "SidenavGroupContent", "data-sidenav": data_sidenav, class: "{merged_class}", {children} } }
 }
 
 #[component]
@@ -204,6 +216,8 @@ pub fn SidenavInput(
     #[props(into, optional)] placeholder: Option<String>,
     #[props(into, optional)] id: Option<String>,
     #[props(into, optional)] name: Option<String>,
+    #[props(into, optional)] value: Option<String>,
+    #[props(optional)] oninput: Option<EventHandler<FormEvent>>,
 ) -> Element {
     let merged_class = tw_merge!(
         "file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive read-only:bg-muted w-full h-8 shadow-none bg-background",
@@ -216,6 +230,12 @@ pub fn SidenavInput(
             placeholder: placeholder,
             id: id,
             name: name,
+            value: value,
+            oninput: move |event| {
+                if let Some(handler) = &oninput {
+                    handler.call(event);
+                }
+            },
         }
     }
 }
@@ -223,6 +243,7 @@ pub fn SidenavInput(
 #[component]
 pub fn SidenavWrapper(
     #[props(into, optional)] class: Option<String>,
+    #[props(into, optional)] style: Option<String>,
     #[props(default = true)] default_open: bool,
     #[props(default = 160)] min_width: u32,
     #[props(default = 480)] max_width: u32,
@@ -234,12 +255,13 @@ pub fn SidenavWrapper(
         "group/sidenav-wrapper has-data-[variant=Inset]:bg-sidenav flex h-full w-full",
         class.as_deref().unwrap_or("")
     );
+    let wrapper_style = format!("--sidenav-width: 256px;{}", style.as_deref().unwrap_or(""));
     rsx! {
         div {
             "data-name": "SidenavWrapper",
             "data-min-width": "{min_width}",
             "data-max-width": "{max_width}",
-            style: "--sidenav-width: 256px",
+            style: "{wrapper_style}",
             class: "{merged_class}",
             {children}
         }

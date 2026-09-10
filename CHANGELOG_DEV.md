@@ -6,6 +6,12 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **Verbatim sidenav routing port**: Ported the Leptos sidenav demo family to
+  Dioxus with nested `/view/:sidenav/docs/...` routes, responsive sheets,
+  section switching, search filtering, breadcrumb updates, and direct sidenav
+  block URLs. Added the required primitive props and documented the single
+  dynamic-route deviation in `PLAN_SIDENAV_BLOCKS_VERBATIM_PORT.md`.
+
 - **Home header parity**: Mirrored the leptos home header. Brand text is now
   `Rust/UI` (was `Dioxus/UI`), a `LeptosLink` cross-link (small brand-coloured
   Leptos mark linking to `https://rust-ui.com`, new

@@ -9,8 +9,8 @@ use crate::ui::button::{ButtonSize, ButtonVariant};
 static SHEET_COUNTER: AtomicUsize = AtomicUsize::new(0);
 
 #[derive(Clone, PartialEq)]
-struct SheetContext {
-    target_id: String,
+pub struct SheetContext {
+    pub target_id: String,
 }
 
 #[derive(Clone, Copy, PartialEq, Default)]

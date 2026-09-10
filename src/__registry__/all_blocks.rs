@@ -216,7 +216,20 @@ impl BlockIdKebab {
     // ─── to_full_view_url ────────────────────────────────────────────────────
 
     pub fn to_full_view_url(&self) -> String {
-        format!("/view/block/{}", self)
+        match self {
+            Self::Sidenav01 => "/view/sidenav01/docs/components".to_string(),
+            Self::Sidenav02 => "/view/sidenav02/docs/components".to_string(),
+            Self::Sidenav03 => "/view/sidenav03/docs/components".to_string(),
+            Self::Sidenav04 => "/view/sidenav04/docs/components".to_string(),
+            Self::Sidenav05 => "/view/sidenav05/docs/components".to_string(),
+            Self::Sidenav06 => "/view/sidenav06/docs/components".to_string(),
+            Self::Sidenav07 => "/view/sidenav07/docs/components".to_string(),
+            Self::Sidenav08 => "/view/sidenav08/docs/components".to_string(),
+            Self::Sidenav09 => "/view/sidenav09/docs/components".to_string(),
+            Self::Sidenav10 => "/view/sidenav10/docs/components".to_string(),
+            Self::Sidenav11 => "/view/sidenav11/docs/components".to_string(),
+            _ => format!("/view/block/{}", self),
+        }
     }
 
     // ─── to_md ───────────────────────────────────────────────────────────────

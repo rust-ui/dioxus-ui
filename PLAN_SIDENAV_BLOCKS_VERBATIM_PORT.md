@@ -1,7 +1,8 @@
 # PLAN: Verbatim port of leptos sidenav blocks to dioxus
 
-Status: NOT STARTED. This document is the full implementation plan. No source
-files changed yet.
+Status: IMPLEMENTED on 2026-09-10. Registry primitives, route layouts, all 11
+sidenav variants, responsive sheets, search filtering, and sidenav URL mapping
+are ported. Remaining validation is visual/browser parity review.
 
 Goal (user, verbatim): "bah je veux tout pareil que leptos" then "note que je
 veux vraiment verbatim hein, invente rien et match parfaitement, si ya des trucs

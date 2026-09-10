@@ -30,7 +30,7 @@ pub mod sidenav08;
 pub mod sidenav09;
 pub mod sidenav10;
 pub mod sidenav11;
+mod sidenav_common;
 pub mod sidenav_inset_right;
 pub mod sidenav_routes;
 pub mod sidenav_routes_selector;
-pub mod sidenav_routes_simplified;
