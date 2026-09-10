@@ -16,24 +16,41 @@ pub fn SeoMeta(
     let og_title_text = og_title.unwrap_or_else(|| title.clone());
     let og_type_value = og_type.unwrap_or_else(|| "website".to_string());
 
+    // dioxus `document::*` elements are injected into `<head>` once and do not
+    // support prop updates: when `SeoMeta` stays mounted across a route change
+    // (same slot in the tree, new props) diffing them logs
+    // "Changing the props of `Meta {}` is not supported" for every field.
+    //
+    // dioxus only honours `key` for siblings inside an element's child list, not
+    // on a component or on a scope-root node. So the head nodes live inside an
+    // inner element that is the sole keyed child of a stable outer wrapper: when
+    // `k` changes, that inner child is unmounted and remounted, which tears down
+    // and recreates the `document::*` components instead of updating their props.
+    // Both wrappers are `hidden`; the head nodes portal to `<head>` regardless.
+    let k = format!("{title}|{canonical}");
+
     rsx! {
-        document::Title { "{title}" }
-        document::Meta { name: "description", content: "{description}" }
-        document::Link { rel: "canonical", href: "{canonical}" }
+        div { hidden: true,
+            div { key: "{k}", hidden: true,
+                document::Title { "{title}" }
+                document::Meta { name: "description", content: "{description}" }
+                document::Link { rel: "canonical", href: "{canonical}" }
 
-        document::Meta { "property": "og:site_name", content: SiteConfig::TITLE }
-        document::Meta { "property": "og:title", content: "{og_title_text}" }
-        document::Meta { "property": "og:description", content: "{description}" }
-        document::Meta { "property": "og:url", content: "{canonical}" }
-        document::Meta { "property": "og:type", content: "{og_type_value}" }
-        document::Meta { "property": "og:image", content: "{og_image}" }
-        document::Meta { "property": "og:image:width", content: "1200" }
-        document::Meta { "property": "og:image:height", content: "630" }
-        document::Meta { "property": "og:locale", content: "en_US" }
+                document::Meta { "property": "og:site_name", content: SiteConfig::TITLE }
+                document::Meta { "property": "og:title", content: "{og_title_text}" }
+                document::Meta { "property": "og:description", content: "{description}" }
+                document::Meta { "property": "og:url", content: "{canonical}" }
+                document::Meta { "property": "og:type", content: "{og_type_value}" }
+                document::Meta { "property": "og:image", content: "{og_image}" }
+                document::Meta { "property": "og:image:width", content: "1200" }
+                document::Meta { "property": "og:image:height", content: "630" }
+                document::Meta { "property": "og:locale", content: "en_US" }
 
-        document::Meta { name: "twitter:card", content: "summary_large_image" }
-        document::Meta { name: "twitter:title", content: "{og_title_text}" }
-        document::Meta { name: "twitter:description", content: "{description}" }
-        document::Meta { name: "twitter:image", content: "{og_image}" }
+                document::Meta { name: "twitter:card", content: "summary_large_image" }
+                document::Meta { name: "twitter:title", content: "{og_title_text}" }
+                document::Meta { name: "twitter:description", content: "{description}" }
+                document::Meta { name: "twitter:image", content: "{og_image}" }
+            }
+        }
     }
 }

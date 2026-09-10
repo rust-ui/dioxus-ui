@@ -31,3 +31,61 @@ mask,✅ done,-,none,"demo-only; no visual class drift"
 header,✅ done,-,none,"no visual class drift"
 auto_form,⚪ n/a,-,"dioxus stub only","full component not ported"
 navbar,⚪ n/a,-,"no leptos counterpart (navbar.rs does not exist in leptos)",
+tooltip,✅ done,-,none,
+switch,✅ done,-,none,
+status,✅ done,-,none,enum name StatusIndactorVariant vs StatusVariant (not CSS)
+radio_button,✅ done,-,none,
+menubar,✅ done,-,none,
+message,✅ done,-,none,dioxus dropped leptos TODO PORT comments; classes identical
+toggle_group,🟡 partial,-,"ToggleGroupItem base missing aria-invalid:ring-destructive/20 aria-invalid:border-destructive shrink-0 dark:aria-invalid:ring-destructive/40 (leptos has it in base)",
+multi_select,🟡 partial,-,"MultiSelectLabel <li> adds text-muted-foreground and drops data-inset:pl-8 vs leptos select::SelectLabel <span> (px-2 py-1.5 text-sm font-medium data-inset:pl-8 mb-1)","leptos re-uses select.rs SelectLabel/SelectItem/SelectGroup; dioxus reimplements"
+aspect_ratio,✅ done,-,none,
+image,✅ done,-,none,
+progress,✅ done,-,none,
+skeleton,✅ done,-,none,
+spinner,✅ done,-,none,
+separator,✅ done,-,none,enum variant names differ (not CSS)
+pressable,✅ done,-,none,
+callout,✅ done,-,none,
+empty,✅ done,-,none,
+shimmer,✅ done,-,none,
+radio_button_group,✅ done,-,none,
+bottom_nav,✅ done,-,none,
+button_action,✅ done,-,none,
+action_bar,✅ done,-,none,
+alert_dialog,✅ done,-,none,thin Dialog wrapper; dioxus adds AlertDialogAction
+avatar,✅ done,-,none,
+collapsible,✅ done,-,none,
+direction_provider,✅ done,-,none,
+data_table,✅ done,-,none,identical re-export from table.rs
+scroll_area,✅ done,-,none,
+footer,✅ done,-,none,dioxus uses Link component vs <a>; classes identical
+input_prompt,✅ done,-,none,
+card_carousel,✅ done,-,none,
+marker,✅ done,-,none,
+animate,✅ done,-,none,"leptos AnimateScroll* variants have cosmetic multi-space in class literal; dioxus normalizes via tw_merge"
+bubble,✅ done,-,none,
+date_picker,✅ done,-,none,"leptos DatePickerNavButton literal has cosmetic double-space; dioxus normalizes via tw_merge"
+date_picker_state,⚪ n/a,-,none,"pure logic no CSS; dioxus omits leptos from_url_or_default/URL-sync"
+date_picker_dual_state,⚪ n/a,-,none,pure logic no CSS
+drag_and_drop,✅ done,-,none,"dioxus dragover JS targets [data-name=DraggableZone] vs leptos .dragabble__container; class output identical"
+charts,✅ done,-,none,rest is data-chart-* attributes
+attachment,✅ done,-,none,dioxus AttachmentTrigger <a> branch adds target/rel (not CSS)
+carousel,✅ done,-,none,
+data_grid,✅ done,-,none,"Toolbar/PinnableSortableHeaderCell/GenericGridHeader/EditableCellContent/TableSeparator all verbatim"
+form,🟡 partial,-,"FormInput renders bare <input> with truncated class string (missing text-foreground file:* selection:* dark:bg-input/30 md:text-sm aria-invalid:* read-only:bg-muted) instead of delegating to Input component like leptos","dioxus FormInput bypasses the Input component"
+input_phone,✅ done,-,none,"dioxus drops CommandInput placeholder + Popover align=Start + aria-label wiring (not CSS)"
+navigation_menu,✅ done,-,none,"dioxus NavigationMenuLink href defaults to # vs leptos empty string (not CSS)"
+accordion,🟡 partial,-,"dioxus ChevronDown has extra size-4 shrink-0 not in leptos",
+input_otp,🟡 partial,-,"dioxus uses hidden where leptos uses sr-only",
+item,🟡 partial,-,"ItemSeparator missing Separator base classes + doubled my-0",
+marquee,🟡 partial,-,"dioxus uses <Mask> components where leptos uses gradient divs",
+context_menu,🟡 partial,-,"leptos has double-relative typo; dioxus is correct (do NOT change dioxus)",
+dropzone,⚪ n/a,-,dioxus-only (no leptos counterpart),
+toolbar,⚪ n/a,-,dioxus-only (no leptos counterpart),
+workflow,⚪ n/a,-,dioxus-only (no leptos counterpart),
+bento_grid,⚪ n/a,-,leptos-only (no dioxus file),
+chat,⚪ n/a,-,leptos-only (no dioxus file),
+expandable,⚪ n/a,-,leptos-only (no dioxus file),
+faq_transition,⚪ n/a,-,leptos-only (no dioxus file),
+select_native,⚪ n/a,-,leptos-only (no dioxus file),
