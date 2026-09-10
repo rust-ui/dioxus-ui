@@ -12,6 +12,8 @@ bug_reports.db
 
 node_modules/
 
+assets/tailwind.css
+
 
 __TMP/
 dioxus_ui_internals/
