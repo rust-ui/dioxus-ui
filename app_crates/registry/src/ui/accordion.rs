@@ -47,7 +47,7 @@ pub fn AccordionTrigger(
             class: "{label_class}",
             {children}
             svg {
-                class: "transition-all duration-300 size-4 shrink-0",
+                class: "transition-all duration-300",
                 xmlns: "http://www.w3.org/2000/svg",
                 view_box: "0 0 24 24",
                 fill: "none",

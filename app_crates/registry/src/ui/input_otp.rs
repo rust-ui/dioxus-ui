@@ -38,7 +38,7 @@ pub fn InputOTP(
                 maxlength: "{max_length}",
                 disabled: disabled,
                 value: value.as_deref().unwrap_or(""),
-                class: "sr-only",
+                class: "hidden",
             }
             script { src: "/components/otp.js" }
         }

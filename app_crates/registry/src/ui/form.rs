@@ -354,10 +354,25 @@ pub fn FormInput(
     let input_type = r#type.unwrap_or_else(|| "text".to_string());
 
     let current_value = form_ctx.values_signal.read().get(&field_name).cloned().unwrap_or_default();
+
+    // Mirrors leptos `FormInput`, which wires `attr:aria-invalid` reactively from touched + error state.
+    let is_touched = form_ctx.touched_signal.read().contains(&field_name);
+    let has_error = form_ctx.errors_signal.read().get(&field_name).is_some_and(|e| e.is_some());
+    let aria_invalid = if is_touched && has_error { Some("true") } else { None };
+
     let set_value = form_ctx.set_value.clone();
     let touch_fn = form_ctx.touch_field.clone();
     let field_name_input = field_name.clone();
     let field_name_blur = field_name.clone();
+
+    // Verbatim leptos `Input` base string (leptos `FormInput` delegates to `<Input />`).
+    let class = tw_merge!(
+        "text-foreground file:text-foreground placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground dark:bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none file:inline-flex file:h-7 file:border-0 file:bg-transparent file:text-sm file:font-medium disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 md:text-sm",
+        "focus-visible:border-ring focus-visible:ring-ring/50",
+        "focus-visible:ring-2",
+        "aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
+        "read-only:bg-muted"
+    );
 
     rsx! {
         input {
@@ -367,7 +382,8 @@ pub fn FormInput(
             r#type: "{input_type}",
             placeholder: placeholder.as_deref().unwrap_or(""),
             value: "{current_value}",
-            class: "placeholder:text-muted-foreground border-input flex h-9 w-full min-w-0 rounded-md border bg-transparent px-3 py-1 text-base shadow-xs outline-none transition-[color,box-shadow] focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",
+            "aria-invalid": aria_invalid,
+            class: "{class}",
             oninput: move |ev| {
                 set_value(&field_name_input, ev.value());
             },

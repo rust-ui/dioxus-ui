@@ -14,6 +14,31 @@ Internal changelog for the dioxus-ui site (not user-facing).
   `DemoAccordionIcons` demo like leptos. `src/components/leptos_link.rs`,
   `src/components/navigation/header_home.rs`, `src/components/mod.rs`
 
+- **CSS parity fixes (ui primitives)**: Realigned five `ui/*.rs` class strings
+  that had drifted from the leptos site.
+  - `toggle_group.rs`: `ToggleGroupItem` base regained
+    `aria-invalid:ring-destructive/20 aria-invalid:border-destructive shrink-0
+    dark:aria-invalid:ring-destructive/40` (leptos carries it between
+    `transition-[color,box-shadow]` and `hover:bg-muted`).
+  - `accordion.rs`: `AccordionTrigger` chevron dropped the extra `size-4
+    shrink-0`; leptos renders `<ChevronDown class="transition-all
+    duration-300" />` and the parent label already sizes the svg via
+    `[&_svg:not([class*='size-'])]:size-4`.
+  - `input_otp.rs`: hidden proxy `<input>` uses `hidden` (was `sr-only`) to
+    match leptos.
+  - `item.rs`: `ItemSeparator` now emits the full `Separator` class string
+    (`shrink-0 bg-border w-full h-[1px] my-0`) instead of a bare `<div>` with a
+    doubled `my-0`.
+  - `form.rs`: `FormInput` now renders the complete leptos `Input` base string
+    (`text-foreground`, `file:*`, `selection:*`, `dark:bg-input/30`,
+    `md:text-sm`, `aria-invalid:*`, `read-only:bg-muted`) and wires
+    `aria-invalid` reactively from the field touched / error state, like the
+    leptos `FormInput` which delegates to `<Input />`.
+  - `multi_select.rs`: `MultiSelectLabel` is a `<span>` with
+    `px-2 py-1.5 text-sm font-medium data-inset:pl-8 mb-1` (was a `<li>` that
+    added `text-muted-foreground` and dropped `data-inset:pl-8`), matching the
+    leptos re-export of `select::SelectLabel`.
+
 ## 2026-09-09
 
 ### Improvements

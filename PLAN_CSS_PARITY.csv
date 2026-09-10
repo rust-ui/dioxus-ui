@@ -37,8 +37,8 @@ status,✅ done,-,none,enum name StatusIndactorVariant vs StatusVariant (not CSS
 radio_button,✅ done,-,none,
 menubar,✅ done,-,none,
 message,✅ done,-,none,dioxus dropped leptos TODO PORT comments; classes identical
-toggle_group,🟡 partial,-,"ToggleGroupItem base missing aria-invalid:ring-destructive/20 aria-invalid:border-destructive shrink-0 dark:aria-invalid:ring-destructive/40 (leptos has it in base)",
-multi_select,🟡 partial,-,"MultiSelectLabel <li> adds text-muted-foreground and drops data-inset:pl-8 vs leptos select::SelectLabel <span> (px-2 py-1.5 text-sm font-medium data-inset:pl-8 mb-1)","leptos re-uses select.rs SelectLabel/SelectItem/SelectGroup; dioxus reimplements"
+toggle_group,✅ done,-,none,"ToggleGroupItem base regained aria-invalid:ring-destructive/20 aria-invalid:border-destructive shrink-0 dark:aria-invalid:ring-destructive/40"
+multi_select,✅ done,-,none,"MultiSelectLabel now <span> px-2 py-1.5 text-sm font-medium data-inset:pl-8 mb-1 (matches select::SelectLabel); Item/Group already verbatim"
 aspect_ratio,✅ done,-,none,
 image,✅ done,-,none,
 progress,✅ done,-,none,
@@ -73,12 +73,12 @@ charts,✅ done,-,none,rest is data-chart-* attributes
 attachment,✅ done,-,none,dioxus AttachmentTrigger <a> branch adds target/rel (not CSS)
 carousel,✅ done,-,none,
 data_grid,✅ done,-,none,"Toolbar/PinnableSortableHeaderCell/GenericGridHeader/EditableCellContent/TableSeparator all verbatim"
-form,🟡 partial,-,"FormInput renders bare <input> with truncated class string (missing text-foreground file:* selection:* dark:bg-input/30 md:text-sm aria-invalid:* read-only:bg-muted) instead of delegating to Input component like leptos","dioxus FormInput bypasses the Input component"
+form,✅ done,-,none,"FormInput now emits full verbatim leptos Input base string + wires aria-invalid reactively; still bare <input> not Input component (behaviour equal)"
 input_phone,✅ done,-,none,"dioxus drops CommandInput placeholder + Popover align=Start + aria-label wiring (not CSS)"
 navigation_menu,✅ done,-,none,"dioxus NavigationMenuLink href defaults to # vs leptos empty string (not CSS)"
-accordion,🟡 partial,-,"dioxus ChevronDown has extra size-4 shrink-0 not in leptos",
-input_otp,🟡 partial,-,"dioxus uses hidden where leptos uses sr-only",
-item,🟡 partial,-,"ItemSeparator missing Separator base classes + doubled my-0",
+accordion,✅ done,-,none,"AccordionTrigger chevron class now transition-all duration-300 (dropped size-4 shrink-0); parent label sizes svg via [&_svg:not([class*='size-'])]:size-4"
+input_otp,✅ done,-,none,"hidden proxy <input> now class=hidden (was sr-only) matching leptos"
+item,✅ done,-,none,"ItemSeparator now emits full Separator class shrink-0 bg-border w-full h-[1px] my-0 (was bare <div> with doubled my-0)"
 marquee,🟡 partial,-,"dioxus uses <Mask> components where leptos uses gradient divs",
 context_menu,🟡 partial,-,"leptos has double-relative typo; dioxus is correct (do NOT change dioxus)",
 dropzone,⚪ n/a,-,dioxus-only (no leptos counterpart),

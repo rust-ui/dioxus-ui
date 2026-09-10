@@ -134,6 +134,8 @@ pub fn ItemFooter(#[props(into, optional)] class: Option<String>, children: Elem
 
 #[component]
 pub fn ItemSeparator(#[props(into, optional)] class: Option<String>) -> Element {
-    let c = tw_merge!("my-0", class.as_deref().unwrap_or(""));
-    rsx! { div { "data-name": "ItemSeparator", class: "my-0 {c}", role: "separator" } }
+    // Mirrors leptos `<Separator attr:data-name="ItemSeparator" class=tw_merge!("my-0", class) />`.
+    // Separator base string inlined so `data-name` and `role` stay on the rendered node.
+    let c = tw_merge!("shrink-0 bg-border w-full h-[1px] my-0", class.as_deref().unwrap_or(""));
+    rsx! { div { "data-name": "ItemSeparator", class: "{c}", role: "separator" } }
 }
