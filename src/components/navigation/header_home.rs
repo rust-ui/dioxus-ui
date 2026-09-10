@@ -3,6 +3,7 @@ use icons::{
     AlignHorizontalSpaceAround, BlocksAnimate, CalendarDaysAnimate, CompassAnimate, FrameAnimate, LogIn, Menu,
     PanelLeftOpenAnimate, SearchAnimate, WindAnimate, X,
 };
+use registry::demos::demo_accordion_icons::DemoAccordionIcons;
 use registry::ui::header::{
     Header, IconWrapper, InsetCard, NavMenu, NavMenuContent, NavMenuContentInset, NavMenuFixed, NavMenuHomeLink,
     NavMenuItem, NavMenuLink, NavMenuLinkDescription, NavMenuLinkGrid, NavMenuLinkTitle, NavMenuList, NavMenuMiddle,
@@ -12,6 +13,7 @@ use registry::ui::theme_toggle::ThemeToggle;
 
 use crate::components::command_search_docs::CommandSearchDocs;
 use crate::components::github_stars::GithubStars;
+use crate::components::leptos_link::LeptosLink;
 
 #[component]
 pub fn HeaderHome() -> Element {
@@ -25,7 +27,7 @@ pub fn HeaderHome() -> Element {
                     div { class: "flex relative flex-wrap justify-between items-center lg:py-3",
                         div { class: "flex gap-8 justify-between items-center max-md:in-data-[state=active]:border-b max-md:h-14 max-md:w-full",
                             NavMenuHomeLink { href: "/", aria_label: "home",
-                                span { class: "text-lg font-semibold", "Dioxus/UI" }
+                                span { class: "text-lg font-semibold", "Rust/UI" }
                             }
                             MobileMenuTrigger { is_open: is_mobile_menu_open }
                         }
@@ -115,7 +117,7 @@ fn FirstNavMenu() -> Element {
                                 }
                             }
                             li {
-                                NavMenuLinkGrid { class: "items-center", href: "/docs/components/changelog",
+                                NavMenuLinkGrid { class: "items-center", href: "docs/components/changelog",
                                     IconWrapper { CalendarDaysAnimate { class: "text-foreground" } }
                                     NavMenuLinkTitle { "Changelog" }
                                 }
@@ -194,6 +196,7 @@ fn NavMenuRight() -> Element {
         div { class: "hidden md:flex md:gap-6 md:p-0 md:m-0 md:bg-transparent md:border-transparent md:shadow-none dark:shadow-none md:w-fit dark:md:bg-transparent",
             div { class: "flex flex-row gap-3 items-center",
                 CommandSearchDocs {}
+                LeptosLink {}
                 GithubStars {}
                 div { class: "flex justify-center items-center mr-1",
                     ThemeToggle {}
@@ -230,8 +233,10 @@ fn MobileMenu(is_open: Signal<bool>) -> Element {
 
     rsx! {
         div { class: "flex-col gap-4 mt-6 w-full md:hidden mb-4 {display_class()}",
+            DemoAccordionIcons {}
             div { class: "flex flex-row gap-3 items-center w-full",
                 CommandSearchDocs {}
+                LeptosLink {}
                 GithubStars {}
                 div { class: "flex justify-center items-center mr-1",
                     ThemeToggle {}

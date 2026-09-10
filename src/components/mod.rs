@@ -6,6 +6,7 @@ pub mod footer;
 pub mod footer_layout;
 pub mod github_stars;
 pub mod install_command;
+pub mod leptos_link;
 pub mod logos;
 pub mod navbar;
 pub mod navigation;
