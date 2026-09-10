@@ -14,6 +14,7 @@ use domain::blocks::routing::blocks_layout::BlocksLayout;
 use domain::blocks::routing::blocks_pages::{
     FaqBlocks, FootersBlocks, HeadersBlocks, IntegrationsBlocks, LoginBlocks, SidenavBlocks,
 };
+use domain::bug_report::page_bug_reports::PageBugReports;
 use domain::charts::routing::charts_layout::ChartsLayout;
 use domain::charts::routing::charts_pages::{
     AreaChartPage, BarChartPage, LineChartPage, PieChartPage, RadarChartPage, RadialChartPage,
@@ -112,6 +113,8 @@ enum Route {
         PageDownload {},
         #[route("/create")]
         PageCreate {},
+        #[route("/bug-reports/d7f3a9c2e1b5")]
+        PageBugReports {},
     #[end_layout]
     #[route("/view/:id")]
     WorkflowViewPage { id: String },
@@ -192,10 +195,12 @@ fn main() {
 /// See `BUGFIX_docs_routes_404_on_refresh.md` for the full write-up.
 #[cfg(feature = "server")]
 mod server {
-    use super::App;
-    use dioxus::server::axum::{routing::get, Router};
+    use dioxus::server::axum::Router;
+    use dioxus::server::axum::routing::get;
     use dioxus::server::{DioxusRouterExt, FullstackState, ServeConfig};
     use tower_http::services::ServeDir;
+
+    use super::App;
 
     /// Directory the CLI bundles static assets into. Mirrors the private
     /// `dioxus_server::public_path()`: honour `DIOXUS_PUBLIC_PATH` if set,
@@ -204,11 +209,7 @@ mod server {
         if let Ok(path) = std::env::var("DIOXUS_PUBLIC_PATH") {
             return path.into();
         }
-        std::env::current_exe()
-            .expect("current_exe")
-            .parent()
-            .expect("exe has a parent directory")
-            .join("public")
+        std::env::current_exe().expect("current_exe").parent().expect("exe has a parent directory").join("public")
     }
 
     /// Equivalent of `Router::new().serve_dioxus_application(cfg, App)` but with
@@ -233,14 +234,9 @@ mod server {
         // trailing-slash form before falling through. Disabling it makes `ServeDir`
         // return "not found" for a bare directory hit, so those paths fall straight
         // to the SSR handler and render at their canonical (no trailing slash) URL.
-        let static_files = ServeDir::new(public_path())
-            .append_index_html_on_directories(false)
-            .fallback(ssr);
+        let static_files = ServeDir::new(public_path()).append_index_html_on_directories(false).fallback(ssr);
 
-        Router::new()
-            .register_server_functions()
-            .fallback_service(static_files)
-            .with_state(state)
+        Router::new().register_server_functions().fallback_service(static_files).with_state(state)
     }
 }
 
@@ -248,6 +244,9 @@ mod server {
 fn App() -> Element {
     #[cfg(target_arch = "wasm32")]
     ::registry::hooks::use_scroll_lock::init();
+
+    #[cfg(target_arch = "wasm32")]
+    utils::client_diagnostic_handler::init();
 
     let theme_mode = ThemeMode::init();
     provide_toaster();

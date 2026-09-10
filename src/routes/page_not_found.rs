@@ -8,6 +8,16 @@ use crate::components::navigation::header_docs::HeaderDocs;
 #[component]
 pub fn PageNotFound(segments: Vec<String>) -> Element {
     let _ = segments;
+
+    // Report the 404 server-side (fire-and-forget). URL comes from the request
+    // parts held by the current fullstack context during streaming SSR.
+    #[cfg(feature = "server")]
+    {
+        use dioxus::fullstack::FullstackContext;
+        let url = FullstackContext::current().map(|ctx| ctx.parts_mut().uri.to_string());
+        crate::domain::bug_report::bug_reports::report_not_found(url);
+    }
+
     rsx! {
         document::Title { "Rust/UI · 404 Not Found" }
 

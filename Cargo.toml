@@ -32,8 +32,11 @@ resend-rs = { version = "0.19", default-features = false, features = ["rustls-tl
 validator = { version = "0.20", features = ["derive"], optional = true }
 tracing = { version = "0.1", optional = true }
 tower-http = { version = "0.6", features = ["fs"], optional = true }
+tokio = { version = "1", features = ["rt-multi-thread"], optional = true }
+rusqlite = { version = "0.32", features = ["bundled"], optional = true }
 strum = { version = "0.28", features = ["derive"] }
 wasm-bindgen = "0.2"
+wasm-bindgen-futures = "0.4"
 web-sys = { version = "0.3", features = [
   "Window",
   "Document",
@@ -55,5 +58,5 @@ time = { version = "0.3", features = ["local-offset"] }
 
 [features]
 default = ["web"]
-server = ["dioxus/server", "dep:reqwest", "dep:resend-rs", "dep:validator", "dep:tracing", "dep:tower-http"]
+server = ["dioxus/server", "dep:reqwest", "dep:resend-rs", "dep:validator", "dep:tracing", "dep:tower-http", "dep:tokio", "dep:rusqlite"]
 web = ["dioxus/web"]

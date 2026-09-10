@@ -6,6 +6,19 @@ Internal changelog for the dioxus-ui site (not user-facing).
 
 ### Improvements
 
+- **Bug report system**: Ported the leptos bug report cluster. Client-side
+  panics and framework / browser `console.warn` output are now captured on the
+  WASM client (`src/utils/client_diagnostic_handler.rs`, wired in `App()`),
+  forwarded through a `report_client_bug` server fn to local SQLite plus the
+  shared RUSTIFY endpoint (`RUSTIFY_API_URL` + `BUG_REPORTS_API_KEY`), and 404s
+  are reported server-side from `PageNotFound`. The SQLite file, schema and wire
+  format match the leptos site so both apps share one database. A new admin page
+  at `/bug-reports/d7f3a9c2e1b5` lists reports grouped by similarity hash, with
+  per-group and delete-all actions, expandable stack traces and a parsed
+  user-agent summary. `src/domain/bug_report/{mod,bug_reports,bug_reports_sqlite,
+  page_bug_reports}.rs`, `src/utils/client_diagnostic_handler.rs`,
+  `src/routes/page_not_found.rs`, `src/main.rs`, `Cargo.toml`
+
 - **CSS parity sweep**: Audited every shared `ui/*.rs` primitive and both
   `tailwind.css` files against the leptos site and realigned the class strings
   that had drifted.
