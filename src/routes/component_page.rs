@@ -14,7 +14,6 @@ pub fn ComponentPage(name: String) -> Element {
     let entry = find_docs_component_entry(&name);
     let (prev, next) = docs_component_prev_next(&name);
 
-
     rsx! {
         div { class: "flex flex-col pt-4 mx-auto w-full min-h-screen px-3 md:px-4 max-w-[730px]",
             match entry {
