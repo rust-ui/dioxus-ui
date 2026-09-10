@@ -23,7 +23,7 @@ pub fn DocsHooksIndexPage() -> Element {
     rsx! {
         DocsIndexPage {
             title: "Dioxus Hooks",
-            description: "Reusable Rust UI hooks for Dioxus applications. A collection of custom hooks for building modern fullstack web apps.",
+            description: "Reusable Rust UI hooks for Dioxus applications. A collection of custom hooks for building fullstack web apps.",
             canonical_url: format!("{}/docs/hooks", SiteConfig::BASE_URL),
             base_url: "/docs/hooks",
             items: SIDENAV_HOOKS_ITEMS,

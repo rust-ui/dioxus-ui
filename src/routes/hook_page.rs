@@ -1,4 +1,4 @@
-use app_config::SeoMeta;
+use app_config::{BreadcrumbItem, JsonLdArticle, JsonLdBreadcrumb, SeoMeta, SiteConfig};
 use dioxus::prelude::*;
 use icons::{ChevronLeft, ChevronRight};
 
@@ -20,36 +20,74 @@ pub fn HookPage(name: String) -> Element {
                 None => rsx! {
                     PageNotFound { segments: vec!["docs".into(), "hooks".into(), name.clone()] }
                 },
-                Some(e) => rsx! {
-                    // Key the whole arm on the slug: dioxus reuses `HookPage`
-                    // across `/docs/hooks/:name` navigations (same slot, new
-                    // prop), so without this the `document::*` nodes inside
-                    // `SeoMeta` get diffed in place and log "Changing the props of
-                    // `Meta {}` is not supported". Keying remounts the subtree on
-                    // navigation, matching how leptos recreates the route view.
-                    SeoMeta {
-                        key: "{e.slug}",
-                        title: format!("{} · Dioxus UI", e.title()),
-                        description: e.description(),
-                        canonical_url: format!("https://dioxus-ui.com/docs/hooks/{}", e.slug),
-                        og_type: "article".to_string(),
+                Some(e) => {
+                    let page_title = format!(
+                        "Dioxus {} · Rust UI Components | {}",
+                        e.title(),
+                        SiteConfig::TITLE,
+                    );
+                    let canonical_url = format!("{}/docs/hooks/{}", SiteConfig::BASE_URL, e.slug);
+                    let meta_description = format!(
+                        "Beautiful Rust UI {} component for Dioxus applications. {}",
+                        e.title(),
+                        e.description(),
+                    );
+                    let breadcrumbs = vec![
+                        BreadcrumbItem {
+                            name: "Home".to_string(),
+                            url: Some(SiteConfig::BASE_URL.to_string()),
+                        },
+                        BreadcrumbItem {
+                            name: "Hooks".to_string(),
+                            url: Some(format!("{}/docs/hooks", SiteConfig::BASE_URL)),
+                        },
+                        BreadcrumbItem {
+                            name: e.title(),
+                            url: None,
+                        },
+                    ];
+                    rsx! {
+                        // Key the whole arm on the slug: dioxus reuses `HookPage`
+                        // across `/docs/hooks/:name` navigations (same slot, new
+                        // prop), so without this the `document::*` nodes inside
+                        // `SeoMeta` get diffed in place and log "Changing the props of
+                        // `Meta {}` is not supported". Keying remounts the subtree on
+                        // navigation, matching how leptos recreates the route view.
+                        SeoMeta {
+                            key: "{e.slug}",
+                            title: page_title,
+                            description: meta_description,
+                            canonical_url: canonical_url.clone(),
+                            og_type: "article".to_string(),
+                        }
+
+                        JsonLdArticle {
+                            title: e.title(),
+                            description: e.description(),
+                            url: canonical_url,
+                            keywords: e.tags.iter().map(|t| t.to_string()).collect(),
+                            article_section: "Hooks".to_string(),
+                        }
+
+                        JsonLdBreadcrumb { breadcrumbs }
+
+                        DocHeader {
+                            title: e.title(),
+                            description: e.description(),
+                            tags: e.tags.to_vec(),
+                            raw: e.raw,
+                            slug: e.slug,
+                            section_label: "Hooks".to_string(),
+                            base_path: "/docs/hooks".to_string(),
+                            prev,
+                            next,
+                        }
+                        MyMd { raw: e.raw }
+                        div { class: "mt-14 mb-6", NewsletterSignup {} }
+                        HookBottomNav { prev, next }
+                        FooterLayout {}
                     }
-                    DocHeader {
-                        title: e.title(),
-                        description: e.description(),
-                        tags: e.tags.to_vec(),
-                        raw: e.raw,
-                        slug: e.slug,
-                        section_label: "Hooks".to_string(),
-                        base_path: "/docs/hooks".to_string(),
-                        prev,
-                        next,
-                    }
-                    MyMd { raw: e.raw }
-                    div { class: "mt-14 mb-6", NewsletterSignup {} }
-                    HookBottomNav { prev, next }
-                    FooterLayout {}
-                },
+                }
             }
         }
     }
